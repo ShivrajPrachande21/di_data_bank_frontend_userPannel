@@ -1,0 +1,188 @@
+body {
+    background: #f8f8f8;
+}
+.main {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+.image {
+    width: auto;
+    overflow: hidden;
+}
+.image img {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+
+    object-fit: cover;
+}
+.FormDiv {
+    position: absolute;
+    width: 35vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    gap: 22px;
+    border-radius: 16px 0px 0px 0px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0px 2px 15.2px 0px rgba(0, 0, 0, 0.16);
+    padding: 20px;
+    height: 96vh;
+}
+.top {
+    width: 100%;
+    height: 4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.head {
+    width: 310px;
+    height: 3rem;
+
+    border-radius: 27px;
+    opacity: 0px;
+    background: rgba(248, 248, 248, 1);
+}
+.loginHead {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loginHead p {
+    color: var(--Primary-color, #3b96e1);
+    text-align: center;
+
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+}
+
+.form-check-input[type='checkbox'] {
+    border-radius: 0.25em;
+    border-color: black;
+}
+
+.container {
+    margin: auto;
+}
+.InputField {
+    width: 100%;
+    margin-top: -38px;
+}
+.custom-lable {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.custom-placeholder::placeholder {
+    color: #000000; /* Your desired placeholder color */
+    font-size: 0.85rem;
+}
+.custom-select {
+    color: #3b96e1;
+    background-color: #f8f8f8;
+}
+
+.custom-select option {
+    background-color: #ffffff; /* Background color for options */
+    color: #4db9f7; /* Text color for options */
+}
+.custom-select option:hover {
+    background-color: #ddd; /* Background color on hover */
+    color: #000; /* Text color on hover */
+}
+
+.register {
+    background: #3b96e1;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+.no-hover-effect {
+    background-color: #3b96e1; /* Keep the button color */
+}
+
+.no-hover-effect:hover {
+    background-color: #3b96e1; /* Disable the hover color change */
+    cursor: default; /* Keep the default cursor */
+}
+
+.custom-input {
+    margin-top: -6px;
+    background-color: #f8f8f8;
+}
+.display-error {
+    z-index: 10;
+    color: red;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.check-custom {
+    display: flex;
+}
+.check-custom span {
+    font-size: 0.8rem;
+    margin-left: 6px;
+    margin-top: 2px;
+    color: #707070;
+}
+.check-custom p {
+    margin-left: 2px;
+    margin-top: 2px;
+    font-size: 0.8rem;
+    color: #233a48;
+    font-weight: 500;
+}
+.already {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.already p {
+    margin-top: 6px;
+    color: #aeaeae;
+    font-size: 0.85rem;
+}
+.already span {
+    color: #3b96e1;
+    font-size: 1rem;
+    font-weight: 600;
+}
+@media only screen and (max-width: 568px) {
+    .FormDiv {
+        width: 100vw;
+    }
+    #btn-forget {
+    }
+}
+
+/* Styles for larger devices (greater than 894px) */
+@media (max-width: 913px) {
+    .FormDiv {
+        width: 60%; /* Example width for larger screens */
+
+        position: absolute;
+    }
+}
+
+@media (max-width: 460px) {
+    .FormDiv {
+        width: 100%; /* Example width for larger screens */
+
+        position: absolute;
+    }
+}

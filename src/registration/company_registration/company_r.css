@@ -1,0 +1,31 @@
+.send-otp {
+    font-size: 10px;
+    margin-top: 40px;
+    padding: 4px 14px;
+    background: #3b96e1;
+    font-weight: 600;
+}
+.back-btn {
+    background-color: white;
+    color: #3b96e1;
+    border: none;
+}
+.btn-div button {
+    width: 100%;
+    padding: 6px;
+    background-color: #3b96e1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.btn-div-2 button {
+    width: 100%;
+    padding: 6px;
+    background-color: #ffffff;
+    color: #3b96e1;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-top: 6px;
+}

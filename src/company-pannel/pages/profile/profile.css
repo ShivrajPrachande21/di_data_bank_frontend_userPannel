@@ -1,0 +1,151 @@
+.ReportedJob {
+    height: 100vh;
+    width: 100%;
+    background: #f8f8f8;
+    padding: 20px;
+}
+.subReportedjob {
+    height: 90vh;
+    padding: 10px;
+    background: white;
+    width: 84%;
+    margin: 0px auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.Skills {
+    margin-top: 20px;
+    display: flex;
+    gap: 14px;
+}
+.Skills p {
+    background: #f8f8f8;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 12px;
+    color: #656565;
+    font-weight: 400;
+}
+.personalDetails {
+    width: 100%;
+}
+.cards {
+    display: flex;
+}
+.cards p {
+    font-size: 12px;
+    color: #aeaeae;
+}
+.tables p {
+    margin-right: 12px;
+    margin-top: -10px;
+}
+.lastcard {
+    display: flex;
+}
+.lastcard p {
+    margin-right: 10px;
+}
+.appliction_btn {
+    width: 22%;
+}
+.appliction_btn p {
+    background: #b4ddff;
+    color: #3b96e1;
+    padding: 4px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; /* Ensures it looks clickable */
+}
+
+.icon-left {
+    margin-right: 8px; /* Space between left icon and text */
+    font-size: 16px; /* Adjust icon size as needed */
+}
+
+.icon-right {
+    margin-left: auto; /* Pushes the right icon to the far right */
+    font-size: 16px; /* Adjust icon size as needed */
+}
+summary {
+    list-style: none; /* Remove the default marker */
+}
+
+summary::-webkit-details-marker {
+    display: none; /* Hide the default marker in WebKit browsers (Chrome, Safari) */
+}
+
+summary::marker {
+    display: none; /* Hide the default marker in other browsers */
+}
+details {
+    width: 100%;
+}
+
+.red_btn {
+    display: flex;
+    gap: 12px;
+}
+.red_btn1 p {
+    background: #febabc;
+    color: #ff0000;
+    padding: 6px;
+    text-align: center;
+    border-radius: 6px;
+    width: 16vw;
+    border: 1.3px solid red;
+}
+.red_btn2 p {
+    background: #ff0000;
+    color: #ffffff;
+    padding: 6px;
+    text-align: center;
+    border-radius: 6px;
+    width: 16vw;
+    border: 1.3px solid red;
+    cursor: pointer;
+}
+
+.subReportedjob_1 {
+    overflow-y: auto;
+    height: 100vh;
+    max-height: 50vh;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+}
+
+.dropdown p {
+    font-size: 0.86rem;
+    color: #aeaeae;
+    font-weight: 400;
+}
+
+.responsibilities p {
+    font-size: 0.86rem;
+    color: #aeaeae;
+    font-weight: 400;
+}
+.responsibilities ul li {
+    font-size: 0.86rem;
+    color: #aeaeae;
+    font-weight: 400;
+}
+.topsection {
+    width: 100%;
+    background: #febabc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.edit p {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #3b96e1;
+}

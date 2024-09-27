@@ -1,0 +1,30 @@
+.job-offered-file {
+    background: white;
+}
+.upload-job-offer {
+    font-size: 0.8rem;
+    background: transparent;
+    border: 1.32px dashed grey;
+    border-radius: 6px;
+
+    padding: 14px 80px;
+}
+.upload-job-offer span {
+    color: #3b96e1;
+    text-decoration: underline;
+}
+.offered-send {
+    font-size: 0.8rem;
+
+    border: 1.32px dashed grey;
+    border-radius: 2px;
+
+    padding: 2px 100px;
+    background: #3b96e1;
+}
+.offered-send span {
+    color: #ffffff;
+}
+.card-table-span {
+    font-size: 0.7rem;
+}

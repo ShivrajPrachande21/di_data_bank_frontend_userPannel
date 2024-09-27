@@ -1,0 +1,96 @@
+.editProfilepage {
+    background: rgb(255, 255, 255);
+    padding: 16px;
+    margin-top: -20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: 12px;
+}
+.imahesection {
+    height: 60px;
+    width: 60px;
+    background: rgb(199, 194, 194);
+    border-radius: 50px;
+    margin-left: 34px;
+    position: relative;
+}
+.custom-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.custom-input-group .form-control {
+    border: 1px solid gray; /* Gray border */
+}
+.custom-input-group-label {
+    font-size: 10px; /* Change label font size */
+    color: #000000; /* Change label color */
+    font-weight: 500;
+    margin-bottom: 5px; /* Space between label and input */
+}
+.btn-upload {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    background: #b4ddff;
+    color: #3b96e1;
+    border: 1.54px solid #3b96e1;
+    padding: 10px;
+}
+.verify-btn {
+    background: #3b96e1;
+    font-size: 0.7rem;
+    border: none;
+    outline: none;
+    padding: 2px 10px;
+    border-radius: 8px;
+}
+.verify {
+    width: 100%;
+    border: 1.4px solid rgb(219, 217, 217);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+.verify input {
+    background: transparent;
+    padding: 4px 0px;
+    border: none;
+    outline: none;
+    color: #000000;
+}
+.saveprofile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.saveprofile-btn {
+    padding: 8px;
+    gap: 10px;
+    border-radius: 8px;
+    opacity: 0px;
+    font-size: 0.8rem;
+    background: #3b96e1;
+}
+.UploadImagediv {
+    height: 50px;
+
+    margin-top: 24px;
+}
+.cross {
+    margin-left: 20px;
+}
+.profile {
+    position: absolute;
+    bottom: -8px;
+    width: 24px;
+    right: -4px;
+    z-index: 10;
+    border-radius: 20px;
+}
+.profileView {
+    width: 100%;
+    object-fit: cover;
+    margin-top: 10px;
+}

@@ -1,0 +1,134 @@
+.dashboard-card {
+    background: rgba(255, 255, 255, 1);
+    border-radius: 8px;
+}
+.dashboard-div {
+    margin-right: 10px;
+}
+.dashboard-p {
+    color: var(--text-color, #343434);
+
+    font-size: 0.8rem;
+
+    font-weight: 500;
+}
+.loading {
+    color: var(--Primary-color, #3b96e1);
+    font-weight: 500;
+    font-size: 1rem;
+}
+.myplan {
+    background: white;
+
+    margin-left: 6px;
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 8px;
+}
+.myplan-p {
+    font-family: Poppins;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+    text-align: left;
+}
+.myplan-btn {
+    margin-top: 4px;
+    margin-left: 10px;
+    height: 30px;
+
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 0px 26px;
+    color: white;
+    background: linear-gradient(
+        99.52deg,
+        #3b96e1 -8.78%,
+        #a3d6ff 19.78%,
+        #3280c0 65.7%,
+        #a3d6ff 103.21%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input-pan {
+    width: 120%;
+    border-radius: 8px;
+    border: 1.4px solid #3b96e1;
+    padding: 0px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.input-pan input {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 6px;
+    color: black;
+}
+.input-pan button {
+    margin-left: 50px;
+}
+.input-pan img {
+    height: 30px;
+}
+.input-success {
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120%;
+    border-radius: 8px;
+    border: 1.4px solid #3b96e1;
+    background-color: #b4ddff;
+}
+.input-success p {
+    font-size: 0.64rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.Candidates {
+    font-family: Poppins;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    margin-bottom: -2px;
+}
+.Candidates-s {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 36px;
+    text-align: left;
+    color: #3b96e1;
+}
+.Candidates-cv {
+    font-family: Poppins;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    color: #aeaeae;
+    margin-bottom: -2px;
+}
+.only {
+    font-family: Poppins;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: right;
+    color: #3b96e1;
+}
+.ends-on {
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: left;
+}
+.pan-error {
+    color: red;
+    font-size: 0.8rem;
+    margin: 4px 9px;
+}

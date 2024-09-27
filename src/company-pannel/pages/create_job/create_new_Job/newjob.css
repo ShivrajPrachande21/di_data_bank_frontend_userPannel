@@ -1,0 +1,58 @@
+.new-job {
+    width: 100%;
+    padding: 18px;
+    height: 100vh;
+    overflow-y: auto;
+}
+.heading-new-job p {
+    font-family: Poppins;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 48px;
+    text-align: center;
+    color: #051f50;
+}
+.skills-required {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+.sekils-display-section {
+    margin-top: -26px;
+    width: 100%;
+
+    display: flex;
+}
+.sekils-display-section p {
+    background: #b4ddff;
+    border: 1px solid;
+    color: #3b96e1;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    margin-top: 20px;
+    margin-right: 4px;
+}
+.sekils-display-section img {
+    width: 20px;
+}
+.create-job-btn-last {
+    width: 40%;
+    margin-top: 12px;
+}
+.suggestions-dropdown {
+    margin-left: 10px;
+    background: #b4ddff;
+    width: 60%;
+    height: 20vh;
+
+    font-size: 0.7rem;
+    padding: 8px;
+    /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis;
+}
+.suggection-click {
+    margin-top: 4px;
+    padding: 4px;
+    cursor: pointer;
+}

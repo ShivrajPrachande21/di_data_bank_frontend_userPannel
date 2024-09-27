@@ -1,0 +1,54 @@
+.top1 {
+    position: relative;
+    padding: 16px;
+    border-radius: 20px;
+    height: 25vh;
+
+    background: linear-gradient(
+        126.92deg,
+        #1c7ac7 2.12%,
+        #4d90c7 50.39%,
+        #1c7ac7 98.27%
+    );
+    width: 21vw;
+}
+
+.top {
+    width: 90%;
+    margin: 80px auto;
+    padding: 10px;
+}
+.sub-card {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.add-topup-btn {
+    position: absolute;
+    bottom: 10px;
+    width: 88%;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 6px;
+}
+.top1 p {
+    color: #ffff00;
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+.ruppee-topup {
+    color: white;
+    font-weight: 700;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ruppee-topup span {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+.ruppee-topup img {
+    margin-top: -4px;
+}

@@ -1,0 +1,130 @@
+.viewCandidate-main {
+    width: 100%;
+    background: #f8f8f8;
+    padding: 14px;
+}
+.viewCandidate {
+    padding: 14px;
+    background: white;
+    width: 100%;
+
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.info-view {
+    width: 100%;
+    display: flex;
+
+    margin-top: -10px;
+}
+.public-info {
+    width: 50%;
+    background: white;
+
+    border-radius: 8px;
+}
+
+.basic-details {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    color: #051f50;
+}
+.personal-info {
+    width: 50%;
+    background: white;
+
+    border-radius: 8px;
+}
+
+.cardsFlex {
+    display: flex;
+}
+
+.tables-right {
+    color: black;
+}
+.topsection-veiw {
+    width: 100%;
+    margin-top: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pdf-view {
+    margin-top: 4px;
+    width: 250px;
+    background: #f8f8f8;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+}
+.pdf {
+    width: 38px;
+    background: #3b96e1;
+    height: 42px;
+    border-radius: 12px 0px 0px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+.pdf-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    color: #3b96e1;
+    font-weight: 500;
+}
+.custom-view-resume .modal-dialog {
+    width: 50%; /* Set the width to 50% */
+    max-width: 50%; /* Ensure it does not exceed 50% */
+    margin: auto; /* Center the modal */
+    max-height: 40vh;
+}
+.custom-view-certificate .modal-dialog {
+    width: 50%; /* Set the width to 50% */
+    max-width: 50%; /* Ensure it does not exceed 50% */
+    margin: auto; /* Center the modal */
+    max-height: 40vh;
+}
+.download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.download-ceriti {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.download-resume {
+    width: 100%;
+    height: 50vh;
+}
+.download-certificate {
+    width: 100%;
+    height: 50vh;
+    border-radius: 12px;
+}
+.btn-download-resume {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .info-view {
+        flex-wrap: wrap;
+    }
+    .public-info {
+        width: 100%;
+    }
+    .basic-details {
+        width: 100%;
+    }
+}

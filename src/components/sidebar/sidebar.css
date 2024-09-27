@@ -4,7 +4,7 @@
     overflow-y: scroll; /* Enable scrolling */
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
-    padding: 10px;
+    padding: 20px;
 }
 .User-pannel {
     margin-top: 10px;
@@ -26,9 +26,13 @@
 .Select {
     display: flex;
     align-items: center;
+    background: rgba(242, 242, 242, 1);
+    border-radius: 8px;
+    height: 6vh;
+    width: 114%;
 }
 .Select p {
-    margin-top: 16px;
+    margin-top: 18px;
     margin-left: 10px;
     font-size: 0.6rem;
 }
@@ -39,8 +43,9 @@
     width: 16vw;
     background: rgba(242, 242, 242, 1);
     color: rgba(92, 92, 92, 1);
-    padding: 8px 4px;
+    padding: 6px 4px;
     border: none;
+    border-radius: 8px;
 }
 .account {
     display: flex;
@@ -63,16 +68,20 @@
 .sidebar-btns ul li {
     text-decoration: none;
     list-style-type: none;
-    font-size: 0.85rem;
-    background: #3b96e1;
-    padding: 6.5px 5px;
+    font-size: 0.8rem;
+
+    /* background: rgba(242, 242, 242, 1); */
+
+    padding: 8px 5px;
     margin-left: 0px;
     border-radius: 8px;
-    color: white;
+
     margin-bottom: 6px;
 }
-
 .sidebar-btns ul {
     list-style-type: none; /* Remove bullets */
     padding-left: 0; /* Remove default padding */
+}
+.logout-img {
+    margin-left: 10px;
 }

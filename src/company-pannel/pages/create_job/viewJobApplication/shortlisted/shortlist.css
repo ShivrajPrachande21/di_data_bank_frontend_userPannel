@@ -1,0 +1,14 @@
+.btn-addcomment {
+    margin: 0px auto;
+    width: 100%;
+    padding: 6px;
+    background: #3b96e1;
+    text-align: center;
+    color: white;
+}
+.custom-comment .modal-dialog {
+    width: 30%;
+}
+.star-rating {
+    width: 100%;
+}

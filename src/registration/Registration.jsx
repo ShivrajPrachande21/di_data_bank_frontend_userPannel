@@ -1,60 +1,50 @@
 import React, { useState } from 'react';
-
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './registration.css';
 import backgroundImage from '../assets/images/AdminLoginPanelBackGround.png';
-import {
-    Form,
-    Button,
-    InputGroup,
-    Spinner,
-    Alert,
-    Row,
-    Col
-} from 'react-bootstrap';
+import { Form, Button, InputGroup, Row, Col, Alert } from 'react-bootstrap';
 
-import './registration.css';
 import { useNavigate } from 'react-router-dom';
+import useRegistration from './useRegistration';
+
 const Registration = () => {
     const navigate = useNavigate();
-    const [registration, setregistration] = useState({
-        email: '',
-        password: '',
-        setPassword: '',
-        role: ''
-    });
+    const {
+        formData,
+        errors,
+        successMessage,
+        errorMessage,
+        isSubmitting,
+        handleChange,
+        handleSubmit,
+        handle_candidate_registration
+    } = useRegistration();
 
-    const [rememberMe, setRememberMe] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    const handleforgetpassword = () => {};
 
-    const hnadleNaviagte = () => {
+    const handleFormSubmit = async e => {
+        e.preventDefault();
+        if (formData.role === 'company') {
+            await handleSubmit(e);
+        } else {
+            // Navigate based on your requirements
+            await handle_candidate_registration(e);
+        }
+    };
+
+    const handleforgetpassword = () => {
+        // Handle forgot password logic
+    };
+
+    const handleNavigate = () => {
         navigate('/');
     };
 
-    const handleInputChange = e => {
-        const { name, value } = e.target;
-        setregistration(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        if (registration.role === 'company') {
-            navigate('/company-registration');
-        } else {
-            navigate('');
-        }
-        console.log('data', registration);
-    };
     return (
         <>
             <div className="main">
                 <div className="image">
-                    <img src={backgroundImage} alt="" />
+                    <img src={backgroundImage} alt="Background" />
                 </div>
                 <div className="FormDiv">
                     <div className="top">
@@ -64,7 +54,7 @@ const Registration = () => {
                         <p>Registration</p>
                     </div>
                     <div className="InputField">
-                        <Form onSubmit={handleSubmit} className="mt-4">
+                        <Form onSubmit={handleFormSubmit} className="mt-4">
                             <Form.Label className="custom-lable">
                                 Select
                             </Form.Label>
@@ -72,13 +62,15 @@ const Registration = () => {
                                 aria-label="Select an Option"
                                 name="role"
                                 className="custom-select"
-                                value={registration.role}
-                                onChange={handleInputChange}
+                                value={formData.role}
+                                onChange={handleChange} // Use handleChange from the custom hook
+                                required
                             >
                                 <option value="">Select</option>
-                                <option value="company">company</option>
-                                <option value="candidate">candidate</option>
+                                <option value="company">Company</option>
+                                <option value="candidate">Candidate</option>
                             </Form.Select>
+
                             <Form.Label className="custom-lable">
                                 Email address
                             </Form.Label>
@@ -86,11 +78,14 @@ const Registration = () => {
                                 className="custom-input"
                                 name="email"
                                 type="email"
-                                value={registration.email}
-                                onChange={handleInputChange}
+                                value={formData.email}
+                                onChange={handleChange} // Use handleChange from the hook
                                 placeholder="Enter your email"
                                 required
                             />
+                            {errors.email && (
+                                <p className="display-error">{errors.email}</p>
+                            )}
 
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label className="custom-lable">
@@ -100,12 +95,12 @@ const Registration = () => {
                                     <Form.Control
                                         className="custom-input"
                                         name="password"
-                                        value={registration.password}
-                                        onChange={handleInputChange}
+                                        value={formData.password}
+                                        onChange={handleChange}
                                         type={
                                             showPassword ? 'text' : 'password'
                                         }
-                                        placeholder=" Enter Password"
+                                        placeholder="Enter Password"
                                         required
                                     />
                                     <InputGroup.Text
@@ -121,22 +116,27 @@ const Registration = () => {
                                         )}
                                     </InputGroup.Text>
                                 </InputGroup>
-                                {/*Display error*/}
+                                {errors.password && (
+                                    <p className="display-error">
+                                        {errors.password}
+                                    </p>
+                                )}
                             </Form.Group>
-                            <Form.Group controlId="formBasicPassword">
+
+                            <Form.Group controlId="formBasicConfirmPassword">
                                 <Form.Label className="custom-lable">
-                                    Set Password
+                                    Confirm Password
                                 </Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         className="custom-input"
-                                        name="setPassword"
-                                        value={registration.setPassword}
-                                        onChange={handleInputChange}
+                                        name="setpassword"
+                                        value={formData.setpassword}
+                                        onChange={handleChange}
                                         type={
                                             showPassword ? 'text' : 'password'
                                         }
-                                        placeholder=" Enter Password"
+                                        placeholder="Confirm Password"
                                         required
                                     />
                                     <InputGroup.Text
@@ -152,32 +152,47 @@ const Registration = () => {
                                         )}
                                     </InputGroup.Text>
                                 </InputGroup>
-                                {/*Display error*/}
-                                <p className="display-error"> </p>
+                                {errors.setpassword && (
+                                    <p className="display-error">
+                                        {errors.setpassword}
+                                    </p>
+                                )}
                             </Form.Group>
 
                             <Row>
                                 <div className="check-custom">
-                                    {' '}
                                     <Form.Check type="checkbox" />
                                     <span>Accept</span>
                                     <p>Terms & Conditions</p>
                                 </div>
                             </Row>
-                            <Row className="px-2 ">
+
+                            <Row className="px-2">
                                 <Button
                                     type="submit"
                                     className="mt-1 register no-hover-effect"
+                                    disabled={isSubmitting} // Disable button while submitting
                                 >
-                                    Register
-                                    {/* {isAuthenticated ? 'loading...' : 'Log in'} */}
+                                    {isSubmitting
+                                        ? 'Registering...'
+                                        : 'Register'}
                                 </Button>
                             </Row>
+
+                            {errorMessage && (
+                                <Alert variant="danger">{errorMessage}</Alert>
+                            )}
+                            {successMessage && (
+                                <Alert variant="success">
+                                    {successMessage}
+                                </Alert>
+                            )}
+
                             <Row>
                                 <div className="already">
                                     <p>
                                         Already have an account?{' '}
-                                        <span onClick={hnadleNaviagte}>
+                                        <span onClick={handleNavigate}>
                                             Log in
                                         </span>
                                     </p>

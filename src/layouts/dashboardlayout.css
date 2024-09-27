@@ -9,6 +9,13 @@
     height: 100vh;
 }
 .left {
-    overflow: hidden;
-    height: 100vh;
+}
+.custom-scroll::-webkit-scrollbar {
+    width: 0; /* For Chrome, Safari, and Opera */
+}
+
+.custom-scroll {
+    scrollbar-width: none; /* For Firefox */
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }

@@ -1,12 +1,10 @@
 .ReportedJob {
-    height: 100vh;
     width: 100%;
     background: #f8f8f8;
     padding: 20px;
 }
 .subReportedjob {
-    height: 90vh;
-    padding: 10px;
+    padding: 14px;
     background: white;
     width: 84%;
     margin: 0px auto;
@@ -115,8 +113,8 @@ details {
 
 .subReportedjob_1 {
     overflow-y: auto;
-    height: 100vh;
-    max-height: 50vh;
+    height: 50vh;
+
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;
 }
@@ -139,13 +137,157 @@ details {
 }
 .topsection {
     width: 100%;
-    background: #febabc;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+.edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.edit img {
+    height: 24px;
+}
 .edit p {
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-top: 16px;
+    margin-right: 4px;
     color: #3b96e1;
+}
+.Overview p {
+    font-size: 11px;
+    color: #aeaeae;
+}
+.info {
+    width: 100%;
+    display: flex;
+
+    margin: 10px auto;
+    width: 84%;
+    gap: 12px;
+}
+.public {
+    width: 50%;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+.private {
+    width: 50%;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.cardsFlex {
+    display: flex;
+}
+
+.tables-right {
+    color: black;
+}
+.reviews {
+    width: 100%;
+    padding: 10px;
+
+    background: white;
+    margin: 10px auto;
+    width: 84%;
+    gap: 12px;
+}
+.profilecard {
+    width: 280px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8f8;
+    padding: 10px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.profilecard p {
+    font-size: 0.7rem;
+
+    font-family: Poppins;
+
+    font-weight: 400;
+    line-height: 18px;
+    text-align: center;
+}
+.profilimg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -40px;
+    border-radius: 50%;
+}
+.pCards {
+    display: flex;
+}
+.profilecard span {
+    font-family: Poppins;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+}
+.names {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+/* Custom styles for the modal */
+.custom-modal .modal-dialog {
+    max-width: 80%; /* Adjust the width as needed */
+}
+
+.custom-modal .modal-content {
+    height: 92vh; /* Adjust the height as needed */
+    border-radius: 8px; /* Optional: Add border radius */
+}
+
+.custom-modal .modal-header,
+.custom-modal .modal-body,
+.custom-modal .modal-footer {
+    padding: 20px; /* Optional: Adjust padding */
+}
+.rejection {
+    margin: 0px auto;
+    border-left: 3.96px solid red;
+    border-radius: 12px;
+    width: 84%;
+    background: white;
+    padding: 12px;
+}
+.status {
+    columns: #051f50;
+    font-weight: 500;
+}
+.profile-percentage {
+    display: flex;
+}
+.pro {
+    margin-top: -10px;
+    margin-left: 14px;
+}
+
+@media (max-width: 768px) {
+    .info {
+        flex-wrap: wrap;
+    }
+    .public {
+        width: 100%;
+    }
+    .private {
+        width: 100%;
+    }
 }

@@ -1,13 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import backgroundImage from '../../assets/images/AdminLoginPanelBackGround.png';
-
+import './companyLogin.css';
 import { useNavigate } from 'react-router-dom';
+import BaseUrl from '../../services/BaseUrl';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CompanyLogin = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+    const [responseOtp, setresponseOtp] = useState('');
+    const [DisplayOtp_input, setDisplayOtp_input] = useState(false);
     const [CompanyLogindata, setCompanydata] = useState({
         email: '',
         password: '',
@@ -40,27 +46,101 @@ const CompanyLogin = () => {
         }
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        const otpCode = otp.join('');
-        console.log('Entered OTP:', otpCode);
-        if (rememberMe) {
-            // Handle the "Remember Me" functionality
-            localStorage.setItem('email', registration.email);
-            localStorage.setItem('password', registration.password);
-        } else {
-            // Clear the stored email and password
-            localStorage.removeItem('email');
-            localStorage.removeItem('password');
-        }
-        // Handle OTP validation here (e.g., sending to an API)
-    };
     const handleInputChange = e => {
         const { name, value } = e.target;
         setCompanydata(prevState => ({
             ...prevState,
             [name]: value
         }));
+    };
+
+    const handleLogin = async logiData => {
+        console.log('lOGIN in COntext', logiData.email);
+        localStorage.setItem('email', logiData.email);
+        setLoading(true);
+        try {
+            // Replace with your login endpoint
+            const response = await axios.post(`${BaseUrl}company/login`, {
+                email: logiData.email, // Sending email directly
+                password: logiData.password
+            });
+
+            // Simulate successful response
+            if (response.status === 200) {
+                const company_otp = response?.data?.companyOTP;
+                const Candidate_token = response?.data?.CandidateToken;
+
+                if (company_otp && !Candidate_token) {
+                    setDisplayOtp_input(true);
+
+                    setresponseOtp(company_otp);
+                    toast.success(response?.data?.message);
+                } else if (Candidate_token) {
+                    navigate('/candidate-dashboard');
+                    toast.success(response?.data?.message);
+                }
+
+                console.log('OTP response', company_otp);
+                // navigate('/main');
+
+                clearStates();
+                // Navigate to dashboard or any other page
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.error;
+            toast.error(errorMessage);
+            setLoading(false);
+        }
+    };
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const otpCode = otp.join('');
+        console.log('Entered OTP:', otpCode);
+
+        await handleLogin(CompanyLogindata);
+        if (rememberMe) {
+            // Handle the "Remember Me" functionality
+            // localStorage.setItem('email', registration.email);
+            localStorage.setItem('password', registration.password);
+        } else {
+            // Clear the stored email and password
+            // localStorage.removeItem('email');
+            localStorage.removeItem('password');
+        }
+        // Handle OTP validation here (e.g., sending to an API)
+    };
+
+    const handle_Verify_otp = async e => {
+        e.preventDefault();
+        if (CompanyLogindata.otp === responseOtp) {
+            try {
+                // Replace with actual OTP verification logic
+
+                // API call to verify OTP
+                const response = await axios.post(
+                    `${BaseUrl}company/login_otp`,
+                    {
+                        email: CompanyLogindata.email // Sending email directly
+                    }
+                );
+                const Company_token = response?.data?.companyToken;
+                localStorage.setItem('companyToken', Company_token);
+                if (response.status === 200) {
+                    // Navigate on success
+                    toast.success('Login successful!');
+                    navigate('/main');
+                    clearStates();
+                } else {
+                    toast.error('Unexpected response from server.');
+                }
+            } catch (error) {
+                // Handle and display any errors
+                console.error('Error verifying OTP:', error);
+            }
+        } else {
+            toast.error('OTP did not match!');
+        }
     };
 
     useEffect(() => {
@@ -81,10 +161,10 @@ const CompanyLogin = () => {
                 </div>
                 <div className="login-FormDiv">
                     <div className="loginHead">
-                        <p>Registration</p>
+                        <p>Log in</p>
                     </div>
                     <div className="login-InputField">
-                        <Form onSubmit={handleSubmit}>
+                        <Form>
                             <Row>
                                 <Col>
                                     <Form.Label className="custom-lable">
@@ -118,44 +198,51 @@ const CompanyLogin = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Row className="justify-content-center mt-2 mb-2">
-                                <Col xs={12}>
-                                    <p
-                                        style={{
-                                            textAlign: 'center',
-                                            fontSize: '0.76rem'
-                                        }}
-                                    >
-                                        Enter the OTP sent to number
-                                    </p>
-                                </Col>
-                                {otp.map((digit, index) => (
-                                    <Col key={index} xs={2}>
-                                        <Form.Control
-                                            type="text"
-                                            maxLength="1"
-                                            value={digit}
-                                            onChange={e =>
-                                                handleChange(e.target, index)
-                                            }
-                                            onKeyDown={e =>
-                                                handleKeyDown(e, index)
-                                            }
-                                            ref={el =>
-                                                (inputRefs.current[index] = el)
-                                            }
-                                            className="text-center otp-input"
+                            {DisplayOtp_input && (
+                                <Row className="justify-content-center mt-2 mb-2">
+                                    <Col xs={12}>
+                                        <p
                                             style={{
-                                                fontSize: '14px',
-                                                padding: '8px 8px',
                                                 textAlign: 'center',
-                                                width: '3.4vw'
+                                                fontSize: '0.76rem'
                                             }}
-                                        />
+                                        >
+                                            Enter the OTP sent to number
+                                        </p>
                                     </Col>
-                                ))}
-                            </Row>
-                            <Row>
+                                    {otp.map((digit, index) => (
+                                        <Col key={index} xs={2}>
+                                            <Form.Control
+                                                type="text"
+                                                maxLength="1"
+                                                value={digit}
+                                                onChange={e =>
+                                                    handleChange(
+                                                        e.target,
+                                                        index
+                                                    )
+                                                }
+                                                onKeyDown={e =>
+                                                    handleKeyDown(e, index)
+                                                }
+                                                ref={el =>
+                                                    (inputRefs.current[index] =
+                                                        el)
+                                                }
+                                                className="text-center otp-input"
+                                                style={{
+                                                    fontSize: '14px',
+                                                    padding: '8px 8px',
+                                                    textAlign: 'center',
+                                                    width: '3.4vw'
+                                                }}
+                                            />
+                                        </Col>
+                                    ))}
+                                </Row>
+                            )}
+
+                            <Row className="mt-2">
                                 <div className="login-check-custom">
                                     {' '}
                                     <div className="checkboxs">
@@ -168,20 +255,27 @@ const CompanyLogin = () => {
                                         />
                                         <span>Remember me</span>
                                     </div>
-                                    <p>Forgot Password?</p>
+                                    <p style={{ marginTop: '10px' }}>
+                                        Forgot Password?
+                                    </p>
                                 </div>
                             </Row>
-                            {/* <Button
-                                type="submit"
-                                variant="primary"
-                                className="mt-3"
-                            >
-                                Submit OTP
-                            </Button> */}
+
                             <Row className="mt-1">
-                                <div className="btn-div">
-                                    <button>Log in</button>
-                                </div>
+                                {DisplayOtp_input ? (
+                                    <div className="btn-div">
+                                        <button onClick={handle_Verify_otp}>
+                                            verify otp
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="btn-div">
+                                        <button onClick={handleSubmit}>
+                                            {' '}
+                                            {loading ? 'loading' : 'Log in'}
+                                        </button>
+                                    </div>
+                                )}
                             </Row>
                             <Row>
                                 <div className="login-already">

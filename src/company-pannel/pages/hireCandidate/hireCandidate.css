@@ -1,0 +1,175 @@
+.hire-candidate {
+    padding: 14px;
+}
+.ai-btn {
+    background: linear-gradient(
+        126.92deg,
+        #1c7ac7 2.12%,
+        #4d90c7 50.39%,
+        #1c7ac7 98.27%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.ai-btn a {
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    margin-left: 6px;
+}
+.Search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: -46px;
+    background: white;
+    border-radius: 10px;
+    padding: 3px 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.Search input {
+    background: white;
+    color: rgb(0, 0, 0);
+    outline: none;
+    border-radius: 8px;
+    border: 0px solid rgb(30, 7, 7);
+    padding: 4px;
+    width: 40%;
+}
+.Search select {
+    border-radius: 2px;
+    background: white;
+    border: 1px solid gray;
+    padding: 4px 6px;
+    width: 24%;
+}
+.serach-icon {
+    display: flex;
+}
+.serach-icon span {
+    font-size: 0.67rem;
+
+    color: #3b96e1;
+    font-weight: 500;
+}
+.serach-icon {
+    background: #b4ddff;
+    padding: 4px 12px;
+    border-radius: 8px;
+}
+.serach-result {
+}
+.serach-result p {
+    font-size: 0.76rem;
+
+    font-weight: 400;
+}
+.serach-result {
+    display: flex;
+    justify-content: space-between;
+}
+.download-btn {
+    width: 180px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.78rem;
+    margin-left: 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.download-btn img {
+    margin-right: 10px;
+    margin-top: -2.6px;
+}
+.download-btn span:hover {
+}
+.select-all {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: white;
+    border-radius: 10px;
+    padding: 2px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.download-email {
+    display: flex;
+}
+.select-all label {
+    font-size: 0.8rem;
+    margin-right: 10px;
+}
+.result-array {
+    display: flex;
+
+    justify-content: space-between;
+
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 58px;
+    padding: 10px 10px;
+    border-radius: 12px;
+}
+.result-img {
+    border-radius: 50px;
+    height: 36px;
+    width: 36px;
+    background: rgb(47, 124, 175);
+    margin-right: 10px;
+    overflow: hidden;
+}
+.result-img img {
+    width: 100%;
+    object-fit: cover;
+}
+.result-left {
+    display: flex;
+}
+.result-text h4 {
+    font-family: Poppins;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: left;
+    margin-top: -6px;
+}
+.result-text p {
+    font-family: Poppins;
+    font-size: 0.74rem;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: left;
+    color: #3b96e1;
+    margin-top: -12px;
+}
+.result-text img {
+    margin-left: 4px;
+}
+.search-by-location {
+    width: 120px;
+}
+.search-by-location input {
+    width: 100%;
+    margin-left: -20px;
+}
+.search-by-location input::placeholder {
+    font-size: 0.7rem;
+    padding: 4px;
+}
+
+.option-div {
+    width: 100px;
+    max-height: 700px;
+}
+.custom-select {
+    font-size: 0.9rem;
+}
+.custom-select::-webkit-scrollbar {
+    width: 8px; /* Adjust the width of the scrollbar */
+}

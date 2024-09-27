@@ -1,0 +1,120 @@
+.create-job-btn {
+    font-size: 0.8rem;
+    padding: 12px 8px;
+    background: #3b96e1;
+}
+.create-job-btn span {
+    font-size: 0.7rem;
+    margin-left: 4px;
+}
+.create-job-btn img {
+    margin-right: 4px;
+}
+.job-data {
+    margin-left: -20px;
+    display: flex;
+    background: #fff;
+    align-items: center;
+    border-radius: 12px;
+    width: 76%;
+}
+.job-created-data {
+    border-right: 1px solid #aeaeae;
+    margin-left: -14px;
+    width: 200px;
+}
+.job-created-data p {
+    margin-bottom: -2px;
+    text-align: center;
+
+    font-weight: 500;
+}
+.total-activ {
+    color: #aeaeae;
+    font-size: 0.64rem;
+    font-weight: 500;
+}
+.create-job {
+    padding: 10px;
+}
+.card-job {
+    width: 106%;
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-job button {
+    background: #b4ddff;
+    font-size: 0.7rem;
+    color: #3b96e1;
+}
+.card-table-span {
+    color: #aeaeae;
+    font-size: 0.85rem;
+}
+.div-bnt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+.job-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown {
+    position: absolute;
+    top: 30px;
+    right: -106px;
+    border-radius: 5px;
+
+    background-color: white; /* Ensure background color is set */
+    padding: 0px; /* Add padding for better appearance */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+    z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+.dropdown p {
+    list-style-type: none;
+    background: rgb(255, 255, 255);
+    font-size: 0.8rem;
+    padding: 8px 6px; /* Add consistent padding for the dropdown items */
+    color: #333; /* Change text color to improve contrast */
+    cursor: pointer;
+    margin: 0; /* Remove margin to avoid gaps between items */
+    border-bottom: 1px solid #aeaeae; /* Optional: Add a divider between items */
+}
+
+.dropdown p:hover {
+    background-color: #f0f0f0; /* Change background on hover */
+}
+
+.dropdown p:last-child {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+.custom-modal {
+    overflow-y: auto;
+}
+
+@media (max-width: 480px) {
+    .job-data {
+        flex-wrap: wrap;
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+    .job-created-data {
+        border-bottom: 1px solid #aeaeae;
+        border-right: none;
+        margin-left: 0px;
+        width: 200px;
+    }
+    .create-job {
+        margin: 0px auto;
+        padding: 20px 40px;
+    }
+}

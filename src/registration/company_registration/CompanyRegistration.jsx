@@ -1,9 +1,60 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import backgroundImage from '../../assets/images/AdminLoginPanelBackGround.png';
 import './company_r.css';
 import { useNavigate } from 'react-router-dom';
+import { useRegistration } from '../../context/RegistrationContex';
+import axios from 'axios';
+import BaseUrl from '../../services/BaseUrl';
+import { toast } from 'react-toastify';
 const CompanyRegistration = () => {
+    const { OTP, sendOtp, verifyOtp } = useRegistration();
+
+    const [company_reg, setcompany_reg] = useState({
+        email: '',
+        password: '',
+        company_name: '',
+        mobile: '',
+        location: '',
+        setpassword: ''
+    });
+
+    const handleInputChange = e => {
+        const { name, value } = e.target;
+        setcompany_reg(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const register_company = async () => {
+        try {
+            const response = await axios.post(
+                `${BaseUrl}company/reg`,
+                company_reg
+            );
+            if (response.status === 200) {
+                toast.success('companay registered Successfully !');
+                navigate('');
+            }
+        } catch (error) {
+            toast.error('Failed to register the company');
+        }
+    };
+
+    const retrieveFormData = () => {
+        const data = sessionStorage.getItem('formData');
+        if (data) {
+            return JSON.parse(data);
+        }
+
+        return { email: '', password: '', setpassword: '' }; // Default empty values
+    };
+
+    // Use it in your component
+    const [formData, setFormData] = useState(retrieveFormData());
+
+    console.log('form data in Company', formData);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const hnadleNaviagte = () => {
@@ -32,12 +83,31 @@ const CompanyRegistration = () => {
         }
     };
 
-    const handleSubmit = e => {
+    const handleFormSubmit = async e => {
         e.preventDefault();
         const otpCode = otp.join('');
         console.log('Entered OTP:', otpCode);
+        if (OTP === otpCode) {
+            await register_company();
+        }
         // Handle OTP validation here (e.g., sending to an API)
     };
+
+    const handle_otp = async () => {
+        await sendOtp(company_reg.mobile);
+    };
+
+    useEffect(() => {
+        retrieveFormData();
+        setcompany_reg(prevData => ({
+            ...prevData,
+            email: formData.email || '',
+            password: formData.password || '',
+            setpassword: formData.setpassword
+        }));
+    }, []);
+
+    console.log('foromData', company_reg);
     return (
         <>
             <div className="login-main">
@@ -49,17 +119,20 @@ const CompanyRegistration = () => {
                         <p>Registration</p>
                     </div>
                     <div className="login-InputField">
-                        <Form onSubmit={handleSubmit}>
+                        <Form onSubmit={handleFormSubmit}>
                             <Row>
                                 <Col>
                                     <Form.Label className="custom-lable">
-                                        Email
+                                        Company name
                                     </Form.Label>
                                     <Form.Control
                                         className="custom-input"
-                                        type="email"
+                                        type="text"
+                                        name="company_name"
                                         placeholder="Enter your email"
                                         required
+                                        value={company_reg.company_name}
+                                        onChange={handleInputChange}
                                     />
                                 </Col>
                             </Row>
@@ -71,8 +144,11 @@ const CompanyRegistration = () => {
                                     </Form.Label>
                                     <Form.Control
                                         className="custom-input"
-                                        type="text"
-                                        placeholder="Enter your email"
+                                        type="number"
+                                        name="mobile"
+                                        placeholder="Enter your mobile no"
+                                        value={company_reg.mobile}
+                                        onChange={handleInputChange}
                                         required
                                     />
                                 </Col>
@@ -80,6 +156,7 @@ const CompanyRegistration = () => {
                                     <Button
                                         variant="primary"
                                         className="send-otp"
+                                        onClick={handle_otp}
                                     >
                                         Get OTP
                                     </Button>
@@ -130,7 +207,10 @@ const CompanyRegistration = () => {
                                     <Form.Control
                                         className="custom-input"
                                         type="text"
-                                        placeholder="Enter your email"
+                                        name="location"
+                                        value={company_reg.location}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter location"
                                         required
                                     />
                                 </Col>
@@ -145,7 +225,7 @@ const CompanyRegistration = () => {
                             </Button> */}
                             <Row className="mt-3">
                                 <div className="btn-div">
-                                    <button>Register</button>
+                                    <button type="submit">Register</button>
                                 </div>
                                 <div className="btn-div-2">
                                     <button onClick={hnadleNaviagte}>

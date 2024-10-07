@@ -14,6 +14,7 @@ import ForgotPasswordProvider from './context/ForgotpasswordContext';
 import { HireCandidateProvider } from './context/HireCandidateContex';
 import { CreateJobProvider } from './context/CreateJobContext';
 import { SubscriptionProvider } from './context/SubscriptionContext';
+import { SupportProvider } from './context/SupportContext';
 function App() {
     const [count, setCount] = useState(0);
 
@@ -25,8 +26,10 @@ function App() {
                         <ForgotPasswordProvider>
                             <CreateJobProvider>
                                 <SubscriptionProvider>
-                                    <ToastContainer />
-                                    <RouterProvider router={router} />
+                                    <SupportProvider>
+                                        <ToastContainer />
+                                        <RouterProvider router={router} />
+                                    </SupportProvider>
                                 </SubscriptionProvider>
                             </CreateJobProvider>
                         </ForgotPasswordProvider>

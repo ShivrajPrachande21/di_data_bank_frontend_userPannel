@@ -1,16 +1,22 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 import './application.css';
 import View from '../../../../../assets/images/View.png';
 import { CreateJobContext } from '../../../../../context/CreateJobContext';
+import { useLocation } from 'react-router-dom';
 
 const Applications = () => {
-    const { viewJobDesciptionData, applicantData, shortlis_candidate } =
-        useContext(CreateJobContext);
+    const {
+        viewJobDesciptionData,
+        applicantData,
+        shortlis_candidate,
+        fetch_Job_applicant
+    } = useContext(CreateJobContext);
     const [modalShow, setModalShow] = useState(false);
     const [currentResume, setCurrentResume] = useState('');
     const [user_id, setUser_id] = useState('');
 
+    const location = useLocation();
     const handleClose = () => {
         setModalShow(false);
         setCurrentResume('');
@@ -45,6 +51,10 @@ const Applications = () => {
         await shortlis_candidate(user_id);
         setModalVisible(false); // Close the modal after confirming
     };
+
+    useEffect(() => {
+        fetch_Job_applicant();
+    }, [location]);
     return (
         <>
             <Modal show={isModalVisible} onHide={showModal} centered>

@@ -9,12 +9,13 @@ import { CreateJobContext } from '../../../../../context/CreateJobContext';
 import { toast, useToast } from 'react-toastify';
 import axios from 'axios';
 import BaseUrl from '../../../../../services/BaseUrl';
+import { useNavigate } from 'react-router-dom';
 const JobOffered = () => {
+    const navigate = useNavigate();
     const { job_offered, get_job_offered } = useContext(CreateJobContext);
     const [job_offerede, setjob_offered] = useState(job_offered);
-    console.log('khad', job_offered);
     const fileref = useRef();
-    const [file, setFilename] = useState('');
+    const [file, setFilename] = useState(null);
     const handle_submit = e => {
         e.preventDefault();
         alert('jhajag');
@@ -24,8 +25,7 @@ const JobOffered = () => {
     };
     const handle_file_change = e => {
         const fileData = e.target.files[0];
-        setFilename(fileData ? fileData?.name : '');
-        console.log('', fileData);
+        setFilename(fileData);
     };
 
     const formatDate = dateString => {
@@ -49,6 +49,10 @@ const JobOffered = () => {
                     }
                 }
             );
+            if (response.status == 200 || 201) {
+                toast.success('Offer letter uploaded successfully');
+                navigate('/main/view-job-application/shortlisted');
+            }
         } catch (error) {
             toast.error('file uplaod error');
         }
@@ -278,7 +282,9 @@ const JobOffered = () => {
                             className="upload-job-offer"
                             onClick={handle_file_upload}
                         >
-                            <span>{file ? file : 'browres from file'}</span>
+                            <span>
+                                {file ? file?.name : 'browres from file'}
+                            </span>
                         </button>
                         <input
                             ref={fileref}

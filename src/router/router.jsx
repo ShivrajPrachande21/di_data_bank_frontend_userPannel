@@ -25,6 +25,16 @@ import JobOffered from '../company-pannel/pages/create_job/viewJobApplication/jo
 import Hired from '../company-pannel/pages/create_job/viewJobApplication/hired/Hired';
 import Subscriptions from '../company-pannel/pages/subscriptionPlan/subscriptions/Subscriptions';
 import Topups from '../company-pannel/pages/subscriptionPlan/topups/Topups';
+import Chatpage from '../company-pannel/pages/support/chatPage/Chatpage';
+import Renew from '../company-pannel/pages/subscriptionPlan/renNew/Renew';
+import EarlyBuy from '../company-pannel/pages/subscriptionPlan/earlyBuy/EarlyBuy';
+import SearchJob from '../candidate-pannel/pages/searchJob/SearchJob';
+import AppliedJob from '../candidate-pannel/pages/appliedJob/AppliedJob';
+import CandidateSubscription from '../candidate-pannel/pages/candidateSubscrition/CandidateSubscription';
+import CandidateTransaction from '../candidate-pannel/pages/candidateTransaction/CandidateTransaction';
+import CandidateSupport from '../candidate-pannel/pages/candidateSupport/CandidateSupport';
+import ViewJobDescription from '../candidate-pannel/pages/searchJob/viewJobDescription/ViewJobDescription';
+import ViewCompanyDetails from '../candidate-pannel/pages/searchJob/viewCompanyDetails/ViewCompanyDetails';
 
 const router = createBrowserRouter([
     {
@@ -118,6 +128,14 @@ const router = createBrowserRouter([
                     {
                         path: 'top-ups',
                         element: <Topups />
+                    },
+                    {
+                        path: 'renew',
+                        element: <Renew />
+                    },
+                    {
+                        path: 'early-buy',
+                        element: <EarlyBuy />
                     }
                 ]
             },
@@ -133,7 +151,41 @@ const router = createBrowserRouter([
     },
     {
         path: 'candidate-dashboard',
-        element: <Candidate_Dashboard />
+        element: <Candidate_Dashboard />,
+        children: [
+            {
+                path: 'search-job',
+                element: <SearchJob />
+            },
+            {
+                path: 'view-job-details',
+                element: <ViewJobDescription />
+            },
+            {
+                path: 'applied-job',
+                element: <AppliedJob />
+            },
+            {
+                path: 'subscription-candidate',
+                element: <CandidateSubscription />
+            },
+            {
+                path: 'transaction-candidate',
+                element: <CandidateTransaction />
+            },
+            {
+                path: 'support-candidate',
+                element: <CandidateSupport />
+            }
+        ]
+    },
+    {
+        path: 'view-company-desc',
+        element: <ViewCompanyDetails />
+    },
+    {
+        path: 'chat-page/:id',
+        element: <Chatpage />
     }
 ]);
 

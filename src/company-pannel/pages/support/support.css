@@ -1,0 +1,40 @@
+.support {
+    padding: 10px;
+    background: white;
+    height: 100vh;
+    margin-left: 10px;
+}
+.search-bar-suport {
+    background: #f8f8f8;
+    border-radius: 8px;
+    height: 36px;
+    width: 88%;
+    margin-left: 14px;
+    box-shadow: 0px 0px 4px 0px rgb(229, 229, 229);
+}
+.search-bar-suport input {
+    background: rgba(255, 255, 255, 0);
+    color: black;
+    outline: none;
+    border: none;
+    padding: 5px;
+    width: 90%;
+    margin-left: 4px;
+}
+.search-bar-suport img {
+    margin-left: 6px;
+}
+.Search-support {
+    display: flex;
+}
+.add-issue-btn {
+    width: 120px;
+    background: #3b96e1;
+}
+.showchat-div {
+}
+
+.add-modal-width {
+    max-width: 700px; /* Set max width */
+    width: 350px; /* Adjust width */
+}

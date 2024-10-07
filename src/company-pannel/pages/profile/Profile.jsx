@@ -4,10 +4,11 @@ import arrow_back from '../../../assets/images/arrow_back.png';
 import { Accordion, Col, Row, Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import BaseUrl from '../../../services/BaseUrl';
 
 import CompanyOnboardManul from '../../../assets/images/CompanyOnboardManul.png';
 import Verified from '../../../assets/images/Verified.png';
-
+import avatar from '../../../assets/images/avatar.png';
 import './profile.css';
 import { useNavigate } from 'react-router-dom';
 import useProfileData from '../../../hooks/company_dashboard/useProfiledata';
@@ -18,26 +19,30 @@ import ProfileComplete from '../../../components/dynamicProgress/ProfileComplete
 
 const Profile = () => {
     const { profileData, loading, error } = useProfileData();
-    const { hideForm, lgShow, setLgShow, smShow, setSmShow } =
-        EditprofileData();
+    const { hideForm, lgShow, setLgShow } = EditprofileData();
+    const rating = profileData?.updatedData?.Candidate_Feed_Back[0]?.rating;
 
-    console.log('lg', smShow);
-    const handleClose = () => setLgShow(false);
+    const handleClose = () => setLgShow(prev => !prev);
 
-    console.log('ProfileData', profileData);
     const navigate = useNavigate();
     const navigateProfile = () => {
         navigate(-1);
     };
 
     const navigate_Edit = () => {
-        setLgShow(true);
+        setLgShow(prev => !prev);
     };
-    useEffect(() => {
-        if (hideForm) {
-            navigate_Edit;
-        }
-    });
+
+    console.log('profileData?.updatedData?.profileUrl', profileData);
+    const bindUrlOrPath = url => {
+        let cleanBaseUrl = BaseUrl.replace(/\/api\b/, '');
+        let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${url.replace(
+            /\\/g,
+            '/'
+        )}`;
+
+        return temp.replace(/([^:]\/)\/+/g, '$1');
+    };
     return (
         <>
             <div className="ReportedJob">
@@ -86,13 +91,34 @@ const Profile = () => {
                     </Row>
                     <Row>
                         <Col xs={2}>
-                            <img src="" alt="" width="20px" />
+                            <div
+                                className="div-img"
+                                style={{
+                                    width: '40%',
+                                    background: '#AEAEAE',
+                                    overflow: 'hidden',
+                                    borderRadius: '50px',
+                                    marginTop: '-6px',
+                                    height: '60px'
+                                }}
+                            >
+                                <img
+                                    src={
+                                        profileData?.updatedData?.profileUrl ||
+                                        ''
+                                    }
+                                    alt=""
+                                    width="100%"
+                                    height="100%"
+                                />
+                            </div>
                         </Col>
                         <Col xs={10}>
                             <div
                                 style={{
                                     display: 'flex',
-                                    justifyContent: 'space-between'
+                                    justifyContent: 'space-between',
+                                    marginLeft: '-90px'
                                 }}
                             >
                                 <div className="profilediv">
@@ -112,6 +138,29 @@ const Profile = () => {
                                     >
                                         {profileData?.updatedData?.industry}
                                     </h4>
+                                    <div
+                                        className="star-rating "
+                                        style={{ marginTop: '-10px' }}
+                                    >
+                                        {[1, 2, 3, 4, 5].map(star => (
+                                            <span
+                                                key={star}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    color:
+                                                        star <= rating
+                                                            ? '#ffc107'
+                                                            : '#e4e5e9',
+                                                    fontSize: '1.5rem'
+                                                }}
+                                                onClick={() =>
+                                                    handleRating(star)
+                                                }
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
                                 <div className="divice-loged-in">
                                     <p
@@ -131,12 +180,12 @@ const Profile = () => {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="mt-3">
                         <Col>
                             <span
                                 style={{
                                     marginRight: '20px',
-                                    fontWeight: '500'
+                                    fontWeight: '400'
                                 }}
                             >
                                 Overview
@@ -201,8 +250,10 @@ const Profile = () => {
                             <div className="cards">
                                 <div className="tables">
                                     <p>Email:</p>
-                                    <p>Mobile No.:</p>
+                                    <p style={{ width: '140px' }}>Mobile No:</p>
+                                    <br></br>
                                     <p>GSTIN:</p>
+                                    <br></br>
                                     <p style={{ marginTop: '30px' }}>PAN:</p>
                                 </div>
                             </div>
@@ -213,29 +264,38 @@ const Profile = () => {
                                         {profileData?.updatedData?.email}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.mobile}
+                                        {profileData?.updatedData?.mobile}
                                     </p>
-                                    <p style={{ color: '#051F50' }}>
+                                    <br></br>
+                                    {/* <p style={{ color: '#051F50' }}>
                                         {profileData?.updatedData?.GST}
-                                    </p>
+                                    </p> */}
                                     <img
                                         src={
                                             profileData?.updatedData
                                                 ?.GSTImageUrl
                                         }
                                         alt=""
-                                        style={{ marginTop: '-20px' }}
+                                        style={{
+                                            marginTop: '-20px',
+                                            width: '30%'
+                                        }}
                                     />
-                                    <p style={{ color: '#051F50' }}>
+                                    {/* <p style={{ color: '#051F50' }}>
                                         {profileData?.updatedData?.PAN}
-                                    </p>
+                                    </p> */}
+                                    <br></br>
+                                    <br></br>
                                     <img
                                         src={
                                             profileData?.updatedData
                                                 ?.PANImageUrl
                                         }
                                         alt=""
-                                        style={{ marginTop: '-20px' }}
+                                        style={{
+                                            marginTop: '-20px',
+                                            width: '30%'
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -252,71 +312,58 @@ const Profile = () => {
                             display: 'flex',
                             justifyContent: 'space-around',
                             alignItems: 'center',
-                            flexWrap: 'wrap'
+                            flexWrap: 'nowrap', // Prevent wrapping so it scrolls horizontally
+                            overflowX: 'auto', // Enable horizontal scrolling
+                            overflowY: 'hidden', // Prevent vertical scrolling (optional)
+                            width: '100%'
                         }}
                     >
-                        <div className="pCards">
-                            <div className="profilecard">
-                                <div className="profilimg">
-                                    <img src={profileimg} alt="" width="40px" />
+                        {profileData?.updatedData?.Candidate_Feed_Back?.map(
+                            (item, index) => (
+                                <div className="pCards" key={index}>
+                                    <div className="profilecard">
+                                        <div className="profilimg">
+                                            <img
+                                                src={bindUrlOrPath(
+                                                    item?.candidate_id?.profile
+                                                )}
+                                                alt={profileimg}
+                                                width="50px"
+                                                height="50px"
+                                                style={{
+                                                    'border-radius': '50%'
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="names">
+                                            <span>
+                                                {
+                                                    item?.candidate_id
+                                                        ?.basic_details?.name
+                                                }
+                                            </span>
+                                            <img
+                                                src={Verified}
+                                                alt=""
+                                                width="24px"
+                                            />
+                                        </div>
+                                        <p>{item?.Feedback}</p>
+                                    </div>
                                 </div>
-                                <div className="names">
-                                    <span>Jack Scott</span>
-                                    <img src={Verified} alt="" width="24px" />
-                                </div>
-                                <p>
-                                    I recently interviewed at your IT company
-                                    and wanted to share my positive experience.
-                                    The interview process was well-organized,
-                                    and the team was friendly and professional.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="pCards">
-                            <div className="profilecard">
-                                <div className="profilimg">
-                                    <img src={profileimg} alt="" width="40px" />
-                                </div>
-                                <div className="names">
-                                    <span>Jack Scott</span>
-                                    <img src={Verified} alt="" width="24px" />
-                                </div>
-                                <p>
-                                    I recently interviewed at your IT company
-                                    and wanted to share my positive experience.
-                                    The interview process was well-organized,
-                                    and the team was friendly and professional.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="pCards">
-                            <div className="profilecard">
-                                <div className="profilimg">
-                                    <img src={profileimg} alt="" width="40px" />
-                                </div>
-                                <div className="names">
-                                    <span>Jack Scott</span>
-                                    <img src={Verified} alt="" width="24px" />
-                                </div>
-                                <p>
-                                    I recently interviewed at your IT company
-                                    and wanted to share my positive experience.
-                                    The interview process was well-organized,
-                                    and the team was friendly and professional.
-                                </p>
-                            </div>
-                        </div>
+                            )
+                        )}
                     </div>
                 </div>
             </div>
 
             <Modal
                 show={lgShow}
-                onHide={handleClose}
+                onHide={() => setLgShow(prev => !prev)}
                 aria-labelledby="example-modal-sizes-title-lg"
                 className="custom-modal" // Apply the custom class here
             >
-                <EditCompanyProfile />
+                <EditCompanyProfile setLgShow={setLgShow} />
             </Modal>
         </>
     );

@@ -116,7 +116,16 @@
     display: flex;
     justify-content: center;
 }
-
+.view-images {
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    background: #3b96e1;
+    overflow: hidden;
+}
+.view-images img {
+    width: 100%;
+}
 @media (max-width: 768px) {
     .info-view {
         flex-wrap: wrap;

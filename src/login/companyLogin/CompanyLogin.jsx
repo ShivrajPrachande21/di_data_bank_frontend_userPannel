@@ -69,7 +69,9 @@ const CompanyLogin = () => {
             if (response.status === 200) {
                 const company_otp = response?.data?.companyOTP;
                 const Candidate_token = response?.data?.CandidateToken;
-
+                // set Candidate token to local storage
+                localStorage.setItem('Candidate_token', Candidate_token);
+                localStorage.setItem('render', 'candidate');
                 if (company_otp && !Candidate_token) {
                     setDisplayOtp_input(true);
 
@@ -126,6 +128,7 @@ const CompanyLogin = () => {
                 );
                 const Company_token = response?.data?.companyToken;
                 localStorage.setItem('companyToken', Company_token);
+                localStorage.setItem('render', 'company');
                 if (response.status === 200) {
                     // Navigate on success
                     toast.success('Login successful!');

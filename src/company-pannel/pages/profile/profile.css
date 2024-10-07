@@ -208,7 +208,7 @@ details {
     background: #f8f8f8;
     padding: 10px;
     position: relative;
-    margin-top: 10px;
+    margin-top: 44px;
 }
 
 .profilecard p {
@@ -278,6 +278,22 @@ details {
 .pro {
     margin-top: -10px;
     margin-left: 14px;
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.align::-webkit-scrollbar {
+    height: 6px; /* Horizontal scrollbar height */
+}
+
+.align::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4); /* Scrollbar color */
+    border-radius: 10px; /* Rounded edges */
+}
+
+/* For Firefox */
+.align {
+    scrollbar-width: thin; /* Makes scrollbar thinner */
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent; /* Scrollbar color */
 }
 
 @media (max-width: 768px) {

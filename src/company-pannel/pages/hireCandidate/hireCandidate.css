@@ -46,6 +46,7 @@
 }
 .serach-icon {
     display: flex;
+    cursor: pointer;
 }
 .serach-icon span {
     font-size: 0.67rem;
@@ -172,4 +173,12 @@
 }
 .custom-select::-webkit-scrollbar {
     width: 8px; /* Adjust the width of the scrollbar */
+}
+/* tooltip */
+.tooltip.custom-tooltip {
+    background-color: green !important; /* Change background color to green */
+    color: white !important; /* Change text color to white */
+    border-radius: 4px; /* Optional: Add border radius */
+    padding: 5px; /* Optional: Add padding */
+    font-size: 14px; /* Optional: Set font size */
 }

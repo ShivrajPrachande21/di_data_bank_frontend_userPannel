@@ -1,7 +1,12 @@
 import React from 'react';
+import CandidateLayouts from '../candidateLayouts/CandidateLayouts';
 
 const Candidate_Dashboard = () => {
-    return <div>Candidate_Dashboard</div>;
+    return (
+        <div>
+            <CandidateLayouts />
+        </div>
+    );
 };
 
 export default Candidate_Dashboard;

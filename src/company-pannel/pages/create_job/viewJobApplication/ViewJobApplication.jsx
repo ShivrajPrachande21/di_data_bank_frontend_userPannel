@@ -50,6 +50,10 @@ const ViewJobApplication = () => {
                                                 alternet
                                             }
                                             alt=""
+                                            style={{
+                                                width: '100%',
+                                                height: '100%'
+                                            }}
                                         />{' '}
                                     </div>
                                     <div className="view-top-content">
@@ -209,7 +213,7 @@ const ViewJobApplication = () => {
                                     }}
                                     onClick={() => navigate('application')}
                                 >
-                                    41 Applications
+                                    Applications
                                 </Button>
                             </li>
                             <li>
@@ -230,7 +234,7 @@ const ViewJobApplication = () => {
                                 {' '}
                                 <Button
                                     size="sm"
-                                    onClick={() => navigate('job-offred')}
+                                    // onClick={() => navigate('job-offred')}
                                     style={{
                                         background: 'none',
                                         color: '#AEAEAE',
@@ -249,7 +253,7 @@ const ViewJobApplication = () => {
                                         color: '#AEAEAE',
                                         border: 'none'
                                     }}
-                                    onClick={() => navigate('hired')}
+                                    // onClick={() => navigate('hired')}
                                 >
                                     Hired
                                 </Button>

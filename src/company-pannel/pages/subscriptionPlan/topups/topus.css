@@ -10,10 +10,10 @@
         #4d90c7 50.39%,
         #1c7ac7 98.27%
     );
-    width: 21vw;
+    width: 290px;
 }
 
-.top {
+.top-1 {
     width: 90%;
     margin: 80px auto;
     padding: 10px;
@@ -21,7 +21,8 @@
 .sub-card {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 .add-topup-btn {
     position: absolute;
@@ -43,12 +44,26 @@
     font-size: 1.8rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin-top: -4px;
 }
 .ruppee-topup span {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 300;
+    text-align: left;
 }
 .ruppee-topup img {
     margin-top: -4px;
+}
+@media only screen and (max-width: 768px) {
+    .sub-card {
+        margin-top: 140px;
+    }
+    .top1 {
+        margin-bottom: 20px;
+    }
+    .ruppee-topup span {
+        font-size: 0.8rem;
+        font-weight: 300;
+        text-align: left;
+    }
 }

@@ -1,12 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './editprofile.css';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Cross from '../../../../assets/images/Cross.png';
 import EditprofileData from '../../../../hooks/company_dashboard/EditprofileData';
 import clarity_note_edit_line from '../../../../assets/images/clarity_note-edit-line.png';
-const EditCompanyProfile = () => {
+const EditCompanyProfile = ({ setLgShow }) => {
     const [Gstimage, setGstImage] = useState(null);
     const [Panimage, setPAnImage] = useState(null);
+    const [GST, Setgst] = useState(null);
+    const [PAN, Setpan] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
     const [ProfileImageURL, setProfileImageURL] = useState('');
     const [preview, setPreview] = useState(null);
@@ -29,7 +31,15 @@ const EditCompanyProfile = () => {
         contact_No: '',
         headQuater_add: ''
     });
-    const { submitForm, loading, error, success } = EditprofileData();
+    const {
+        lgShow,
+
+        submitForm,
+        loading,
+        error,
+        success,
+        FormDataFunction
+    } = EditprofileData();
     const handleFieldChange = e => {
         const { name, value } = e.target;
 
@@ -47,6 +57,7 @@ const EditCompanyProfile = () => {
 
         if (file) {
             const imageUrl = URL.createObjectURL(file);
+            Setgst(file);
             setGstImage(imageUrl);
             setProfileImageURL(imageUrl);
         } else {
@@ -63,6 +74,7 @@ const EditCompanyProfile = () => {
         const file = event.target.files[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
+            Setpan(file);
             setPAnImage(imageUrl);
         }
     };
@@ -76,15 +88,27 @@ const EditCompanyProfile = () => {
         const file = event.target.files[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
-            setProfileImage(imageUrl); // Store the file in state
+            setProfileImage(file); // Store the file in state
             setPreview(URL.createObjectURL(file)); // Generate a URL for the image preview
         }
     };
     const handleSubmit = async e => {
+        setLgShow(false);
+        console.log('lgShow', lgShow);
         e.preventDefault();
+
         // Call the submitForm function from the custom hook
-        await submitForm(formFields, Gstimage, Panimage, profileImage);
+        await submitForm(formFields, GST, PAN, profileImage);
     };
+
+    const fromData = async () => {
+        const res = await FormDataFunction();
+        setFormFields(res);
+    };
+
+    useEffect(() => {
+        fromData();
+    }, []);
 
     console.log('Formdata', formFields);
     return (

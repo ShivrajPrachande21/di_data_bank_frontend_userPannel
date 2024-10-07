@@ -3,6 +3,7 @@ import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
+import { Prev } from 'react-bootstrap/esm/PageItem';
 
 // Custom hook to handle form submission
 const EditprofileData = url => {
@@ -57,11 +58,12 @@ const EditprofileData = url => {
             );
 
             if (response.status === 200) {
-                toast.success('Profile edited successfully');
-                setHideForm(true);
-                setSmShow(false);
+                toast.success('Profile updated successfully');
+                setLgShow(prev => !prev);
+
                 setSuccess(response.data);
-                setLgShow(false);
+
+                return response.status;
             }
 
             // Handle success
@@ -76,6 +78,32 @@ const EditprofileData = url => {
         }
     };
 
+    const FormDataFunction = async () => {
+        try {
+            const token = localStorage.getItem('companyToken');
+            const decodedToken = jwtDecode(token);
+            const companyId = decodedToken?._id;
+            if (!companyId) {
+                throw new Error('Invalid token');
+            }
+            const response = await axios.get(
+                `${BaseUrl}company/get/saved/data/${companyId}`,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                return response?.data;
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.error);
+            setError(error);
+        }
+    };
+
     return {
         submitForm,
         loading,
@@ -85,7 +113,8 @@ const EditprofileData = url => {
         lgShow,
         setLgShow,
         smShow,
-        setSmShow
+        setSmShow,
+        FormDataFunction
     };
 };
 

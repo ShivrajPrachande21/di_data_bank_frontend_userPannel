@@ -37,7 +37,7 @@ const Login = () => {
                 toast.success('Login successful!');
                 clearStates();
                 // Navigate to dashboard or any other page
-                navigate('main');
+                navigate('main/dashboard');
             }
         } catch (error) {
             const errorMessage = error.response?.data?.error;

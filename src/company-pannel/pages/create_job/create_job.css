@@ -64,18 +64,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 1;
 }
-
+.job-head h6 {
+}
 .dropdown {
     position: absolute;
     top: 30px;
-    right: -106px;
+    right: -14px;
     border-radius: 5px;
-
+    cursor: pointer;
     background-color: white; /* Ensure background color is set */
     padding: 0px; /* Add padding for better appearance */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
-    z-index: 1000; /* Ensure it's on top of other elements */
+    z-index: 10; /* Ensure it's on top of other elements */
 }
 
 .dropdown p {
@@ -99,6 +101,39 @@
 
 .custom-modal {
     overflow-y: auto;
+}
+.promote-job {
+    width: 260px;
+    height: 140px;
+    background: rgb(255, 255, 255);
+    border-radius: 12px;
+    padding: 16px;
+}
+.promote-job p {
+    margin-top: 14px;
+    font-size: 0.96rem;
+    font-weight: 400;
+    text-align: center;
+}
+.promote-btn-div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.promote-btn-div button {
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+    background: #3b96e1;
+    font-weight: 700;
+}
+.custom-modal-promote .modal-dialog {
+    width: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Makes sure the modal takes up full viewport height */
 }
 
 @media (max-width: 480px) {

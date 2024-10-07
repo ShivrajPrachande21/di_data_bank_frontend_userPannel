@@ -3,10 +3,13 @@ import axios from 'axios';
 import BaseUrl from '../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
+import io from 'socket.io-client';
+const socket = io('http://localhost:4000');
 
 // Create the context
 export const HireCandidateContext = createContext();
 
+let id;
 // Context Provider component
 export const HireCandidateProvider = ({ children }) => {
     const [appliedcandidate, setappliedcandidate] = useState([]);
@@ -18,6 +21,24 @@ export const HireCandidateProvider = ({ children }) => {
     const [resume_loading, setResume_loading] = useState(null);
 
     const [candidate_detials, set_candidate_detials] = useState(null);
+
+    // states for notification
+    const [show, setShow] = useState(null);
+    const [showHire, SetShowHire] = useState(null);
+    const [candidateNoti, SetcandidateNoti] = useState(null);
+    console.log('harshendra canidai notification', candidateNoti);
+    const handleCloseHire = id => {
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const companyId = decodedToken?._id;
+        socket.emit('viewnotification', companyId, id);
+        socket.on('view', data => {
+            SetcandidateNoti(data);
+        });
+        setShow(false);
+        SetShowHire(prev => !prev);
+    };
+    console.log('showHire', showHire);
 
     // subsciption data
     const [Subscription_Data, setSubscription_Data] = useState({});
@@ -143,6 +164,7 @@ export const HireCandidateProvider = ({ children }) => {
     };
 
     const get_Candidate_detials = async id => {
+        id = id;
         const token = localStorage.getItem('companyToken');
         const decodedToken = jwtDecode(token);
         const companyId = decodedToken?._id;
@@ -172,6 +194,7 @@ export const HireCandidateProvider = ({ children }) => {
             );
             if (response.status == 200) {
                 setappliedcandidate(response?.data);
+                get_subscription_details();
                 setSearchLoading(false);
                 // toast.success('jhgaj');
             }
@@ -181,11 +204,13 @@ export const HireCandidateProvider = ({ children }) => {
     };
     // Fetch candidates when the component mounts
     console.log('Status', Subscription_Data);
+
     useEffect(() => {
         fetchCandidates();
         get_subscription_details();
     }, []);
 
+    console.log('id', id);
     return (
         <HireCandidateContext.Provider
             value={{
@@ -200,7 +225,13 @@ export const HireCandidateProvider = ({ children }) => {
                 handleDownload_Resume,
                 get_Candidate_detials,
                 Search_bye_keyWord,
-                SearchLoading
+                SearchLoading,
+                handleCloseHire,
+                showHire,
+                SetShowHire,
+                candidateNoti,
+                show,
+                setShow
             }}
         >
             {children}

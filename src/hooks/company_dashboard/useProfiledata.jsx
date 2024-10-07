@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
+import { useLocation } from 'react-router-dom';
 
 // Adjust the path based on your project structure
 
 const useProfileData = userId => {
+    const locate = useLocation();
     const [profileData, setProfileData] = useState(null); // Profile data state
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
@@ -34,7 +36,7 @@ const useProfileData = userId => {
             }
         };
         fetchProfileData();
-    }, []); // Re-run the effect if userId changes
+    }, [locate]); // Re-run the effect if userId changes
 
     // Return data, loading, and error for consumption in components
     return { profileData, loading, error };

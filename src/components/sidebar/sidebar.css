@@ -85,3 +85,19 @@
 .logout-img {
     margin-left: 10px;
 }
+
+.noti {
+    position: absolute;
+    right: 0px;
+    top: 2px;
+
+    height: 8px;
+    width: 8px;
+    border-radius: 50px;
+    background: rgb(255, 126, 34);
+}
+.noti p {
+    margin-top: -0.4px;
+    text-align: center;
+    font-size: 0.4rem;
+}

@@ -1,0 +1,86 @@
+.searchJob input {
+    width: 96%;
+    padding: 6px;
+    background: transparent;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+}
+.searchJob input:focus {
+    outline: 1px solid #3b96e1; /* Adds a blue outline on focus */
+}
+
+.searchJob {
+    margin-top: -10px;
+    padding: 10px;
+}
+
+.searchJob input::placeholder {
+    color: rgb(169, 168, 168); /* Customize the color of the placeholder */
+    opacity: 1; /* Ensure the opacity is 100% for visibility */
+}
+.search-select {
+    height: 30px;
+    border: 1.3px solid #3b96e1;
+    border-radius: 8px;
+    padding: 1px;
+    margin-right: 10px;
+}
+.search-select select {
+    font-size: 12px;
+    width: 100%;
+    height: 98%;
+    padding: 4px;
+    border: none;
+    /* Blue border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: white; /* White background */
+    color: black; /* Text color */
+    outline: none; /* Remove default outline */
+    color: #3b96e1;
+}
+
+/* .search-select select:focus {
+    border-color: darkblue; /* Darker blue border on focus */
+
+.search-select select.expanded {
+    max-height: 150px; /* Max height on open */
+}
+
+.search-select select.collapsed {
+    max-height: 50px; /* Reduced height after click */
+}
+
+.search-select select option {
+    height: 20px; /* Adjust line height to control option height */
+    padding: 5px; /* Adjust padding to reduce the height */
+}
+.search-job-card-div {
+    padding: 4px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.search {
+    width: 240px;
+}
+.search-job-top {
+    display: flex;
+    margin-left: -2px;
+    position: relative;
+}
+.search-job-top h6 {
+    margin-left: 8px;
+    font-weight: 500;
+}
+.green-thik {
+    position: absolute;
+    right: 0px;
+}
+.search-job-bnt {
+    display: flex;
+    justify-content: space-between;
+}
+.search-job-bnt button {
+    width: 48%;
+}

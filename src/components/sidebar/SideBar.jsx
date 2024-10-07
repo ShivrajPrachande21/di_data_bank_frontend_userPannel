@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import io from 'socket.io-client';
+const socket = io('http://localhost:4000');
 import './sidebar.css';
 import bellgray from '../../assets/images/bellgray.png';
 import logoutButton from '../../assets/images/logoutButton.png';
 import iconamoon_arrowd from '../../assets/images/iconamoon_arrowd.png';
 import dashboard from '../../assets/images/AdminPanelmenu iconblue.png';
 import dashboardwhite from '../../assets/images/AdminPanelmenu icons.png';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Col, Offcanvas, Row } from 'react-bootstrap';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import ProfileComplete from '../dynamicProgress/ProfileComplete';
 import hirecandidate from '../../assets/images/hirecandidate.png';
@@ -14,13 +17,24 @@ import SubscriptionIcon from '../../assets/images/SubscriptionIcon.png';
 import transactions from '../../assets/images/transactions.png';
 import SupportIcon from '../../assets/images/SupportIcon.png';
 import createjobblue from '../../assets/images/createjobblue.png';
+import SearchJob from '../../assets/images/SearchJob.png';
 import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
+import CompanyNotification from '../../company-pannel/pages/company_Notification/CompanyNotification';
+import { HireCandidateContext } from '../../context/HireCandidateContex';
+import HireCandidateNotification from '../../company-pannel/pages/company_Notification/HireCandidateNotification';
 const SideBar = () => {
+    const { handleCloseHire, showHire, SetShowHire, show, setShow } =
+        useContext(HireCandidateContext);
     const navigate = useNavigate();
     const [hidelogout, sethidelogout] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
+    const [candidateToken, setCandidateToken] = useState('');
+    console.log('candidtetoke', candidateToken);
+
+    const handleClose = () => setShow(prev => !prev);
+    const handleShow = () => setShow(prev => !prev);
 
     const toggleLogoout = () => {
         sethidelogout(prev => !prev);
@@ -42,6 +56,24 @@ const SideBar = () => {
                 navigate('/');
             }
         } catch (error) {}
+    };
+
+    // handle Logout Candidate
+    const handle_logOut_candidate = async () => {
+        // const email = localStorage.getItem('email');
+        // console.log(email);
+
+        navigate('/');
+        // try {
+        //     const response = await axios.post(`${BaseUrl}company/logout`, {
+        //         email
+        //     });
+        //     if (response.status === 200) {
+        //         localStorage.removeItem('Candidate_token');
+        //         localStorage.removeItem('');
+        //         navigate('/');
+        //     }
+        // } catch (error) {}
     };
 
     const sidebarButtons = [
@@ -67,7 +99,7 @@ const SideBar = () => {
             id: 4,
             label: 'Subscription Plans',
             icon: SubscriptionIcon,
-            link: 'subscription-plan'
+            link: 'subscription-plan/subscription'
         },
         {
             id: 5,
@@ -84,9 +116,99 @@ const SideBar = () => {
 
         // Add more buttons if needed
     ];
+
+    // Candidate oject to render based on login credentials
+    const sidebarButtonsCanditas = [
+        {
+            id: 1,
+            label: 'Search Jobs',
+            icon: SearchJob,
+            link: 'search-job'
+        },
+        {
+            id: 2,
+            label: 'Applied Jobs',
+            icon: SearchJob,
+            link: 'applied-job'
+        },
+
+        {
+            id: 3,
+            label: 'Subscription Plans',
+            icon: SubscriptionIcon,
+            link: 'subscription-candidate'
+        },
+        {
+            id: 4,
+            label: 'Transactions',
+            icon: transactions,
+            link: 'transaction-candidate'
+        },
+        {
+            id: 5,
+            label: 'Support',
+            icon: SupportIcon,
+            link: 'support-candidate'
+        }
+
+        // Add more buttons if needed
+    ];
     const navigateProfile = () => {
         navigate('/profile-page');
     };
+
+    //Notification count
+    const [notifications, setNotifications] = useState([]);
+    const [notiCount, SetCount] = useState(0);
+
+    useEffect(() => {
+        const render = localStorage.getItem('render');
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            const decodedToken = jwtDecode(token);
+            const company_id = decodedToken?._id;
+            socket.connect();
+
+            socket.emit('issuenotification', company_id);
+
+            socket.on('notification', newNotification => {
+                setNotifications(newNotification);
+            });
+
+            socket.emit('newCandidatenotification', company_id);
+
+            socket.on('candidatenotification', newNotification => {
+                SetCount(newNotification);
+                ///setNotifications(newNotification);
+            });
+
+            socket.on('disconnect', () => {
+                console.log('User disconnected');
+            });
+
+            return () => {
+                socket.off('notification');
+                socket.disconnect();
+            };
+        } else {
+            const token = localStorage.getItem('Candidate_token');
+            const decodedToken = jwtDecode(token);
+            const company_id = decodedToken?._id;
+        }
+    }, [show]);
+
+    useEffect(() => {
+        const render = localStorage.getItem('render');
+        if (render == 'candidate') {
+            const Candiatetoken = localStorage.getItem('Candidate_token');
+            console.log('Candiatetoken', Candiatetoken);
+            const decodedToken = jwtDecode(Candiatetoken);
+            const company_id = decodedToken?._id;
+            setCandidateToken(company_id);
+        } else {
+        }
+    }, []);
+
     return (
         <>
             <div className="MainSidebar">
@@ -105,8 +227,28 @@ const SideBar = () => {
                         }}
                         className="User-pannel"
                     >
-                        <h1>Super Panel</h1>
-                        <img src={bellgray} alt="" width="20px" />
+                        <h1>{candidateToken ? 'Candidate' : 'Company'}</h1>
+                        <div
+                            style={{ position: 'relative', cursor: 'pointer' }}
+                        >
+                            <img
+                                src={bellgray}
+                                alt=""
+                                width="20px"
+                                onClick={handleShow}
+                            />
+                            {notifications.length + notiCount.length == 0 ? (
+                                ''
+                            ) : (
+                                <div className="noti">
+                                    <p>
+                                        {' '}
+                                        {notifications.length +
+                                            notiCount.length}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
                     </Col>
                 </Row>
                 {/* Logout section */}
@@ -195,7 +337,11 @@ const SideBar = () => {
                                         justifyContent: 'center',
                                         paddingBottom: '10px'
                                     }}
-                                    onClick={handle_logOut}
+                                    onClick={
+                                        candidateToken
+                                            ? handle_logOut_candidate
+                                            : handle_logOut
+                                    }
                                 >
                                     <button
                                         className="logout-btn"
@@ -242,72 +388,155 @@ const SideBar = () => {
                                 padding: 0
                             }}
                         >
-                            {sidebarButtons.map(button => (
-                                <Link
-                                    to={button.link}
-                                    style={{
-                                        textDecoration: 'none',
-                                        color:
-                                            activeButton === button.id
-                                                ? 'white' // Active button text color
-                                                : hoveredButton === button.id
-                                                ? '#051F50' // Hovered button text color
-                                                : '#3b96e1'
-                                    }}
-                                >
-                                    <li
-                                        key={button.id}
-                                        // onMouseOver={e => {
-                                        //     e.currentTarget.style.backgroundColor =
-                                        //         '#fff'; // Change to any hover color
-                                        // }}
-                                        onClick={() =>
-                                            handleButtonClick(button.id)
-                                        }
-                                        onMouseOver={() =>
-                                            setHoveredButton(button.id)
-                                        } // Set hovered button
-                                        onMouseOut={() =>
-                                            setHoveredButton(null)
-                                        }
-                                        style={{
-                                            background:
-                                                activeButton === button.id
-                                                    ? '#3b96e1' // Active button background
-                                                    : hoveredButton ===
-                                                      button.id
-                                                    ? '#f0f0f0' // Hover background
-                                                    : 'white', // Default background
-                                            color:
-                                                activeButton === button.id
-                                                    ? 'white' // Active button text color
-                                                    : hoveredButton ===
-                                                      button.id
-                                                    ? '#051F50' // Hovered button text color
-                                                    : '#3b96e1',
-                                            transition:
-                                                'background-color 0.3s, color 0.3s'
-                                        }}
-                                    >
-                                        <img
-                                            src={button.icon}
-                                            alt=""
-                                            width="18px"
-                                            style={{
-                                                marginRight: '16px',
-                                                marginLeft: '10px',
-                                                marginTop: '-4px'
-                                            }}
-                                        />
+                            {candidateToken
+                                ? sidebarButtonsCanditas.map(button => (
+                                      <Link
+                                          to={button.link}
+                                          style={{
+                                              textDecoration: 'none',
+                                              color:
+                                                  activeButton === button.id
+                                                      ? 'white' // Active button text color
+                                                      : hoveredButton ===
+                                                        button.id
+                                                      ? '#051F50' // Hovered button text color
+                                                      : '#3b96e1'
+                                          }}
+                                      >
+                                          <li
+                                              key={button.id}
+                                              // onMouseOver={e => {
+                                              //     e.currentTarget.style.backgroundColor =
+                                              //         '#fff'; // Change to any hover color
+                                              // }}
+                                              onClick={() =>
+                                                  handleButtonClick(button.id)
+                                              }
+                                              onMouseOver={() =>
+                                                  setHoveredButton(button.id)
+                                              } // Set hovered button
+                                              onMouseOut={() =>
+                                                  setHoveredButton(null)
+                                              }
+                                              style={{
+                                                  background:
+                                                      activeButton === button.id
+                                                          ? '#3b96e1' // Active button background
+                                                          : hoveredButton ===
+                                                            button.id
+                                                          ? '#f0f0f0' // Hover background
+                                                          : 'white', // Default background
+                                                  color:
+                                                      activeButton === button.id
+                                                          ? 'white' // Active button text color
+                                                          : hoveredButton ===
+                                                            button.id
+                                                          ? '#051F50' // Hovered button text color
+                                                          : '#3b96e1',
+                                                  transition:
+                                                      'background-color 0.3s, color 0.3s'
+                                              }}
+                                          >
+                                              <img
+                                                  src={button.icon}
+                                                  alt=""
+                                                  width="18px"
+                                                  style={{
+                                                      marginRight: '16px',
+                                                      marginLeft: '10px',
+                                                      marginTop: '-4px'
+                                                  }}
+                                              />
 
-                                        {button.label}
-                                    </li>
-                                </Link>
-                            ))}
+                                              {button.label}
+                                          </li>
+                                      </Link>
+                                  ))
+                                : sidebarButtons.map(button => (
+                                      <Link
+                                          to={button.link}
+                                          style={{
+                                              textDecoration: 'none',
+                                              color:
+                                                  activeButton === button.id
+                                                      ? 'white' // Active button text color
+                                                      : hoveredButton ===
+                                                        button.id
+                                                      ? '#051F50' // Hovered button text color
+                                                      : '#3b96e1'
+                                          }}
+                                      >
+                                          <li
+                                              key={button.id}
+                                              // onMouseOver={e => {
+                                              //     e.currentTarget.style.backgroundColor =
+                                              //         '#fff'; // Change to any hover color
+                                              // }}
+                                              onClick={() =>
+                                                  handleButtonClick(button.id)
+                                              }
+                                              onMouseOver={() =>
+                                                  setHoveredButton(button.id)
+                                              } // Set hovered button
+                                              onMouseOut={() =>
+                                                  setHoveredButton(null)
+                                              }
+                                              style={{
+                                                  background:
+                                                      activeButton === button.id
+                                                          ? '#3b96e1' // Active button background
+                                                          : hoveredButton ===
+                                                            button.id
+                                                          ? '#f0f0f0' // Hover background
+                                                          : 'white', // Default background
+                                                  color:
+                                                      activeButton === button.id
+                                                          ? 'white' // Active button text color
+                                                          : hoveredButton ===
+                                                            button.id
+                                                          ? '#051F50' // Hovered button text color
+                                                          : '#3b96e1',
+                                                  transition:
+                                                      'background-color 0.3s, color 0.3s'
+                                              }}
+                                          >
+                                              <img
+                                                  src={button.icon}
+                                                  alt=""
+                                                  width="18px"
+                                                  style={{
+                                                      marginRight: '16px',
+                                                      marginLeft: '10px',
+                                                      marginTop: '-4px'
+                                                  }}
+                                              />
+
+                                              {button.label}
+                                          </li>
+                                      </Link>
+                                  ))}
                         </ul>
                     </div>
                 </div>
             </div>
+            <Offcanvas show={show} onHide={handleClose} placement="end">
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Notifications</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    {/* Company Notification  Component */}
+                    <CompanyNotification handleClose={handleClose} />
+                </Offcanvas.Body>
+            </Offcanvas>
+
+            {/* to view Hired Candidate Notification */}
+
+            <Offcanvas show={showHire} onHide={handleCloseHire} placement="top">
+                <Offcanvas.Body>
+                    {/* Hire Candidate Notificaton  Component*/}
+                    <HireCandidateNotification />
+                </Offcanvas.Body>
+            </Offcanvas>
         </>
     );
 };

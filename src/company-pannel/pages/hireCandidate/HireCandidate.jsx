@@ -1,5 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Col, Row, Form } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
+import {
+    Button,
+    Col,
+    Row,
+    Form,
+    OverlayTrigger,
+    Tooltip
+} from 'react-bootstrap';
 import { Link, useNavigate, Outlet } from 'react-router-dom';
 import Ai from '../../../assets/images/Ai.png';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
@@ -9,6 +17,7 @@ import './hireCandidate.css';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import profileimg from '../../../assets/images/profileimg.png';
 import { toast } from 'react-toastify';
+import BaseUrl from '../../../services/BaseUrl';
 
 const HireCandidate = () => {
     const {
@@ -156,6 +165,8 @@ const HireCandidate = () => {
         }
     };
 
+    const appliedcandidate_Count = appliedcandidate.length;
+
     useEffect(() => {
         fetchCandidates();
     }, []);
@@ -212,20 +223,25 @@ const HireCandidate = () => {
                     </div>
                     <p
                         style={{
-                            color: 'red',
                             fontSize: '0.7rem',
-                            marginLeft: '-30px'
+                            marginLeft: '-30px',
+                            textAlign: 'end',
+                            marginTop: '4px'
                         }}
                     >
-                        {fiedEmpty}
+                        ({' '}
+                        {Subscription_Data[0]?.search_limit == 'Unlimited'
+                            ? 'Unlimited'
+                            : Subscription_Data[0]?.search_limit}
+                        <span style={{ marginLeft: '3px' }}>Search left</span>)
                     </p>
                 </Col>
             </Row>
-            <Row className="mt-3">
+            <Row className="mt-1">
                 <Col xs={12}>
                     <div className="serach-result">
                         <div className="para">
-                            <p>Search Results : 563</p>
+                            <p>Search Results :{appliedcandidate_Count}</p>
                         </div>
 
                         <div className="download-email">
@@ -266,7 +282,7 @@ const HireCandidate = () => {
                                     {' '}
                                     {resume_loading
                                         ? 'downloading resume'
-                                        : ResumeButtonText}
+                                        : 'download resume'}
                                 </span>
                             </Button>
                             <div className="select-all">
@@ -298,8 +314,8 @@ const HireCandidate = () => {
                                 <div className="result-img">
                                     <img
                                         src={
-                                            candidate?.candidateDetails[0]
-                                                ?.profile || profileimg
+                                            appliedcandidate[0]
+                                                ?.candidateDetails?.profile
                                         }
                                         alt=""
                                     />
@@ -307,7 +323,32 @@ const HireCandidate = () => {
                                 <div className="result-text">
                                     <h4>
                                         {candidate?.basicDetails[0]?.name}
-                                        <img src={Verified} alt="" width="19" />
+
+                                        {/* Tool-tip componet */}
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <div
+                                                    style={{
+                                                        position: 'absolute',
+                                                        backgroundColor:
+                                                            'white',
+                                                        padding: '2px 10px',
+                                                        color: '#008000',
+                                                        borderRadius: 3,
+                                                        border: '1px solid #008000'
+                                                    }}
+                                                >
+                                                    verified
+                                                </div>
+                                            }
+                                        >
+                                            <img
+                                                src={Verified}
+                                                alt="Verified"
+                                                width="19"
+                                            />
+                                        </OverlayTrigger>
                                     </h4>
                                     <p>
                                         {

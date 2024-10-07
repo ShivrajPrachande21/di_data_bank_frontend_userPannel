@@ -3,7 +3,9 @@ import { Col, Container, Row } from 'react-bootstrap';
 import './dashboard.css';
 import carbon_send from '../../../assets/images/carbon_send.png';
 import useDashboardData from '../../../hooks/company_dashboard/useDashboardData';
-
+import CandidateHiredIcon from '../../../assets/images/CandidateHiredIcon.png';
+import CandidateOnboardedIcon from '../../../assets/images/CandidateOnboardedIcon.png';
+import building from '../../../assets/images/building.png';
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
         useDashboardData();
@@ -50,7 +52,7 @@ const Dashboard = () => {
                 <div class="row">
                     <div class="col-4  d-flex align-items-center justify-content-center dashboard-card  first-row ">
                         <div className="col-2 dashboard-div ">
-                            {/* <img src={building} width="40vw" alt="" /> */}
+                            <img src={building} width="40vw" alt="" />
                         </div>
                         <div className="col-10 ">
                             <p className="h1 dashboard-p">Total Job Created</p>
@@ -71,7 +73,11 @@ const Dashboard = () => {
                         }}
                     >
                         <div className="col-2 " style={{ marginRight: '8px' }}>
-                            {/* <img src={Cadidate} width="40vw" alt="" /> */}
+                            <img
+                                src={CandidateOnboardedIcon}
+                                width="40vw"
+                                alt=""
+                            />
                         </div>
                         <div className="col-10 ">
                             <p
@@ -109,7 +115,7 @@ const Dashboard = () => {
                         }}
                     >
                         <div className="col-2 " style={{ marginRight: '8px' }}>
-                            {/* <img src={JobCreatedIcon} width="40vw" alt="" /> */}
+                            <img src={CandidateHiredIcon} width="40vw" alt="" />
                         </div>
                         <div className="col-10 ">
                             <p
@@ -207,7 +213,7 @@ const Dashboard = () => {
                         </div>
                         <div className="col-12 ">
                             <p className="only">
-                                Only for Premium/Enterprise - UPGRADE
+                                {/* Only for Premium/Enterprise - UPGRADE */}
                             </p>
                             <p className="ends-on">
                                 {data?.subscriptionData[0]?.expiresAt}

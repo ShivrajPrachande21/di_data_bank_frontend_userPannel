@@ -13,7 +13,8 @@
     background: rgb(199, 194, 194);
     border-radius: 50px;
     margin-left: 34px;
-    position: relative;
+
+    overflow: hidden;
 }
 .custom-img {
     display: flex;
@@ -92,5 +93,7 @@
 .profileView {
     width: 100%;
     object-fit: cover;
-    margin-top: 10px;
+}
+.profileImageEdit {
+    position: relative;
 }

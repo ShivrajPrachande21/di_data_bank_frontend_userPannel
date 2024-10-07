@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 
 // Create the context
 export const CreateJobContext = createContext();
-
+let datapayment = {};
+let formData = {};
 // Create the provider component
 export const CreateJobProvider = ({ children }) => {
     const [lgShow, setLgShow] = useState(null);
@@ -18,6 +19,8 @@ export const CreateJobProvider = ({ children }) => {
     const [loading, setloading] = useState(null);
     const [Finalise_true, setFinalise_true] = useState(null);
     const [job_offered, setjob_offered] = useState(null);
+    const [paymentLoading, SetPropaymentLoading] = useState(null);
+    const [PromotpaymentData, SetPromotpaymentData] = useState('');
     const fetch_job_status = async () => {
         const token = localStorage.getItem('companyToken');
 
@@ -94,7 +97,7 @@ export const CreateJobProvider = ({ children }) => {
             );
             if (response?.status == 200) {
                 await fetch_Job_applicant();
-                toast.success('success');
+                toast.success('Candidate shortlisted successfully');
             }
         } catch (error) {}
     };
@@ -136,7 +139,7 @@ export const CreateJobProvider = ({ children }) => {
                 }
             );
             if (response.status == 200) {
-                toast.success('success');
+                toast.success('Feedback added successfully');
                 fetch_shortlist();
                 setloading(false);
             }
@@ -156,6 +159,95 @@ export const CreateJobProvider = ({ children }) => {
         } catch (error) {}
     };
 
+    const initiate_Payment = async createJobData => {
+        formData = createJobData;
+        SetPropaymentLoading(true);
+        try {
+            // Fetch token from localStorage and decode company ID
+            const token = localStorage.getItem('companyToken');
+            const decodedToken = jwtDecode(token);
+            const company_id = decodedToken?._id;
+
+            // Log the sub_id and companyId for debugging
+
+            const response = await axios.post(
+                `${BaseUrl}company/promote_job/payment`,
+                {
+                    company_id
+                }
+            );
+            if (response.status === 200) {
+                datapayment = response?.data;
+                SetPromotpaymentData(response?.data);
+
+                const paymentLink = response?.data?.paymentLink;
+                if (paymentLink) {
+                    window.open(paymentLink, '_blank');
+                }
+            }
+            RunPromote_verify();
+        } catch (error) {
+            console.error('Error during payment initiation:', error);
+        }
+    };
+
+    const fetch_Promaote_success_status = async () => {
+        try {
+            const token = localStorage.getItem('companyToken');
+            const decodedToken = jwtDecode(token);
+            const companyId = decodedToken?._id;
+
+            const response = await axios.post(
+                `${BaseUrl}company/promote_job/verify`,
+                {
+                    orderId: datapayment?.order_id,
+                    topupId: datapayment?.topupId,
+                    company_id: companyId,
+                    paymentMethod: 'cashfree',
+                    price: datapayment?.order_amount,
+                    job_title: formData?.job_title,
+                    No_openings: formData?.No_openings,
+                    industry: formData?.industry,
+                    salary: formData?.salary,
+                    experience: formData?.experience,
+                    location: formData?.location,
+                    country: formData?.country,
+                    job_type: formData?.job_type,
+                    work_type: formData?.job_type,
+                    skills: formData?.skills,
+                    education: formData?.education,
+                    description: formData?.description
+                }
+            );
+            if (response?.status === 200 || response?.status === 201) {
+                SetPropaymentLoading(false);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Error during verification:', error);
+        }
+    };
+
+    function RunPromote_verify() {
+        const toUpIntervelId = setInterval(() => {
+            fetch_Promaote_success_status();
+        }, 1000); // Call every 1 second
+
+        const ToptimeoutId = setTimeout(() => {
+            clearInterval(toUpIntervelId);
+        }, 1000 * 60 * 5);
+
+        // Watch paymentLoading and clear intervals if it's false
+        const checkPaymentLoading = setInterval(() => {
+            if (paymentLoading === false) {
+                clearInterval(toUpIntervelId); // Clear the interval for get_payment_success_status
+                clearTimeout(ToptimeoutId); // Clear the 5-minute timeout
+                clearInterval(checkPaymentLoading); // Clear this watcher interval
+            }
+        }, 500);
+    }
+
+    console.log('createJobData', formData);
     useEffect(() => {
         // Fetch all data when the component mounts
         const fetchData = async () => {
@@ -192,7 +284,10 @@ export const CreateJobProvider = ({ children }) => {
                 get_job_offered,
                 lgShow,
                 setLgShow,
-                fetch_hire_candidate
+                fetch_hire_candidate,
+                initiate_Payment,
+                paymentLoading,
+                fetch_Job_applicant
             }}
         >
             {children}

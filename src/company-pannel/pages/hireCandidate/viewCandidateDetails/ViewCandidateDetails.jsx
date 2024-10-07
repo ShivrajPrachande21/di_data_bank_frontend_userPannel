@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './viewCandidate_details.css';
 import arrow_back from '../../../../assets/images/arrow_back.png';
 import { Button, Col, Row } from 'react-bootstrap';
@@ -6,6 +6,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 import { HireCandidateContext } from '../../../../context/HireCandidateContex';
+import BaseUrl from '../../../../services/BaseUrl';
 const ViewCandidateDetails = () => {
     const { get_Candidate_detials, candidate_detials } =
         useContext(HireCandidateContext);
@@ -61,6 +62,17 @@ const ViewCandidateDetails = () => {
         document.body.removeChild(a);
     };
 
+    const bindUrlOrPath = url => {
+        let cleanBaseUrl = BaseUrl.replace(/\/api\b/, '');
+        let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${url.replace(
+            /\\/g,
+            '/'
+        )}`;
+
+        return temp.replace(/([^:]\/)\/+/g, '$1');
+    };
+
+    console.log(' p', candidate_detials?.profile);
     return (
         <>
             <div className="viewCandidate-main">
@@ -118,15 +130,18 @@ const ViewCandidateDetails = () => {
                             </p>
                         </div>
                     </Row>
-                    <Row style={{ marginTop: '-13px' }}>
+                    <Row style={{ marginTop: '-8px' }}>
                         <Col xs={1}>
-                            <img src="" alt="" width="20px" />
+                            <div className="view-images">
+                                <img src={candidate_detials?.profile} alt="" />
+                            </div>
                         </Col>
                         <Col xs={10}>
                             <div
                                 style={{
                                     display: 'flex',
-                                    justifyContent: 'space-between'
+                                    justifyContent: 'space-between',
+                                    marginTop: '10px'
                                 }}
                             >
                                 <div className="profilediv">

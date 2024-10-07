@@ -234,9 +234,7 @@ const Hired = () => {
                     <div className="job-offered-accpeted mt-2">
                         <div className="job-righttop">
                             <img
-                                src={
-                                    hiredCandidateData?.offerletterUrl || avatar
-                                }
+                                src={hiredCandidateData?.offerletterUrl}
                                 alt=""
                                 style={{ width: '100%' }}
                             />

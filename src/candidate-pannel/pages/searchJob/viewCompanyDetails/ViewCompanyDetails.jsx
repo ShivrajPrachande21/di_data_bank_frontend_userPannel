@@ -1,13 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row, Image, Button } from 'react-bootstrap';
 import ep_back from '../../../../assets/images/ep_back.png';
 import avatar from '../../../../assets/images/avatar.png';
 import './viewCompanyDesc.css';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import BaseUrl from '../../../../services/BaseUrl';
+
 const ViewCompanyDetails = () => {
-    const rating = 3;
+    const { id } = useParams();
+    const [companyDetails, setcompanyDetails] = useState(null);
+
+    const rating = companyDetails?.averageRating;
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleNavigate = data => {
+        if (data === 'details') {
+            navigate('details');
+        } else if (data === 'jobs') {
+            navigate('jobs');
+        } else {
+            navigate('reviews');
+        }
+    };
+
+    // Function to determine button style based on the path
+    const getButtonStyle = path => {
+        if (location.pathname.includes(path)) {
+            return {
+                background: '#3B96E1',
+                color: 'white',
+                border: '1px solid #3B96E1'
+            };
+        } else {
+            return {
+                background: '#B4DDFF',
+                color: '#3B96E1',
+                border: 'none'
+            };
+        }
+    };
+
+    const getCompanyDetails = async () => {
+        const companyId = id;
+        console.log('companyId', companyId);
+        try {
+            const response = await axios.get(
+                `${BaseUrl}candidate/company_details/${companyId}`
+            );
+
+            setcompanyDetails(response?.data);
+        } catch (error) {}
+    };
+    const bindUrlOrPath = url => {
+        let cleanBaseUrl = BaseUrl.replace(/\/api\b/, '');
+        let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${url.replace(
+            /\\/g,
+            '/'
+        )}`;
+
+        return temp.replace(/([^:]\/)\/+/g, '$1');
+    };
+    useEffect(() => {
+        getCompanyDetails();
+    }, []);
     return (
         <>
-            <div style={{ height: '100vh' }}>
+            <div style={{ height: '100vh', overflow: 'hidden' }}>
                 <div
                     className="view-company-descriptio"
                     style={{
@@ -17,28 +77,38 @@ const ViewCompanyDetails = () => {
                         padding: '10px'
                     }}
                 >
-                    <img src={ep_back} alt="" width="20px" />
+                    <img
+                        src={ep_back}
+                        alt=""
+                        width="20px"
+                        onClick={() =>
+                            navigate(`/candidate-dashboard/search-job`)
+                        }
+                    />
                     <div className="search-job-top company-desc">
                         <Image
-                            src={avatar}
+                            src={bindUrlOrPath(
+                                companyDetails?.updatedData['0']?.profile ||
+                                    'img'
+                            )}
                             roundedCircle
                             alt="Profile"
-                            width="70" // Set the desired width
-                            height="70" // Set the desired height
+                            width="70"
+                            height="70"
                         />
                         <h6>
-                            Amazon.com, Inc{' '}
+                            {companyDetails?.updatedData['0'].company_name}
+
                             <p
                                 style={{
                                     color: '#AEAEAE',
-
                                     fontSize: '0.7rem',
                                     cursor: 'pointer',
                                     marginTop: '5px',
                                     marginBottom: '4px'
                                 }}
                             >
-                                Software Development
+                                {companyDetails?.updatedData['0'].industry}{' '}
                             </p>
                             {[1, 2, 3, 4, 5].map(star => (
                                 <span
@@ -56,41 +126,38 @@ const ViewCompanyDetails = () => {
                                 </span>
                             ))}
                         </h6>
-                        {/* <div className="green-thik">
-                            <img src={flag} alt="" height="20px" />
-                        </div> */}
                     </div>
                     <p style={{ color: '#051F50' }}>Overview</p>
                     <div className="comapany-overview">
-                        <p>
-                            Amazon is guided by four principles: customer
-                            obsession rather than competitor focus, passion for
-                            invention, commitment to operational excellence, and
-                            long-term thinking. We are driven by the excitement
-                            of building technologies, inventing products, and
-                            providing services that change lives. We embrace new
-                            ways of doing things, make decisions quickly, and
-                            are not afraid to fail. We have the scope and
-                            capabilities of a large company, and the spirit and
-                            heart of a small one. Together, Amazonians research
-                            and develop new technologies from Amazon Web
-                            Services to Alexa on behalf of our customers:
-                            shoppers, sellers, content creators, and developers
-                            around the world. Our mission is to be Earth's most
-                            customer-centric company. Our actions, goals,
-                            projects, programs, and inventions begin and end
-                            with the customer top of mind. You'll also hear us
-                            say that at Amazon, it's always "Day 1."​ What do we
-                            mean? That our approach remains the same as it was
-                            on Amazon's very first day - to make smart, fast
-                            decisions, stay nimble, invent, and focus on
-                            delighting our customers.
-                        </p>
+                        <p>{companyDetails?.updatedData['0']?.overView}</p>
                     </div>
+                    <div className="company-bnt mt-2">
+                        <Button
+                            size="sm"
+                            style={getButtonStyle('details')}
+                            onClick={() => handleNavigate('details')}
+                        >
+                            Details
+                        </Button>
+                        <Button
+                            size="sm"
+                            style={getButtonStyle('jobs')}
+                            onClick={() => handleNavigate('jobs')}
+                        >
+                            Jobs
+                        </Button>
+                        <Button
+                            size="sm"
+                            style={getButtonStyle('reviews')}
+                            onClick={() => handleNavigate('reviews')}
+                        >
+                            Reviews
+                        </Button>
+                    </div>
+                    <Outlet />
                 </div>
             </div>
         </>
     );
 };
-
 export default ViewCompanyDetails;

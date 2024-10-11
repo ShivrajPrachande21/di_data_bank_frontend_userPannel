@@ -1,34 +1,86 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Button, Col, Row, Image } from 'react-bootstrap';
 import './searchjob.css';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import avatar from '../../../assets/images/avatar.png';
 import Verified from '../../../assets/images/Verified.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SearchJobContext } from '../../../context/candidateContext/SearchJobContext';
+import BaseUrl from '../../../services/BaseUrl';
+import axios from 'axios';
 const SearchJob = () => {
+    const locate = useLocation();
+    const {
+        data,
+        fetch_search_job,
+        applyTo_job,
+        save_job,
+        hasMore,
+        loadMoreJobs
+    } = useContext(SearchJobContext);
+    // console.log('data', data);
+
     const navigate = useNavigate();
-    const handleNavigate = () => {
-        navigate('/candidate-dashboard/view-job-details');
+    const handleNavigate = id => {
+        navigate(`/candidate-dashboard/view-job-details/${id}`);
     };
+    //
+    const formatDate = dateString => {
+        const options = { day: '2-digit' };
+        return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
+    };
+    // Image Bind Method
+    const bindUrlOrPath = url => {
+        let cleanBaseUrl = BaseUrl.replace(/\/api\b/, '');
+        let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${url.replace(
+            /\\/g,
+            '/'
+        )}`;
+
+        return temp.replace(/([^:]\/)\/+/g, '$1');
+    };
+
+    // function for Apply job
+    const ApplyTOJob = id => {
+        applyTo_job(id);
+    };
+
+    // function to Save Jobs
+    const SavedJobs = id => {
+        save_job(id);
+    };
+
+    useEffect(() => {
+        fetch_search_job();
+    }, [locate]);
     return (
         <>
             <div className="searchJob">
+                <Col
+                    xs={9}
+                    style={{
+                        background: 'white',
+                        borderRadius: '12px',
+                        boxShadow: ' 0px 0px 1px #3B96E1',
+                        position: 'fixed',
+                        width: '78%',
+                        zIndex: '10'
+                    }}
+                >
+                    <input
+                        type="text"
+                        placeholder="Search Jobs (Search by Job profile, Company, Experience, Location, Skills, Qualification)"
+                    />
+                    <img
+                        src={SearchIcon}
+                        alt=""
+                        width="20px"
+                        style={{ cursor: 'pointer' }}
+                    />
+                </Col>
+
                 <Row>
-                    <Col
-                        style={{
-                            background: 'white',
-                            borderRadius: '12px',
-                            boxShadow: ' 0px 0px 1px #3B96E1'
-                        }}
-                    >
-                        <input
-                            type="text"
-                            placeholder="Search Jobs (Search by Job profile, Company, Experience, Location, Skills, Qualification)"
-                        />
-                        <img src={SearchIcon} alt="" width="20px" />
-                    </Col>
-                </Row>
-                <Row className="mt-2">
                     <Col className="d-flex">
                         <div class="search-select">
                             <select>
@@ -99,44 +151,58 @@ const SearchJob = () => {
                         </div>
                     </Col>
                 </Row>
-                <Row className="mt-2">
+                <p className="searchresult">Search Result:{data?.length}</p>
+                <Row>
                     <div className="search-job-card-div">
-                        <Col xs={12} sm={6} md={4} lg={3} className="mb-3">
-                            <div
-                                className="card-job search"
-                                onClick={() => handleNavigate()}
-                            >
-                                <div className="search-job-top">
+                        {data?.map((item, index) => (
+                            <div className="card-job search">
+                                <div
+                                    className="search-job-top"
+                                    onClick={() => handleNavigate(item?._id)}
+                                >
                                     <Image
-                                        src={avatar}
+                                        src={bindUrlOrPath(
+                                            item?.company_details?.profile
+                                        )}
                                         roundedCircle
                                         alt="Profile"
                                         width="40" // Set the desired width
                                         height="40" // Set the desired height
                                     />
                                     <h6>
-                                        UI UX Designer{' '}
+                                        {item?.job_title}{' '}
                                         <p
                                             style={{
                                                 color: '#3B96E1',
 
-                                                fontSize: '0.8rem'
+                                                fontSize: '0.76rem'
                                             }}
                                         >
-                                            Amazon
+                                            {
+                                                item?.company_details
+                                                    ?.company_name
+                                            }
                                         </p>
                                     </h6>
                                     <div className="green-thik">
-                                        <img
-                                            src={Verified}
-                                            alt=""
-                                            height="20px"
-                                        />
+                                        {item?.company_details?.verified_batch
+                                            .length > 0 ? (
+                                            <img
+                                                src={Verified}
+                                                alt=""
+                                                height="20px"
+                                            />
+                                        ) : null}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <table style={{ cursor: 'pointer' }}>
+                                    <table
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() =>
+                                            handleNavigate(item?._id)
+                                        }
+                                    >
                                         <tr>
                                             <th></th>
                                             <th></th>
@@ -154,7 +220,7 @@ const SearchJob = () => {
                                             <td>
                                                 {' '}
                                                 <span className="card-table-span">
-                                                    Years
+                                                    {item?.experience} Years
                                                 </span>
                                             </td>
                                         </tr>
@@ -170,7 +236,9 @@ const SearchJob = () => {
                                             </td>
                                             <td>
                                                 {' '}
-                                                <span className="card-table-span"></span>
+                                                <span className="card-table-span">
+                                                    {item?.location}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -186,7 +254,7 @@ const SearchJob = () => {
                                             <td>
                                                 {' '}
                                                 <span className="card-table-span">
-                                                    LPA
+                                                    {item?.salary} LPA
                                                 </span>
                                             </td>
                                         </tr>
@@ -202,7 +270,9 @@ const SearchJob = () => {
                                             </td>
                                             <td>
                                                 {' '}
-                                                <span className="card-table-span"></span>
+                                                <span className="card-table-span">
+                                                    {item?.education}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -218,7 +288,30 @@ const SearchJob = () => {
                                             <td>
                                                 {' '}
                                                 <span className="card-table-span">
+                                                    {formatDate(
+                                                        item?.createdDate
+                                                    )}{' '}
                                                     days ago
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                style={{
+                                                    paddingRight: '30px'
+                                                }}
+                                            >
+                                                <span className="card-table-span">
+                                                    Applicants:
+                                                </span>{' '}
+                                            </td>
+                                            <td>
+                                                {' '}
+                                                <span className="card-table-span">
+                                                    {
+                                                        item?.applied_candidates
+                                                            ?.length
+                                                    }
                                                 </span>
                                             </td>
                                         </tr>
@@ -234,6 +327,7 @@ const SearchJob = () => {
                                                 color: '#3B96E1',
                                                 border: '1px solid #3B96E1'
                                             }}
+                                            onClick={() => SavedJobs(item?._id)}
                                         >
                                             Save
                                         </Button>
@@ -245,13 +339,16 @@ const SearchJob = () => {
 
                                                 border: 'none'
                                             }}
+                                            onClick={() =>
+                                                ApplyTOJob(item?._id)
+                                            }
                                         >
                                             Apply
                                         </Button>
                                     </div>
                                 </div>
                             </div>
-                        </Col>
+                        ))}
                     </div>
                 </Row>
             </div>

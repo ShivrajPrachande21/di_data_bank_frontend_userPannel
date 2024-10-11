@@ -15,6 +15,8 @@ import { HireCandidateProvider } from './context/HireCandidateContex';
 import { CreateJobProvider } from './context/CreateJobContext';
 import { SubscriptionProvider } from './context/SubscriptionContext';
 import { SupportProvider } from './context/SupportContext';
+import { SearchJobProvider } from './context/candidateContext/SearchJobContext';
+import { AppliedJobProvider } from './context/candidateContext/AppliedJobContext';
 function App() {
     const [count, setCount] = useState(0);
 
@@ -27,8 +29,14 @@ function App() {
                             <CreateJobProvider>
                                 <SubscriptionProvider>
                                     <SupportProvider>
-                                        <ToastContainer />
-                                        <RouterProvider router={router} />
+                                        <SearchJobProvider>
+                                            <AppliedJobProvider>
+                                                <ToastContainer />
+                                                <RouterProvider
+                                                    router={router}
+                                                />
+                                            </AppliedJobProvider>
+                                        </SearchJobProvider>
                                     </SupportProvider>
                                 </SubscriptionProvider>
                             </CreateJobProvider>

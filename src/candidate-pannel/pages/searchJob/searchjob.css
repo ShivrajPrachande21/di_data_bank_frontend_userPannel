@@ -12,7 +12,7 @@
 }
 
 .searchJob {
-    margin-top: -10px;
+    margin-top: -8px;
     padding: 10px;
 }
 
@@ -26,6 +26,7 @@
     border-radius: 8px;
     padding: 1px;
     margin-right: 10px;
+    margin-top: 44px;
 }
 .search-select select {
     font-size: 12px;
@@ -57,12 +58,17 @@
     padding: 5px; /* Adjust padding to reduce the height */
 }
 .search-job-card-div {
-    padding: 4px;
+    padding: 6px;
     display: flex;
     flex-wrap: wrap;
+    margin-top: -18px;
+    gap: 10px;
+    margin-left: 8px;
 }
 .search {
     width: 240px;
+    margin-bottom: 4px;
+    padding: 10px;
 }
 .search-job-top {
     display: flex;
@@ -70,8 +76,13 @@
     position: relative;
 }
 .search-job-top h6 {
-    margin-left: 8px;
+    font-size: 0.8rem;
+    margin-left: 6px;
     font-weight: 500;
+    margin-top: 4px;
+}
+.search-job-top h6 p {
+    margin-top: 2px;
 }
 .green-thik {
     position: absolute;
@@ -83,4 +94,13 @@
 }
 .search-job-bnt button {
     width: 48%;
+}
+
+.searchresult {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    font-family: Poppins;
+
+    font-weight: 400;
+    line-height: 18px;
 }

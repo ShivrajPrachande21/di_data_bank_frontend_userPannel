@@ -35,6 +35,12 @@ import CandidateTransaction from '../candidate-pannel/pages/candidateTransaction
 import CandidateSupport from '../candidate-pannel/pages/candidateSupport/CandidateSupport';
 import ViewJobDescription from '../candidate-pannel/pages/searchJob/viewJobDescription/ViewJobDescription';
 import ViewCompanyDetails from '../candidate-pannel/pages/searchJob/viewCompanyDetails/ViewCompanyDetails';
+import Job from '../candidate-pannel/pages/searchJob/viewCompanyDetails/job/Job';
+import Reviews from '../candidate-pannel/pages/searchJob/viewCompanyDetails/reviews/Reviews';
+import Details from '../candidate-pannel/pages/searchJob/viewCompanyDetails/details/Details';
+import AppliedJobs from '../candidate-pannel/pages/appliedJob/appliedJobs/AppliedJobs';
+import SavedJobs from '../candidate-pannel/pages/appliedJob/savedJobs/SavedJobs';
+import ViewAppliedJobDetails from '../candidate-pannel/pages/appliedJob/viewAppliedJobDetails/ViewAppliedJobDetails';
 
 const router = createBrowserRouter([
     {
@@ -158,12 +164,26 @@ const router = createBrowserRouter([
                 element: <SearchJob />
             },
             {
-                path: 'view-job-details',
+                path: 'view-job-details/:id',
                 element: <ViewJobDescription />
             },
             {
                 path: 'applied-job',
-                element: <AppliedJob />
+                element: <AppliedJob />,
+                children: [
+                    {
+                        path: 'applied-jobs',
+                        element: <AppliedJobs />
+                    },
+                    {
+                        path: 'saved-jobs',
+                        element: <SavedJobs />
+                    }
+                ]
+            },
+            {
+                path: 'viewAppliedJobDetails/:id',
+                element: <ViewAppliedJobDetails />
             },
             {
                 path: 'subscription-candidate',
@@ -180,8 +200,22 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: 'view-company-desc',
-        element: <ViewCompanyDetails />
+        path: 'view-company-desc/:id',
+        element: <ViewCompanyDetails />,
+        children: [
+            {
+                path: 'details',
+                element: <Details />
+            },
+            {
+                path: 'jobs',
+                element: <Job />
+            },
+            {
+                path: 'reviews',
+                element: <Reviews />
+            }
+        ]
     },
     {
         path: 'chat-page/:id',

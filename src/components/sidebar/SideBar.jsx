@@ -31,7 +31,6 @@ const SideBar = () => {
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
     const [candidateToken, setCandidateToken] = useState('');
-    console.log('candidtetoke', candidateToken);
 
     const handleClose = () => setShow(prev => !prev);
     const handleShow = () => setShow(prev => !prev);
@@ -129,7 +128,7 @@ const SideBar = () => {
             id: 2,
             label: 'Applied Jobs',
             icon: SearchJob,
-            link: 'applied-job'
+            link: 'applied-job/applied-jobs'
         },
 
         {
@@ -201,7 +200,7 @@ const SideBar = () => {
         const render = localStorage.getItem('render');
         if (render == 'candidate') {
             const Candiatetoken = localStorage.getItem('Candidate_token');
-            console.log('Candiatetoken', Candiatetoken);
+
             const decodedToken = jwtDecode(Candiatetoken);
             const company_id = decodedToken?._id;
             setCandidateToken(company_id);
@@ -391,6 +390,7 @@ const SideBar = () => {
                             {candidateToken
                                 ? sidebarButtonsCanditas.map(button => (
                                       <Link
+                                          key={button.id}
                                           to={button.link}
                                           style={{
                                               textDecoration: 'none',

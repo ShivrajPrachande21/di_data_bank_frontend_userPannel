@@ -22,7 +22,6 @@ export const SupportProvider = ({ children }) => {
         } catch (error) {}
     };
 
-    console.log('data', data);
     useEffect(() => {
         fetch_all_issue();
     }, []);

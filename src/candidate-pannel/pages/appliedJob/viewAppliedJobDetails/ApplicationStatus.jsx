@@ -6,6 +6,7 @@ import { Button, Row, Col, ProgressBar, Modal } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
+import harsh from '../../../../assets/images/harsh.pdf';
 const ApplicationStatus = () => {
     const { id } = useParams();
     const { reject_Offered_letter } = useContext(AppliedJobContext);
@@ -187,6 +188,33 @@ const ApplicationStatus = () => {
     const handleRejectOffer = async id => {
         reject_Offered_letter(id);
     };
+    const isGoogleDriveLink = url => {
+        return url && url.includes('drive.google.com');
+    };
+    // check whether the img or pdf
+    const [isValidFile, setIsValidFile] = useState(null);
+
+    // Function to check file type based on URL extension
+    const checkFileType = url => {
+        if (url == null) {
+            return;
+        } else {
+            const extension = url.split('.').pop().toLowerCase(); // Get file extension and convert to lowercase
+
+            // Check if the extension is jpg or pdf
+            if (extension === 'jpg' || extension === 'jpeg') {
+                setIsValidFile(true); // Set to true if it's jpg or pdf
+            } else if (extension === 'pdf') {
+                setIsValidFile(false); // Set to false otherwise
+            }
+        }
+    };
+
+    console.log('isValidFile', isValidFile);
+    useEffect(() => {
+        checkFileType(applicationState?.offerletterUrl);
+    }, []);
+
     return (
         <div>
             <Modal
@@ -206,11 +234,28 @@ const ApplicationStatus = () => {
                         borderRadius: '10px'
                     }}
                 >
-                    <img
-                        src={applicationState?.offerletterUrl}
-                        alt=""
-                        style={{ width: '110%' }}
-                    />
+                    {isValidFile ? (
+                        <img
+                            src={applicationState?.offerletterUrl}
+                            alt=""
+                            style={{ width: '110%' }}
+                        />
+                    ) : (
+                        <iframe
+                            src={applicationState?.offerletterUrl}
+                            // Ensure the src is set
+                            frameBorder="0"
+                            style={{
+                                width: '89%',
+                                height: '80vh',
+                                zoom: '1',
+                                margin: '0px 20px',
+                                width: '100%'
+                            }}
+                            title="Resume"
+                        ></iframe>
+                    )}
+
                     <button
                         className="donwload-btn-job"
                         onClick={() =>

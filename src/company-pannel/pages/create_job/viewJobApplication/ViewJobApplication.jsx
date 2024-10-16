@@ -5,7 +5,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import arrow_back from '../../../../assets/images/arrow_back.png';
 import Chevrondown from '../../../../assets/images/Chevrondown.png';
 import alternet from '../../../../assets/images/alternet.jpg';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { CreateJobContext } from '../../../../context/CreateJobContext';
 const ViewJobApplication = () => {
     const navigate = useNavigate();
@@ -19,6 +19,37 @@ const ViewJobApplication = () => {
     const formatDate = dateString => {
         const options = { day: '2-digit' };
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
+    };
+
+    const location = useLocation();
+
+    const handleNavigate = data => {
+        if (data === 'applications') {
+            navigate('applications');
+        } else if (data === 'job-offred') {
+            navigate('job-offred');
+        } else if (data === 'hired') {
+            navigate('hired');
+        } else {
+            navigate('shortlisted');
+        }
+    };
+
+    // Function to determine button style based on the path
+    const getButtonStyle = path => {
+        if (location.pathname.includes(path)) {
+            return {
+                background: '#3B96E1',
+                color: 'white',
+                border: '1px solid #3B96E1'
+            };
+        } else {
+            return {
+                background: 'white',
+                color: '#AEAEAE',
+                border: 'none'
+            };
+        }
     };
     useEffect(() => {
         SetDescription(viewJobDesciptionData?.description);
@@ -206,12 +237,10 @@ const ViewJobApplication = () => {
                             <li>
                                 <Button
                                     size="sm"
-                                    style={{
-                                        background: '#B4DDFF',
-                                        color: '#3B96E1',
-                                        border: 'none'
-                                    }}
-                                    onClick={() => navigate('application')}
+                                    style={getButtonStyle('applications')}
+                                    onClick={() =>
+                                        handleNavigate('applications')
+                                    }
                                 >
                                     Applications
                                 </Button>
@@ -220,12 +249,10 @@ const ViewJobApplication = () => {
                                 {' '}
                                 <Button
                                     size="sm"
-                                    style={{
-                                        background: 'none',
-                                        color: '#AEAEAE',
-                                        border: 'none'
-                                    }}
-                                    onClick={() => navigate('shortlisted')}
+                                    style={getButtonStyle('shortlisted')}
+                                    onClick={() =>
+                                        handleNavigate('shortlisted')
+                                    }
                                 >
                                     shortlisted
                                 </Button>
@@ -235,11 +262,8 @@ const ViewJobApplication = () => {
                                 <Button
                                     size="sm"
                                     // onClick={() => navigate('job-offred')}
-                                    style={{
-                                        background: 'none',
-                                        color: '#AEAEAE',
-                                        border: 'none'
-                                    }}
+                                    style={getButtonStyle('job-offred')}
+                                    onClick={() => handleNavigate('job-offred')}
                                 >
                                     Job Offered
                                 </Button>
@@ -248,12 +272,8 @@ const ViewJobApplication = () => {
                                 {' '}
                                 <Button
                                     size="sm"
-                                    style={{
-                                        background: 'none',
-                                        color: '#AEAEAE',
-                                        border: 'none'
-                                    }}
-                                    // onClick={() => navigate('hired')}
+                                    style={getButtonStyle('hired')}
+                                    onClick={() => handleNavigate('hired')}
                                 >
                                     Hired
                                 </Button>

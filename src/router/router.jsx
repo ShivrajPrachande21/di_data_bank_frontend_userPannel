@@ -41,6 +41,12 @@ import Details from '../candidate-pannel/pages/searchJob/viewCompanyDetails/deta
 import AppliedJobs from '../candidate-pannel/pages/appliedJob/appliedJobs/AppliedJobs';
 import SavedJobs from '../candidate-pannel/pages/appliedJob/savedJobs/SavedJobs';
 import ViewAppliedJobDetails from '../candidate-pannel/pages/appliedJob/viewAppliedJobDetails/ViewAppliedJobDetails';
+import CandidateChat from '../candidate-pannel/pages/candidateSupport/candidateChate/CandidateChat';
+import CandidateProfile from '../candidate-pannel/pages/profile/CandidateProfile';
+import MyDetails from '../candidate-pannel/pages/profile/myDetails/MyDetails';
+import Experience from '../candidate-pannel/pages/profile/experience/Experience';
+import Education from '../candidate-pannel/pages/profile/education/Education';
+import CandidateReviews from '../candidate-pannel/pages/profile/reviews/CandidateReviews';
 
 const router = createBrowserRouter([
     {
@@ -106,7 +112,7 @@ const router = createBrowserRouter([
                 element: <ViewJobApplication />,
                 children: [
                     {
-                        path: 'application',
+                        path: 'applications',
                         element: <Applications />
                     },
                     {
@@ -196,6 +202,10 @@ const router = createBrowserRouter([
             {
                 path: 'support-candidate',
                 element: <CandidateSupport />
+            },
+            {
+                path: 'candidate-chat/:id',
+                element: <CandidateChat />
             }
         ]
     },
@@ -214,6 +224,28 @@ const router = createBrowserRouter([
             {
                 path: 'reviews',
                 element: <Reviews />
+            }
+        ]
+    },
+    {
+        path: 'profile-candidate', // Fixed typo here
+        element: <CandidateProfile />,
+        children: [
+            {
+                path: 'my-detials',
+                element: <MyDetails />
+            },
+            {
+                path: 'experience',
+                element: <Experience />
+            },
+            {
+                path: 'education',
+                element: <Education />
+            },
+            {
+                path: 'reviews',
+                element: <CandidateReviews />
             }
         ]
     },

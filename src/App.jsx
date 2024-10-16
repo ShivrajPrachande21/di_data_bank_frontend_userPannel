@@ -17,6 +17,9 @@ import { SubscriptionProvider } from './context/SubscriptionContext';
 import { SupportProvider } from './context/SupportContext';
 import { SearchJobProvider } from './context/candidateContext/SearchJobContext';
 import { AppliedJobProvider } from './context/candidateContext/AppliedJobContext';
+import { TransactionProvider } from './context/candidateContext/TransactionContext';
+import { SubscriptionsProvider } from './context/candidateContext/SubscriptionsContext';
+import { CandidateSupportProvider } from './context/candidateContext/CandidateSupportContext';
 function App() {
     const [count, setCount] = useState(0);
 
@@ -31,10 +34,16 @@ function App() {
                                     <SupportProvider>
                                         <SearchJobProvider>
                                             <AppliedJobProvider>
-                                                <ToastContainer />
-                                                <RouterProvider
-                                                    router={router}
-                                                />
+                                                <TransactionProvider>
+                                                    <SubscriptionsProvider>
+                                                        <CandidateSupportProvider>
+                                                            <ToastContainer />
+                                                            <RouterProvider
+                                                                router={router}
+                                                            />
+                                                        </CandidateSupportProvider>
+                                                    </SubscriptionsProvider>
+                                                </TransactionProvider>
                                             </AppliedJobProvider>
                                         </SearchJobProvider>
                                     </SupportProvider>

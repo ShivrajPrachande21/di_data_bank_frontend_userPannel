@@ -79,6 +79,10 @@ const JobOffered = () => {
     useEffect(() => {
         get_job_offered();
     }, []);
+
+    const isGoogleDriveLink = url => {
+        return url && url.includes('drive.google.com');
+    };
     return (
         <>
             <Modal
@@ -102,8 +106,10 @@ const JobOffered = () => {
                                 <iframe
                                     src={
                                         currentResume
-                                            ? getEmbedLink(currentResume)
-                                            : currentResume
+                                            ? isGoogleDriveLink(currentResume)
+                                                ? getEmbedLink(currentResume)
+                                                : currentResume
+                                            : null
                                     } // Ensure the src is set
                                     frameBorder="0"
                                     style={{

@@ -3,11 +3,13 @@ import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJ
 import Verified from '../../../../assets/images/Verified.png';
 import { Button, Image } from 'react-bootstrap';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import AppliedJobs from './../appliedJobs/AppliedJobs';
 const SavedJobs = () => {
     const { applyTo_job } = useContext(SearchJobContext);
     const { fetchSavedJob, savedJobData } = useContext(AppliedJobContext);
     const locate = useLocation();
+    const navigate = useNavigate();
     console.log('savedJobData', savedJobData);
     const formatDate = dateString => {
         const options = { day: '2-digit' };
@@ -21,6 +23,10 @@ const SavedJobs = () => {
     useEffect(() => {
         fetchSavedJob();
     }, [locate]);
+
+    const handleNavigate = async id => {
+        navigate(`/candidate-dashboard/view-job-details/${id}`);
+    };
     return (
         <>
             <div className="saved-jobs-card">
@@ -152,7 +158,7 @@ const SavedJobs = () => {
                                               }}
                                           >
                                               <span className="card-table-span">
-                                                  Poasted:
+                                                  Posted:
                                               </span>{' '}
                                           </td>
                                           <td>
@@ -162,6 +168,26 @@ const SavedJobs = () => {
                                                       item?.createdDate
                                                   )}{' '}
                                                   days ago
+                                              </span>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td
+                                              style={{
+                                                  paddingRight: '30px'
+                                              }}
+                                          >
+                                              <span className="card-table-span">
+                                                  Applicants:
+                                              </span>{' '}
+                                          </td>
+                                          <td>
+                                              {' '}
+                                              <span className="card-table-span">
+                                                  {
+                                                      item?.applied_candidates
+                                                          ?.length
+                                                  }
                                               </span>
                                           </td>
                                       </tr>

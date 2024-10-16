@@ -237,14 +237,13 @@ const ViewJobDescription = () => {
                                     }}
                                 >
                                     <span className="card-table-span">
-                                        Applications:
+                                        Applicants:
                                     </span>{' '}
                                 </td>
                                 <td>
                                     {' '}
                                     <span className="card-table-span">
                                         {JobData?.applied_candidates?.length}{' '}
-                                        Candidates Applied
                                     </span>
                                 </td>
                             </tr>
@@ -255,13 +254,14 @@ const ViewJobDescription = () => {
                                     }}
                                 >
                                     <span className="card-table-span">
-                                        Poasted:
+                                        Posted:
                                     </span>{' '}
                                 </td>
                                 <td>
                                     {' '}
                                     <span className="card-table-span">
-                                        {JobData?.createdDate} days ago
+                                        {formatDate(JobData?.createdDate)} days
+                                        ago
                                     </span>
                                 </td>
                             </tr>

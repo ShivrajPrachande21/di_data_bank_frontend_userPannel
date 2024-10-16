@@ -101,7 +101,8 @@ export const SearchJobProvider = ({ children }) => {
                 applyTo_job,
                 save_job,
                 hasMore,
-                loadMoreJobs
+                loadMoreJobs,
+                setData
             }}
         >
             {children}

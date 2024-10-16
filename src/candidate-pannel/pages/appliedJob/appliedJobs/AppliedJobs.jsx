@@ -186,14 +186,24 @@ const AppliedJobs = () => {
                                           className="application-p"
                                           style={{
                                               color:
-                                                  item?.Shortlisted?.length == 0
+                                                  item?.Shortlisted.length == 0
                                                       ? '#3B96E1'
                                                       : item?.Shortlisted
-                                                            ?.length !== 0
-                                                      ? '#3B96E1'
+                                                            ?.length !== 0 &&
+                                                        item?.Shortlisted[0]
+                                                            ?.shorted_status ==
+                                                            false &&
+                                                        item?.Shortlisted[0]
+                                                            ?.reject_status ==
+                                                            false
+                                                      ? 'green'
                                                       : item?.Shortlisted[0]
                                                             ?.shorted_status ==
-                                                        true
+                                                            true &&
+                                                        item?.Shortlisted[0]
+                                                            ?.short_Candidate
+                                                            ?.offer_accepted_status ==
+                                                            'Processing'
                                                       ? 'green'
                                                       : item?.Shortlisted[0]
                                                             ?.reject_status ==
@@ -203,7 +213,7 @@ const AppliedJobs = () => {
                                                             ?.short_Candidate
                                                             ?.offer_accepted_status ==
                                                         'Processing'
-                                                      ? 'green'
+                                                      ? '#3B96E1'
                                                       : item?.Shortlisted[0]
                                                             ?.short_Candidate
                                                             ?.offer_accepted_status ==
@@ -212,12 +222,21 @@ const AppliedJobs = () => {
                                                       : 'red'
                                           }}
                                       >
-                                          {item?.Shortlisted?.length == 0
+                                          {item?.Shortlisted.length == 0
                                               ? 'Application sent'
-                                              : item?.Shortlisted?.length !== 0
+                                              : item?.Shortlisted?.length !==
+                                                    0 &&
+                                                item?.Shortlisted[0]
+                                                    ?.shorted_status == false &&
+                                                item?.Shortlisted[0]
+                                                    ?.reject_status == false
                                               ? 'Application Shortlisted'
                                               : item?.Shortlisted[0]
-                                                    ?.shorted_status == true
+                                                    ?.shorted_status == true &&
+                                                item?.Shortlisted[0]
+                                                    ?.short_Candidate
+                                                    ?.offer_accepted_status ==
+                                                    'Processing'
                                               ? 'Job offered'
                                               : item?.Shortlisted[0]
                                                     ?.reject_status == true
@@ -232,7 +251,7 @@ const AppliedJobs = () => {
                                                     ?.offer_accepted_status ==
                                                 'Accepted'
                                               ? 'Hired'
-                                              : 'Application rejected'}
+                                              : 'Job offer rejected'}
                                       </p>
                                   </div>
                               </div>

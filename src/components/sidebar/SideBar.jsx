@@ -153,7 +153,11 @@ const SideBar = () => {
         // Add more buttons if needed
     ];
     const navigateProfile = () => {
-        navigate('/profile-page');
+        if (candidateToken) {
+            navigate('/profile-candidate');
+        } else {
+            navigate('/profile-page');
+        }
     };
 
     //Notification count

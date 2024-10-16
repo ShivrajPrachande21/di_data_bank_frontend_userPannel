@@ -7,7 +7,7 @@ import hamburger from '../../../assets/images/hamburger.png';
 import { CreateJobContext } from '../../../context/CreateJobContext';
 import CreateNewJob from './create_new_Job/CreateNewJob';
 import Verified from '../../../assets/images/Verified.png';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import Loader from '../loader/Loader';
@@ -21,11 +21,12 @@ const CreateJob = () => {
         viewJobDescription,
         lgShow,
         setLgShow,
-        paymentLoading
+        paymentLoading,
+        fetch_job_status
     } = useContext(CreateJobContext);
-    console.log('ssss', job_status);
 
     const naviagte = useNavigate();
+    const location = useLocation();
     const { orderId } = useParams();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -56,7 +57,7 @@ const CreateJob = () => {
     const handleNavigate = async job_id => {
         localStorage.setItem('job_id', job_id);
         await viewJobDescription(job_id);
-        naviagte('/main/view-job-application/application');
+        naviagte('/main/view-job-application/applications');
     };
 
     const handle_promote_job = async data => {
@@ -91,7 +92,7 @@ const CreateJob = () => {
                     jobId
                 }
             );
-            if (response.status === 200) {
+            if (response.status == 200 || response?.status == 201) {
                 promoteJob = response?.data;
                 setPromote_job_paymentData(response?.data);
 
@@ -167,6 +168,15 @@ const CreateJob = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await fetch_job_status();
+        };
+
+        fetchData();
+    }, [location]);
+
     return (
         <>
             {PromoteLoading ? (
@@ -342,7 +352,9 @@ const CreateJob = () => {
                                         ) : (
                                             <button
                                                 style={{
-                                                    zIndex: '10'
+                                                    zIndex: '10',
+                                                    borderRadius: '8px',
+                                                    padding: '2px 8px'
                                                 }}
                                                 onClick={() =>
                                                     handle_promote_job(

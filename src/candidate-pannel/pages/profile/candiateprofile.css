@@ -1,0 +1,72 @@
+.candidate-profile-btns button {
+    margin-right: 8px;
+    padding: 4px 16px;
+}
+.candidate-profile {
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.viewOutlet {
+    margin-top: 16px;
+}
+.myDetials {
+    width: 70%;
+}
+.personall {
+}
+.myDetials p {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+}
+.myDetials table {
+    margin-top: -14px;
+    width: 100%;
+}
+
+.edit-profile-btn {
+    margin-top: -26px;
+    margin-left: -100px;
+    cursor: pointer;
+}
+.pdf-viewer {
+    width: 45%;
+    height: 40px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 10px;
+}
+.pdf-name {
+    height: 40px;
+    width: 16%;
+    background: #3b96e1;
+}
+.pdf-name {
+    font-size: 0.78rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.content-pdf {
+}
+.content-pdf p {
+    margin-top: 10px;
+    margin-left: 6px;
+    font-size: 0.78rem;
+    color: #3b96e1;
+}
+.pro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pro img {
+    height: 20px;
+    margin-top: 40px;
+}

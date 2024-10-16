@@ -1,5 +1,5 @@
 .searchJob input {
-    width: 96%;
+    width: 94%;
     padding: 6px;
     background: transparent;
     color: black;
@@ -9,6 +9,22 @@
 }
 .searchJob input:focus {
     outline: 1px solid #3b96e1; /* Adds a blue outline on focus */
+}
+.search-inductiers {
+    width: 26%;
+    margin-top: 40px;
+
+    border-radius: 8px;
+    outline: none;
+}
+.search-inductiers input {
+    font-size: 12px;
+    margin-top: 4px;
+    padding: 6px;
+    color: black;
+    border: 1px solid #3b96e1;
+    border-radius: 8px;
+    outline: none;
 }
 
 .searchJob {

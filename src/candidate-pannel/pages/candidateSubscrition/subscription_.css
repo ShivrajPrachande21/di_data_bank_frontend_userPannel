@@ -1,0 +1,152 @@
+.plan {
+    /* background: red; */
+    width: 80%;
+    margin: 0px auto;
+    padding: 10px;
+}
+.plan p {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 39px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    color: #3b96e1;
+}
+.plan hr {
+    margin-top: -18px; /* Adjust this value as needed */
+    height: 2px; /* Set to desired height */
+    background-color: #73c0ff; /* Change color */
+    border: none; /* Remove the default border */
+}
+.sub1 {
+    position: relative;
+    padding: 14px;
+    border-radius: 20px;
+    height: 68vh;
+
+    background: linear-gradient(
+        126.92deg,
+        #1c7ac7 2.12%,
+        #4d90c7 50.39%,
+        #1c7ac7 98.27%
+    );
+    width: 250px;
+}
+.sub1 p {
+    color: #f6e31d;
+}
+.ruppee {
+    margin-top: -20px;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+}
+.ruppee span {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+.sub1 ul li {
+    margin-top: 8px;
+    list-style-type: none;
+    margin-left: -30px;
+    font-size: 0.8rem;
+    color: #e7f5ff;
+}
+.sub1 li {
+    margin-top: 6px;
+}
+.sub1 ul li img {
+    margin-right: 6px;
+}
+.buybtn {
+    position: absolute;
+    bottom: 16px;
+    left: 9%;
+    background: #19588c;
+    width: 15vw;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 8px;
+}
+.sub-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sub-date p {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #051f50;
+    text-decoration: underline;
+}
+.early-renew {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -4px;
+}
+.early-renew button {
+    width: 10vw;
+    margin-right: 8px;
+    border-radius: 14px;
+    background: #3b96e1;
+    color: white;
+}
+.sub-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.sub2 {
+    position: relative;
+    padding: 14px;
+    border-radius: 20px;
+    height: 68vh;
+
+    background: white;
+    border: 2px solid #3b96e1;
+    width: 250px;
+    color: #3b96e1;
+}
+.sub2 ul li {
+    margin-top: 8px;
+    list-style-type: none;
+    margin-left: -30px;
+    font-size: 0.8rem;
+    color: #3b96e1;
+}
+.sub2 li {
+    margin-top: 6px;
+}
+.sub2 ul li img {
+    margin-right: 6px;
+}
+.sub2 p {
+    color: #000000;
+}
+.ruppee2 {
+    margin-top: -20px;
+    color: #3b96e1;
+    font-weight: 700;
+}
+.ruppee2 span {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+.loader-div {
+    position: fixed; /* Make it cover the entire screen */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    height: 100vh; /* Full height */
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Horizontally center the loader */
+    align-items: center; /* Vertically center the loader */
+    background-color: rgba(
+        201,
+        201,
+        201,
+        0.943
+    ); /* Optional: Semi-transparent background */
+    z-index: 9999; /* Ensure it stays on top of other elements */
+}

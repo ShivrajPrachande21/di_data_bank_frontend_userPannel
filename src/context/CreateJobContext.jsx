@@ -219,7 +219,7 @@ export const CreateJobProvider = ({ children }) => {
                     description: formData?.description
                 }
             );
-            if (response?.status === 200 || response?.status === 201) {
+            if (response?.status == 200 || response?.status == 201) {
                 SetPropaymentLoading(false);
                 window.location.reload();
             }
@@ -287,7 +287,8 @@ export const CreateJobProvider = ({ children }) => {
                 fetch_hire_candidate,
                 initiate_Payment,
                 paymentLoading,
-                fetch_Job_applicant
+                fetch_Job_applicant,
+                fetch_job_status
             }}
         >
             {children}

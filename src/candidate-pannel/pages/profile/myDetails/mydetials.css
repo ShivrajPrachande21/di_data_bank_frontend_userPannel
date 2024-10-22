@@ -1,0 +1,129 @@
+.custom-modal-size .modal-dialog {
+    max-width: 460px; /* Set the width to your desired size */
+    width: 100%; /* This makes sure the width is responsive */
+}
+.verify-pan-adhar-btn {
+    font-size: 0.7rem;
+    padding: 0px 12px;
+    height: 25px;
+    background: #3b96e1;
+    border: none;
+    font-weight: 500;
+}
+
+/* custom Radio button in Edit Profile Form */
+
+/* Style the radio button itself */
+.custom-radio input[type='radio'] {
+    appearance: none; /* Remove default radio button appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px; /* Set the size */
+    height: 18px; /* Set the size */
+    border-radius: 50%; /* Make it circular */
+    border: 1px solid #3b96e1; /* Add border color */
+    outline: none; /* Remove focus outline */
+    position: relative;
+    cursor: pointer;
+    background-color: #fff; /* Set background color */
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Add a check mark when the radio is selected */
+.custom-radio input[type='radio']:checked::after {
+    content: ''; /* Use a pseudo-element */
+    position: absolute;
+    top: 1px; /* Adjust position */
+    left: 1.5px;
+    width: 14px; /* Smaller size for the check */
+    height: 14px; /* Smaller size for the check */
+    border-radius: 50%; /* Circle */
+    background-color: #3b96e1; /* Color of the checked state */
+}
+
+/* Add hover effects to make it more interactive */
+.custom-radio input[type='radio']:hover {
+    border-color: #2c7acf; /* Darker border on hover */
+}
+
+/* For radio button focus */
+.custom-radio input[type='radio']:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow on focus */
+}
+.custom-checkbox {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: white; /* Background color when unchecked */
+    border: 1px solid #3b96e1; /* Border styling */
+    border-radius: 4px; /* Optional: rounded corners */
+    position: relative; /* Make it easier to position the tick */
+    cursor: pointer;
+}
+
+.custom-checkbox:checked {
+    background-color: hwb(207 23% 12%); /* Background color when checked */
+    border-color: #3b96e1;
+}
+
+.custom-checkbox:checked::before {
+    content: '✔'; /* Unicode tick character */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; /* Tick color */
+    font-size: 12px; /* Adjust the size of the tick */
+}
+.lable-custom {
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-top: 1px;
+    margin-left: 6px;
+}
+.days {
+    color: #3b96e1;
+    margin-top: 2.5px;
+    margin-right: 4px;
+}
+.custom-option-exp {
+    width: 51%;
+    border-radius: 6px;
+    padding: 4px;
+    border: 1.5px solid #aeaeae;
+}
+
+/* Style the date input */
+.custom-date-input {
+    font-size: 0.8rem;
+    outline: none;
+    border: none;
+    width: 90%;
+    background-color: white;
+
+    border-radius: 4px; /* Optional: Round the corners */
+    /* Optional: Add some padding */
+    /* Change font color and size if needed */
+    color: #000; /* Font color */
+    font-size: 0.8rem; /* Font size */
+}
+
+/* To style the calendar icon, you may need to use pseudo-elements for browsers that support it. */
+.custom-date-input::-webkit-calendar-picker-indicator {
+    /* background: #007bff; /* Change calendar icon color */
+    /* border-radius: 10%; Make it round if you want */
+    /* Add some padding to the icon */
+}
+
+/* Specific to Chrome */
+.custom-date-input::-webkit-inner-spin-button {
+    display: none; /* Hide the spinner buttons */
+}
+
+/* Style for Firefox */
+.custom-date-input {
+    -moz-appearance: textfield; /* Remove the default styling */
+}
+.calender {
+    cursor: pointer;
+}

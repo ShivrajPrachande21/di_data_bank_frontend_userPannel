@@ -154,7 +154,7 @@ const SideBar = () => {
     ];
     const navigateProfile = () => {
         if (candidateToken) {
-            navigate('/profile-candidate');
+            navigate('/profile-candidate/my-detials');
         } else {
             navigate('/profile-page');
         }

@@ -107,3 +107,35 @@
     font-size: 1rem;
     font-weight: 600;
 }
+
+@media (max-width: 600px) {
+    .login-FormDiv {
+        width: 90%;
+    }
+    .otp-input {
+        padding: 0px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 924px) {
+    .login-FormDiv {
+        width: 60%;
+    }
+    .otp-input {
+        padding: 0px;
+    }
+}
+@media (min-width: 925px) and (max-width: 1440px) {
+    .otp-input {
+        padding: 0px;
+    }
+}
+
+@media (min-width: 1040px) and (max-width: 1440px) {
+    .login-FormDiv {
+        width: 32%;
+    }
+    .otp-input {
+        padding: 8px;
+    }
+}

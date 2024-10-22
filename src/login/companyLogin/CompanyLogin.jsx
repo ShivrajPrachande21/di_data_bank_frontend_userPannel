@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, InputGroup } from 'react-bootstrap';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import backgroundImage from '../../assets/images/AdminLoginPanelBackGround.png';
 import './companyLogin.css';
 import { useNavigate } from 'react-router-dom';
@@ -55,7 +56,7 @@ const CompanyLogin = () => {
     };
 
     const handleLogin = async logiData => {
-        console.log('lOGIN in COntext', logiData.email);
+        // console.log('lOGIN in COntext', logiData.email);
         localStorage.setItem('email', logiData.email);
         setLoading(true);
         try {
@@ -145,6 +146,10 @@ const CompanyLogin = () => {
             toast.error('OTP did not match!');
         }
     };
+    // forgot password
+    const naigateForgetpassword = () => {
+        navigate('forgot-password');
+    };
 
     useEffect(() => {
         const OTP = otp.join('');
@@ -155,7 +160,7 @@ const CompanyLogin = () => {
             otp: OTP
         }));
     }, [otp]);
-    console.log('COmpany Login data', CompanyLogindata);
+    // console.log('COmpany Login data', CompanyLogindata);
     return (
         <>
             <div className="login-main">
@@ -190,15 +195,42 @@ const CompanyLogin = () => {
                                     <Form.Label className="custom-lable">
                                         Password
                                     </Form.Label>
-                                    <Form.Control
+                                    <InputGroup>
+                                        <Form.Control
+                                            className="custom-input"
+                                            name="password"
+                                            value={CompanyLogindata.password}
+                                            onChange={handleInputChange}
+                                            type={
+                                                showPassword
+                                                    ? 'text'
+                                                    : 'password'
+                                            }
+                                            placeholder="Enter Password"
+                                            required
+                                        />
+                                        <InputGroup.Text
+                                            onClick={() =>
+                                                setShowPassword(!showPassword)
+                                            }
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            {showPassword ? (
+                                                <FaEyeSlash />
+                                            ) : (
+                                                <FaEye />
+                                            )}
+                                        </InputGroup.Text>
+                                    </InputGroup>
+                                    {/* <Form.Control
                                         className="custom-input"
-                                        type="text"
+                                        type="password"
                                         name="password"
                                         value={CompanyLogindata.password}
                                         onChange={handleInputChange}
-                                        placeholder="Enter your email"
+                                        placeholder="Enter your password"
                                         required
-                                    />
+                                    /> */}
                                 </Col>
                             </Row>
                             {DisplayOtp_input && (
@@ -233,12 +265,6 @@ const CompanyLogin = () => {
                                                         el)
                                                 }
                                                 className="text-center otp-input"
-                                                style={{
-                                                    fontSize: '14px',
-                                                    padding: '8px 8px',
-                                                    textAlign: 'center',
-                                                    width: '3.4vw'
-                                                }}
                                             />
                                         </Col>
                                     ))}
@@ -258,7 +284,10 @@ const CompanyLogin = () => {
                                         />
                                         <span>Remember me</span>
                                     </div>
-                                    <p style={{ marginTop: '10px' }}>
+                                    <p
+                                        style={{ marginTop: '10px' }}
+                                        onClick={naigateForgetpassword}
+                                    >
                                         Forgot Password?
                                     </p>
                                 </div>

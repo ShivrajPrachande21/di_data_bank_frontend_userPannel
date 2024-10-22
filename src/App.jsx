@@ -20,6 +20,7 @@ import { AppliedJobProvider } from './context/candidateContext/AppliedJobContext
 import { TransactionProvider } from './context/candidateContext/TransactionContext';
 import { SubscriptionsProvider } from './context/candidateContext/SubscriptionsContext';
 import { CandidateSupportProvider } from './context/candidateContext/CandidateSupportContext';
+import { CandidateProfileProvider } from './context/candidateContext/CandidateProfileContext';
 function App() {
     const [count, setCount] = useState(0);
 
@@ -37,10 +38,14 @@ function App() {
                                                 <TransactionProvider>
                                                     <SubscriptionsProvider>
                                                         <CandidateSupportProvider>
-                                                            <ToastContainer />
-                                                            <RouterProvider
-                                                                router={router}
-                                                            />
+                                                            <CandidateProfileProvider>
+                                                                <ToastContainer />
+                                                                <RouterProvider
+                                                                    router={
+                                                                        router
+                                                                    }
+                                                                />
+                                                            </CandidateProfileProvider>
                                                         </CandidateSupportProvider>
                                                     </SubscriptionsProvider>
                                                 </TransactionProvider>

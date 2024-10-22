@@ -1,0 +1,76 @@
+.add-experence-card {
+    margin-top: 10px;
+    padding: 2px;
+}
+.add-experence-card h4 {
+    font-family: Poppins;
+    font-size: 0.96rem;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    color: #3b96e1;
+}
+.add-experence-card h6 {
+    margin-top: -6px;
+    display: flex;
+    color: #051f50;
+    font-size: 0.99rem;
+}
+.add-experence-card h6 ul li {
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-left: -4px;
+    margin-top: 1.5px;
+}
+.exp-add {
+    margin-top: -22px;
+    font-family: Poppins;
+    font-size: 0.8rem;
+    color: #7e7e7e;
+    line-height: 24px;
+    text-align: left;
+    margin-bottom: 22px;
+    display: flex;
+}
+.reviling {
+    color: #3b96e1;
+    text-decoration: underline;
+    margin-top: -20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.experience {
+    margin-top: -25px;
+}
+.work-detials {
+    margin-left: 40px;
+}
+.data {
+    color: #051f50;
+    font-weight: 400;
+    font-size: 0.88rem;
+}
+.exp-pdf {
+    width: 180px;
+    background: #f8f8f8;
+    height: 30px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+}
+.exp-pdf p {
+    margin-top: 7px;
+    margin-left: 6px;
+    font-size: 0.7rem;
+}
+.exp-pdf-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    background: #3b96e1;
+    height: 30px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: white;
+}

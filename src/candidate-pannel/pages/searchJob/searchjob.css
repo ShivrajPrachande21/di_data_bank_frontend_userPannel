@@ -1,3 +1,21 @@
+.search {
+    animation: fadeInMoveUp 0.3s ease-in-out forwards; /* Apply the animation */
+    opacity: 0; /* Initial opacity for the fade-in effect */
+}
+
+@keyframes fadeInMoveUp {
+    20% {
+        opacity: 0;
+        transform: translateY(
+            20px
+        ); /* Start with the element 20px below its original position */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* End at its original position */
+    }
+}
+
 .searchJob input {
     width: 94%;
     padding: 6px;

@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import arrow_back from '../../../assets/images/arrow_back.png';
-import { Accordion, Col, Row, Table } from 'react-bootstrap';
+import {
+    Accordion,
+    Col,
+    Row,
+    Table,
+    Image,
+    OverlayTrigger,
+    Tooltip
+} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import BaseUrl from '../../../services/BaseUrl';
@@ -13,17 +21,24 @@ import EditProfile from '../../../assets/images/EditProfile.png';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import useProfileData from '../../../hooks/company_dashboard/useProfiledata';
 import profileimg from '../../../assets/images/profileimg.png';
+import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
+import ProfileEdit from './myDetails/profileEdit/ProfileEdit';
 
 const CandidateProfile = () => {
-    // const { profileData, loading, error } = useProfileData();
-    // const { hideForm, lgShow, setLgShow } = EditprofileData();
-    // const rating = profileData?.updatedData?.Candidate_Feed_Back[0]?.rating;
-    const rating = 6;
+    const {
+        CandidateProfile,
+        fetchCandidateProfile,
+        modalShowEdit,
+        showEditModle
+    } = useContext(CandidateProfileContext);
+    const locate = useLocation();
+    const rating = CandidateProfile?.averageRating;
+
     const handleClose = () => setLgShow(prev => !prev);
 
     const navigate = useNavigate();
     const navigateProfile = () => {
-        navigate(-1);
+        navigate('/candidate-dashboard/search-job');
     };
 
     const navigate_Edit = () => {
@@ -73,6 +88,19 @@ const CandidateProfile = () => {
         }
     };
 
+    // Toottip
+    const renderSaveTooltip = props => (
+        <Tooltip id="save-tooltip" {...props}>
+            Edit Profile
+        </Tooltip>
+    );
+    useEffect(() => {
+        const fetch = async () => {
+            await fetchCandidateProfile();
+        };
+        fetch();
+    }, [locate]);
+
     return (
         <>
             <div className="ReportedJob candidate-profile">
@@ -113,8 +141,18 @@ const CandidateProfile = () => {
                                 </p>
                             </div>
 
-                            <div className="edit pro" onClick={navigate_Edit}>
-                                <img src={EditProfile} alt="" height="20px" />
+                            <div className="edit pro">
+                                <OverlayTrigger
+                                    placement="top"
+                                    overlay={renderSaveTooltip}
+                                >
+                                    <img
+                                        src={EditProfile}
+                                        alt=""
+                                        height="20px"
+                                        onClick={showEditModle}
+                                    />
+                                </OverlayTrigger>
                             </div>
                         </div>
                     </Row>
@@ -131,11 +169,8 @@ const CandidateProfile = () => {
                                     height: '60px'
                                 }}
                             >
-                                <img
-                                    // src={
-                                    //     // profileData?.updatedData?.profileUrl ||
-                                    //     // ''
-                                    // }
+                                <Image
+                                    src={CandidateProfile?.profileUrl}
                                     alt=""
                                     width="100%"
                                     height="100%"
@@ -157,19 +192,29 @@ const CandidateProfile = () => {
                                             color: '#3B96E1'
                                         }}
                                     >
-                                        {/* {profileData?.updatedData?.company_name} */}
+                                        {
+                                            CandidateProfile?.data
+                                                ?.basic_details?.name
+                                        }
                                     </h4>
-                                    <h4
+                                    <p
                                         style={{
                                             fontSize: '0.7rem',
-                                            color: '#AEAEAE'
+                                            color: '#AEAEAE',
+                                            marginTop: '-8px'
                                         }}
                                     >
-                                        {/* {profileData?.updatedData?.industry} */}
-                                    </h4>
+                                        {
+                                            CandidateProfile?.data?.work_details
+                                                ?.aspiring_position
+                                        }
+                                    </p>
                                     <div
                                         className="star-rating "
-                                        style={{ marginTop: '-10px' }}
+                                        style={{
+                                            marginTop: '-22px',
+                                            marginLeft: '-3.3px'
+                                        }}
                                     >
                                         {[1, 2, 3, 4, 5].map(star => (
                                             <span
@@ -180,11 +225,11 @@ const CandidateProfile = () => {
                                                         star <= rating
                                                             ? '#ffc107'
                                                             : '#e4e5e9',
-                                                    fontSize: '1.5rem'
+                                                    fontSize: '1.3rem'
                                                 }}
-                                                onClick={() =>
-                                                    handleRating(star)
-                                                }
+                                                // onClick={() =>
+                                                //     handleRating(star)
+                                                // }
                                             >
                                                 ★
                                             </span>
@@ -209,8 +254,7 @@ const CandidateProfile = () => {
                     </Row>
                     <Row className="mt-2">
                         <Col className="Overview">
-                            <p>gdjhjhd jhgd jhGAD Kgadg gDG </p>
-                            {/* {profileData?.updatedData?.overView} */}
+                            <p> {CandidateProfile?.data?.summary}</p>
                         </Col>
                     </Row>
                     <Row>
@@ -252,13 +296,32 @@ const CandidateProfile = () => {
                     </Row>
                 </div>
             </div>
+
             <Modal
-                // show={lgShow}
-                onHide={() => setLgShow(prev => !prev)}
+                show={modalShowEdit}
+                onHide={showEditModle}
                 aria-labelledby="example-modal-sizes-title-lg"
-                className="custom-modal" // Apply the custom class here
+                centered
             >
-                {/* <EditCompanyProfile setLgShow={setLgShow} /> */}
+                <Modal.Body
+                    style={{
+                        height: '390px'
+                    }}
+                >
+                    <div
+                        style={{
+                            padding: '20px',
+                            overflow: 'hidden',
+                            overflowY: 'auto',
+                            position: 'relative',
+                            borderRadius: '10px',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
+                        }}
+                    >
+                        <ProfileEdit />
+                    </div>
+                </Modal.Body>
             </Modal>
         </>
     );

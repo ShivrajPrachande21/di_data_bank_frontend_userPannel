@@ -40,7 +40,6 @@ const useRegistration = () => {
         console.log('FOrm data', formData);
         sessionStorage.setItem('formData', JSON.stringify(formData));
         e.preventDefault();
-        console.log('data in Custom hook');
 
         try {
             const response = await axios.post(
@@ -56,7 +55,8 @@ const useRegistration = () => {
 
             // Optionally redirect or perform additional actions here
         } catch (error) {
-            toast.error('Error while submiting form');
+            toast.error(`${error?.response?.data?.error}`);
+            console.log('');
             setErrorMessage('Registration failed. Please try again.');
         } finally {
             setIsSubmitting(false);
@@ -76,7 +76,8 @@ const useRegistration = () => {
 
             // Optionally redirect or perform additional actions here
         } catch (error) {
-            toast.error('Error while submiting form');
+            toast.error(`${error?.response?.data?.error}`);
+            console.log('');
         } finally {
             setIsSubmitting(false);
         }
@@ -88,6 +89,7 @@ const useRegistration = () => {
         successMessage,
         errorMessage,
         isSubmitting,
+        validate,
         handleChange,
         handleSubmit,
         handle_candidate_registration

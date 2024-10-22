@@ -9,6 +9,7 @@ let id = '';
 export const SearchJobProvider = ({ children }) => {
     const [data, setData] = useState(null);
     const [hasMore, setHasMore] = useState(true);
+    const [visibleItems, setVisibleItems] = useState([]);
 
     const fetch_search_job = async () => {
         const token = localStorage.getItem('Candidate_token');
@@ -22,6 +23,7 @@ export const SearchJobProvider = ({ children }) => {
                 );
 
                 setData(response?.data || []); // Assuming the response has a jobs array
+                setVisibleItems(response?.data || []);
                 setHasMore(response.data?.length > 0);
             } catch (error) {}
         }
@@ -102,7 +104,9 @@ export const SearchJobProvider = ({ children }) => {
                 save_job,
                 hasMore,
                 loadMoreJobs,
-                setData
+                setData,
+                visibleItems,
+                setVisibleItems
             }}
         >
             {children}

@@ -7,6 +7,18 @@
     overflow: hidden;
     overflow-y: auto;
 }
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.candidate-profile::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.candidate-profile {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
 .viewOutlet {
     margin-top: 16px;
 }
@@ -34,7 +46,7 @@
 }
 .pdf-viewer {
     width: 45%;
-    height: 40px;
+    height: 36px;
     background: #f8f8f8;
     border-radius: 10px;
     overflow: hidden;
@@ -42,7 +54,7 @@
     margin-bottom: 10px;
 }
 .pdf-name {
-    height: 40px;
+    height: 36px;
     width: 16%;
     background: #3b96e1;
 }
@@ -56,9 +68,9 @@
 .content-pdf {
 }
 .content-pdf p {
-    margin-top: 10px;
+    margin-top: 8px;
     margin-left: 6px;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: #3b96e1;
 }
 .pro {
@@ -69,4 +81,5 @@
 .pro img {
     height: 20px;
     margin-top: 40px;
+    cursor: pointer;
 }

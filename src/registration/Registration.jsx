@@ -13,8 +13,10 @@ const Registration = () => {
         formData,
         errors,
         successMessage,
+
         errorMessage,
         isSubmitting,
+        validate,
         handleChange,
         handleSubmit,
         handle_candidate_registration
@@ -24,11 +26,16 @@ const Registration = () => {
 
     const handleFormSubmit = async e => {
         e.preventDefault();
-        if (formData.role === 'company') {
-            await handleSubmit(e);
+        validate();
+        if (validate()) {
+            return; // Stop the submission if the validation fails
         } else {
-            // Navigate based on your requirements
-            await handle_candidate_registration(e);
+            if (formData.role == 'company') {
+                await handleSubmit(e);
+            } else {
+                // Navigate based on your requirements
+                await handle_candidate_registration(e);
+            }
         }
     };
 
@@ -143,7 +150,9 @@ const Registration = () => {
                                         onClick={() =>
                                             setShowPassword(!showPassword)
                                         }
-                                        style={{ cursor: 'pointer' }}
+                                        style={{
+                                            cursor: 'pointer'
+                                        }}
                                     >
                                         {showPassword ? (
                                             <FaEyeSlash />

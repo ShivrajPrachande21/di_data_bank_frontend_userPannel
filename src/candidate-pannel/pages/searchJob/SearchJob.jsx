@@ -20,7 +20,9 @@ const SearchJob = () => {
         save_job,
         hasMore,
         loadMoreJobs,
-        setData
+        setData,
+        visibleItems,
+        setVisibleItems
     } = useContext(SearchJobContext);
 
     const [SearchData, SetSearchData] = useState({
@@ -60,6 +62,7 @@ const SearchJob = () => {
                 );
                 if (response?.status == 200 || response?.status == 201) {
                     setData(response?.data);
+                    setVisibleItems(response?.data);
                     Setloading(false);
                 }
             } catch (error) {}
@@ -98,6 +101,19 @@ const SearchJob = () => {
 
     useEffect(() => {
         fetch_search_job();
+    }, [locate]);
+
+    // Animation code
+
+    // When the data changes, update the visibleItems state with delay
+    useEffect(() => {
+        if (data && data.length > 0) {
+            data.forEach((item, index) => {
+                setTimeout(() => {
+                    setVisibleItems(data); // Add item with delay
+                }, index * 300); // 300ms delay for sequential fade-in
+            });
+        }
     }, [locate]);
     return (
         <>
@@ -220,7 +236,7 @@ const SearchJob = () => {
                     <div className="search-job-card-div">
                         {loading
                             ? 'loading'
-                            : data?.map((item, index) => (
+                            : visibleItems?.map((item, index) => (
                                   <div className="card-job search">
                                       <div
                                           className="search-job-top"

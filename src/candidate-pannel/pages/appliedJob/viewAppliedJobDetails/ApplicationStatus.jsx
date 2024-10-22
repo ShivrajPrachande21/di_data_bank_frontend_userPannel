@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import BaseUrl from '../../../../services/BaseUrl';
 import { Button, Row, Col, ProgressBar, Modal } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
 import harsh from '../../../../assets/images/harsh.pdf';
@@ -12,7 +12,7 @@ const ApplicationStatus = () => {
     const { reject_Offered_letter } = useContext(AppliedJobContext);
     const [currentStep, setCurrentStep] = useState(null);
     //const [rating, setRating] = useState(0); // Set default rating to 5
-    const navigate = useNavigate();
+    const location = useLocation();
 
     const [applicationStatus, SetApplicationStatus] = useState(null);
     const [feedback, SetFeeBack] = useState('');
@@ -213,7 +213,7 @@ const ApplicationStatus = () => {
     console.log('isValidFile', isValidFile);
     useEffect(() => {
         checkFileType(applicationState?.offerletterUrl);
-    }, []);
+    }, [location]);
 
     return (
         <div>
@@ -234,13 +234,13 @@ const ApplicationStatus = () => {
                         borderRadius: '10px'
                     }}
                 >
-                    {isValidFile ? (
-                        <img
-                            src={applicationState?.offerletterUrl}
-                            alt=""
-                            style={{ width: '110%' }}
-                        />
-                    ) : (
+                    {/* {isValidFile ? ( */}
+                    <img
+                        src={applicationState?.offerletterUrl}
+                        alt=""
+                        style={{ width: '110%' }}
+                    />
+                    {/* ) : (
                         <iframe
                             src={applicationState?.offerletterUrl}
                             // Ensure the src is set
@@ -254,7 +254,7 @@ const ApplicationStatus = () => {
                             }}
                             title="Resume"
                         ></iframe>
-                    )}
+                    )} */}
 
                     <button
                         className="donwload-btn-job"

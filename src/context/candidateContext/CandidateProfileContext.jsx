@@ -16,6 +16,9 @@ export const CandidateProfileProvider = ({ children }) => {
     const [modalShowEdit, setmodalShowEdit] = useState(null);
     const [personalModal, setPersonalModal] = useState(null);
     const [ExpModle, setExpModel] = useState(null);
+    const [showWork, setShowWork] = useState(null);
+    const [showEducation, setShowEducation] = useState(null);
+    const [showAddeducation, setshowAddeducation] = useState(null);
     const [editExp, setEditExp] = useState(null);
 
     const [expData, setExpData] = useState({
@@ -72,6 +75,7 @@ export const CandidateProfileProvider = ({ children }) => {
         }
     };
     const Submit_edit_experience = async () => {
+        console.log('exppDat', expData);
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
             return;
@@ -88,17 +92,18 @@ export const CandidateProfileProvider = ({ children }) => {
                     showEditExp();
                 }
             } catch (error) {
-                if (error.response && error.response.data) {
-                    toast.error(
-                        `Failed to Edit: ${
-                            error.response.data.message || 'Unknown error'
-                        }`
-                    );
-                } else {
-                    toast.error('Failed to Edit. Please try again.');
-                }
+                toast.error(` ${error.response.data.error}`);
             }
         }
+    };
+    const showAdd_new_Education = () => {
+        setshowAddeducation(prev => !prev);
+    };
+    const handleShowEducation = () => {
+        setShowEducation(prev => !prev);
+    };
+    const handleShowWork = () => {
+        setShowWork(prev => !prev);
     };
     const showExperiencelModal = () => {
         setExpModel(prev => !prev);
@@ -175,6 +180,8 @@ export const CandidateProfileProvider = ({ children }) => {
     return (
         <CandidateProfileContext.Provider
             value={{
+                showWork,
+                handleShowWork,
                 setEdit_ExpData,
                 Edit_ExpData,
                 CandidateProfile,
@@ -195,7 +202,12 @@ export const CandidateProfileProvider = ({ children }) => {
                 showEditExp,
                 expData,
                 setExpData,
-                Submit_edit_experience
+                Submit_edit_experience,
+                editExp,
+                showEducation,
+                handleShowEducation,
+                showAddeducation,
+                showAdd_new_Education
             }}
         >
             {children}

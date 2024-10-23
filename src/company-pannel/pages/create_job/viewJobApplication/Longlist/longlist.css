@@ -1,0 +1,19 @@
+.custommodule {
+    background-color: rgba(
+        255,
+        255,
+        255,
+        0.332
+    ); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+}
+.custommodule .modal-dialog {
+    max-width: 300px; /* Set a maximum width */
+    margin: 1.75rem auto; /* Center the modal */
+}
+.applications {
+    background: white;
+    margin-left: 12px;
+    padding: 10px;
+    border-radius: 8px;
+}

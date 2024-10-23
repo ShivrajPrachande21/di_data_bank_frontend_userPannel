@@ -1,20 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Modal, Table } from 'react-bootstrap';
-import './application.css';
+import { Button, Modal, Table,Form } from 'react-bootstrap';
+import './Longlist';
 import View from '../../../../../assets/images/View.png';
 import { CreateJobContext } from '../../../../../context/CreateJobContext';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import BaseUrl from '../../../../../services/BaseUrl';
 
-const Applications = () => {
+
+const Longlist = () => {
     const {
         viewJobDesciptionData,
-        applicantData,
+        longlistData,
         shortlis_candidate,
-        fetch_Job_applicant
+        fetch_Job_Longlist
     } = useContext(CreateJobContext);
+    console.log("appud Longolis",longlistData)
     const [modalShow, setModalShow] = useState(false);
     const [currentResume, setCurrentResume] = useState('');
     const [user_id, setUser_id] = useState('');
+    const [selectedRounds, setSelectedRounds] = useState({});
 
     const location = useLocation();
     const handleClose = () => {
@@ -47,14 +53,34 @@ const Applications = () => {
     const showModal = () => setModalVisible(prev => !prev);
 
     const confirmAction = async () => {
-        // console.log('Action confirmed!', user_id);
         await shortlis_candidate(user_id);
         setModalVisible(false); // Close the modal after confirming
     };
 
     useEffect(() => {
-        fetch_Job_applicant();
+        fetch_Job_Longlist();
     }, [location]);
+
+    const handleRoundChange = (candidateIndex, event) => {
+        const selectedIndex = event.target.value;
+        setSelectedRounds((prevState) => ({
+          ...prevState,
+          [candidateIndex]: selectedIndex,
+        }));
+      };
+
+      const handle_Interview_RoundAction=async(user_id,interviewRound, status)=>{
+        const jobid = localStorage.getItem('job_id');
+        try {
+            const response = await axios.put(
+                `${BaseUrl}company/change_status/interview_round/${jobid}/${user_id}`,
+                {interviewRound, status}
+            );
+             if(response.status==200||201){
+                fetch_Job_Longlist()
+             }
+        } catch (error) {}
+      }
     return (
         <>
             <Modal show={isModalVisible} onHide={showModal} centered>
@@ -127,16 +153,26 @@ const Applications = () => {
                                 scope="col"
                                 style={{ fontSize: '0.7rem' }}
                             >
+                            Interview Round
+                            </th>
+                            <th
+                                className="p-1"
+                                scope="col"
+                                style={{ fontSize: '0.7rem' }}
+                            >
                                 Action
                             </th>
                         </tr>
                     </thead>
                     <tbody style={{ fontSize: '0.7rem' }}>
-                        {applicantData &&
-                            applicantData.map((item, index) => (
-                                <tr key={index}>
+                                {longlistData&&longlistData.map((item, candidateIndex) => {
+                                    const selectedRoundIndex = selectedRounds[candidateIndex] || 0; // Use 0 as default if not selected
+                                    const selectedRound = item?.applied_candidates?.interviewRound[selectedRoundIndex]; // Get current selected round
+                        
+                                    return (
+                                <tr key={candidateIndex}>
                                     <td style={{ borderLeft: 'none' }}>
-                                        {index + 1}
+                                        {candidateIndex + 1}
                                     </td>
                                     <td>{item?.BasicDetails?.name}</td>
                                     <td>{item?.BasicDetails?.email}</td>
@@ -152,11 +188,11 @@ const Applications = () => {
                                             src={View}
                                             alt=""
                                             height="20px"
-                                            onClick={() =>
-                                                handleShow(
-                                                    item?.WorkDetails?.resume
-                                                )
-                                            } // Pass the correct resume link
+                                            // onClick={() =>
+                                            //     handleShow(
+                                            //         item?.resumeUrl
+                                            //     )
+                                            // } // Pass the correct resume link
                                         />
                                     </td>
                                     <td>
@@ -165,27 +201,105 @@ const Applications = () => {
                                                 ?.applied_date
                                         )}
                                     </td>
-                                    <td style={{ width: '20%' }}>
+                                    <td style={{ width: '15%' }}>
+                                    
+                    <Form.Group controlId="email" className="mt-2">
+                       
+                        <Form.Select
+                            name="gender"
+                            value={selectedRoundIndex}
+                            onChange={(event) =>
+                                handleRoundChange(candidateIndex, event)
+                              }
+                            style={{
+                                marginTop: '-6px',
+                                height: '35px',
+                                border: '1.3px solid #AEAEAE',
+                                fontSize: '0.8rem'
+                            }}
+                        >
+                                   
+                    {item?.applied_candidates?.interviewRound.map((round, roundIndex) => (
+                        <option key={roundIndex} value={roundIndex}> {round.roundName}</option>
+                    ))}
+               </Form.Select>
+               </Form.Group>
+                                    </td>
+                                    <td style={{ width: '25%' }}>
+                                    {selectedRound.roundAction === "Pending" ? (
+                                  <>  <Button
+                                            size="sm"
+                                            style={{
+                                                background: '#3B96E1',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '6px 28px',
+                                                width: '40%'
+                                            }}
+                                            onClick={() =>
+                                                handle_Interview_RoundAction(
+                                                    item?.
+                                                    applied_candidates
+                                                    ?.candidate_id,selectedRound?.roundName,'Selected'
+
+                                                )
+                                            }
+                                        >
+                                            Select
+                                        </Button>
                                         <Button
+                                            size="sm"
+                                            style={{
+                                                background: 'red',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '6px 28px',
+                                                width: '40%'
+                                            }}
+                                            onClick={() =>
+                                                handle_Interview_RoundAction(
+                                                    item?.
+                                                    applied_candidates
+                                                    ?.candidate_id,selectedRound?.roundName,'Rejected'
+
+                                                )
+                                            }
+                                        >
+                                        Reject
+                                        </Button>
+                                        </>
+                                          ) : selectedRound.roundAction == "Selected" ? (
+                                            <Button
                                             size="sm"
                                             style={{
                                                 background: '#3B96E1',
                                                 color: 'white',
                                                 border: 'none',
                                                 padding: '6px 40px',
-                                                width: '100%'
+                                                width: '70%'
                                             }}
-                                            onClick={() =>
-                                                handle_ShortList(
-                                                    item?.CandidateDetails?._id
-                                                )
-                                            }
+                                            
                                         >
-                                            Longlist
+                                            Selected
                                         </Button>
+                                        ) : (
+                                            <Button
+                                            size="sm"
+                                            style={{
+                                                background: 'red',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '6px 40px',
+                                                width: '70%'
+                                            }}
+                                            
+                                        >
+                                        Rejected
+                                        </Button>
+                                        )}
                                     </td>
                                 </tr>
-                            ))}
+                             )})}
                     </tbody>
                 </Table>
 
@@ -208,14 +322,13 @@ const Applications = () => {
                             <div>
                                 {currentResume ? (
                                     <iframe
-                                        src={getEmbedLink(currentResume)} // Ensure the src is set
+                                        src={getEmbedLink(currentResume)} 
                                         frameBorder="0"
                                         style={{
                                             width: '89%',
                                             height: '80vh',
                                             zoom: '1',
-                                            margin: '0px 20px' // Prevent zoom feature
-                                            // pointerEvents: 'none' // Disable interactions if needed
+                                            margin: '0px 20px'
                                         }}
                                         title="Resume"
                                     ></iframe>
@@ -231,4 +344,4 @@ const Applications = () => {
     );
 };
 
-export default Applications;
+export default Longlist;

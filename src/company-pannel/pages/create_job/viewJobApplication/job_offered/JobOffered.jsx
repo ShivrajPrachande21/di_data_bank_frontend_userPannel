@@ -14,6 +14,7 @@ const JobOffered = () => {
     const navigate = useNavigate();
     const { job_offered, get_job_offered } = useContext(CreateJobContext);
     const [job_offerede, setjob_offered] = useState(job_offered);
+    const [date,SetDate]=useState(null)
     const fileref = useRef();
     const [file, setFilename] = useState(null);
     const handle_submit = e => {
@@ -36,9 +37,11 @@ const JobOffered = () => {
     const upload_offered_letter = async () => {
         const jobid = localStorage.getItem('job_id');
         const user_id = localStorage.getItem('getJobofferId');
+        const dateValue = new Date(date);  
+const isoDate = dateValue.toISOString();
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('userID', user_id);
+        formData.append('date',isoDate)
         try {
             const response = await axios.put(
                 `${BaseUrl}company/job_offer/${jobid}/${user_id}`,
@@ -298,6 +301,33 @@ const JobOffered = () => {
                             style={{ display: 'none' }}
                             onChange={handle_file_change}
                         />{' '}
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+  <input 
+    type="date" 
+    style={{ 
+      backgroundColor: 'white', 
+      padding: '10px 40px 10px 10px', 
+      borderRadius: '4px', 
+      border: '1px solid #ccc',
+      width: '100%',
+      fontSize: '16px'
+    }}
+    onChange={(e)=>SetDate(e.target.value)}
+  />
+  <i 
+    className="calendar-icon" 
+    style={{ 
+      position: 'absolute', 
+      top: '50%', 
+      right: '10px', 
+      transform: 'translateY(-50%)',
+      pointerEvents: 'none', 
+      color: '#ccc', 
+      fontSize: '20px'
+    }}
+  >📅</i>
+</div>   
+
                         <br />
                         <button
                             className="offered-send mt-2"

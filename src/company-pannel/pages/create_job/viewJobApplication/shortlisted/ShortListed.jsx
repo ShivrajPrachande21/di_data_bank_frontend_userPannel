@@ -12,9 +12,6 @@ const ShortListed = () => {
         shortListData,
         handle_feedback,
         loading,
-        // finalise_candidate,
-        // reject_finalise_candidate,
-        // Finalise_true
         fetch_shortlist,
         fetch_hire_candidate
     } = useContext(CreateJobContext);
@@ -32,17 +29,10 @@ const ShortListed = () => {
     const [Finalise_userId, setFinalise_userId] = useState('');
 
     const finalise_candidate = async user_id => {
-        console.log('user_id finalise', user_id);
         const jobid = localStorage.getItem('job_id');
         localStorage.setItem('getJobofferId', user_id);
-        try {
-            const response = await axios.put(
-                `${BaseUrl}company/hired_applicent/${jobid}/${user_id}`
-            );
-            if (response.status == 200) {
                 navigate('/main/view-job-application/job-offred');
-            }
-        } catch (error) {}
+         
     };
     const reject_finalise_candidate = async user_id => {
         console.log('user_id finalise', user_id);
@@ -98,10 +88,10 @@ const ShortListed = () => {
     };
 
     const handle_finalise_candidate = data => {
-        if (data === 'yes') {
+        if (data =='yes') {
             finalise_candidate(Finalise_userId);
             setisModalfinalise(prev => !prev);
-        } else if (data === 'no') {
+        } else if (data =='no') {
             reject_finalise_candidate(Finalise_userId);
             setisModalfinalise(prev => !prev);
         }
@@ -117,19 +107,21 @@ const ShortListed = () => {
     const handleCommentChange = e => {
         setComment(e.target.value);
     };
-
-    const confirmAction = async (rating, feedback) => {
-        await handle_feedback(rating, feedback, user_id);
-        if (loading) {
-            showModal();
+    const confirmAction = async (rating, feedBack) => {
+        if (rating < 1) {
+            toast.error("Please select rating for the candidate.")
+            return;
         }
+        if (!feedBack || feedBack.trim() === '') {
+            toast.error("Please provide valid feedback.")
+            return;
+        }
+        await handle_feedback(rating, feedBack, user_id);
+       
+            showModal(false);
+        
     };
 
-    // useEffect(() => {
-    //     if (Finalise_true) {
-    //         navigate('/main/view-job-application/job-offred');
-    //     }
-    // }, []);
     return (
         <>
             <Modal
@@ -289,7 +281,7 @@ const ShortListed = () => {
                                         <Button
                                             disabled={
                                                 item?.Shortlisted
-                                                    ?.interviewed_status
+                                                    ?.feed_back_Status
                                             }
                                             size="sm"
                                             style={{
@@ -309,7 +301,7 @@ const ShortListed = () => {
                                                 item?.Shortlisted
                                                     ?.interviewed_status
                                             )}
-                                            Interviewed
+                                            FeedBack
                                         </Button>
                                     </td>
                                     <td style={{ width: '20%' }}>

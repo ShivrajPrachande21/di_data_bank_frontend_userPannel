@@ -61,6 +61,15 @@ const SearchJob = () => {
                     SearchData
                 );
                 if (response?.status == 200 || response?.status == 201) {
+                    SetSearchData({
+                        search: '',
+        experience: '',
+        location: '',
+        industry: '',
+        salary: '',
+        job_type: '',
+        date_posted: ''
+                    })
                     setData(response?.data);
                     setVisibleItems(response?.data);
                     Setloading(false);

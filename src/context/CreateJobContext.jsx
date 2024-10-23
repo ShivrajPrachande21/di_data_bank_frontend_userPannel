@@ -21,6 +21,7 @@ export const CreateJobProvider = ({ children }) => {
     const [job_offered, setjob_offered] = useState(null);
     const [paymentLoading, SetPropaymentLoading] = useState(null);
     const [PromotpaymentData, SetPromotpaymentData] = useState('');
+    const [longlistData,SetlonglistData]=useState(null);
     const fetch_job_status = async () => {
         const token = localStorage.getItem('companyToken');
 
@@ -88,16 +89,25 @@ export const CreateJobProvider = ({ children }) => {
         } catch (error) {}
     };
 
+    const fetch_Job_Longlist=async()=>{
+        const jobid = localStorage.getItem('job_id');
+        try {
+            const response = await axios.get(
+                `${BaseUrl}company/interview_round/Candidate/${jobid}`
+            );
+            SetlonglistData(response?.data);
+        } catch (error) {}
+    }
+
     const shortlis_candidate = async user_id => {
         const jobid = localStorage.getItem('job_id');
-        console.log('hagjagja', user_id, jobid);
         try {
             const response = await axios.put(
-                `${BaseUrl}company/sortlist/candidate/${jobid}/${user_id}`
+                `${BaseUrl}company/long_list/candidate/${jobid}/${user_id}`
             );
             if (response?.status == 200) {
                 await fetch_Job_applicant();
-                toast.success('Candidate shortlisted successfully');
+                toast.success('Candidate longlisted successfully');
             }
         } catch (error) {}
     };
@@ -108,7 +118,7 @@ export const CreateJobProvider = ({ children }) => {
 
         try {
             const response = await axios.get(
-                `${BaseUrl}company/listout_sortliste/applicent/${jobid}`
+                `${BaseUrl}company/shortlist_applicant/${jobid}`
             );
             setShortlistData(response?.data);
         } catch (error) {}
@@ -255,6 +265,7 @@ export const CreateJobProvider = ({ children }) => {
             await viewJobDescription(); // Fetch job description
             await fetch_Job_applicant(); // Fetch job applicants
             await fetch_shortlist(); // Fetch shortlisted applicants
+            await fetch_Job_Longlist();
         };
 
         fetchData(); // Call the fetch function
@@ -288,7 +299,9 @@ export const CreateJobProvider = ({ children }) => {
                 initiate_Payment,
                 paymentLoading,
                 fetch_Job_applicant,
-                fetch_job_status
+                fetch_job_status,
+                fetch_Job_Longlist,
+                longlistData,
             }}
         >
             {children}

@@ -20,6 +20,7 @@ import CompanyAiSearch from '../company-pannel/pages/hireCandidate/aiSearches/Co
 import ViewCandidateDetails from '../company-pannel/pages/hireCandidate/viewCandidateDetails/ViewCandidateDetails';
 import ViewJobApplication from '../company-pannel/pages/create_job/viewJobApplication/ViewJobApplication';
 import Applications from '../company-pannel/pages/create_job/viewJobApplication/applications/Applications';
+import Longlist from '../company-pannel/pages/create_job/viewJobApplication/Longlist/Longlist'
 import ShortListed from '../company-pannel/pages/create_job/viewJobApplication/shortlisted/ShortListed';
 import JobOffered from '../company-pannel/pages/create_job/viewJobApplication/job_offered/JobOffered';
 import Hired from '../company-pannel/pages/create_job/viewJobApplication/hired/Hired';
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
                     {
                         path: 'applications',
                         element: <Applications />
+                    },
+                    {
+                      path:'longlist',
+                      element:<Longlist/>
                     },
                     {
                         path: 'shortlisted',

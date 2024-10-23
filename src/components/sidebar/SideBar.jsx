@@ -196,7 +196,31 @@ const SideBar = () => {
         } else {
             const token = localStorage.getItem('Candidate_token');
             const decodedToken = jwtDecode(token);
-            const company_id = decodedToken?._id;
+            const candidate_id = decodedToken?._id;
+
+            socket.connect();
+
+            socket.emit('CandidateIssuenotification', candidate_id);
+
+            socket.on('CandidateNotification', newNotification => {
+                setNotifications(newNotification);
+            });
+
+            socket.emit('newCompannynotification', candidate_id);
+
+            socket.on('companynotification', newNotification => {
+                SetCount(newNotification);
+                ///setNotifications(newNotification);
+            });
+
+            socket.on('disconnect', () => {
+                console.log('User disconnected');
+            });
+
+            return () => {
+                socket.off('notification');
+                socket.disconnect();
+            };
         }
     }, [show]);
 

@@ -10,11 +10,12 @@ const CompanyNotification = ({ handleClose }) => {
         useContext(HireCandidateContext);
     const [notifications, setNotifications] = useState([]);
     const [NewCandidate, setNewCandidate] = useState([]);
-    const token = localStorage.getItem('companyToken');
+    useEffect(() => {
+        const render = localStorage.getItem('render');
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
     const decodedToken = jwtDecode(token);
     const company_id = decodedToken?._id;
-
-    useEffect(() => {
         socket.connect();
 
         socket.emit('issuenotification', company_id);
@@ -31,9 +32,36 @@ const CompanyNotification = ({ handleClose }) => {
             socket.off('notification');
             socket.disconnect();
         };
+    }else{
+        const token = localStorage.getItem('Candidate_token');
+        const decodedToken = jwtDecode(token);
+        const candidate_id = decodedToken?._id;
+
+        socket.connect();
+
+        socket.emit('CandidateIssuenotification', candidate_id);
+
+        socket.on('CandidateNotification', newNotification => {
+            setNotifications(newNotification);
+        });
+
+        socket.on('disconnect', () => {
+            console.log('User disconnected');
+        });
+
+        return () => {
+            socket.off('notification');
+            socket.disconnect();
+        };
+    }
     }, []);
     // New Candidate Notification
     useEffect(() => {
+        const render = localStorage.getItem('render');
+        if (render == 'company') {
+        const token = localStorage.getItem('companyToken');
+    const decodedToken = jwtDecode(token);
+    const company_id = decodedToken?._id;
         socket.connect();
 
         socket.emit('newCandidatenotification', company_id);
@@ -50,11 +78,24 @@ const CompanyNotification = ({ handleClose }) => {
             socket.off('notification');
             socket.disconnect();
         };
+    }
     }, []);
 
     const handle_notification = () => {
+        const render = localStorage.getItem('render');
+        if (render == 'company') {
+        const token = localStorage.getItem('companyToken');
+    const decodedToken = jwtDecode(token);
+    const company_id = decodedToken?._id;
         socket.emit('viewissuenotification', company_id);
         handleClose();
+        }else{
+            const token = localStorage.getItem('Candidate_token');
+            const decodedToken = jwtDecode(token);
+            const candidate_id = decodedToken?._id;  
+            socket.emit('viewissuenotifications', candidate_id);
+        handleClose();
+        }
     };
 
     return (

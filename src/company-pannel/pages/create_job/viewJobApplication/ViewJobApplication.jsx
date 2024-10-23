@@ -26,6 +26,8 @@ const ViewJobApplication = () => {
     const handleNavigate = data => {
         if (data === 'applications') {
             navigate('applications');
+        } else if (data === 'longlist') {
+            navigate('longlist');
         } else if (data === 'job-offred') {
             navigate('job-offred');
         } else if (data === 'hired') {
@@ -243,6 +245,17 @@ const ViewJobApplication = () => {
                                     }
                                 >
                                     Applications
+                                </Button>
+                            </li>
+                            <li>
+                                <Button
+                                    size="sm"
+                                    style={getButtonStyle('longlist')}
+                                    onClick={() =>
+                                        handleNavigate('longlist')
+                                    }
+                                >
+                                    Longlist
                                 </Button>
                             </li>
                             <li>

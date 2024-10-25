@@ -1,5 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, Button, Container, Row, Col, InputGroup } from 'react-bootstrap';
+import {
+    Form,
+    Button,
+    Container,
+    Row,
+    Col,
+    InputGroup,
+    Spinner
+} from 'react-bootstrap';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import backgroundImage from '../../assets/images/AdminLoginPanelBackGround.png';
 import './companyLogin.css';
@@ -15,6 +23,7 @@ const CompanyLogin = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const [responseOtp, setresponseOtp] = useState('');
     const [DisplayOtp_input, setDisplayOtp_input] = useState(false);
+    const [emailError, setEmailError] = useState('');
     const [CompanyLogindata, setCompanydata] = useState({
         email: '',
         password: '',
@@ -49,6 +58,19 @@ const CompanyLogin = () => {
 
     const handleInputChange = e => {
         const { name, value } = e.target;
+        if (name === 'email') {
+            if (value.trim() === '') {
+                setEmailError('');
+            } else {
+                const emailRegex = /^[a-z][^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailRegex.test(value)) {
+                    setEmailError('Please enter a valid email address.');
+                } else {
+                    setEmailError('');
+                }
+            }
+        }
         setCompanydata(prevState => ({
             ...prevState,
             [name]: value
@@ -56,7 +78,6 @@ const CompanyLogin = () => {
     };
 
     const handleLogin = async logiData => {
-        // console.log('lOGIN in COntext', logiData.email);
         localStorage.setItem('email', logiData.email);
         setLoading(true);
         try {
@@ -98,6 +119,11 @@ const CompanyLogin = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        if (emailError || CompanyLogindata.email.trim() === '') {
+            // Don't submit the form and show an alert or a message
+            setEmailError('Please enter valid Email.');
+            return;
+        }
         const otpCode = otp.join('');
         console.log('Entered OTP:', otpCode);
 
@@ -172,7 +198,7 @@ const CompanyLogin = () => {
                         <p>Log in</p>
                     </div>
                     <div className="login-InputField">
-                        <Form>
+                        <Form onSubmit={handleSubmit}>
                             <Row>
                                 <Col>
                                     <Form.Label className="custom-lable">
@@ -188,6 +214,7 @@ const CompanyLogin = () => {
                                         required
                                     />
                                 </Col>
+                                <p className="email-error">{emailError}</p>
                             </Row>
                             <Row>
                                 <Col xs={12}>
@@ -222,15 +249,6 @@ const CompanyLogin = () => {
                                             )}
                                         </InputGroup.Text>
                                     </InputGroup>
-                                    {/* <Form.Control
-                                        className="custom-input"
-                                        type="password"
-                                        name="password"
-                                        value={CompanyLogindata.password}
-                                        onChange={handleInputChange}
-                                        placeholder="Enter your password"
-                                        required
-                                    /> */}
                                 </Col>
                             </Row>
                             {DisplayOtp_input && (
@@ -302,9 +320,16 @@ const CompanyLogin = () => {
                                     </div>
                                 ) : (
                                     <div className="btn-div">
-                                        <button onClick={handleSubmit}>
+                                        <button type="submit">
                                             {' '}
-                                            {loading ? 'loading' : 'Log in'}
+                                            {loading ? (
+                                                <Spinner
+                                                    animation="border"
+                                                    size="sm"
+                                                />
+                                            ) : (
+                                                'Log in'
+                                            )}
                                         </button>
                                     </div>
                                 )}

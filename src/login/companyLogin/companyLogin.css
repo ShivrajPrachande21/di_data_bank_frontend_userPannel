@@ -1,3 +1,9 @@
 .checkboxs p {
     margin-top: 70px;
 }
+/* Email Error Css in Login page */
+.email-error {
+    font-size: 0.8rem;
+    color: red;
+    margin-top: 4px;
+}

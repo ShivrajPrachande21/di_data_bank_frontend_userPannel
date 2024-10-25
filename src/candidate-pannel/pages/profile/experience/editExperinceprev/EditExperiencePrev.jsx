@@ -9,7 +9,8 @@ const EditExperiencePrev = () => {
         Edit_ExpData,
         setEdit_ExpData,
         setExpData,
-        Submit_edit_experience
+        Submit_edit_experience,
+        handleShowEducation
     } = useContext(CandidateProfileContext);
     // const [start_date, setstart_date] = useState('');
 

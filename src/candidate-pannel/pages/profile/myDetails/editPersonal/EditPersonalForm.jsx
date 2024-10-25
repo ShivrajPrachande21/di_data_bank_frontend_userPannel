@@ -407,7 +407,7 @@ function EditPersonalForm() {
                                     name="name"
                                     value={name}
                                     onChange={e => setname(e.target.value)}
-                                    placeholder="Ex: PGDH9874G"
+                                    placeholder="Ex: GURU"
                                     style={{
                                         outline: 'none',
                                         height: '35px',

@@ -172,8 +172,8 @@ const CandidateProfile = () => {
                                 <Image
                                     src={CandidateProfile?.profileUrl}
                                     alt=""
-                                    width="100%"
-                                    height="100%"
+                                    width="70px"
+                                    height="60px"
                                 />
                             </div>
                         </Col>

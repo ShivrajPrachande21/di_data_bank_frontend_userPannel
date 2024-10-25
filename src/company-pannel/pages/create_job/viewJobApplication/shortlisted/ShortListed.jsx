@@ -60,23 +60,18 @@ const ShortListed = () => {
     };
     const formatDate = dateString => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
+        return new Date(dateString).toLocaleDateString('en-GB', options);
     };
 
     const getEmbedLink = link => {
-        const fileId = link.split('/d/')[1].split('/')[0]; // Extract file ID
-        return `https://drive.google.com/file/d/${fileId}/preview`; // Create preview link
+        const fileId = link.split('/d/')[1].split('/')[0]; 
+        return `https://drive.google.com/file/d/${fileId}/preview`;
     };
 
-    const [rating, setRating] = useState(0); // Set default rating to 5
-    const [comment, setComment] = useState(''); // State to hold input field data
+    const [comment, setComment] = useState(''); 
     const [isModalVisible, setModalVisible] = useState(false);
     const [isModalfinalise, setisModalfinalise] = useState(false);
 
-    // Function to handle star selection
-    const handleRating = newRating => {
-        setRating(newRating);
-    };
     const showModal = user_id => {
         setuser_id(user_id);
         setModalVisible(prev => !prev);
@@ -107,16 +102,12 @@ const ShortListed = () => {
     const handleCommentChange = e => {
         setComment(e.target.value);
     };
-    const confirmAction = async (rating, feedBack) => {
-        if (rating < 1) {
-            toast.error("Please select rating for the candidate.")
-            return;
-        }
+    const confirmAction = async ( feedBack) => {
         if (!feedBack || feedBack.trim() === '') {
             toast.error("Please provide valid feedback.")
             return;
         }
-        await handle_feedback(rating, feedBack, user_id);
+        await handle_feedback(feedBack, user_id);
        
             showModal(false);
         
@@ -132,25 +123,6 @@ const ShortListed = () => {
             >
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
-                    Are you sure you want to proceed with this action?
-                    {/* Star Rating System */}
-                    <div className="star-rating mt-3">
-                        {[1, 2, 3, 4, 5].map(star => (
-                            <span
-                                key={star}
-                                style={{
-                                    cursor: 'pointer',
-                                    color:
-                                        star <= rating ? '#ffc107' : '#e4e5e9',
-                                    fontSize: '1.5rem'
-                                }}
-                                onClick={() => handleRating(star)}
-                            >
-                                ★
-                            </span>
-                        ))}
-                    </div>
-                    {/* Input field for additional comments */}
                     <Form.Group className="mt-3">
                         <Form.Label>Feedback</Form.Label>
                         <Form.Control
@@ -164,7 +136,7 @@ const ShortListed = () => {
                 <Modal.Footer>
                     <button
                         className="btn-addcomment"
-                        onClick={() => confirmAction(rating, comment)} // Pass rating and comment to confirm action
+                        onClick={() => confirmAction(comment)}
                     >
                         Confirm
                     </button>

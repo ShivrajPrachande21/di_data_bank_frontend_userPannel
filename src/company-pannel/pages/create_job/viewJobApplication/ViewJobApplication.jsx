@@ -14,7 +14,6 @@ const ViewJobApplication = () => {
     const [toogle, settoggle] = useState(null);
     const [description, SetDescription] = useState('');
 
-    console.log('daa', viewJobDesciptionData);
     const sanitizedDescription = DOMPurify.sanitize(description);
     const formatDate = dateString => {
         const options = { day: '2-digit' };

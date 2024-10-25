@@ -33,7 +33,6 @@ const Profile = () => {
         setLgShow(prev => !prev);
     };
 
-    console.log('profileData?.updatedData?.profileUrl', profileData);
     const bindUrlOrPath = url => {
         let cleanBaseUrl = BaseUrl.replace(/\/api\b/, '');
         let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${url.replace(

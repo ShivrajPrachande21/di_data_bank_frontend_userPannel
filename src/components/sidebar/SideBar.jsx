@@ -31,6 +31,8 @@ const SideBar = () => {
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
     const [candidateToken, setCandidateToken] = useState('');
+    const [Identity,SetIdentity]=useState(null)
+    const [profile,SetProfile]=useState(null)
 
     const handleClose = () => setShow(prev => !prev);
     const handleShow = () => setShow(prev => !prev);
@@ -38,7 +40,6 @@ const SideBar = () => {
     const toggleLogoout = () => {
         sethidelogout(prev => !prev);
     };
-    // Function to handle setting the active button
     const handleButtonClick = buttonId => {
         setActiveButton(buttonId);
     };
@@ -162,7 +163,29 @@ const SideBar = () => {
 
     //Notification count
     const [notifications, setNotifications] = useState([]);
-    const [notiCount, SetCount] = useState(0);
+    const [notiCount, SetCount] = useState([]);
+    const [profileview,SetProfileView]=useState([])
+    const [shortlist,SetShortlist]=useState([])
+
+   async function CompanyProfile(id){
+         try {
+            const response = await axios.get(`${BaseUrl}company/profile/details/${id}`);
+            if (response.status === 200) {
+                SetIdentity(response?.data.name)
+                SetProfile(response?.data.profile)
+            }
+        } catch (error) {}
+    }
+
+    async function CandidateProfile(id){
+        try {
+           const response = await axios.get(`${BaseUrl}candidate.profile/details/${id}`);
+           if (response.status === 200) {
+            SetIdentity(response?.data?.basic_details?.name)
+            SetProfile(response?.data?.profile)
+           }
+       } catch (error) {}
+   }
 
     useEffect(() => {
         const render = localStorage.getItem('render');
@@ -170,6 +193,7 @@ const SideBar = () => {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const company_id = decodedToken?._id;
+            CompanyProfile(company_id)
             socket.connect();
 
             socket.emit('issuenotification', company_id);
@@ -197,7 +221,7 @@ const SideBar = () => {
             const token = localStorage.getItem('Candidate_token');
             const decodedToken = jwtDecode(token);
             const candidate_id = decodedToken?._id;
-
+            CandidateProfile(candidate_id)
             socket.connect();
 
             socket.emit('CandidateIssuenotification', candidate_id);
@@ -206,12 +230,24 @@ const SideBar = () => {
                 setNotifications(newNotification);
             });
 
+             //Shortlist notification 
+             socket.emit('getshortlistnotification',candidate_id);
+             socket.on('shortlistenotification',data=>{
+                 SetShortlist(data)
+             })
+
             socket.emit('newCompannynotification', candidate_id);
 
             socket.on('companynotification', newNotification => {
                 SetCount(newNotification);
                 ///setNotifications(newNotification);
             });
+            
+            //profile View notification 
+            socket.emit('getcvviewnotification',candidate_id);
+            socket.on('companyViewnotification',data=>{
+                SetProfileView(data)
+            })
 
             socket.on('disconnect', () => {
                 console.log('User disconnected');
@@ -223,6 +259,16 @@ const SideBar = () => {
             };
         }
     }, [show]);
+
+    const bindUrlOrPath = url => {
+        let cleanBaseUrl = BaseUrl?.replace(/\/api\b/, '');
+        let temp = `${cleanBaseUrl?.replace(/\/$/, '')}/${url?.replace(
+            /\\/g,
+            '/'
+        )}`;
+
+        return temp.replace(/([^:]\/)\/+/g, '$1');
+    };
 
     useEffect(() => {
         const render = localStorage.getItem('render');
@@ -264,14 +310,14 @@ const SideBar = () => {
                                 width="20px"
                                 onClick={handleShow}
                             />
-                            {notifications.length + notiCount.length == 0 ? (
+                            {notifications.length + notiCount.length + profileview.lengthv + shortlist.length == 0 ? (
                                 ''
                             ) : (
                                 <div className="noti">
                                     <p>
                                         {' '}
                                         {notifications.length +
-                                            notiCount.length}
+                                            notiCount.length+ profileview.length + shortlist.length}
                                     </p>
                                 </div>
                             )}
@@ -291,17 +337,18 @@ const SideBar = () => {
                     >
                         <div className="Select">
                             <img
-                                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                                src={bindUrlOrPath(profile)}
                                 class="rounded-circle"
                                 style={{
                                     width: '20px',
+                                     height:'20px',
                                     marginLeft: '10px'
                                 }}
                                 alt="Avatar"
                                 onClick={navigateProfile}
                             />
 
-                            <p>Rajesh Kumar</p>
+                            <p>{Identity?.length > 10 ? Identity.substring(0,12) + "..." : Identity}</p>
 
                             <img
                                 src={iconamoon_arrowd}
@@ -326,17 +373,18 @@ const SideBar = () => {
                                 <Row>
                                     <Col xs={2} className="logout-img">
                                         <img
-                                            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                                            src={bindUrlOrPath(profile)}
                                             class="rounded-circle"
                                             style={{
-                                                width: '20px'
+                                                width: '20px',
+                                                height:'20px'
                                             }}
                                             alt="Avatar"
                                         />
                                     </Col>
                                     <Col xs={8}>
                                         <h4 style={{ fontSize: '0.7rem' }}>
-                                            Rajesh Kumar
+                                       {Identity?.length > 10 ? Identity.substring(0,12) + "..." : Identity}
                                         </h4>
                                         <div className="account">
                                             <p
@@ -344,15 +392,13 @@ const SideBar = () => {
                                                     fontSize: '0.4rem'
                                                 }}
                                             >
-                                                {' '}
-                                                Account ID:
+                                               
                                             </p>
                                             <p
                                                 style={{
                                                     fontSize: '0.4rem'
                                                 }}
                                             >
-                                                (898556652622333)
                                             </p>
                                         </div>
                                     </Col>

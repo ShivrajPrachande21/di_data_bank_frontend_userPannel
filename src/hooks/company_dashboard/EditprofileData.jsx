@@ -21,8 +21,6 @@ const EditprofileData = url => {
 
         try {
             const formData = new FormData();
-
-            // Append form fields to FormData
             Object.keys(formFields).forEach(key => {
                 formData.append(key, formFields[key]);
             });

@@ -136,15 +136,13 @@ export const CreateJobProvider = ({ children }) => {
         } catch (error) {}
     };
 
-    const handle_feedback = async (rating, feedback, user_id) => {
-        console.log('data in contex', user_id);
+    const handle_feedback = async (feedback, user_id) => {
         const jobid = localStorage.getItem('job_id');
 
         try {
             const response = await axios.put(
                 `${BaseUrl}company/add_feedback/${jobid}/${user_id}`,
                 {
-                    rating,
                     feedback
                 }
             );

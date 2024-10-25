@@ -29,7 +29,8 @@ const EditCompanyProfile = ({ setLgShow }) => {
         location: '',
         contact_email: '',
         contact_No: '',
-        headQuater_add: ''
+        headQuater_add: '',
+        status:''
     });
     const {
         lgShow,
@@ -94,23 +95,19 @@ const EditCompanyProfile = ({ setLgShow }) => {
     };
     const handleSubmit = async e => {
         setLgShow(false);
-        console.log('lgShow', lgShow);
         e.preventDefault();
-
-        // Call the submitForm function from the custom hook
         await submitForm(formFields, GST, PAN, profileImage);
     };
 
     const fromData = async () => {
         const res = await FormDataFunction();
         setFormFields(res);
+        setPreview(res?.profileUrl)
     };
 
     useEffect(() => {
         fromData();
     }, []);
-
-    console.log('Formdata', formFields);
     return (
         <>
             <div className="editProfilepage">
@@ -122,6 +119,7 @@ const EditCompanyProfile = ({ setLgShow }) => {
                                     <img
                                         src={preview}
                                         alt=""
+                                        style={{width:"100%",height:'100%'}}
                                         className="profileView"
                                     />
                                     <img
@@ -377,53 +375,53 @@ const EditCompanyProfile = ({ setLgShow }) => {
                                     name="GST"
                                     value={formFields.GST}
                                     onChange={handleFieldChange}
+                                    readOnly={formFields?.status=='approve'}
                                 />
                                 {/* <button className="verify-btn">Verify</button> */}
                             </div>
                         </Col>
                         <Col xs={2}>
-                            {Gstimage ? (
-                                <div className="UploadImagediv">
-                                    <img
-                                        src={Gstimage}
-                                        alt="Uploaded"
-                                        style={{
-                                            width: '80px',
+    {formFields?.status !== 'approve' ? (
+        Gstimage ? (
+            <div className="UploadImagediv">
+                <img
+                    src={Gstimage}
+                    alt="Uploaded"
+                    style={{
+                        width: '80px',
+                        objectFit: 'cover',
+                    }}
+                />
+                <img
+                    src={Cross}
+                    alt=""
+                    width="20px"
+                    className="cross"
+                    onClick={remove_gst}
+                />
+            </div>
+        ) : (
+            <Button
+                className="btn-upload"
+                onClick={() =>
+                    document.getElementById('fileInput').click()
+                }
+            >
+                Upload Image
+            </Button>
+        )
+    ) : null}
+    
+    <input
+        type="file"
+        accept="image/*"
+        id="fileInput"
+        style={{ display: 'none' }}
+        onChange={handleImageUpload}
+        ref={fileInputRef}
+    />
+</Col>
 
-                                            objectFit: 'cover'
-                                        }}
-                                    />
-                                    {}
-                                    <img
-                                        src={Cross}
-                                        alt=""
-                                        width="20px"
-                                        className="cross"
-                                        onClick={remove_gst}
-                                    />
-                                </div>
-                            ) : (
-                                <Button
-                                    className="btn-upload"
-                                    onClick={() =>
-                                        document
-                                            .getElementById('fileInput')
-                                            .click()
-                                    }
-                                >
-                                    Uplaod Image
-                                </Button>
-                            )}
-
-                            <input
-                                type="file"
-                                accept="image/*"
-                                id="fileInput"
-                                style={{ display: 'none' }}
-                                onChange={handleImageUpload}
-                                ref={fileInputRef}
-                            />
-                        </Col>
                         <Col xs={4}>
                             <Form.Label className="custom-input-group-label">
                                 PAN*
@@ -434,52 +432,52 @@ const EditCompanyProfile = ({ setLgShow }) => {
                                     placeholder="Ex: PCMNP7474G"
                                     name="PAN"
                                     value={formFields.PAN}
+                                    readOnly={formFields?.status=='approve'}
                                     onChange={handleFieldChange}
                                 />
                             </div>
                         </Col>
                         <Col xs={2}>
-                            {Panimage ? (
-                                <div className="UploadImagediv">
-                                    <img
-                                        src={Panimage}
-                                        alt="Uploaded"
-                                        style={{
-                                            width: '80px',
+    {formFields?.status !== 'approve' ? (
+        Panimage ? (
+            <div className="UploadImagediv">
+                <img
+                    src={Panimage}
+                    alt="Uploaded"
+                    style={{
+                        width: '80px',
+                        objectFit: 'cover',
+                    }}
+                />
+                <img
+                    src={Cross}
+                    alt=""
+                    width="20px"
+                    className="cross"
+                    onClick={remove_pan}
+                />
+            </div>
+        ) : (
+            <Button
+                className="btn-upload"
+                onClick={() =>
+                    document.getElementById('fileInputpan').click()
+                }
+            >
+                Upload Image
+            </Button>
+        )
+    ) : null}
+    <input
+        type="file"
+        accept="image/*"
+        id="fileInputpan"
+        style={{ display: 'none' }}
+        onChange={handleImageUploadPan}
+        ref={fileInputRefPan}
+    />
+</Col>
 
-                                            objectFit: 'cover'
-                                        }}
-                                    />
-                                    {}
-                                    <img
-                                        src={Cross}
-                                        alt=""
-                                        width="20px"
-                                        className="cross"
-                                        onClick={remove_pan}
-                                    />
-                                </div>
-                            ) : (
-                                <Button
-                                    className="btn-upload"
-                                    onClick={() =>
-                                        document
-                                            .getElementById('fileInputpan')
-                                            .click()
-                                    }
-                                >
-                                    Uplaod Image
-                                </Button>
-                            )}
-                            <input
-                                type="file"
-                                accept="image/*"
-                                id="fileInputpan"
-                                style={{ display: 'none' }}
-                                onChange={handleImageUploadPan}
-                                ref={fileInputRefPan}
-                            />
-                        </Col>
                     </Row>
                     <Row>
                         <div className=" mt-3 saveprofile">

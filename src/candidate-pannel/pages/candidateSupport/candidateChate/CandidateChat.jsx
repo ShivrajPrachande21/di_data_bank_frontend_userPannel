@@ -80,7 +80,6 @@ function CandidateChat() {
         socket.emit('newMessage', data);
         setMessage('');
         settimeStamp(timestamps);
-        console.log('Time', timestamps);
     };
 
     return (

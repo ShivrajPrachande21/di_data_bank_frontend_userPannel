@@ -9,7 +9,7 @@ import { AppliedJobContext } from "../../../../context/candidateContext/AppliedJ
 import harsh from "../../../../assets/images/harsh.pdf";
 const ApplicationStatus = () => {
   const { id } = useParams();
-  const { reject_Offered_letter } = useContext(AppliedJobContext);
+  const { reject_Offered_letter,Accept_offer_lettter} = useContext(AppliedJobContext);
   const [currentStep, setCurrentStep] = useState(null);
   //const [rating, setRating] = useState(0); // Set default rating to 5
   const location = useLocation();
@@ -183,26 +183,30 @@ const ApplicationStatus = () => {
   };
 
   const handleRejectOffer = async (id) => {
-    reject_Offered_letter(id);
+   await reject_Offered_letter(id);
+   getApplicationData()
   };
+
+  const handleAcceptOffer=async(id)=>{
+    await Accept_offer_lettter(id)
+    getApplicationData()
+  }
+
   const isGoogleDriveLink = (url) => {
     return url && url.includes("drive.google.com");
   };
-  // check whether the img or pdf
+
   const [isValidFile, setIsValidFile] = useState(null);
 
-  // Function to check file type based on URL extension
   const checkFileType = (url) => {
     if (url == null) {
       return;
     } else {
-      const extension = url.split(".").pop().toLowerCase(); // Get file extension and convert to lowercase
-
-      // Check if the extension is jpg or pdf
+      const extension = url.split(".").pop().toLowerCase(); 
       if (extension === "jpg" || extension === "jpeg") {
-        setIsValidFile(true); // Set to true if it's jpg or pdf
+        setIsValidFile(true); 
       } else if (extension === "pdf") {
-        setIsValidFile(false); // Set to false otherwise
+        setIsValidFile(false);
       }
     }
   };
@@ -422,6 +426,7 @@ const ApplicationStatus = () => {
                     border: "none",
                   }}
                   size="sm"
+                  onClick={() => handleAcceptOffer(id)}
                 >
                   Accept
                 </Button>
@@ -443,7 +448,7 @@ const ApplicationStatus = () => {
           {currentStep == 4 && (
             <div className="main-view-offered">
               <div className="view-applied-offered-letter">
-                <img src={applicationState?.offerletterUrl} alt="" />
+                <img src={applicationState?.offerletterUrl} alt="" style={{width:"8rem"}} />
                 <div className="view-pdf-btn">
                   <Button
                     size="sm"
@@ -456,7 +461,7 @@ const ApplicationStatus = () => {
               <div className="accept-offer-btn2">
                 <Button
                   style={{
-                    width: "100%",
+                    width: "70%",
                     background:
                       applicationState?.jobs?.Shortlisted[0]?.short_Candidate
                         ?.offer_accepted_status == "Rejected"

@@ -35,10 +35,11 @@ export const HireCandidateProvider = ({ children }) => {
         socket.on('view', data => {
             SetcandidateNoti(data);
         });
+
+
         setShow(false);
         SetShowHire(prev => !prev);
     };
-    console.log('showHire', showHire);
 
     // subsciption data
     const [Subscription_Data, setSubscription_Data] = useState({});

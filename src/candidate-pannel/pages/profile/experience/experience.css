@@ -74,3 +74,132 @@
     font-weight: 500;
     color: white;
 }
+.exp-review {
+    width: 100%;
+    padding: 10px;
+
+    gap: 12px;
+}
+/* Education CSS */
+.education {
+    margin-left: 2px;
+}
+.education-card {
+    width: 45%;
+    border: 1px solid #e3e3e3;
+    border-radius: 6px;
+    padding: 12px;
+    overflow: hidden;
+    text-wrap: wrap;
+    margin-top: 4px;
+}
+.education-card h4 {
+    color: #3b96e1;
+}
+.eduction-details {
+    display: flex;
+    margin-top: -4px;
+}
+.eduction-details p {
+    color: #051f50;
+    font-size: 0.9rem;
+}
+.eduction-details ul li {
+    color: #051f50;
+    font-size: 0.9rem;
+}
+.eduction-time {
+    display: flex;
+    margin-top: -14px;
+}
+.eduction-time p {
+    font-size: 0.9rem;
+    color: #7e7e7e;
+}
+.grade {
+    font-size: 0.9rem;
+    color: #7e7e7e;
+    margin-top: -14px;
+}
+.description {
+    font-size: 0.9rem;
+    color: #7e7e7e;
+    margin-top: -14px;
+    word-wrap: break-word;
+}
+.eduction-pdf {
+    margin-top: -12px;
+}
+
+/* Edit Education CSS */
+.edit-education-p {
+    text-align: center;
+    color: #051f50;
+    font-weight: 600;
+}
+.edit-lable-edu {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.education-form {
+    outline: none;
+    height: 35px;
+    border: 1px solid gray;
+
+    font-size: 0.8rem;
+    margin-top: -4px;
+}
+.add-eduction-details {
+    border: 1px solid grey;
+    margin-top: 12px;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #f8f8f8;
+}
+.add-eduction-details p {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #8d8d8d;
+}
+.eduction-degree-name {
+    display: flex;
+    justify-content: space-between;
+}
+.eduction-degree-name img {
+    height: 20px;
+    cursor: pointer;
+}
+.delete-eduction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.delete-eduction img {
+    height: 20px;
+    cursor: pointer;
+}
+.education-btn {
+    border: 1px dashed #aeaeae;
+    background: #ffffff;
+    border-radius: 8px;
+    color: #3b96e1;
+    font-size: 0.7rem;
+    padding: 10px 20px;
+    margin-top: 26px;
+    width: 100%;
+    text-decoration: underline;
+    font-weight: 500;
+}
+.add-certi {
+    padding: 2px 6px;
+    background: #7db6e6;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    border: none;
+    margin-top: 4px;
+}
+.add-certi img {
+    height: 20px;
+}

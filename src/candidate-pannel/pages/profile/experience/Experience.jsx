@@ -11,6 +11,7 @@ import BaseUrl from '../../../../services/BaseUrl';
 import { toast } from 'react-toastify';
 import EditExperience from './editExperience/EditExperience';
 import EditExperiencePrev from './editExperinceprev/EditExperiencePrev';
+import EditWorkDetails from './editWorkDetails/EditWorkDetails';
 
 const Experience = () => {
     const {
@@ -19,7 +20,9 @@ const Experience = () => {
         ExpModle,
         editExp,
         showExperiencelModal,
-        showEditExp
+        showEditExp,
+        showWork,
+        handleShowWork
     } = useContext(CandidateProfileContext);
     console.log('CandidateProfile', CandidateProfile);
     const formatDate = dateString => {
@@ -301,6 +304,7 @@ const Experience = () => {
                                             width="18px"
                                             className="mx-1"
                                             style={{ marginTop: '8px' }}
+                                            onClick={handleShowWork}
                                         />
                                     </Col>
                                     <table style={{ marginLeft: '10px' }}>
@@ -459,6 +463,30 @@ const Experience = () => {
                     </Row>
                 </Row>
             </div>
+            {/* Work Details  Model */}
+            <Modal
+                show={showWork}
+                onHide={handleShowWork}
+                aria-labelledby="example-modal-sizes-title-lg"
+                centered
+                className="custom-modal-size"
+            >
+                <Modal.Body>
+                    <div
+                        style={{
+                            padding: '2px',
+
+                            overflowY: 'auto',
+                            position: 'relative',
+                            borderRadius: '10px',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
+                        }}
+                    >
+                        <EditWorkDetails />
+                    </div>
+                </Modal.Body>
+            </Modal>
             {/* EDit Personal Module */}
             <Modal
                 show={editExp}

@@ -203,3 +203,23 @@
 .add-certi img {
     height: 20px;
 }
+.education-calednder {
+    margin-top: 40px;
+    margin-left: -6px;
+    cursor: pointer;
+    height: 20px;
+}
+.education-details-card {
+    width: 110%;
+}
+.add-new-edu {
+    width: 46.44%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.add-new-edu img {
+    height: 20px;
+    cursor: pointer;
+}

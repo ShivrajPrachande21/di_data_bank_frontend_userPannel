@@ -8,14 +8,71 @@ import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 import EditEducation from './editEducation/EditEducation';
 import AddNewEducation from './addNewEducation/AddNewEducation';
+import BaseUrl from '../../../../services/BaseUrl';
+import { toast } from 'react-toastify';
 
 function Education() {
     const {
+        CandidateProfile,
         showEducation,
         handleShowEducation,
         showAddeducation,
-        showAdd_new_Education
+        showAdd_new_Education,
+        fetchCandidateProfile
     } = useContext(CandidateProfileContext);
+
+    const { highest_education, board_represent, articles } =
+        CandidateProfile?.data?.education_details || {};
+
+    const formatDate = dateString => {
+        const date = new Date(dateString);
+
+        // Get the day of the month with the correct suffix (st, nd, rd, th)
+        const day = date.getDate();
+        const daySuffix = day => {
+            if (day > 3 && day < 21) return 'th'; // covers 4th to 20th
+            switch (day % 10) {
+                case 1:
+                    return '';
+                case 2:
+                    return '';
+                case 3:
+                    return '';
+                default:
+                    return '';
+            }
+        };
+
+        // Format month and year
+        const month = date.toLocaleString('en-GB', { month: 'short' }); // e.g., 'Aug'
+        const year = date.getFullYear();
+
+        // Return the formatted string
+        return ` ${day}${daySuffix(day)} ${month} ${year}`;
+    };
+
+    const handle_delete_Eduction = async education_id => {
+        const token = localStorage.getItem('Candidate_token');
+
+        if (!token) {
+            return; // Exit if no token found
+        }
+
+        const decodedToken = jwtDecode(token);
+        const user_id = decodedToken?._id;
+        try {
+            const response = await axios.delete(
+                `${BaseUrl}candidate/profile/delete_education/${user_id}/${education_id}`
+            );
+            if (response?.status == 200 || response?.status == 201) {
+                toast.success('Education Deleted');
+                await fetchCandidateProfile();
+            }
+        } catch (error) {
+            toast.error('Failed to Delete Education');
+        }
+    };
+    // console.log('CandidateProfile', CandidateProfile);
     return (
         <>
             <div className="education">
@@ -57,7 +114,9 @@ function Education() {
                                     >
                                         Highest level of education:
                                     </td>
-                                    <td className="data">years</td>
+                                    <td className="data">
+                                        {highest_education}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td
@@ -69,7 +128,7 @@ function Education() {
                                     >
                                         Boards represented names:
                                     </td>
-                                    <td className="data">CTC</td>
+                                    <td className="data">{board_represent}</td>
                                 </tr>
                                 <tr>
                                     <td
@@ -79,14 +138,9 @@ function Education() {
                                             width: '56%'
                                         }}
                                     >
-                                        Book Published/Article::
+                                        Book Published/Article:
                                     </td>
-                                    <td className="data">
-                                        {/* {
-                                    CandidateProfile?.data?.work_details
-                                        ?.aspiring_position
-                                } */}
-                                    </td>
+                                    <td className="data ">{articles}</td>
                                 </tr>
 
                                 <tr>
@@ -105,36 +159,67 @@ function Education() {
                         </Col>
                     </Row>
                 </Row>
-                <div className="education-card">
-                    <div className="eduction-degree-name">
-                        <h4>MIT Kothrud</h4>{' '}
+                <Row>
+                    <div className="add-new-edu">
                         <img
                             src={addPlues}
                             alt=""
                             onClick={showAdd_new_Education}
                         />
                     </div>
+                    <div className="education-details-card">
+                        {CandidateProfile?.data?.education_details?.Education?.map(
+                            (item, index) => (
+                                <>
+                                    <div className="education-card" key={index}>
+                                        <div className="eduction-degree-name">
+                                            <h4>{item?.school}</h4>{' '}
+                                        </div>
 
-                    <div className="eduction-details">
-                        <p>Master’s In Design</p>
-                        <ul>
-                            <li>User Experience Design</li>
-                        </ul>
+                                        <div className="eduction-details">
+                                            <p>{item?.degree}</p>
+                                            <ul>
+                                                <li>{item?.Field_study}</li>
+                                            </ul>
+                                        </div>
+                                        <div className="eduction-time">
+                                            <p>
+                                                {formatDate(item?.start_date)}
+                                            </p>{' '}
+                                            <span className="mx-2">-</span>{' '}
+                                            <p>{formatDate(item?.end_date)}</p>
+                                        </div>
+                                        <p className="grade">
+                                            Grade:&nbsp;{item?.grade}
+                                        </p>
+                                        <p className="description">
+                                            Description:&nbsp;
+                                            {item?.description}
+                                        </p>
+                                        <div className="eduction-pdf delete-eduction">
+                                            <div></div>
+                                            {/* <div className="exp-pdf"> */}
+                                            {/* <div className="exp-pdf-name">
+                                                    PDF
+                                                </div> */}
+
+                                            {/* </div> */}
+                                            <img
+                                                src={DeleteIcon}
+                                                alt=""
+                                                onClick={() =>
+                                                    handle_delete_Eduction(
+                                                        item?._id
+                                                    )
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                </>
+                            )
+                        )}
                     </div>
-                    <div className="eduction-time">
-                        <p>Sept 2016</p> <span className="mx-2">-</span>{' '}
-                        <p>Dec 2019</p>
-                    </div>
-                    <p className="grade">Grade:</p>
-                    <p className="description">Description:</p>
-                    <div className="eduction-pdf delete-eduction">
-                        <div className="exp-pdf">
-                            <div className="exp-pdf-name">PDF</div>
-                            {/* <p>{result1 ? 'Resume.pdf' : result1}</p> */}
-                        </div>
-                        <img src={DeleteIcon} alt="" />
-                    </div>
-                </div>
+                </Row>
             </div>
             {/* Highest Education  Model */}
             <Modal

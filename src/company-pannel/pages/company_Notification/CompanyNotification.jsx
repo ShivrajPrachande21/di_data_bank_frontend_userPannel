@@ -201,16 +201,17 @@ const CompanyNotification = ({ handleClose }) => {
                 <>
                     <p key={index} style={{ fontSize: '0.8rem'}}>
                     Congratulations! Your profile has been shortlisted!
-                        <span
-                            onClick={() => handleCloseShortlist(item?._id)}
-                            style={{
-                                color: '#3B96E1',
-                                fontSize: '0.8rem',
-                                marginLeft: '10px'
-                            }}
-                        >
-                            View
-                        </span>
+                        <Link
+                        to="/candidate-dashboard/applied-job/applied-jobs"
+                        onClick={() => handleCloseShortlist(item?._id)}
+                        style={{
+                            color: '#3B96E1',
+                            fontSize: '0.8rem',
+                            marginLeft: '10px'
+                        }}
+                    >
+                        View
+                    </Link>
                     </p>
                 </>
             ))}

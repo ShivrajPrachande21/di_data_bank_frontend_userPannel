@@ -27,14 +27,14 @@ const CreateJob = () => {
 
     const naviagte = useNavigate();
     const location = useLocation();
-    const { orderId } = useParams();
+    //const { orderId } = useParams();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [modalShow, setModalShow] = React.useState(false);
     const [modalShowhide, setModalShowhide] = React.useState(null);
     const [PromoteJobData, setPromoteJobData] = useState(null);
-    const [Promote_job_paymentData, setPromote_job_paymentData] =
-        useState(null);
+        const [modalShows,SetmodalShow]=useState(false);
+        const [orderId,SetOrderId]=useState('')
     const [jobId, setJob_id] = useState('');
     const [PromoteLoading, SetPromoteLoading] = useState(null);
 
@@ -77,14 +77,9 @@ const CreateJob = () => {
         SetPromoteLoading(true);
 
         try {
-            console.log('data?', promoteJob);
-            // Fetch token from localStorage and decode company ID
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const company_id = decodedToken?._id;
-
-            // Log the sub_id and companyId for debugging
-
             const response = await axios.post(
                 `${BaseUrl}company/promote_job/payment`,
                 {
@@ -94,21 +89,19 @@ const CreateJob = () => {
             );
             if (response.status == 200 || response?.status == 201) {
                 promoteJob = response?.data;
-                setPromote_job_paymentData(response?.data);
-
                 const paymentLink = response?.data?.paymentLink;
                 if (paymentLink) {
                     window.open(paymentLink, '_blank');
                 }
             }
-            Run_Promote_verify();
+            Run_Promote_verify(promoteJob);
         } catch (error) {
             console.error('Error during payment initiation:', error);
         }
     };
-
-    const fetch_topUp_success_status = async () => {
-        console.log('promoteJob', promoteJob);
+    let toUpIntervelId;
+    let ToptimeoutId;
+    const fetch_topUp_success_status = async (data) => {
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
@@ -117,42 +110,36 @@ const CreateJob = () => {
             const response = await axios.post(
                 `${BaseUrl}company/promote_job/verify`,
                 {
-                    orderId: promoteJob?.order_id,
-                    jobId: promoteJob?.job_id,
+                    orderId: data?.order_id,
+                    jobId: data?.jobId,
                     company_id: companyId,
-                    paymentMethod: promoteJob?.payment_methods || 'UPI'
+                    paymentMethod: data?.payment_methods || 'UPI'
                 }
             );
             if (response?.status === 200 || response?.status === 201) {
                 SetPromoteLoading(false);
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 4000);
+                SetOrderId(response.data?.orderId)
+                clearInterval(toUpIntervelId);
+                clearTimeout(ToptimeoutId);
+                fetch_job_status()
+                setModalShowhide(false)
+                SetmodalShow(true);
             }
         } catch (error) {
             console.error('Error during verification:', error);
         }
     };
 
-    function Run_Promote_verify() {
-        const toUpIntervelId = setInterval(() => {
-            fetch_topUp_success_status();
-        }, 1000); // Call every 1 second
+    function Run_Promote_verify(data) {
+        toUpIntervelId = setInterval(() => {
+            fetch_topUp_success_status(data);
+        }, 1000); 
 
-        const ToptimeoutId = setTimeout(() => {
+        ToptimeoutId = setTimeout(() => {
             clearInterval(toUpIntervelId);
         }, 1000 * 60 * 5);
-
-        // Watch paymentLoading and clear intervals if it's false
-        const checkPaymentLoading = setInterval(() => {
-            if (PromoteLoading == false) {
-                clearInterval(toUpIntervelId); // Clear the interval for get_payment_success_status
-                clearTimeout(ToptimeoutId); // Clear the 5-minute timeout
-                clearInterval(checkPaymentLoading); // Clear this watcher interval
-            }
-        }, 500);
     }
+
     useEffect(() => {
         if (paymentLoading == false) {
             setModalShow(true);
@@ -519,6 +506,36 @@ const CreateJob = () => {
                         </>
                     ))}
                 </Row>
+                {modalShows&&
+                (
+                    <Modal
+                    show={modalShows}
+                    size="sm" // Keep small size
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    className="compact-modal" // Custom class for additional styling
+                >
+                    <Modal.Header closeButton style={{ padding: '0.5rem', borderBottom: 'none' }}>
+                        <Modal.Title id="contained-modal-title-vcenter" className="text-center w-100">
+                            <h6 className="text-success mb-0">🎉 Payment Successful!</h6> {/* Smaller header */}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body style={{ padding: '0.5rem 1rem' }}>
+                        <div className="text-center">
+                            <p className="mb-1" style={{ fontSize: '0.8rem', color: '#6c757d' }}>Order ID:{orderId}</p>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer style={{ padding: '0.5rem', borderTop: 'none' }}>
+                        <Button 
+                            onClick={() => SetmodalShow(false)} 
+                            style={{ width: '100%', padding: '0.4rem 0', background: '#3B96E1', border: 'none', fontSize: '0.85rem' }}
+                        >
+                            OK
+                        </Button>
+                    </Modal.Footer>
+                </Modal> 
+                )
+                }
                 <Modal
                     show={lgShow}
                     onHide={handleClose}
@@ -538,9 +555,7 @@ const CreateJob = () => {
                             Promote job{' '}
                             <span class="custom-color fw-bold custom-font-size">
                                 {'₹' +
-                                    (PromoteJobData == []
-                                        ? PromoteJobData?.price
-                                        : '99')}
+                                    PromoteJobData?.price}
                             </span>
                             {/* <img src={Verified} alt="" width="24px" /> */}
                         </p>

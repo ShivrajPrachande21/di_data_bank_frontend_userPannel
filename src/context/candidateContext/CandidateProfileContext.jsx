@@ -155,9 +155,6 @@ export const CandidateProfileProvider = ({ children }) => {
 
     const EditPersonalDetails = async data => {
         const token = localStorage.getItem('Candidate_token');
-        if (!token) {
-            return;
-        } else {
             const decodedToken = jwtDecode(token);
             const user_id = decodedToken?._id;
             try {
@@ -167,14 +164,14 @@ export const CandidateProfileProvider = ({ children }) => {
                     data
                 );
                 if (response?.status == 200 || response?.status == 201) {
-                    toast.success('Saved Successfully');
+                    toast.success('Personal details edited successfully');
                     showPersonalModal();
                     await fetchCandidateProfile();
                 }
             } catch (error) {
-                toast.error('Failed to Submit');
+                toast.error(`${error.response.data.error}`);
             }
-        }
+        
     };
 
     return (
@@ -207,7 +204,8 @@ export const CandidateProfileProvider = ({ children }) => {
                 showEducation,
                 handleShowEducation,
                 showAddeducation,
-                showAdd_new_Education
+                showAdd_new_Education,
+                EditPersonalDetails 
             }}
         >
             {children}

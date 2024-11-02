@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
-const socket = io('http://localhost:4000');
+const socket = io('http://65.20.91.47:4000');
 import './sidebar.css';
 import bellgray from '../../assets/images/bellgray.png';
 import logoutButton from '../../assets/images/logoutButton.png';
@@ -23,16 +23,18 @@ import BaseUrl from '../../services/BaseUrl';
 import CompanyNotification from '../../company-pannel/pages/company_Notification/CompanyNotification';
 import { HireCandidateContext } from '../../context/HireCandidateContex';
 import HireCandidateNotification from '../../company-pannel/pages/company_Notification/HireCandidateNotification';
+import GreenBatch from "../../company-pannel/pages/GreenBatch/GreenBatch";
+import Verified from '../../assets/images/Verified.png';
+import {useSubscription} from '../../context/SubscriptionContext';
 const SideBar = () => {
-    const { handleCloseHire, showHire, SetShowHire, show, setShow } =
+    const { handleCloseHire, showHire, show, setShow ,Identity,profile,greenBatch,CompanyProfile} =
         useContext(HireCandidateContext);
+       const { ShowGreen,SetGreenBatch}=useSubscription()
     const navigate = useNavigate();
     const [hidelogout, sethidelogout] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
     const [candidateToken, setCandidateToken] = useState('');
-    const [Identity,SetIdentity]=useState(null)
-    const [profile,SetProfile]=useState(null)
 
     const handleClose = () => setShow(prev => !prev);
     const handleShow = () => setShow(prev => !prev);
@@ -166,16 +168,6 @@ const SideBar = () => {
     const [notiCount, SetCount] = useState([]);
     const [profileview,SetProfileView]=useState([])
     const [shortlist,SetShortlist]=useState([])
-
-   async function CompanyProfile(id){
-         try {
-            const response = await axios.get(`${BaseUrl}company/profile/details/${id}`);
-            if (response.status === 200) {
-                SetIdentity(response?.data.name)
-                SetProfile(response?.data.profile)
-            }
-        } catch (error) {}
-    }
 
     async function CandidateProfile(id){
         try {
@@ -448,9 +440,28 @@ const SideBar = () => {
                         }}
                         className="User-pannel-percentage"
                     >
-                        <h1 style={{ border: '1.32px solid #3B96E1' }}>
-                            Get Verified Batch
-                        </h1>
+                        {greenBatch&&greenBatch?.length==0?(
+                           <h1 style={{ border: '1.32px solid #3B96E1' }} onClick={()=>SetGreenBatch(true)}>
+                           Get Verified Batch
+                           <img
+                                               src={Verified}
+                                               alt="Verified"
+                                               width="19"
+                                           />
+                       </h1>  
+                        ):
+                        (
+                            <h1 style={{ border: '1.32px solid #3B96E1' }}>
+                            Profile verified
+                            <img
+                                                src={Verified}
+                                                alt="Verified"
+                                                width="19"
+                                            />
+                        </h1>   
+                        )
+                        }
+                       
                     </Col>
                 </Row>
                 <div className="sidebar-btns mt-1">
@@ -602,6 +613,8 @@ const SideBar = () => {
                     <CompanyNotification handleClose={handleClose} />
                 </Offcanvas.Body>
             </Offcanvas>
+
+             <GreenBatch/>
 
             {/* to view Hired Candidate Notification */}
 

@@ -59,13 +59,13 @@ function AddNewEducation() {
                 formData
             );
             if (response?.status === 200 || response?.status === 201) {
-                toast.success('Education Details Updated');
+                toast.success('Education details added successfully');
                 await fetchCandidateProfile();
                 showAdd_new_Education();
             }
         } catch (error) {
             toast.error(
-                `${error.response?.data?.error || 'Error updating details'}`
+                `${error.response?.data?.error}`
             );
         }
     };
@@ -77,40 +77,40 @@ function AddNewEducation() {
                 <Form onSubmit={e => handle_submit(e)}>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label className="edit-lable-edu">
-                            school*
+                            School Name<span style={{ color: 'red' }}> *</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
                             name="school"
                             value={addNewData?.school}
                             onChange={handleInputChange}
-                            placeholder="Ex: World Development Corporation"
+                            placeholder="Ex: Sent joshoph"
                             className="education-form"
                         />
                     </Form.Group>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label className="edit-lable-edu">
-                            Degree
+                            Degree<span style={{ color: 'red' }}> *</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
                             name="degree"
                             value={addNewData?.degree}
                             onChange={handleInputChange}
-                            placeholder="Ex: World Development Corporation"
+                            placeholder="Ex: Mcom"
                             className="education-form"
                         />
                     </Form.Group>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label className="edit-lable-edu">
-                            Field of study
+                            Field of study <span style={{ color: 'red' }}> *</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
                             name="Field_study"
                             value={addNewData?.Field_study}
                             onChange={handleInputChange}
-                            placeholder="Ex: World Development Corporation"
+                            placeholder="Ex:Electronics and communication engineering"
                             className="education-form"
                         />
                     </Form.Group>
@@ -118,7 +118,7 @@ function AddNewEducation() {
                         <Col xs={10}>
                             <Form.Group controlId="mobile" className="mt-2">
                                 <Form.Label className="edit-lable-edu">
-                                    Start date
+                                    Start date <span style={{ color: 'red' }}> *</span>
                                 </Form.Label>
                                 <Form.Control
                                     type="date"
@@ -141,7 +141,7 @@ function AddNewEducation() {
                         <Col xs={10}>
                             <Form.Group controlId="mobile" className="mt-2">
                                 <Form.Label className="edit-lable-edu">
-                                    End date (or expected)
+                                    End date (or expected)<span style={{ color: 'red' }}> *</span>
                                 </Form.Label>
                                 <Form.Control
                                     type="date"
@@ -164,7 +164,7 @@ function AddNewEducation() {
                     </Row>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label className="edit-lable-edu">
-                            Garde
+                            Garde<span style={{ color: 'red' }}> *</span>
                         </Form.Label>
                         <Form.Control
                             type="text"

@@ -144,7 +144,7 @@ const SearchJob = () => {
                             value={SearchData.search}
                             onChange={handleInputChange}
                             type="text"
-                            placeholder="Search Jobs (Search by Job profile, Company, Experience, Location, Skills, Qualification)"
+                            placeholder="Search Jobs (Search by Job title , Company name)"
                         />
                         <Button type="submit">
                             <img
@@ -244,7 +244,9 @@ const SearchJob = () => {
                 <Row>
                     <div className="search-job-card-div">
                         {loading
-                            ? 'loading'
+                            ? 'loading...':visibleItems.length==0?<div className="no-jobs-container">
+                            <span>No matching jobs found.</span>
+                        </div>
                             : visibleItems?.map((item, index) => (
                                   <div className="card-job search">
                                       <div

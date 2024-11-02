@@ -28,7 +28,7 @@ const EditExperience = () => {
         }
     };
     const [expData, setExpData] = useState({
-        end_position: '',
+        End_posistion: '',
         companyName: '',
         current_workingStatus: '',
         designation: '',
@@ -432,8 +432,8 @@ const EditExperience = () => {
                         <input
                             type="checkbox"
                             className="custom-checkbox"
-                            name="end_position"
-                            value={expData?.end_position}
+                            name="End_posistion"
+                            value={expData?.End_posistion}
                             onChange={handleInputChange}
                         />
                         <label for="custom-checkbox" className="lable-custom">

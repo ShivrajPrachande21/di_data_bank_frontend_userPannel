@@ -169,10 +169,12 @@ const Dashboard = () => {
                                     data?.subscriptionData[0]
                                         .AdminSubscription[0]?.cv_view_limit
                                 }{' '}
-                                /{data?.subscriptionData[0].cv_view_limit}
-                                <span style={{ marginLeft: '4px' }}>
-                                    Remaining
-                                </span>
+                                { data?.subscriptionData[0].cv_view_limit=="Unlimited"?null:`/${data?.subscriptionData[0].cv_view_limit}`}
+                                {data?.subscriptionData[0].cv_view_limit=="Unlimited"?null:(
+                                     <span style={{ marginLeft: '4px' }}>
+                                     Remaining
+                                 </span>
+                                )}
                             </h3>
                         </div>
                         <div className="col-12">

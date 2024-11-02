@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 
-const socket = io('http://localhost:4000');
+const socket = io('http://65.20.91.47:4000');
 const CompanyNotification = ({ handleClose }) => {
     const { handleCloseHire, showHire, SetShowHire, show, setShow } =
         useContext(HireCandidateContext);

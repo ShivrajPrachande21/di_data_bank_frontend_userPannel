@@ -152,7 +152,7 @@ const ViewCandidateDetails = () => {
                                         }}
                                     >
                                         {candidate_detials?.basicDetails
-                                            ?.name || 'loading'}
+                                            ?.name || 'N/A'}
                                     </h4>
                                     <h4
                                         style={{
@@ -161,7 +161,7 @@ const ViewCandidateDetails = () => {
                                         }}
                                     >
                                         {candidate_detials?.workDetails
-                                            ?.designation || 'loading'}
+                                            ?.designation || 'N/A'}
                                     </h4>
                                 </div>
                             </div>
@@ -213,17 +213,17 @@ const ViewCandidateDetails = () => {
                                         <div className="tables">
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.basicDetails
-                                                    ?.email || 'loading'}
+                                                    ?.email || 'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials?.basicDetails
-                                                    ?.mobile || 'loading'}
+                                                    ?.mobile || 'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials?.basicDetails
-                                                    ?.linkedIn || 'loading'}
+                                                    ?.linkedIn || 'N/A'}
                                             </p>
                                         </div>
                                     </div>
@@ -250,13 +250,13 @@ const ViewCandidateDetails = () => {
                                         <div className="tables">
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails
-                                                    ?.designation || 'loading'}
+                                                    ?.designation || 'N/A'}
                                             </p>
                                             <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials?.workDetails
                                                     ?.aspiring_position ||
-                                                    'loading'}
+                                                    'N/A'}
                                             </p>
                                             <p style={{ color: '#051F50' }}>
                                                 {
@@ -276,11 +276,11 @@ const ViewCandidateDetails = () => {
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails
                                                     ?.career_highlight ||
-                                                    'loading'}
+                                                    'N/A'}
                                             </p>
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails
-                                                    ?.recognation || 'loading'}
+                                                    ?.recognation || 'N/A'}
                                             </p>
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails?.skill?.map(
@@ -334,7 +334,7 @@ const ViewCandidateDetails = () => {
                                                             }}
                                                         >
                                                             {item?.designation ||
-                                                                'loading'}
+                                                                'N/A'}
                                                         </p>
                                                         <p
                                                             style={{
@@ -342,7 +342,7 @@ const ViewCandidateDetails = () => {
                                                             }}
                                                         >
                                                             {item?.companyName ||
-                                                                'loading'}
+                                                                'N/A'}
                                                         </p>
                                                         <p
                                                             style={{
@@ -350,7 +350,7 @@ const ViewCandidateDetails = () => {
                                                             }}
                                                         >
                                                             {item?.CTC ||
-                                                                'loading'}
+                                                                'N/A'}
                                                         </p>
                                                         <p
                                                             style={{
@@ -358,7 +358,7 @@ const ViewCandidateDetails = () => {
                                                             }}
                                                         >
                                                             {item?.location ||
-                                                                'loading'}
+                                                                'N/A'}
                                                         </p>
                                                         <p
                                                             style={{
@@ -366,7 +366,7 @@ const ViewCandidateDetails = () => {
                                                             }}
                                                         >
                                                             {item?.start_date ||
-                                                                'loading'}
+                                                                'N/A'}
                                                         </p>
                                                         <p
                                                             style={{
@@ -376,7 +376,7 @@ const ViewCandidateDetails = () => {
                                                             {item?.current_workingStatus
                                                                 ? 'Currently Working'
                                                                 : item?.end_date ||
-                                                                  'loading'}
+                                                                  'N/A'}
                                                         </p>
                                                         <p
                                                             style={{
@@ -384,7 +384,7 @@ const ViewCandidateDetails = () => {
                                                             }}
                                                         >
                                                             {item?.reporting_structure ||
-                                                                'loading'}
+                                                                'N/A'}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -417,46 +417,46 @@ const ViewCandidateDetails = () => {
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials
                                                     ?.personalDetails?.gender ||
-                                                    'loading'}
+                                                    'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails?.age ||
-                                                    'loading'}
+                                                    'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
                                                     ?.marriag_status ||
-                                                    'loading'}
+                                                    'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
                                                     ?.family_member ||
-                                                    'loading'}
+                                                    'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
-                                                    ?.father_name || 'loading'}
+                                                    ?.father_name || 'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
-                                                    ?.son_name || 'loading'}
+                                                    ?.son_name || 'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
                                                     ?.spouse_profession ||
-                                                    'loading'}
+                                                    'N/A'}
                                             </p>
                                         </div>
                                     </div>

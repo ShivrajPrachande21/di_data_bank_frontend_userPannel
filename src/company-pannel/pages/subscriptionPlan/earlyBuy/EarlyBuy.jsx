@@ -13,29 +13,25 @@ import BaseUrl from '../../../../services/BaseUrl';
 import { useSubscription } from '../../../../context/SubscriptionContext';
 import Loader from '../../loader/Loader';
 import { useParams } from 'react-router-dom';
-let early_buy = {};
 const EarlyBuy = () => {
-    const { EarlyBuy, paymentLoading } = useSubscription();
+    const { EarlyBuy} = useSubscription();
     const [EarlyBuyPaymentData, setEarlyBuyPaymentData] = useState();
     const [EarlyBuyID, setEarlyBuyID] = useState('');
     const [EarlyLoading, SetEarlyLoading] = useState(null);
     const [modalShowhide, setModalShow] = React.useState(false);
+    const [orderID,SetOrderID]=useState('')
+    const [SuccessModal,SetSuccessModal]=useState(false)
 
     const data1 = EarlyBuy?.CurrentSubscription?.plane_name;
-    const { orderId, status } = useParams();
 
     const Early_initiatePayment = async sub_id => {
-        console.log('topup_id', sub_id);
         SetEarlyLoading(true);
         setEarlyBuyID(sub_id);
 
         try {
-            // Fetch token from localStorage and decode company ID
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const company_id = decodedToken?._id;
-
-            // Log the sub_id and companyId for debugging
 
             const response = await axios.post(
                 `${BaseUrl}company/early_plane/payment`,
@@ -45,7 +41,6 @@ const EarlyBuy = () => {
                 }
             );
             if (response.status === 200) {
-                early_buy = response?.data;
                 setEarlyBuyPaymentData(response?.data);
 
                 const paymentLink = response?.data?.paymentLink;
@@ -53,13 +48,14 @@ const EarlyBuy = () => {
                     window.open(paymentLink, '_blank');
                 }
             }
-            RunEarlyBuy_verify();
+            RunEarlyBuy_verify(response?.data);
         } catch (error) {
             console.error('Error during payment initiation:', error);
         }
     };
-
-    const fetch_EarlyBuy_success_status = async () => {
+    let toUpIntervelId;
+    let ToptimeoutId 
+    const fetch_EarlyBuy_success_status = async (data) => {
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
@@ -68,38 +64,32 @@ const EarlyBuy = () => {
             const response = await axios.post(
                 `${BaseUrl}company/early_subscription/verify`,
                 {
-                    orderId: early_buy?.order_id,
-                    sub_id: early_buy?.subscription_id,
+                    orderId: data?.order_id,
+                    sub_id: data?.sub_id,
                     company_id: companyId,
-                    paymentMethod: 'cahfree'
+                    paymentMethod:data?.payment_methods
                 }
             );
             if (response?.status === 200 || response?.status === 201) {
                 SetEarlyLoading(false);
-                window.location.reload();
+                clearInterval(toUpIntervelId); 
+                clearTimeout(ToptimeoutId);
+                SetOrderID(response?.data?.orderId);
+                SetSuccessModal(true)
             }
         } catch (error) {
             console.error('Error during verification:', error);
         }
     };
 
-    function RunEarlyBuy_verify() {
-        const toUpIntervelId = setInterval(() => {
-            fetch_EarlyBuy_success_status();
+    function RunEarlyBuy_verify(data) {
+        toUpIntervelId = setInterval(() => {
+            fetch_EarlyBuy_success_status(data);
         }, 1000); // Call every 1 second
 
-        const ToptimeoutId = setTimeout(() => {
+         ToptimeoutId = setTimeout(() => {
             clearInterval(toUpIntervelId);
         }, 1000 * 60 * 5);
-
-        // Watch paymentLoading and clear intervals if it's false
-        const checkPaymentLoading = setInterval(() => {
-            if (paymentLoading === false) {
-                clearInterval(toUpIntervelId); // Clear the interval for get_payment_success_status
-                clearTimeout(ToptimeoutId); // Clear the 5-minute timeout
-                clearInterval(checkPaymentLoading); // Clear this watcher interval
-            }
-        }, 500);
     }
 
     useEffect(() => {
@@ -107,16 +97,13 @@ const EarlyBuy = () => {
             SetEarlyLoading(true);
         }
     }, []);
-    useEffect(() => {
-        console.log('RenewData', EarlyBuy);
-    }, []);
     return (
         <>
-            {status && (
+            {SuccessModal && (
                 <Modal
-                    show={modalShowhide}
-                    onHide={() => setModalShow(false)}
-                    size="lg"
+                    show={SuccessModal}
+                    onHide={() => SetSuccessModal(false)}
+                    size="sm"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                 >
@@ -129,7 +116,7 @@ const EarlyBuy = () => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Order ID:{orderId}</p>
+                        <p>Order ID:{orderID}</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button

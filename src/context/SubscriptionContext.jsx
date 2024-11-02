@@ -17,6 +17,9 @@ export const SubscriptionProvider = ({ children }) => {
     const [EarlyBuy, SetEarlyData] = useState(null);
     const [RenewData, SetRenewData] = useState(null);
     const [topUp_id, setTopUp_id] = useState('');
+    const [modalShow,SetmodalShow]=useState(false);
+    const [SubId,SetSubId]=useState(null)
+    const [ShowGreen,SetGreenBatch]=useState(false)
     const fetch_all_subscription = async () => {
         setloading(true);
         const token = localStorage.getItem('companyToken');
@@ -61,24 +64,25 @@ export const SubscriptionProvider = ({ children }) => {
             }
         } catch (error) {}
     };
-    const initiatePayment = async sub_id => {
+    let intervalId;
+    let timeoutId;
+    
+    const initiatePayment = async (sub_id) => {
         SetpaymentLoading(true);
         try {
-            // Fetch token from localStorage and decode company ID
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const id = decodedToken?._id;
-
-            // Log the sub_id and companyId for debugging
-
+    
             const response = await axios.post(`${BaseUrl}/company/payment`, {
                 id,
                 sub_id
             });
+    
             if (response.status === 200) {
                 datapayment = response?.data;
                 SetpaymentData(response?.data);
-
+    
                 const paymentLink = response?.data?.paymentLink;
                 if (paymentLink) {
                     window.open(paymentLink, '_blank');
@@ -89,71 +93,60 @@ export const SubscriptionProvider = ({ children }) => {
             console.error('Error during payment initiation:', error);
         }
     };
-
+    
     useEffect(() => {
         if (paymentData) {
             get_payment_success_status();
         }
     }, [paymentData]);
-
+    
     const get_payment_success_status = async () => {
-        // console.log('Payment Data in get_payment_success_status:', paymentData); // Add this line
-
-        // if (!subscriptionId || !paymentMethod || !orderId) {
-        //     console.error('Missing payment data.');
-        //     return;
-        // }
-
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const companyId = decodedToken?._id;
-
+    
             const response = await axios.post(`${BaseUrl}company/verify`, {
                 orderId: datapayment?.order_id,
                 subscriptionId: datapayment?.subscription_id,
                 companyId: companyId,
                 paymentMethod: datapayment?.payment_methods
             });
+    
             if (response?.status === 200 || response?.status === 201) {
+                SetSubId(response.data?.orderId)
                 SetpaymentLoading(false);
-                window.location.reload();
+                clearInterval(intervalId);
+                clearTimeout(timeoutId);
+                fetch_all_subscription()
+                SetmodalShow(true);
             }
         } catch (error) {
             console.error('Error during verification:', error);
         }
     };
+    
     function RunVerify() {
-        const intervalId = setInterval(() => {
+        intervalId = setInterval(() => {
             get_payment_success_status();
-        }, 1000); // Call every 1 second
+        }, 1000);
 
-        const timeoutId = setTimeout(() => {
+        timeoutId = setTimeout(() => {
             clearInterval(intervalId);
         }, 1000 * 60 * 5);
-
-        // Watch paymentLoading and clear intervals if it's false
-        const checkPaymentLoading = setInterval(() => {
-            if (paymentLoading === false) {
-                clearInterval(intervalId); // Clear the interval for get_payment_success_status
-                clearTimeout(timeoutId); // Clear the 5-minute timeout
-                clearInterval(checkPaymentLoading); // Clear this watcher interval
-            }
-        }, 500); // Check paymentLoading every 500 milliseconds
     }
+    
+    let toUpIntervelIds;
+    let ToptimeoutIds ;
 
     const topup_initiatePayment = async topup_id => {
         SetpaymentLoading(true);
         setTopUp_id(topup_id);
 
         try {
-            console.log('data?', topup_id);
-            // Fetch token from localStorage and decode company ID
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const company_id = decodedToken?._id;
-
-            // Log the sub_id and companyId for debugging
 
             const response = await axios.post(
                 `${BaseUrl}company/topup_plane/payment`,
@@ -178,7 +171,6 @@ export const SubscriptionProvider = ({ children }) => {
     };
 
     const fetch_topUp_success_status = async to => {
-        console.log('top_up_data', top_up_data);
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
@@ -195,7 +187,12 @@ export const SubscriptionProvider = ({ children }) => {
             );
             if (response?.status === 200 || response?.status === 201) {
                 SetpaymentLoading(false);
-                window.location.reload();
+                SetSubId(response.data?.orderId)
+                clearInterval(toUpIntervelIds);
+                clearTimeout(toUpIntervelIds);
+                fetch_all_subscription()
+                SetmodalShow(true);
+
             }
         } catch (error) {
             console.error('Error during verification:', error);
@@ -203,22 +200,13 @@ export const SubscriptionProvider = ({ children }) => {
     };
 
     function RuntopUp_verify() {
-        const toUpIntervelId = setInterval(() => {
+         toUpIntervelIds = setInterval(() => {
             fetch_topUp_success_status();
-        }, 1000); // Call every 1 second
+        }, 1000);
 
-        const ToptimeoutId = setTimeout(() => {
+        ToptimeoutIds = setTimeout(() => {
             clearInterval(toUpIntervelId);
         }, 1000 * 60 * 5);
-
-        // Watch paymentLoading and clear intervals if it's false
-        const checkPaymentLoading = setInterval(() => {
-            if (paymentLoading === false) {
-                clearInterval(toUpIntervelId); // Clear the interval for get_payment_success_status
-                clearTimeout(ToptimeoutId); // Clear the 5-minute timeout
-                clearInterval(checkPaymentLoading); // Clear this watcher interval
-            }
-        }, 500);
     }
 
     //Renew Subscription plane
@@ -258,7 +246,10 @@ export const SubscriptionProvider = ({ children }) => {
                 fetch_all_subscription,
                 fetch_top_ups,
                 initiatePayment,
-                topup_initiatePayment
+                topup_initiatePayment,
+                modalShow,SetmodalShow,
+                SubId,SetSubId,
+                ShowGreen,SetGreenBatch
             }}
         >
             {children}

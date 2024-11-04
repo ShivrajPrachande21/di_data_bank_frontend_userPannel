@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './viewCandidate_details.css';
 import arrow_back from '../../../../assets/images/arrow_back.png';
+import altprofile from '../../../../assets/images/altprofile.jpg';
 import { Button, Col, Row } from 'react-bootstrap';
 
 import Modal from 'react-bootstrap/Modal';
@@ -133,7 +134,7 @@ const ViewCandidateDetails = () => {
                     <Row style={{ marginTop: '-8px' }}>
                         <Col xs={1}>
                             <div className="view-images">
-                                <img src={candidate_detials?.profile} alt="" />
+                                <img src={candidate_detials?.profile?candidate_detials?.profile:altprofile} alt="" />
                             </div>
                         </Col>
                         <Col xs={10}>

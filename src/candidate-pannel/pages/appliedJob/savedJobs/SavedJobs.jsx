@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
 import Verified from '../../../../assets/images/Verified.png';
+import altprofile from '../../../../assets/images/altprofile.jpg';
 import { Button, Image } from 'react-bootstrap';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -48,10 +49,12 @@ const SavedJobs = () => {
                               key={index}
                           >
                               <div className="search-job-top">
+                                
                                   <Image
-                                      src={item?.profileUrl}
+                                      src={item?.profileUrl?item?.profileUrl:altprofile}
+                                     
                                       roundedCircle
-                                      alt="Profile"
+                                    // alt={altprofile}
                                       width="40" // Set the desired width
                                       height="40" // Set the desired height
                                   />
@@ -71,8 +74,7 @@ const SavedJobs = () => {
                                       </p>
                                   </h6>
                                   <div className="green-thik">
-                                      {item?.company_details?.verified_batch
-                                          .length > 0 ? (
+                                      {item?.Green_Batch?(
                                           <img
                                               src={Verified}
                                               alt=""
@@ -222,7 +224,11 @@ const SavedJobs = () => {
                               </div>
                           </div>
                       ))
-                    : ''}
+                    :(
+                        <div className="no-jobs-container">
+                        <span>No jobs have been saved.</span>
+                      </div>
+                    )}
             </div>
         </>
     );

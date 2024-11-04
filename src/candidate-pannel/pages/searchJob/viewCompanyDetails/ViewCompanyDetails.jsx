@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Image, Button } from 'react-bootstrap';
 import ep_back from '../../../../assets/images/ep_back.png';
 import avatar from '../../../../assets/images/avatar.png';
+import altprofile from '../../../../assets/images/altprofile.jpg';
 import './viewCompanyDesc.css';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -86,11 +87,11 @@ const ViewCompanyDetails = () => {
                         }
                     />
                     <div className="search-job-top company-desc">
-                        <Image
-                            src={bindUrlOrPath(
+                        <Image  
+                            src={companyDetails?.updatedData['0']?.profile?bindUrlOrPath(
                                 companyDetails?.updatedData['0']?.profile ||
                                     'img'
-                            )}
+                            ):altprofile}
                             roundedCircle
                             alt="Profile"
                             width="70"

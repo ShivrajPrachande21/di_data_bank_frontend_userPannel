@@ -13,6 +13,7 @@ import Ai from '../../../assets/images/Ai.png';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import Crown from '../../../assets/images/Crown.png';
 import Verified from '../../../assets/images/Verified.png';
+import altprofile from '../../../assets/images/altprofile.jpg';
 import './hireCandidate.css';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import profileimg from '../../../assets/images/profileimg.png';
@@ -321,9 +322,10 @@ const HireCandidate = () => {
                                     <img
                                         src={
                                             appliedcandidate[0]
-                                                ?.candidateDetails?.profile
+                                                ?.candidateDetails?.profile? appliedcandidate[0]
+                                                ?.candidateDetails?.profile:altprofile
                                         }
-                                        alt=""
+                                        style={{width:'100%',height:'100%'}}
                                     />
                                 </div>
                                 <div className="result-text">

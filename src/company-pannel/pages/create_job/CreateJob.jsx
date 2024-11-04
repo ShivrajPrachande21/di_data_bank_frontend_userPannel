@@ -7,6 +7,7 @@ import hamburger from '../../../assets/images/hamburger.png';
 import { CreateJobContext } from '../../../context/CreateJobContext';
 import CreateNewJob from './create_new_Job/CreateNewJob';
 import Verified from '../../../assets/images/Verified.png';
+import altprofile from '../../../assets/images/altprofile.jpg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
@@ -292,7 +293,8 @@ const CreateJob = () => {
                 </Row>
                 {/* card Sections */}
                 <Row className="mt-4">
-                    {job_status?.PostedJobList?.map((item, index) => (
+                    {job_status?.PostedJobList&&job_status?.PostedJobList.length>0?
+                    job_status?.PostedJobList.map((item, index) => (
                         <>
                             <Col
                                 xs={12}
@@ -526,7 +528,13 @@ const CreateJob = () => {
                                 </div>
                             </Col>
                         </>
-                    ))}
+                    )):
+                    (
+                        <div className="no-jobs-container">
+                        <span>You haven't created any jobs yet.</span>
+                      </div>
+                    )
+                    }
                 </Row>
                 {modalShows&&
                 (

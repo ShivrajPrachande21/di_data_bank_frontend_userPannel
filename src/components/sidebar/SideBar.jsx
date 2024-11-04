@@ -25,6 +25,7 @@ import { HireCandidateContext } from '../../context/HireCandidateContex';
 import HireCandidateNotification from '../../company-pannel/pages/company_Notification/HireCandidateNotification';
 import GreenBatch from "../../company-pannel/pages/GreenBatch/GreenBatch";
 import Verified from '../../assets/images/Verified.png';
+import altprofile from '../../assets/images/altprofile.jpg';
 import {useSubscription} from '../../context/SubscriptionContext';
 import { CandidateProfileContext } from '../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
@@ -330,7 +331,7 @@ const SideBar = () => {
                     >
                         <div className="Select">
                             <img
-                                src={bindUrlOrPath(profile)}
+                                src={profile?bindUrlOrPath(profile):altprofile}
                                 class="rounded-circle"
                                 style={{
                                     width: '20px',
@@ -366,7 +367,7 @@ const SideBar = () => {
                                 <Row>
                                     <Col xs={2} className="logout-img">
                                         <img
-                                            src={bindUrlOrPath(profile)}
+                                            src={profile?bindUrlOrPath(profile):altprofile}
                                             class="rounded-circle"
                                             style={{
                                                 width: '20px',

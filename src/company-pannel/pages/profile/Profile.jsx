@@ -8,6 +8,7 @@ import BaseUrl from '../../../services/BaseUrl';
 
 import CompanyOnboardManul from '../../../assets/images/CompanyOnboardManul.png';
 import Verified from '../../../assets/images/Verified.png';
+import altprofile from '../../../assets/images/altprofile.jpg';
 import avatar from '../../../assets/images/avatar.png';
 import './profile.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -108,7 +109,7 @@ const Profile = () => {
                                 <img
                                     src={
                                         profileData?.updatedData?.profileUrl ||
-                                        ''
+                                        altprofile
                                     }
                                     alt=""
                                     width="100%"

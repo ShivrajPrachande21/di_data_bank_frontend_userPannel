@@ -16,8 +16,13 @@ import Applications from './../../../../company-pannel/pages/create_job/viewJobA
 import BaseUrl from '../../../../services/BaseUrl';
 import axios from 'axios';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
+import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
 const ViewJobDescription = () => {
     const { applyTo_job, save_job } = useContext(SearchJobContext);
+    const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
     const { id } = useParams();
     const navigate = useNavigate();
     const [modalShow, setModalShow] = React.useState(true);
@@ -54,6 +59,10 @@ const ViewJobDescription = () => {
     const sanitizedDescription = DOMPurify.sanitize(JobData?.description);
 
     const handleApplyJob = async id => {
+        if(CandidateProfile?.profileCompletionPercentage!=100){
+            toast.error("Please complete your profile before apply jobs.");
+        return 
+        }
         await applyTo_job(id);
         navigate('/candidate-dashboard/search-job');
     };
@@ -64,6 +73,7 @@ const ViewJobDescription = () => {
     };
     useEffect(() => {
         SetDescription(JobData?.description);
+        fetchCandidateProfile();
     }, []);
 
     const renderSaveTooltip = props => (

@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-
+import { Button, Modal} from 'react-bootstrap';
 import './subscription_.css';
 import Rupees1 from '../../../assets/images/Rupees1.png';
 import rupeeblue from '../../../assets/images/rupeeblue.png';
 import CardCheck from '../../../assets/images/CardCheck.png';
 import bluetick from '../../../assets/images/bluetick.png';
-import { Button, Spinner } from 'react-bootstrap';
-
+import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
-//import BaseUrl from '../../../../services/BaseUrl';
 import { useNavigate } from 'react-router-dom';
 import { SubscriptionContext } from '../../../context/candidateContext/SubscriptionsContext';
+import BaseUrl from '../../../services/BaseUrl';
+import Loader from '../../../company-pannel/pages/loader/Loader';
+import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
 
 const CandidateSubscription = () => {
     const {
@@ -19,6 +21,9 @@ const CandidateSubscription = () => {
         fetch_CurrentSubscrtipion,
         currentSubscription
     } = useContext(SubscriptionContext);
+    const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
 
     const navigate = useNavigate();
 
@@ -68,10 +73,124 @@ const CandidateSubscription = () => {
     useEffect(() => {
         fetch_Subscrtipion();
         fetch_CurrentSubscrtipion();
+        fetchCandidateProfile();
     }, []);
+    const [locading,SetEarlyLoading]=useState(false)
+    const [orderID,SetOrderID]=useState('');
+    const [SuccessModal,SetSuccessModal]=useState(false);
+
+    const initiatePayment = async sub_id => {
+        if(CandidateProfile?.profileCompletionPercentage!=100){
+            toast.error("Please complete your profile before purchasing a subscription plan.");
+            return
+        }
+        SetEarlyLoading(true);
+        try {
+            const token = localStorage.getItem('Candidate_token');
+             const decodedToken = jwtDecode(token);
+                const userId = decodedToken?._id;
+           
+
+            const response = await axios.post(
+                `${BaseUrl}candidate/payment`,
+                {
+                    userId:userId, subId:sub_id
+                }
+            );
+            if (response.status === 200||response.status === 201) {
+              
+                const paymentLink = response?.data?.payment_link;
+                if (paymentLink) {
+                    window.open(paymentLink, '_blank');
+                }
+            }
+            RunEarlyBuy_verify(response?.data);
+        } catch (error) {
+            console.error('Error during payment initiation:', error);
+        }
+    };
+    let toUpIntervelId;
+    let ToptimeoutId 
+    const fetch_EarlyBuy_success_status = async (data) => {
+        try {
+            const token = localStorage.getItem('Candidate_token');
+             const decodedToken = jwtDecode(token);
+                const userId = decodedToken?._id;
+
+            const response = await axios.post(
+                `${BaseUrl}candidate/verify`,
+                {
+                    orderId: data?.order_id,
+                    subscriptionId: data?.subscription_id,
+                    userId: userId,
+                    paymentMethod:data?.payment_methods
+                }
+            );
+            if (response?.status === 200 || response?.status === 201) {
+                SetEarlyLoading(false);
+                clearInterval(toUpIntervelId); 
+                clearTimeout(ToptimeoutId);
+                SetOrderID(response?.data?.orderId);
+                SetSuccessModal(true)
+               await fetch_Subscrtipion();
+               await fetch_CurrentSubscrtipion();
+            }
+        } catch (error) {
+            console.error('Error during verification:', error);
+        }
+    };
+
+    function RunEarlyBuy_verify(data) {
+        toUpIntervelId = setInterval(() => {
+            fetch_EarlyBuy_success_status(data);
+        }, 1000); 
+
+         ToptimeoutId = setTimeout(() => {
+            clearInterval(toUpIntervelId);
+        }, 1000 * 60 * 5);
+    }
+
+
+
 
     return (
         <>
+         {SuccessModal && (
+                <Modal
+                    show={SuccessModal}
+                    onHide={() => SetSuccessModal(false)}
+                    size="sm"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter ">
+                            <h4 className="text-success">
+                                {' '}
+                                Payment Sucessfull !
+                            </h4>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Order ID:{orderID}</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            onClick={() => SetSuccessModal(prev => !prev)}
+                            style={{ width: '100%', background: '#3B96E1' }}
+                        >
+                            OK
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            )}
+             {locading ? (
+                <div className="loader-div">
+                    <Loader />
+                </div>
+            ) : (
+                ''
+            )}
             <div className="plan">
                 <p>Subscription plans</p>
                 <hr />

@@ -11,6 +11,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import Loader from '../loader/Loader';
+import { toast } from 'react-toastify';
 let promoteJob = {};
 const CreateJob = () => {
     const {
@@ -38,7 +39,22 @@ const CreateJob = () => {
     const [jobId, setJob_id] = useState('');
     const [PromoteLoading, SetPromoteLoading] = useState(null);
 
-    const handleClose = () => setLgShow(preve => !preve);
+    const handleClose = () => {
+        const jobPosting0 = job_status?.SubscriptionStatus[0]?.job_posting || 0;
+        const jobPosting1 = job_status?.SubscriptionStatus[1]?.job_posting || 0;
+    
+        if (jobPosting0 + jobPosting1 === 0) {
+            if (!job_status?.SubscriptionStatus[0]) {
+                toast.error("Please buy a subscription plan");
+            } else {
+                toast.error("Please upgrade your subscription plan");
+            }
+            return;
+        }
+    
+        setLgShow(prev => !prev);
+    };
+    
 
     const handleToggleDropdown = index => {
         setIsDropdownOpen(prevState => (prevState === index ? null : index)); // Toggle dropdown
@@ -149,8 +165,6 @@ const CreateJob = () => {
     // Add event listener on component mount and clean up on unmount
     useEffect(() => {
         window.addEventListener('resize', handleResize);
-
-        // Clean up the event listener when the component is unmounted
         return () => {
             window.removeEventListener('resize', handleResize);
         };
@@ -203,12 +217,17 @@ const CreateJob = () => {
                             Create a Job{' '}
                             <span>
                                 (
-                                {
-                                    job_status?.SubscriptionStatus[0]
-                                        ?.AdminSubscription[0]?.job_posting
-                                }
+                                    {
+    (job_status?.SubscriptionStatus[0]?.AdminSubscription[0]?.job_posting || 0) + 
+    (job_status?.SubscriptionStatus[1]?.AdminSubscription[0]?.job_posting || 0)
+}
+
                                 /
-                                {job_status?.SubscriptionStatus[0]?.job_posting}{' '}
+                                {
+                                    (job_status?.SubscriptionStatus[0]?.job_posting || 0) + 
+                                    (job_status?.SubscriptionStatus[1]?.job_posting || 0)
+                                }
+                                {' '}
                                 remaining)
                             </span>
                         </Button>
@@ -286,7 +305,10 @@ const CreateJob = () => {
                                 <div className="card-job">
                                     <div className="job-head">
                                         <h6>{item?.job_title}</h6>
-
+                                        {item?.Green_Batch?
+                                        <img src={Verified} alt="Verified" width="19" style={{marginTop:'-7px',marginLeft:'-10px'}} />
+                                        :null
+                                        }
                                         <img
                                             src={hamburger}
                                             alt=""

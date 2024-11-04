@@ -14,7 +14,7 @@ import { CreateJobContext } from '../../../../context/CreateJobContext';
 import Loader from '../../loader/Loader';
 
 const CreateNewJob = () => {
-    const { lgShow, setLgShow, initiate_Payment, paymentLoading } =
+    const { lgShow, setLgShow, initiate_Payment, paymentLoading, fetch_job_status } =
         useContext(CreateJobContext);
     const [createJobData, setcreateJobData] = useState({
         job_title: '',
@@ -151,6 +151,7 @@ const CreateNewJob = () => {
             if (response?.status == 201 || response?.status == 200) {
                 toast.success('Job created successfully');
                 setLgShow(false);
+                await fetch_job_status()
             }
         } catch (error) {
             toast.error(error?.response?.data?.error);

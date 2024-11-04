@@ -245,7 +245,7 @@ export const HireCandidateProvider = ({ children }) => {
                 candidateNoti,
                 show,
                 setShow,
-                Identity,profile,greenBatch,
+                Identity,profile,greenBatch,SetIdentity,SetProfile,
                 CompanyProfile
             }}
         >

@@ -10,6 +10,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { SearchJobContext } from '../../../context/candidateContext/SearchJobContext';
 import BaseUrl from '../../../services/BaseUrl';
 import axios from 'axios';
+import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
 const SearchJob = () => {
     const locate = useLocation();
 
@@ -24,6 +26,9 @@ const SearchJob = () => {
         visibleItems,
         setVisibleItems
     } = useContext(SearchJobContext);
+    const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
 
     const [SearchData, SetSearchData] = useState({
         search: '',
@@ -43,7 +48,7 @@ const SearchJob = () => {
         }));
     };
 
-    console.log('Serach Input', SearchData);
+   
 
     // api for seacrch Data
     const handleSearch = async e => {
@@ -100,6 +105,10 @@ const SearchJob = () => {
 
     // function for Apply job
     const ApplyTOJob = id => {
+        if(CandidateProfile?.profileCompletionPercentage!=100){
+            toast.error("Please complete your profile before apply jobs.");
+        return 
+        }
         applyTo_job(id);
     };
 
@@ -110,6 +119,7 @@ const SearchJob = () => {
 
     useEffect(() => {
         fetch_search_job();
+        fetchCandidateProfile();
     }, [locate]);
 
     // Animation code

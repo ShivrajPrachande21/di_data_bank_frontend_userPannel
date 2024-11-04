@@ -100,12 +100,10 @@ const CompanyLogin = () => {
                     setresponseOtp(company_otp);
                     toast.success(response?.data?.message);
                 } else if (Candidate_token) {
-                    navigate('/candidate-dashboard');
+                    navigate('/candidate-dashboard/search-job');
                     toast.success(response?.data?.message);
                 }
 
-                console.log('OTP response', company_otp);
-                // navigate('/main');
 
                 clearStates();
                 // Navigate to dashboard or any other page
@@ -159,7 +157,7 @@ const CompanyLogin = () => {
                 if (response.status === 200) {
                     // Navigate on success
                     toast.success('Login successful!');
-                    navigate('/main');
+                    navigate('/main/dashboard');
                     clearStates();
                 } else {
                     toast.error('Unexpected response from server.');

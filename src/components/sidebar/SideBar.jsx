@@ -26,10 +26,15 @@ import HireCandidateNotification from '../../company-pannel/pages/company_Notifi
 import GreenBatch from "../../company-pannel/pages/GreenBatch/GreenBatch";
 import Verified from '../../assets/images/Verified.png';
 import {useSubscription} from '../../context/SubscriptionContext';
+import { CandidateProfileContext } from '../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
 const SideBar = () => {
-    const { handleCloseHire, showHire, show, setShow ,Identity,profile,greenBatch,CompanyProfile} =
+    const { handleCloseHire, showHire, show, setShow ,Identity,SetIdentity,profile,greenBatch,CompanyProfile,SetProfile} =
         useContext(HireCandidateContext);
        const { ShowGreen,SetGreenBatch}=useSubscription()
+       const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
     const navigate = useNavigate();
     const [hidelogout, sethidelogout] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
@@ -46,36 +51,28 @@ const SideBar = () => {
         setActiveButton(buttonId);
     };
     const handle_logOut = async () => {
-        const email = localStorage.getItem('email');
-        console.log(email);
+       // const email = localStorage.getItem('email');
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const company_id = decodedToken?._id;
         try {
             const response = await axios.post(`${BaseUrl}company/logout`, {
-                email
+                company_id
             });
             if (response.status === 200) {
                 localStorage.removeItem('companyToken');
                 localStorage.removeItem('email');
                 navigate('/');
             }
-        } catch (error) {}
+        } catch (error) {
+            toast.error(`${error.response?.data?.error}`)
+        }
     };
 
     // handle Logout Candidate
     const handle_logOut_candidate = async () => {
-        // const email = localStorage.getItem('email');
-        // console.log(email);
-
+        localStorage.removeItem('Candidate_token');
         navigate('/');
-        // try {
-        //     const response = await axios.post(`${BaseUrl}company/logout`, {
-        //         email
-        //     });
-        //     if (response.status === 200) {
-        //         localStorage.removeItem('Candidate_token');
-        //         localStorage.removeItem('');
-        //         navigate('/');
-        //     }
-        // } catch (error) {}
     };
 
     const sidebarButtons = [
@@ -168,8 +165,8 @@ const SideBar = () => {
     const [notiCount, SetCount] = useState([]);
     const [profileview,SetProfileView]=useState([])
     const [shortlist,SetShortlist]=useState([])
-
-    async function CandidateProfile(id){
+    const [RenderVerify,SetRenderVerify]=useState('')
+    async function CandidateProfiles(id){
         try {
            const response = await axios.get(`${BaseUrl}candidate.profile/details/${id}`);
            if (response.status === 200) {
@@ -213,7 +210,7 @@ const SideBar = () => {
             const token = localStorage.getItem('Candidate_token');
             const decodedToken = jwtDecode(token);
             const candidate_id = decodedToken?._id;
-            CandidateProfile(candidate_id)
+            CandidateProfiles(candidate_id)
             socket.connect();
 
             socket.emit('CandidateIssuenotification', candidate_id);
@@ -262,17 +259,21 @@ const SideBar = () => {
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
 
+
     useEffect(() => {
         const render = localStorage.getItem('render');
+        SetRenderVerify(render)
         if (render == 'candidate') {
             const Candiatetoken = localStorage.getItem('Candidate_token');
 
             const decodedToken = jwtDecode(Candiatetoken);
             const company_id = decodedToken?._id;
             setCandidateToken(company_id);
+            fetchCandidateProfile()
         } else {
         }
     }, []);
+    
 
     return (
         <>
@@ -440,7 +441,8 @@ const SideBar = () => {
                         }}
                         className="User-pannel-percentage"
                     >
-                        {greenBatch&&greenBatch?.length==0?(
+                        {RenderVerify=='company'?
+                        (greenBatch&&greenBatch?.length==0?(
                            <h1 style={{ border: '1.32px solid #3B96E1' }} onClick={()=>SetGreenBatch(true)}>
                            Get Verified Batch
                            <img
@@ -460,7 +462,20 @@ const SideBar = () => {
                                             />
                         </h1>   
                         )
-                        }
+                    ):
+                    (CandidateProfile?.profileCompletionPercentage==100?
+                        (
+                            <h1 style={{ border: '1.32px solid #3B96E1' }}>
+                            Profile verified
+                            <img
+                                                src={Verified}
+                                                alt="Verified"
+                                                width="19"
+                                            />
+                        </h1>  
+                        )
+                        :null)
+                    }
                        
                     </Col>
                 </Row>

@@ -36,7 +36,6 @@ const Login = () => {
                 navigate('/company-login');
                 toast.success('Login successful!');
                 clearStates();
-                // Navigate to dashboard or any other page
                 navigate('main/dashboard');
             }
         } catch (error) {
@@ -55,7 +54,6 @@ const Login = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log('lOGIN DATA', login);
         await handleLogin(login);
     };
     return (

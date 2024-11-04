@@ -5,23 +5,33 @@ import { Button, Image } from 'react-bootstrap';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppliedJobs from './../appliedJobs/AppliedJobs';
+import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
 const SavedJobs = () => {
     const { applyTo_job } = useContext(SearchJobContext);
     const { fetchSavedJob, savedJobData } = useContext(AppliedJobContext);
     const locate = useLocation();
     const navigate = useNavigate();
-    console.log('savedJobData', savedJobData);
+    const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
     const formatDate = dateString => {
         const options = { day: '2-digit' };
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
 
     const handleApply = async id => {
+        if(CandidateProfile?.profileCompletionPercentage!=100){
+            toast.error("Please complete your profile before apply jobs.");
+            return 
+
+        }
         await applyTo_job(id);
         await fetchSavedJob();
     };
     useEffect(() => {
         fetchSavedJob();
+        fetchCandidateProfile();
     }, [locate]);
 
     const handleNavigate = async id => {

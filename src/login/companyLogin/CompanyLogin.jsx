@@ -120,7 +120,6 @@ const CompanyLogin = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         if (emailError || CompanyLogindata.email.trim() === '') {
-            // Don't submit the form and show an alert or a message
             setEmailError('Please enter valid Email.');
             return;
         }
@@ -186,7 +185,7 @@ const CompanyLogin = () => {
             otp: OTP
         }));
     }, [otp]);
-    // console.log('COmpany Login data', CompanyLogindata);
+
     return (
         <>
             <div className="login-main">

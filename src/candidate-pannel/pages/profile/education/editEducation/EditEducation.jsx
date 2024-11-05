@@ -17,16 +17,14 @@ const EditEducation = () => {
     });
 
     const [rows, setRows] = useState([
-        { 
-            Certificate: '', image: null, fileInputRef: React.createRef() }
+        { Certificate: '', image: null, imageUrl: '', imageName: '', fileInputRef: React.createRef() }
     ]);
 
     const addCertificateRow = (e) => {
         e.preventDefault();
         setRows([
             ...rows,
-            { 
-                Certificate: '', image: null, fileInputRef: React.createRef() }
+            { Certificate: '', image: null, imageUrl: '', imageName: '', fileInputRef: React.createRef() }
         ]);
     };
 
@@ -40,8 +38,7 @@ const EditEducation = () => {
 
     const handleCertificateInputChange = (index, e) => {
         const updatedRows = [...rows];
-        updatedRows[index].
-        Certificate = e.target.value; 
+        updatedRows[index].Certificate = e.target.value; 
         setRows(updatedRows);
         setEducationData((prevData) => ({
             ...prevData,
@@ -51,7 +48,21 @@ const EditEducation = () => {
 
     const handleFileChange = (index, e) => {
         const updatedRows = [...rows];
-        updatedRows[index].image = e.target.files[0];
+        const file = e.target.files[0];
+        
+        updatedRows[index].image = file;
+        updatedRows[index].imageName = file ? file.name : '';
+        updatedRows[index].imageUrl = ''; // Clear previous image URL if a new image is uploaded
+        
+        setRows(updatedRows);
+        setEducationData((prevData) => ({
+            ...prevData,
+            certificates: updatedRows
+        }));
+    };
+
+    const handleDeleteCertificateRow = (index) => {
+        const updatedRows = rows.filter((_, rowIndex) => rowIndex !== index);
         setRows(updatedRows);
         setEducationData((prevData) => ({
             ...prevData,
@@ -78,7 +89,13 @@ const EditEducation = () => {
                 articles: articles || '',
                 certificates: certificates || []
             });
-            setRows(certificates);
+            setRows(certificates.map(cert => ({
+                ...cert,
+                image:null, 
+                imageUrl: cert.image || '', 
+                imageName: cert.imageName || '',
+                fileInputRef: React.createRef()
+            })));
         } catch (error) {
             console.error('Error fetching education details', error);
         }
@@ -98,7 +115,7 @@ const EditEducation = () => {
         formData.append('articles', educationData.articles);
 
         rows.forEach((cert, index) => {
-            formData.append(`certificates[${index}][certificateName]`, cert.certificateName);
+            formData.append(`certificates[${index}][certificateName]`, cert.Certificate);
             if (cert.image) {
                 formData.append(`certificates[${index}][image]`, cert.image);
             }
@@ -116,7 +133,7 @@ const EditEducation = () => {
             }
         } catch (error) {
             toast.error(
-                `${error.response?.data?.error || 'Error updating details'}`
+                `${error.response?.data?.error || 'Error updating details'}` 
             );
         }
     };
@@ -171,8 +188,8 @@ const EditEducation = () => {
                     />
                 </Form.Group>
                 {rows.map((cert, index) => (
-                    <Row key={index}>
-                        <Col xs={7}>
+                    <Row key={index} className="align-items-center">
+                        <Col xs={5}>
                             <Form.Label className="edit-label-edu" style={{ fontSize: '0.8rem', fontWeight: '500' }}>
                                 Certificate name
                             </Form.Label>
@@ -185,14 +202,26 @@ const EditEducation = () => {
                                 required
                             />
                         </Col>
-                        <Col xs={5}>
+                        <Col xs={4}>
                             <button
                                 className="education-btn"
                                 type="button"
                                 onClick={() => cert.fileInputRef.current.click()}
                             >
-                                 Browse from files
-                               
+                                {cert.imageName ? (
+                                    <span style={{fontSize:'0.4rem'}}>{cert.imageName} (Click to Replace)</span>
+                                ) : cert.imageUrl ? (
+                                    <span >
+                                        <img
+                                            src={cert.imageUrl}
+                                            alt="Existing certificate"
+                                            style={{ width: '20px', height: '20px', marginRight: '5px' }}
+                                        />
+                                        Replace Image
+                                    </span>
+                                ) : (
+                                    'Browse from files'
+                                )}
                                 <input
                                     type="file"
                                     ref={cert.fileInputRef}
@@ -201,11 +230,14 @@ const EditEducation = () => {
                                 />
                             </button>
                         </Col>
+                        <Col xs={1}>
+                            <Button style={{marginTop:'24px'}} size='sm' variant="primary" onClick={() => handleDeleteCertificateRow(index)}>X</Button>
+                        </Col>
                     </Row>
                 ))}
 
                 <button className="add-certi" type="button" onClick={addCertificateRow}>
-                    <img src={whiteplus} alt="" /> Add Certificate
+                    Add Certificate
                 </button>
 
                 <div className="text-end">
@@ -225,5 +257,6 @@ const EditEducation = () => {
         </div>
     );
 };
+
 
 export default EditEducation;

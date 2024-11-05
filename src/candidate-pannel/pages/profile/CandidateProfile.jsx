@@ -265,7 +265,7 @@ const CandidateProfile = () => {
                                 style={getButtonStyle('my-detials')}
                                 onClick={() => handleNavigate('my-detials')}
                             >
-                                My Detials
+                                My Details
                             </Button>
                             <Button
                                 size="sm"

@@ -15,11 +15,11 @@ import Loader from '../../loader/Loader';
 import { useSubscription } from '../../../../context/SubscriptionContext';
 let renew_buy = {};
 const Renew = () => {
-    const { RenewData, paymentLoading } = useSubscription();
-    const [EarlyBuyPaymentData, setEarlyBuyPaymentData] = useState();
+    const { RenewData} = useSubscription();
     const [EarlyBuyID, setEarlyBuyID] = useState('');
     const [RenewLoading, SetRenewLoading] = useState(null);
     const [modalShowhide, setModalShow] = React.useState(false);
+    const [orderId,SetOrderId]=useState('')
 
     const data1 = RenewData?.CurrentSubscription?.plane_name;
     // const { orderId, status } = useParams();
@@ -44,21 +44,20 @@ const Renew = () => {
                 }
             );
             if (response.status === 200) {
-                renew_buy = response?.data;
-                setEarlyBuyPaymentData(response?.data);
-
                 const paymentLink = response?.data?.paymentLink;
                 if (paymentLink) {
                     window.open(paymentLink, '_blank');
                 }
             }
-            RunRenew_verify();
+            RunRenew_verify(response?.data);
         } catch (error) {
             console.error('Error during payment initiation:', error);
         }
     };
-
-    const fetch_Renew_success_status = async () => {
+   
+let toUpIntervelId;
+let ToptimeoutId;
+    const fetch_Renew_success_status = async (data) => {
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
@@ -67,38 +66,33 @@ const Renew = () => {
             const response = await axios.post(
                 `${BaseUrl}company/renewPlane/verify`,
                 {
-                    orderId: renew_buy?.order_id,
-                    subscription_id: renew_buy?.subscription_id,
+                    orderId: data?.order_id,
+                    subscription_id: data?.subscription_id,
                     company_id: companyId,
-                    paymentMethod: 'cahfree'
+                    paymentMethod:data?.payment_methods
                 }
             );
             if (response?.status === 200 || response?.status === 201) {
                 SetRenewLoading(false);
-                window.location.reload();
+                clearInterval(toUpIntervelId); 
+                clearTimeout(ToptimeoutId); 
+                setModalShow(true);
+                SetOrderId(response?.data?.orderId)
             }
         } catch (error) {
             console.error('Error during verification:', error);
         }
     };
 
-    function RunRenew_verify() {
-        const toUpIntervelId = setInterval(() => {
-            fetch_Renew_success_status();
+    function RunRenew_verify(data) {
+         toUpIntervelId = setInterval(() => {
+            fetch_Renew_success_status(data);
         }, 1000); // Call every 1 second
 
-        const ToptimeoutId = setTimeout(() => {
+        ToptimeoutId = setTimeout(() => {
             clearInterval(toUpIntervelId);
         }, 1000 * 60 * 5);
 
-        // Watch paymentLoading and clear intervals if it's false
-        const checkPaymentLoading = setInterval(() => {
-            if (paymentLoading === false) {
-                clearInterval(toUpIntervelId); // Clear the interval for get_payment_success_status
-                clearTimeout(ToptimeoutId); // Clear the 5-minute timeout
-                clearInterval(checkPaymentLoading); // Clear this watcher interval
-            }
-        }, 500);
     }
 
     useEffect(() => {
@@ -106,16 +100,13 @@ const Renew = () => {
             SetRenewLoading(true);
         }
     }, []);
-    useEffect(() => {
-        console.log('RenewData', RenewData);
-    }, []);
     return (
         <>
-            {RenewLoading && (
+            {modalShowhide && (
                 <Modal
                     show={modalShowhide}
                     onHide={() => setModalShow(false)}
-                    size="lg"
+                    size="sm"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                 >
@@ -128,7 +119,7 @@ const Renew = () => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Order ID:</p>
+                        <p>Order ID:{orderId}</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -150,7 +141,7 @@ const Renew = () => {
                 ''
             )}
             <div className="plan">
-                <p> Plans for Early Buy Plans</p>
+                <p>Renew Buy Plans</p>
                 <hr />
                 <div className="sub-cards">
                     {RenewData?.getSubscriptionPlans?.map((item, index) => (

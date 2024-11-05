@@ -3,6 +3,7 @@ import { Button, Col, Image } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Verified from '../../../../assets/images/Verified.png';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
+import altprofile from '../../../../assets/images/altprofile.jpg';
 
 const AppliedJobs = () => {
     const { id } = useParams();
@@ -31,7 +32,7 @@ const AppliedJobs = () => {
                           >
                               <div className="search-job-top">
                                   <Image
-                                      src={item?.profileUrl}
+                                      src={item?.profileUrl?item?.profileUrl:altprofile}
                                       roundedCircle
                                       alt="Profile"
                                       width="40" // Set the desired width
@@ -53,8 +54,7 @@ const AppliedJobs = () => {
                                       </p>
                                   </h6>
                                   <div className="green-thik">
-                                      {item?.company_details?.verified_batch
-                                          .length > 0 ? (
+                                      {item?.Green_Batch?(
                                           <img
                                               src={Verified}
                                               alt=""
@@ -88,7 +88,7 @@ const AppliedJobs = () => {
                                           <td>
                                               {' '}
                                               <span className="card-table-span">
-                                                  {item?.experience} Years
+                                                  {item?.experience?item?.experience:'N/A'} Years
                                               </span>
                                           </td>
                                       </tr>
@@ -105,7 +105,7 @@ const AppliedJobs = () => {
                                           <td>
                                               {' '}
                                               <span className="card-table-span">
-                                                  {item?.location}
+                                                  {item?.location?item?.location:'N/A'}
                                               </span>
                                           </td>
                                       </tr>
@@ -122,7 +122,7 @@ const AppliedJobs = () => {
                                           <td>
                                               {' '}
                                               <span className="card-table-span">
-                                                  {item?.salary} LPA
+                                                  {item?.salary?item?.salary:'N/A'} LPA
                                               </span>
                                           </td>
                                       </tr>
@@ -139,7 +139,7 @@ const AppliedJobs = () => {
                                           <td>
                                               {' '}
                                               <span className="card-table-span">
-                                                  {item?.education}
+                                                  {item?.education?item?.education:'N/A'}
                                               </span>
                                           </td>
                                       </tr>
@@ -257,7 +257,11 @@ const AppliedJobs = () => {
                               </div>
                           </div>
                       ))
-                    : ''}
+                    : (
+                        <div className="no-jobs-container">
+                        <span>You haven't applied to any jobs yet.</span>
+                      </div>
+                    )}
             </div>
         </>
     );

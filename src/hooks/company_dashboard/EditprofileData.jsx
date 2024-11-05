@@ -4,7 +4,6 @@ import BaseUrl from '../../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import { Prev } from 'react-bootstrap/esm/PageItem';
-
 // Custom hook to handle form submission
 const EditprofileData = url => {
     const [loading, setLoading] = useState(false);
@@ -58,9 +57,7 @@ const EditprofileData = url => {
             if (response.status === 200) {
                 toast.success('Profile updated successfully');
                 setLgShow(prev => !prev);
-
                 setSuccess(response.data);
-
                 return response.status;
             }
 

@@ -5,26 +5,37 @@ import Rupees1 from '../../../../assets/images/Rupees1.png';
 import rupeeblue from '../../../../assets/images/rupeeblue.png';
 import CardCheck from '../../../../assets/images/CardCheck.png';
 import bluetick from '../../../../assets/images/bluetick.png';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner ,Modal} from 'react-bootstrap';
 
 import axios from 'axios';
+import { differenceInDays, isAfter } from 'date-fns';
 import BaseUrl from '../../../../services/BaseUrl';
 import { useSubscription } from '../../../../context/SubscriptionContext';
 import Loader from '../../loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import useProfileData from '../../../../hooks/company_dashboard/useProfiledata';
+import { toast } from 'react-toastify';
 
 const Subscriptions = () => {
+    const { profileData,fetchProfileData} = useProfileData();
     const {
         subscriptionData,
         loading,
         fetch_all_subscription,
         initiatePayment,
-        paymentLoading
+        paymentLoading,
+        modalShow,SetmodalShow,
+        SubId,SetSubId
     } = useSubscription();
     const navigate = useNavigate();
     const data1 = subscriptionData?.CurrentSubscription[0]?.plane_name;
     const data2 = subscriptionData?.getSubscriptionPlans[0]?.plane_name;
-    console.log('dada', subscriptionData);
+    const [progress, setProgress] = useState(0);
+
+    const currentDate = new Date();
+const expiresAt = subscriptionData?.CurrentSubscription[0]?.expiresAt ? new Date(subscriptionData?.CurrentSubscription[0].expiresAt) : null;
+const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : null;
+
     const formatDate = dateString => {
         const date = new Date(dateString);
 
@@ -72,7 +83,22 @@ const Subscriptions = () => {
 
     useEffect(() => {
         fetch_all_subscription();
+        fetchProfileData();
     }, []);
+
+    useEffect(() => {
+        if (profileData?.profileCompletionPercentage !== undefined) {
+            setProgress(profileData.profileCompletionPercentage);
+        }
+    }, [profileData]);
+
+    function BuynowSubscription(id){
+        if(progress==100){
+        initiatePayment(id)
+        }else{
+            toast.error("Please complete your profile to purchase a subscription plan.");
+        }
+    }
 
     return (
         <>
@@ -281,7 +307,7 @@ const Subscriptions = () => {
                                                 className="buybtn"
                                                 disabled={data1}
                                                 onClick={() => {
-                                                    initiatePayment(item?._id);
+                                                    BuynowSubscription(item?._id);
                                                 }}
                                             >
                                                 {data1 === item?.plane_name
@@ -310,26 +336,26 @@ const Subscriptions = () => {
                 </div>
 
                 <div className="early-renew">
-                    {data1 ? (
-                        <Button
-                            size="sm"
-                            onClick={() =>
-                                navigate('/main/subscription-plan/early-buy')
-                            }
-                        >
-                            Early Buy{' '}
-                        </Button>
-                    ) : (
-                        <Button
-                            size="sm"
-                            style={{ background: 'white', color: '#3B96E1' }}
-                            onClick={() =>
-                                navigate('/main/subscription-plan/renew')
-                            }
-                        >
-                            Renew{' '}
-                        </Button>
-                    )}
+                {expiresAt && isAfter(expiresAt, currentDate) && daysUntilExpire <= 2 ? (
+    <Button
+        size="sm"
+        style={{ background: 'white', color: '#3B96E1' }}
+        onClick={() =>
+            navigate('/main/subscription-plan/renew')
+        }
+    >
+        Renew
+    </Button>
+) :(
+    <Button
+        size="sm"
+        onClick={() =>
+            navigate('/main/subscription-plan/early-buy')
+        }
+    >
+        Early Buy
+    </Button>
+)}
                 </div>
             </div>
             <div className="plan">
@@ -391,6 +417,34 @@ const Subscriptions = () => {
                     </Button>
                     <Button size="sm">Early Buy </Button>
                 </div>
+                {modalShow && (
+              <Modal
+              show={modalShow}
+              size="sm" // Keep small size
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              className="compact-modal" // Custom class for additional styling
+          >
+              <Modal.Header closeButton style={{ padding: '0.5rem', borderBottom: 'none' }}>
+                  <Modal.Title id="contained-modal-title-vcenter" className="text-center w-100">
+                      <h6 className="text-success mb-0">🎉 Payment Successful!</h6>
+                  </Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{ padding: '0.5rem 1rem' }}>
+                  <div className="text-center">
+                      <p className="mb-1" style={{ fontSize: '0.8rem', color: '#6c757d' }}>Order ID:{SubId}</p>
+                  </div>
+              </Modal.Body>
+              <Modal.Footer style={{ padding: '0.5rem', borderTop: 'none' }}>
+                  <Button 
+                    onClick={() => { SetmodalShow(false); SetSubId(''); }}
+                      style={{ width: '100%', padding: '0.4rem 0', background: '#3B96E1', border: 'none', fontSize: '0.85rem' }}
+                  >
+                      OK
+                  </Button>
+              </Modal.Footer>
+          </Modal>
+            )}
             </div>
         </>
     );

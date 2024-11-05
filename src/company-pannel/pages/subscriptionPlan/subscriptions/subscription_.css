@@ -150,3 +150,20 @@
     ); /* Optional: Semi-transparent background */
     z-index: 9999; /* Ensure it stays on top of other elements */
 }
+
+.compact-modal .modal-content {
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.compact-modal h6 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.compact-modal p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+}

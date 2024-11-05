@@ -12,7 +12,6 @@ const useProfileData = userId => {
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
 
-    useEffect(() => {
         const fetchProfileData = async () => {
             const token = localStorage.getItem('companyToken');
 
@@ -35,11 +34,13 @@ const useProfileData = userId => {
                 setLoading(false); // Set loading to false after fetching
             }
         };
-        fetchProfileData();
-    }, [locate]); // Re-run the effect if userId changes
 
+        useEffect(()=>{
+           fetchProfileData()
+        },[locate])
+   
     // Return data, loading, and error for consumption in components
-    return { profileData, loading, error };
+    return { profileData, loading, error,fetchProfileData};
 };
 
 export default useProfileData;

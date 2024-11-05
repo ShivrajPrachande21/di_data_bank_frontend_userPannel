@@ -13,6 +13,7 @@ import Ai from '../../../assets/images/Ai.png';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import Crown from '../../../assets/images/Crown.png';
 import Verified from '../../../assets/images/Verified.png';
+import altprofile from '../../../assets/images/altprofile.jpg';
 import './hireCandidate.css';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import profileimg from '../../../assets/images/profileimg.png';
@@ -67,9 +68,12 @@ const HireCandidate = () => {
     const [selectedCandidateIds, setSelectedCandidateIds] = useState([]);
     const [buttonText, setButtonText] = useState('Download Emails');
     const [ResumeButtonText, setResumeButtonText] = useState('Download Resume');
-    const isEmail_Disabled =
-        Subscription_Data[0]?.download_email_limit === false;
-    const resume_Disabled = Subscription_Data[0]?.download_cv_limit === false;
+    const isEmail_Disabled =!(Subscription_Data[0]?.download_email_limit || Subscription_Data[1]?.download_email_limit);
+
+      //Subscription_Data[0]?.download_email_limit === false;
+    const resume_Disabled =!(Subscription_Data[0]?.download_cv_limit || Subscription_Data[1]?.download_cv_limit);
+    
+    
 
     // Handle the "select all" checkbox change
     const handleSelectAllChange = e => {
@@ -105,7 +109,6 @@ const HireCandidate = () => {
     };
 
     const download_emails = async () => {
-        console.log('selected candidate id', selectedCandidateIds);
         if (isEmail_Disabled) {
             toast.error('Buy Premium Plan');
         } else {
@@ -170,8 +173,14 @@ const HireCandidate = () => {
     useEffect(() => {
         fetchCandidates();
     }, []);
-    console.log('appliedcandidate', appliedcandidate);
-    console.log('Selected Candidate IDs:', selectedCandidateIds);
+    const searchLimit = Subscription_Data[1]?.search_limit === 'Unlimited'
+        ? Subscription_Data[1]?.search_limit
+        : Subscription_Data[0]?.search_limit === 'Unlimited'
+        ? Subscription_Data[0]?.search_limit
+        : Subscription_Data[0]?.search_limit !== 0 
+        ? Subscription_Data[0]?.search_limit
+        : Subscription_Data[1]?.search_limit || "";
+
 
     return (
         <div className="hire-candidate">
@@ -230,9 +239,7 @@ const HireCandidate = () => {
                         }}
                     >
                         ({' '}
-                        {Subscription_Data[0]?.search_limit == 'Unlimited'
-                            ? 'Unlimited'
-                            : Subscription_Data[0]?.search_limit}
+                       {searchLimit}
                         <span style={{ marginLeft: '3px' }}>Search left</span>)
                     </p>
                 </Col>
@@ -315,9 +322,10 @@ const HireCandidate = () => {
                                     <img
                                         src={
                                             appliedcandidate[0]
-                                                ?.candidateDetails?.profile
+                                                ?.candidateDetails?.profile? appliedcandidate[0]
+                                                ?.candidateDetails?.profile:altprofile
                                         }
-                                        alt=""
+                                        style={{width:'100%',height:'100%'}}
                                     />
                                 </div>
                                 <div className="result-text">
@@ -325,30 +333,33 @@ const HireCandidate = () => {
                                         {candidate?.basicDetails[0]?.name}
 
                                         {/* Tool-tip componet */}
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <div
-                                                    style={{
-                                                        position: 'absolute',
-                                                        backgroundColor:
-                                                            'white',
-                                                        padding: '2px 10px',
-                                                        color: '#008000',
-                                                        borderRadius: 3,
-                                                        border: '1px solid #008000'
-                                                    }}
-                                                >
-                                                    verified
-                                                </div>
-                                            }
-                                        >
-                                            <img
-                                                src={Verified}
-                                                alt="Verified"
-                                                width="19"
-                                            />
-                                        </OverlayTrigger>
+                                        {candidate?.personalDetails[0]?.Aadhar_verified_status && 
+ candidate?.personalDetails[0]?.Pan_verified_status ? (
+    <OverlayTrigger
+        placement="top"
+        overlay={
+            <div
+                style={{
+                    position: 'absolute',
+                    backgroundColor: 'white',
+                    padding: '2px 10px',
+                    color: '#008000',
+                    borderRadius: 3,
+                    border: '1px solid #008000'
+                }}
+            >
+                Verified
+            </div>
+        }
+    >
+        <img
+            src={Verified}
+            alt="Verified"
+            width="19"
+        />
+    </OverlayTrigger>
+) : null}
+
                                     </h4>
                                     <p>
                                         {

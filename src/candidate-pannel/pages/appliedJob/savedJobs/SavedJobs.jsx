@@ -1,27 +1,38 @@
 import React, { useContext, useEffect } from 'react';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
 import Verified from '../../../../assets/images/Verified.png';
+import altprofile from '../../../../assets/images/altprofile.jpg';
 import { Button, Image } from 'react-bootstrap';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppliedJobs from './../appliedJobs/AppliedJobs';
+import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
 const SavedJobs = () => {
     const { applyTo_job } = useContext(SearchJobContext);
     const { fetchSavedJob, savedJobData } = useContext(AppliedJobContext);
     const locate = useLocation();
     const navigate = useNavigate();
-    console.log('savedJobData', savedJobData);
+    const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
     const formatDate = dateString => {
         const options = { day: '2-digit' };
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
 
     const handleApply = async id => {
+        if(CandidateProfile?.profileCompletionPercentage!=100){
+            toast.error("Please complete your profile before apply jobs.");
+            return 
+
+        }
         await applyTo_job(id);
         await fetchSavedJob();
     };
     useEffect(() => {
         fetchSavedJob();
+        fetchCandidateProfile();
     }, [locate]);
 
     const handleNavigate = async id => {
@@ -38,10 +49,12 @@ const SavedJobs = () => {
                               key={index}
                           >
                               <div className="search-job-top">
+                                
                                   <Image
-                                      src={item?.profileUrl}
+                                      src={item?.profileUrl?item?.profileUrl:altprofile}
+                                     
                                       roundedCircle
-                                      alt="Profile"
+                                    // alt={altprofile}
                                       width="40" // Set the desired width
                                       height="40" // Set the desired height
                                   />
@@ -61,8 +74,7 @@ const SavedJobs = () => {
                                       </p>
                                   </h6>
                                   <div className="green-thik">
-                                      {item?.company_details?.verified_batch
-                                          .length > 0 ? (
+                                      {item?.Green_Batch?(
                                           <img
                                               src={Verified}
                                               alt=""
@@ -212,7 +224,11 @@ const SavedJobs = () => {
                               </div>
                           </div>
                       ))
-                    : ''}
+                    :(
+                        <div className="no-jobs-container">
+                        <span>No jobs have been saved.</span>
+                      </div>
+                    )}
             </div>
         </>
     );

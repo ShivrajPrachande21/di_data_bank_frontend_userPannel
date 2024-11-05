@@ -138,3 +138,25 @@
     font-weight: 400;
     line-height: 18px;
 }
+
+.no-jobs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 16rem;
+    height: 60vh;
+    text-align: center;
+    font-size: 2rem;
+    color: #555;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.no-jobs-container span {
+    padding: 20px;
+    border: 2px solid #3B96E1; 
+    border-radius: 8px; 
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    color: #3B96E1; 
+}

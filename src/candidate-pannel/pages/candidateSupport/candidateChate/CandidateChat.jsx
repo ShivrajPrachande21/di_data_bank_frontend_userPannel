@@ -7,8 +7,8 @@ import avatar from '../../../../assets/images/avatar.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
-// const socket = io('http://localhost:4000');
-const socket = io('http://65.20.91.47:4000');
+const socket = io('http://localhost:4000');
+
 function CandidateChat() {
     const { id } = useParams();
 

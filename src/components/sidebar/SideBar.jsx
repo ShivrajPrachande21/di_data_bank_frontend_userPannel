@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
-const socket = io('http://localhost:4000');
+const socket = io('http://65.20.91.47:4000');
 import './sidebar.css';
 import bellgray from '../../assets/images/bellgray.png';
 import logoutButton from '../../assets/images/logoutButton.png';
@@ -23,16 +23,24 @@ import BaseUrl from '../../services/BaseUrl';
 import CompanyNotification from '../../company-pannel/pages/company_Notification/CompanyNotification';
 import { HireCandidateContext } from '../../context/HireCandidateContex';
 import HireCandidateNotification from '../../company-pannel/pages/company_Notification/HireCandidateNotification';
+import GreenBatch from "../../company-pannel/pages/GreenBatch/GreenBatch";
+import Verified from '../../assets/images/Verified.png';
+import altprofile from '../../assets/images/altprofile.jpg';
+import {useSubscription} from '../../context/SubscriptionContext';
+import { CandidateProfileContext } from '../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
 const SideBar = () => {
-    const { handleCloseHire, showHire, SetShowHire, show, setShow } =
+    const { handleCloseHire, showHire, show, setShow ,Identity,SetIdentity,profile,greenBatch,CompanyProfile,SetProfile} =
         useContext(HireCandidateContext);
+       const { ShowGreen,SetGreenBatch}=useSubscription()
+       const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
     const navigate = useNavigate();
     const [hidelogout, sethidelogout] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
     const [candidateToken, setCandidateToken] = useState('');
-    const [Identity,SetIdentity]=useState(null)
-    const [profile,SetProfile]=useState(null)
 
     const handleClose = () => setShow(prev => !prev);
     const handleShow = () => setShow(prev => !prev);
@@ -44,36 +52,28 @@ const SideBar = () => {
         setActiveButton(buttonId);
     };
     const handle_logOut = async () => {
-        const email = localStorage.getItem('email');
-        console.log(email);
+       // const email = localStorage.getItem('email');
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const company_id = decodedToken?._id;
         try {
             const response = await axios.post(`${BaseUrl}company/logout`, {
-                email
+                company_id
             });
             if (response.status === 200) {
                 localStorage.removeItem('companyToken');
                 localStorage.removeItem('email');
                 navigate('/');
             }
-        } catch (error) {}
+        } catch (error) {
+            toast.error(`${error.response?.data?.error}`)
+        }
     };
 
     // handle Logout Candidate
     const handle_logOut_candidate = async () => {
-        // const email = localStorage.getItem('email');
-        // console.log(email);
-
+        localStorage.removeItem('Candidate_token');
         navigate('/');
-        // try {
-        //     const response = await axios.post(`${BaseUrl}company/logout`, {
-        //         email
-        //     });
-        //     if (response.status === 200) {
-        //         localStorage.removeItem('Candidate_token');
-        //         localStorage.removeItem('');
-        //         navigate('/');
-        //     }
-        // } catch (error) {}
     };
 
     const sidebarButtons = [
@@ -166,18 +166,8 @@ const SideBar = () => {
     const [notiCount, SetCount] = useState([]);
     const [profileview,SetProfileView]=useState([])
     const [shortlist,SetShortlist]=useState([])
-
-   async function CompanyProfile(id){
-         try {
-            const response = await axios.get(`${BaseUrl}company/profile/details/${id}`);
-            if (response.status === 200) {
-                SetIdentity(response?.data.name)
-                SetProfile(response?.data.profile)
-            }
-        } catch (error) {}
-    }
-
-    async function CandidateProfile(id){
+    const [RenderVerify,SetRenderVerify]=useState('')
+    async function CandidateProfiles(id){
         try {
            const response = await axios.get(`${BaseUrl}candidate.profile/details/${id}`);
            if (response.status === 200) {
@@ -221,7 +211,7 @@ const SideBar = () => {
             const token = localStorage.getItem('Candidate_token');
             const decodedToken = jwtDecode(token);
             const candidate_id = decodedToken?._id;
-            CandidateProfile(candidate_id)
+            CandidateProfiles(candidate_id)
             socket.connect();
 
             socket.emit('CandidateIssuenotification', candidate_id);
@@ -270,17 +260,21 @@ const SideBar = () => {
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
 
+
     useEffect(() => {
         const render = localStorage.getItem('render');
+        SetRenderVerify(render)
         if (render == 'candidate') {
             const Candiatetoken = localStorage.getItem('Candidate_token');
 
             const decodedToken = jwtDecode(Candiatetoken);
             const company_id = decodedToken?._id;
             setCandidateToken(company_id);
+            fetchCandidateProfile()
         } else {
         }
     }, []);
+    
 
     return (
         <>
@@ -337,7 +331,7 @@ const SideBar = () => {
                     >
                         <div className="Select">
                             <img
-                                src={bindUrlOrPath(profile)}
+                                src={profile?bindUrlOrPath(profile):altprofile}
                                 class="rounded-circle"
                                 style={{
                                     width: '20px',
@@ -373,7 +367,7 @@ const SideBar = () => {
                                 <Row>
                                     <Col xs={2} className="logout-img">
                                         <img
-                                            src={bindUrlOrPath(profile)}
+                                            src={profile?bindUrlOrPath(profile):altprofile}
                                             class="rounded-circle"
                                             style={{
                                                 width: '20px',
@@ -448,9 +442,42 @@ const SideBar = () => {
                         }}
                         className="User-pannel-percentage"
                     >
-                        <h1 style={{ border: '1.32px solid #3B96E1' }}>
-                            Get Verified Batch
-                        </h1>
+                        {RenderVerify=='company'?
+                        (greenBatch&&greenBatch?.length==0?(
+                           <h1 style={{ border: '1.32px solid #3B96E1' }} onClick={()=>SetGreenBatch(true)}>
+                           Get Verified Batch
+                           <img
+                                               src={Verified}
+                                               alt="Verified"
+                                               width="19"
+                                           />
+                       </h1>  
+                        ):
+                        (
+                            <h1 style={{ border: '1.32px solid #3B96E1' }}>
+                            Profile verified
+                            <img
+                                                src={Verified}
+                                                alt="Verified"
+                                                width="19"
+                                            />
+                        </h1>   
+                        )
+                    ):
+                    (CandidateProfile?.profileCompletionPercentage==100?
+                        (
+                            <h1 style={{ border: '1.32px solid #3B96E1' }}>
+                            Profile verified
+                            <img
+                                                src={Verified}
+                                                alt="Verified"
+                                                width="19"
+                                            />
+                        </h1>  
+                        )
+                        :null)
+                    }
+                       
                     </Col>
                 </Row>
                 <div className="sidebar-btns mt-1">
@@ -602,6 +629,8 @@ const SideBar = () => {
                     <CompanyNotification handleClose={handleClose} />
                 </Offcanvas.Body>
             </Offcanvas>
+
+             <GreenBatch/>
 
             {/* to view Hired Candidate Notification */}
 

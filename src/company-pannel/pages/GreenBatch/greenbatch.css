@@ -1,0 +1,22 @@
+.promote-btn-div {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+
+.promote-btn-div button {
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+    background: #3b96e1;
+    font-weight: 700;
+}
+
+.valid-for-text {
+    font-size: 0.7rem; 
+    color: gray;   
+    margin-top: -28px;    
+    text-align: center;
+}

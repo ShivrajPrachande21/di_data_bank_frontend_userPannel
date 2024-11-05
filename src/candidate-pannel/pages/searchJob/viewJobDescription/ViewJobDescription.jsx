@@ -11,13 +11,20 @@ import {
 } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import flag from '../../../../assets/images/flag.png';
+import ep_back from '../../../../assets/images/ep_back.png';
 import './viewJobdescription.css';
 import Applications from './../../../../company-pannel/pages/create_job/viewJobApplication/applications/Applications';
 import BaseUrl from '../../../../services/BaseUrl';
 import axios from 'axios';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
+import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
+import { toast } from 'react-toastify';
+import { jwtDecode } from 'jwt-decode';
 const ViewJobDescription = () => {
     const { applyTo_job, save_job } = useContext(SearchJobContext);
+    const {
+        CandidateProfile,
+        fetchCandidateProfile} = useContext(CandidateProfileContext);
     const { id } = useParams();
     const navigate = useNavigate();
     const [modalShow, setModalShow] = React.useState(true);
@@ -54,6 +61,10 @@ const ViewJobDescription = () => {
     const sanitizedDescription = DOMPurify.sanitize(JobData?.description);
 
     const handleApplyJob = async id => {
+        if(CandidateProfile?.profileCompletionPercentage!=100){
+            toast.error("Please complete your profile before apply jobs.");
+        return 
+        }
         await applyTo_job(id);
         navigate('/candidate-dashboard/search-job');
     };
@@ -64,6 +75,7 @@ const ViewJobDescription = () => {
     };
     useEffect(() => {
         SetDescription(JobData?.description);
+        fetchCandidateProfile();
     }, []);
 
     const renderSaveTooltip = props => (
@@ -77,16 +89,27 @@ const ViewJobDescription = () => {
             Apply for this job
         </Tooltip>
     );
-
+const [userId,SetUserId]=useState(null)
     useEffect(() => {
         getSingleJobDetails();
+        const token = localStorage.getItem('Candidate_token');
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
+            SetUserId(userId)
     }, [id]);
     return (
         <>
-            <p onClick={() => navigate('/candidate-dashboard/search-job')}>
-                back
-            </p>
-
+          
+            <img
+                            src={ep_back}
+                            alt=""
+                            style={{ height: '20px', cursor: 'pointer' }}
+                            onClick={() =>
+                                navigate(
+                                    '/candidate-dashboard/search-job'
+                                )
+                            }
+                        />
             <div className="view-job-description">
                 <Row>
                     <Col>
@@ -270,7 +293,23 @@ const ViewJobDescription = () => {
                             className="search-job-bnt mt-2"
                             // onClick={handleNavigate}
                         >
-                            <OverlayTrigger
+                            
+                                {JobData?.applied_candidates.some((candidate) => candidate.candidate_id.toString() ==userId)? (
+        <Button
+        size="sm"
+        style={{
+            background: '#B4DDFF',
+            color: '#3B96E1',
+            width: '100%',
+            border: 'none'
+        }}
+    >
+        Applied
+    </Button>
+    ) :
+    (
+        <>
+        <OverlayTrigger
                                 placement="top"
                                 overlay={renderSaveTooltip}
                             >
@@ -303,6 +342,10 @@ const ViewJobDescription = () => {
                                     Apply
                                 </Button>
                             </OverlayTrigger>
+        </>
+    )
+    }
+    
                         </div>
                         <p
                             style={{

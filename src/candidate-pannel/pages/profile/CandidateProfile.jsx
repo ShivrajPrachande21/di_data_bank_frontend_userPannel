@@ -16,6 +16,7 @@ import BaseUrl from '../../../services/BaseUrl';
 import './candiateprofile.css';
 import CompanyOnboardManul from '../../../assets/images/CompanyOnboardManul.png';
 import Verified from '../../../assets/images/Verified.png';
+import altprofile from '../../../assets/images/altprofile.jpg';
 import avatar from '../../../assets/images/avatar.png';
 import EditProfile from '../../../assets/images/EditProfile.png';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
@@ -170,7 +171,7 @@ const CandidateProfile = () => {
                                 }}
                             >
                                 <Image
-                                    src={CandidateProfile?.profileUrl}
+                                    src={CandidateProfile?.profileUrl?CandidateProfile?.profileUrl:altprofile}
                                     alt=""
                                     width="70px"
                                     height="60px"
@@ -264,7 +265,7 @@ const CandidateProfile = () => {
                                 style={getButtonStyle('my-detials')}
                                 onClick={() => handleNavigate('my-detials')}
                             >
-                                My Detials
+                                My Details
                             </Button>
                             <Button
                                 size="sm"

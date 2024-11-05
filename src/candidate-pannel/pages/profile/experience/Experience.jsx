@@ -55,7 +55,6 @@ const Experience = () => {
     // calculate start and end date
 
     const calculateExperience = (starts, ends) => {
-        console.log('Appus date', starts, ends);
         const start = new Date(starts);
         const end = ends ? new Date(ends) : new Date();
 
@@ -86,19 +85,15 @@ const Experience = () => {
     const delete_experience = async work_id => {
         const token = localStorage.getItem('Candidate_token');
 
-        if (!token) {
-            return; // Exit if no token found
-        }
-
         const decodedToken = jwtDecode(token);
-        const user_id = decodedToken?._id; // Extract user_id from the token
+        const user_id = decodedToken?._id;
 
         try {
             const response = await axios.delete(
                 `${BaseUrl}candidate/profile/delete_work/${work_id}/${user_id}`,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}` // Include token in the request header
+                        Authorization: `Bearer ${token}`
                     }
                 }
             );
@@ -108,7 +103,7 @@ const Experience = () => {
                 await fetchCandidateProfile();
             }
         } catch (error) {
-            toast.error('falied to delete');
+            toast.error(`${error.response.data.error}`)
         }
     };
 

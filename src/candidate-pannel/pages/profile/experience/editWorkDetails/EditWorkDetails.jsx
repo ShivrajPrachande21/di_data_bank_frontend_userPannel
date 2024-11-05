@@ -107,7 +107,7 @@ const EditWorkDetails = () => {
                     await fetchCandidateProfile();
                 }
             } catch (error) {
-                toast.error('failed to edit');
+                toast.error(`${error.response?.data?.error}`);
             }
         }
     };
@@ -118,6 +118,7 @@ const EditWorkDetails = () => {
         };
         fun();
     }, [locate]);
+                        
     return (
         <>
             <div>
@@ -128,14 +129,14 @@ const EditWorkDetails = () => {
                         fontWeight: '600'
                     }}
                 >
-                    EditWorkDetails
+                    Edit WorkDetails
                 </p>
                 <Form noValidate onSubmit={e => handle_Edit_submit(e)}>
-                    <Form.Group controlId="email" style={{ marginTop: '-8px' }}>
-                        <Form.Label
+                    <Form.Group controlId="Role" style={{ marginTop: '-8px' }}>
+                    <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Total Experience
+                            Aspiring Position/Role
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -150,20 +151,54 @@ const EditWorkDetails = () => {
                                 }}
                             >
                                 <Form.Control
-                                    type="number"
-                                    name="work_experience"
-                                    value={workDetails?.work_experience}
-                                    onChange={e => handleInputChange(e)}
-                                    placeholder="Enter total experience"
-                                    style={{
-                                        outline: 'none',
-                                        height: '35px',
-                                        border: '1px solid gray',
-                                        marginLeft: '-12px',
+    type="text"
+    name="aspiring_position"
+    value={workDetails?.aspiring_position}
+    onChange={e => handleInputChange(e)}
+    placeholder="Enter Aspiring Position/Role"
+    style={{
+        marginTop: '1px',
+        fontSize: '0.8rem',
+        height: '34px',
+        border: '1.4px solid #AEAEAE',
+        marginLeft:'-10px'
+    }}
+/>
+                            </Col>
+                        </Row>
+                    </Form.Group>
+                    <Form.Group controlId="industry" style={{ marginTop: '3px' }}>
+                    <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Industry
+                        </Form.Label>
+                        <Row style={{ marginTop: '-6px' }}>
+                            <Col
+                                xs={12}
+                                style={{
+                                    border: 'none',
 
-                                        fontSize: '0.8rem'
-                                    }}
-                                />
+                                    marginLeft: '10px',
+                                    borderRadius: '4px',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Form.Control
+    type="text"
+    name="industry"
+    value={workDetails?.industry}
+    onChange={e => handleInputChange(e)}
+    placeholder="Enter industry"
+    style={{
+        marginTop: '1px',
+        fontSize: '0.8rem',
+        height: '34px',
+        border: '1.4px solid #AEAEAE',
+        marginLeft:'-10px'
+    }}
+/>
                             </Col>
                         </Row>
                     </Form.Group>
@@ -204,25 +239,47 @@ const EditWorkDetails = () => {
                         </Row>
                     </Form.Group>
 
-                    <Form.Group controlId="mobile" className="mt-2">
+                    <Form.Group controlId="mobile" className="mt-2 " >
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Aspiring Position/Role
+                            Total year of Experience
                         </Form.Label>
                         <Form.Control
-                            type="text"
-                            name="aspiring_position"
-                            value={workDetails?.aspiring_position}
-                            onChange={e => handleInputChange(e)}
-                            placeholder="Enter Aspiring Position/Role"
-                            style={{
-                                marginTop: '-6px',
-                                fontSize: '0.8rem',
-                                height: '34px',
-                                border: '1.4px solid #AEAEAE'
-                            }}
-                        />
+                         type="number"
+                         name="work_experience"
+                         value={workDetails?.work_experience}
+                         onChange={e => handleInputChange(e)}
+                         placeholder="Enter total experience"
+                         style={{
+                             outline: 'none',
+                             height: '35px',
+                             border: '1px solid gray',
+                             marginLeft: '1px',
+                             fontSize: '0.8rem'
+                         }}
+                     />
+                    </Form.Group>
+                    <Form.Group controlId="mobile" className="mt-2 " >
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            function(s)
+                        </Form.Label>
+                        <Form.Control
+                         type="text"
+                         name="functions"
+                         value={workDetails?.functions}
+                         onChange={e => handleInputChange(e)}
+                         placeholder="Ex: Marketing, sale,Human resources"
+                         style={{
+                             outline: 'none',
+                             height: '35px',
+                             border: '1px solid gray',
+                             marginLeft: '1px',
+                             fontSize: '0.8rem'
+                         }}
+                     />
                     </Form.Group>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label
@@ -236,6 +293,66 @@ const EditWorkDetails = () => {
                             value={workDetails?.skill}
                             onChange={e => handleInputChange(e)}
                             placeholder="Ex: Leadership, Time Management,etc"
+                            style={{
+                                marginTop: '-6px',
+                                fontSize: '0.8rem',
+                                height: '34px',
+                                border: '1.4px solid #AEAEAE'
+                            }}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="mobile" className="mt-2">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                           Preferred location
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="preferred_location"
+                            value={workDetails?.preferred_location}
+                            onChange={e => handleInputChange(e)}
+                            placeholder="Ex: pune,Bengalure"
+                            style={{
+                                marginTop: '-6px',
+                                fontSize: '0.8rem',
+                                height: '34px',
+                                border: '1.4px solid #AEAEAE'
+                            }}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="mobile" className="mt-2">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Current location
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="current_location"
+                            value={workDetails?.current_location}
+                            onChange={e => handleInputChange(e)}
+                            placeholder="Ex:Pune"
+                            style={{
+                                marginTop: '-6px',
+                                fontSize: '0.8rem',
+                                height: '34px',
+                                border: '1.4px solid #AEAEAE'
+                            }}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="mobile" className="mt-2">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Country
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="country"
+                            value={workDetails?.country}
+                            onChange={e => handleInputChange(e)}
+                            placeholder="Ex:India"
                             style={{
                                 marginTop: '-6px',
                                 fontSize: '0.8rem',

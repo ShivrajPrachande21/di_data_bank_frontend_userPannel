@@ -21,7 +21,7 @@ function Education() {
         fetchCandidateProfile
     } = useContext(CandidateProfileContext);
 
-    const { highest_education, board_represent, articles } =
+    const { highest_education, board_represent, articles,certificates} =
         CandidateProfile?.data?.education_details || {};
 
     const formatDate = dateString => {
@@ -142,7 +142,7 @@ function Education() {
                                     </td>
                                     <td className="data ">{articles}</td>
                                 </tr>
-
+                                {certificates&&certificates.map((item,index)=>(
                                 <tr>
                                     <td
                                         style={{
@@ -151,10 +151,20 @@ function Education() {
                                             width: '56%'
                                         }}
                                     >
-                                        Resume:
+                                        {item?.Certificate}:
                                     </td>
-                                    <td className="data"></td>
+                                    <td className="data">
+                                    <div className="exp-pdf">
+                                                    <div className="exp-pdf-name">
+                                                        PDF
+                                                    </div>
+                                                    <p>
+                                                    {item?.image ? item.image.slice(-10) : 'No Image Selected'}
+                                                    </p>
+                                                </div>
+                                    </td>
                                 </tr>
+                                ))}
                             </table>
                         </Col>
                     </Row>

@@ -21,6 +21,9 @@ export const HireCandidateProvider = ({ children }) => {
     const [resume_loading, setResume_loading] = useState(null);
 
     const [candidate_detials, set_candidate_detials] = useState(null);
+    const [Identity,SetIdentity]=useState(null)
+    const [profile,SetProfile]=useState(null);
+    const [greenBatch,SetgreenBatch]=useState(null)
 
     // states for notification
     const [show, setShow] = useState(null);
@@ -203,15 +206,24 @@ export const HireCandidateProvider = ({ children }) => {
             toast.error(error?.response?.data?.error);
         }
     };
-    // Fetch candidates when the component mounts
-    console.log('Status', Subscription_Data);
+
+    async function CompanyProfile(id){
+        try {
+           const response = await axios.get(`${BaseUrl}company/profile/details/${id}`);
+           if (response.status === 200) {
+               SetIdentity(response?.data.name)
+               SetProfile(response?.data.profile);
+               SetgreenBatch(response?.data?.verified_batch)
+           }
+       } catch (error) {}
+   }
+
 
     useEffect(() => {
         fetchCandidates();
         get_subscription_details();
     }, []);
 
-    console.log('id', id);
     return (
         <HireCandidateContext.Provider
             value={{
@@ -232,7 +244,9 @@ export const HireCandidateProvider = ({ children }) => {
                 SetShowHire,
                 candidateNoti,
                 show,
-                setShow
+                setShow,
+                Identity,profile,greenBatch,SetIdentity,SetProfile,
+                CompanyProfile
             }}
         >
             {children}

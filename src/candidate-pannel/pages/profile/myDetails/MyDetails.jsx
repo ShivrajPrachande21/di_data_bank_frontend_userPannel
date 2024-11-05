@@ -120,7 +120,7 @@ function MyDetails() {
                                 padding: '2px'
                             }}
                         >
-                            LinkedIn::
+                            LinkedIn:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
                             {CandidateProfile?.data?.basic_details?.linkedIn}
@@ -170,15 +170,10 @@ function MyDetails() {
                                 width: '30%'
                             }}
                         >
-                            Aadhaar Card No.::
+                            Aadhaar Card No.:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            <div className="pdf-viewer">
-                                <div className="pdf-name">PDF</div>
-                                <div className="content-pdf">
-                                    <p> Rahul Joshi Aadhaar.pdf</p>
-                                </div>
-                            </div>
+                            {CandidateProfile?.data?.personal_details?.aadhar_number}
                         </td>
                         <td>
                             <OverlayTrigger
@@ -208,20 +203,9 @@ function MyDetails() {
                         >
                             PAN:
                         </td>
-                        <td
-                            style={{
-                                color: '#051F50',
-                                fontSize: '12px'
-                            }}
-                        >
-                            <div className="pdf-viewer">
-                                <div className="pdf-name">PDF</div>
-                                <div className="content-pdf">
-                                    <p> Rahul Joshi Aadhaar.pdf</p>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                        <td style={{ color: '#051F50', fontSize: '12px' }}>
+                            {CandidateProfile?.data?.personal_details?.PAN}
+                        </td>                    </tr>
                     <tr>
                         <td
                             style={{
@@ -353,7 +337,8 @@ function MyDetails() {
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
                             {
                                 CandidateProfile?.data?.personal_details
-                                    ?.disbility_name
+                                    ?.disbility_name? CandidateProfile?.data?.personal_details
+                                    ?.disbility_name: 'No'
                             }
                         </td>
                     </tr>

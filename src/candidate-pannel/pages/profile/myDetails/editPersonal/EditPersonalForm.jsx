@@ -440,9 +440,9 @@ function EditPersonalForm() {
                             }}
                         >
                             <option>Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="others">Other's</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other's</option>
                         </Form.Select>
                     </Form.Group>
 

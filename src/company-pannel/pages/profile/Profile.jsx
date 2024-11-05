@@ -8,9 +8,10 @@ import BaseUrl from '../../../services/BaseUrl';
 
 import CompanyOnboardManul from '../../../assets/images/CompanyOnboardManul.png';
 import Verified from '../../../assets/images/Verified.png';
+import altprofile from '../../../assets/images/altprofile.jpg';
 import avatar from '../../../assets/images/avatar.png';
 import './profile.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useProfileData from '../../../hooks/company_dashboard/useProfiledata';
 import profileimg from '../../../assets/images/profileimg.png';
 import EditCompanyProfile from './editProfile/EditCompanyProfile';
@@ -18,16 +19,20 @@ import EditprofileData from '../../../hooks/company_dashboard/EditprofileData';
 import ProfileComplete from '../../../components/dynamicProgress/ProfileComplete';
 
 const Profile = () => {
-    const { profileData, loading, error } = useProfileData();
+    const { profileData, loading, error,fetchProfileData } = useProfileData();
     const { hideForm, lgShow, setLgShow } = EditprofileData();
     const rating = profileData?.updatedData?.Candidate_Feed_Back[0]?.rating;
-
+   const location =useLocation()
     const handleClose = () => setLgShow(prev => !prev);
 
     const navigate = useNavigate();
     const navigateProfile = () => {
         navigate(-1);
     };
+
+    useEffect(()=>{
+        fetchProfileData()
+    },[location])
 
     const navigate_Edit = () => {
         setLgShow(prev => !prev);
@@ -104,7 +109,7 @@ const Profile = () => {
                                 <img
                                     src={
                                         profileData?.updatedData?.profileUrl ||
-                                        ''
+                                        altprofile
                                     }
                                     alt=""
                                     width="100%"
@@ -217,26 +222,28 @@ const Profile = () => {
                                     <p style={{ color: '#051F50' }}>
                                         {
                                             profileData?.updatedData
-                                                ?.contact_email
+                                                ?.contact_email?profileData?.updatedData
+                                                ?.contact_email:'N/A'
                                         }
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.contact_No}
+                                        {profileData?.updatedData?.contact_No?profileData?.updatedData?.contact_No:'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.location}
+                                        {profileData?.updatedData?.location?profileData?.updatedData?.location:'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        amazon.com
+                                         {profileData?.updatedData?.website_url?profileData?.updatedData?.website_url:'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.company_size}
+                                        {profileData?.updatedData?.company_size?profileData?.updatedData?.company_size:'N/A'}
                                         + Employees
                                     </p>
                                     <p style={{ color: '#051F50' }}>
                                         {
                                             profileData?.updatedData
-                                                ?.headQuater_add
+                                                ?.headQuater_add? profileData?.updatedData
+                                                ?.headQuater_add:'N/A'
                                         }
                                     </p>
                                 </div>

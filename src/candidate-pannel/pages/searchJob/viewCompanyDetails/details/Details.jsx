@@ -36,7 +36,7 @@ const Details = () => {
                     <td>
                         {' '}
                         <span className="card-table-span">
-                            {details?.email}Years
+                            {details?.email?details?.email:'N/A'}Years
                         </span>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@ const Details = () => {
                     <td>
                         {' '}
                         <span className="card-table-span">
-                            {details?.mobile}
+                            {details?.mobile?details?.mobile:'N/A'}
                         </span>
                     </td>
                 </tr>
@@ -66,7 +66,7 @@ const Details = () => {
                     <td>
                         {' '}
                         <span className="card-table-span">
-                            {details?.location}
+                            {details?.location?details?.location:'N/A'}
                         </span>
                     </td>
                 </tr>
@@ -81,7 +81,7 @@ const Details = () => {
                     <td>
                         {' '}
                         <span className="card-table-span">
-                            {details?.website_url}
+                            {details?.website_url?details?.website_url:'N/A'}
                         </span>
                     </td>
                 </tr>
@@ -96,7 +96,7 @@ const Details = () => {
                     <td>
                         {' '}
                         <span className="card-table-span">
-                            {details?.company_size}
+                            {details?.company_size?details?.company_size:'N/A'}
                         </span>
                     </td>
                 </tr>
@@ -113,7 +113,7 @@ const Details = () => {
                     <td>
                         {' '}
                         <span className="card-table-span">
-                            {details?.headQuater_add}
+                            {details?.headQuater_add?details?.headQuater_add:'N/A'}
                         </span>
                     </td>
                 </tr>

@@ -23,7 +23,7 @@ const Registration = () => {
     } = useRegistration();
 
     const [showPassword, setShowPassword] = useState(false);
-
+    const [hideConfirm, sethideConfirm] = useState(false);
     const handleFormSubmit = async e => {
         e.preventDefault();
         validate();
@@ -140,21 +140,19 @@ const Registration = () => {
                                         name="setpassword"
                                         value={formData.setpassword}
                                         onChange={handleChange}
-                                        type={
-                                            showPassword ? 'text' : 'password'
-                                        }
+                                        type={hideConfirm ? 'text' : 'password'}
                                         placeholder="Confirm Password"
                                         required
                                     />
                                     <InputGroup.Text
                                         onClick={() =>
-                                            setShowPassword(!showPassword)
+                                            sethideConfirm(!hideConfirm)
                                         }
                                         style={{
                                             cursor: 'pointer'
                                         }}
                                     >
-                                        {showPassword ? (
+                                        {hideConfirm ? (
                                             <FaEyeSlash />
                                         ) : (
                                             <FaEye />
@@ -179,7 +177,7 @@ const Registration = () => {
                             <Row className="px-2">
                                 <Button
                                     type="submit"
-                                    className="mt-1 register no-hover-effect"
+                                    className="register no-hover-effect"
                                     disabled={isSubmitting} // Disable button while submitting
                                 >
                                     {isSubmitting
@@ -187,15 +185,6 @@ const Registration = () => {
                                         : 'Register'}
                                 </Button>
                             </Row>
-
-                            {errorMessage && (
-                                <Alert variant="danger">{errorMessage}</Alert>
-                            )}
-                            {successMessage && (
-                                <Alert variant="success">
-                                    {successMessage}
-                                </Alert>
-                            )}
 
                             <Row>
                                 <div className="already">

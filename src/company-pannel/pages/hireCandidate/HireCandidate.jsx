@@ -68,12 +68,16 @@ const HireCandidate = () => {
     const [selectedCandidateIds, setSelectedCandidateIds] = useState([]);
     const [buttonText, setButtonText] = useState('Download Emails');
     const [ResumeButtonText, setResumeButtonText] = useState('Download Resume');
-    const isEmail_Disabled =!(Subscription_Data[0]?.download_email_limit || Subscription_Data[1]?.download_email_limit);
+    const isEmail_Disabled = !(
+        Subscription_Data[0]?.download_email_limit ||
+        Subscription_Data[1]?.download_email_limit
+    );
 
-      //Subscription_Data[0]?.download_email_limit === false;
-    const resume_Disabled =!(Subscription_Data[0]?.download_cv_limit || Subscription_Data[1]?.download_cv_limit);
-    
-    
+    //Subscription_Data[0]?.download_email_limit === false;
+    const resume_Disabled = !(
+        Subscription_Data[0]?.download_cv_limit ||
+        Subscription_Data[1]?.download_cv_limit
+    );
 
     // Handle the "select all" checkbox change
     const handleSelectAllChange = e => {
@@ -173,14 +177,14 @@ const HireCandidate = () => {
     useEffect(() => {
         fetchCandidates();
     }, []);
-    const searchLimit = Subscription_Data[1]?.search_limit === 'Unlimited'
-        ? Subscription_Data[1]?.search_limit
-        : Subscription_Data[0]?.search_limit === 'Unlimited'
-        ? Subscription_Data[0]?.search_limit
-        : Subscription_Data[0]?.search_limit !== 0 
-        ? Subscription_Data[0]?.search_limit
-        : Subscription_Data[1]?.search_limit || "";
-
+    const searchLimit =
+        Subscription_Data[1]?.search_limit === 'Unlimited'
+            ? Subscription_Data[1]?.search_limit
+            : Subscription_Data[0]?.search_limit === 'Unlimited'
+            ? Subscription_Data[0]?.search_limit
+            : Subscription_Data[0]?.search_limit !== 0
+            ? Subscription_Data[0]?.search_limit
+            : Subscription_Data[1]?.search_limit || '';
 
     return (
         <div className="hire-candidate">
@@ -238,8 +242,7 @@ const HireCandidate = () => {
                             marginTop: '4px'
                         }}
                     >
-                        ({' '}
-                       {searchLimit}
+                        ( {searchLimit}
                         <span style={{ marginLeft: '3px' }}>Search left</span>)
                     </p>
                 </Col>
@@ -321,11 +324,15 @@ const HireCandidate = () => {
                                 <div className="result-img">
                                     <img
                                         src={
-                                            appliedcandidate[0]
-                                                ?.candidateDetails?.profile? appliedcandidate[0]
-                                                ?.candidateDetails?.profile:altprofile
+                                            candidate?.candidateDetails?.profile
+                                                ? candidate?.candidateDetails
+                                                      ?.profile
+                                                : altprofile
                                         }
-                                        style={{width:'100%',height:'100%'}}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%'
+                                        }}
                                     />
                                 </div>
                                 <div className="result-text">
@@ -333,33 +340,36 @@ const HireCandidate = () => {
                                         {candidate?.basicDetails[0]?.name}
 
                                         {/* Tool-tip componet */}
-                                        {candidate?.personalDetails[0]?.Aadhar_verified_status && 
- candidate?.personalDetails[0]?.Pan_verified_status ? (
-    <OverlayTrigger
-        placement="top"
-        overlay={
-            <div
-                style={{
-                    position: 'absolute',
-                    backgroundColor: 'white',
-                    padding: '2px 10px',
-                    color: '#008000',
-                    borderRadius: 3,
-                    border: '1px solid #008000'
-                }}
-            >
-                Verified
-            </div>
-        }
-    >
-        <img
-            src={Verified}
-            alt="Verified"
-            width="19"
-        />
-    </OverlayTrigger>
-) : null}
-
+                                        {candidate?.personalDetails[0]
+                                            ?.Aadhar_verified_status &&
+                                        candidate?.personalDetails[0]
+                                            ?.Pan_verified_status ? (
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={
+                                                    <div
+                                                        style={{
+                                                            position:
+                                                                'absolute',
+                                                            backgroundColor:
+                                                                'white',
+                                                            padding: '2px 10px',
+                                                            color: '#008000',
+                                                            borderRadius: 3,
+                                                            border: '1px solid #008000'
+                                                        }}
+                                                    >
+                                                        Verified
+                                                    </div>
+                                                }
+                                            >
+                                                <img
+                                                    src={Verified}
+                                                    alt="Verified"
+                                                    width="19"
+                                                />
+                                            </OverlayTrigger>
+                                        ) : null}
                                     </h4>
                                     <p>
                                         {

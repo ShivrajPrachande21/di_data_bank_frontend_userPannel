@@ -152,7 +152,7 @@ function EditPersonalForm() {
     // Verify Add with OTP
     const VerifyAadharOpt = async () => {
         const token = localStorage.getItem('Candidate_token');
-
+        const aadhar_number = personalData?.aadhar_number.toString();
         if (!token) {
             return;
         } else {
@@ -161,7 +161,7 @@ function EditPersonalForm() {
             try {
                 const response = await axios.post(
                     `${BaseUrl}candidate/aadhar_otp/${user_id}`,
-                    { ref_id, otp }
+                    { ref_id, otp, aadhar_number }
                 );
                 if (response?.status == 200 || response?.status == 201) {
                     toast.success(`Aadhar verified successfully`);
@@ -444,6 +444,46 @@ function EditPersonalForm() {
                             <option value="Female">Female</option>
                             <option value="Other">Other's</option>
                         </Form.Select>
+                    </Form.Group>
+                    <Form.Group controlId="mobile" className="mt-2">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Country
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="country"
+                            value={personalData?.country}
+                            onChange={handleInputChange}
+                            placeholder="Enter Country"
+                            style={{
+                                marginTop: '-6px',
+                                fontSize: '0.8rem',
+                                height: '34px',
+                                border: '1.3px solid #AEAEAE'
+                            }}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="mobile" className="mt-2">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Location
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="location"
+                            value={personalData?.location}
+                            onChange={handleInputChange}
+                            placeholder="Enter Location"
+                            style={{
+                                marginTop: '-6px',
+                                fontSize: '0.8rem',
+                                height: '34px',
+                                border: '1.3px solid #AEAEAE'
+                            }}
+                        />
                     </Form.Group>
 
                     <Form.Group controlId="mobile" className="mt-2">

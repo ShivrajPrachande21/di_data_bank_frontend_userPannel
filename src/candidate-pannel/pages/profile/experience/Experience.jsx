@@ -103,7 +103,7 @@ const Experience = () => {
                 await fetchCandidateProfile();
             }
         } catch (error) {
-            toast.error(`${error.response.data.error}`)
+            toast.error(`${error.response.data.error}`);
         }
     };
 
@@ -318,11 +318,10 @@ const Experience = () => {
                                                 Total Experience:
                                             </td>
                                             <td className="data">
-                                                {
-                                                    CandidateProfile?.data
-                                                        ?.work_details
-                                                        ?.work_experience
-                                                }{' '}
+                                                {CandidateProfile?.data
+                                                    ?.work_details
+                                                    ?.work_experience ||
+                                                    'N/A'}{' '}
                                                 years
                                             </td>
                                         </tr>
@@ -337,11 +336,9 @@ const Experience = () => {
                                                 Current CTC:
                                             </td>
                                             <td className="data">
-                                                {
-                                                    CandidateProfile?.data
-                                                        ?.work_details
-                                                        ?.current_ctc
-                                                }{' '}
+                                                {CandidateProfile?.data
+                                                    ?.work_details
+                                                    ?.current_ctc || 'N/A'}{' '}
                                                 CTC
                                             </td>
                                         </tr>
@@ -356,11 +353,10 @@ const Experience = () => {
                                                 Aspiring Position/Role:
                                             </td>
                                             <td className="data">
-                                                {
-                                                    CandidateProfile?.data
-                                                        ?.work_details
-                                                        ?.aspiring_position
-                                                }
+                                                {CandidateProfile?.data
+                                                    ?.work_details
+                                                    ?.aspiring_position ||
+                                                    'N/A'}
                                             </td>
                                         </tr>
                                         <tr>
@@ -426,11 +422,9 @@ const Experience = () => {
                                                 Career highlights details:
                                             </td>
                                             <td className="data">
-                                                {
-                                                    CandidateProfile?.data
-                                                        ?.work_details
-                                                        ?.career_highlight
-                                                }
+                                                {CandidateProfile?.data
+                                                    ?.work_details
+                                                    ?.career_highlight || 'N/A'}
                                             </td>
                                         </tr>
                                         <tr>
@@ -444,11 +438,9 @@ const Experience = () => {
                                                 Awards & Recognition:
                                             </td>
                                             <td className="data">
-                                                {
-                                                    CandidateProfile?.data
-                                                        ?.work_details
-                                                        ?.recognation
-                                                }
+                                                {CandidateProfile?.data
+                                                    ?.work_details
+                                                    ?.recognation || 'N/A'}
                                             </td>
                                         </tr>
                                     </table>

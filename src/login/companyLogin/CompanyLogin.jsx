@@ -104,7 +104,6 @@ const CompanyLogin = () => {
                     toast.success(response?.data?.message);
                 }
 
-
                 clearStates();
                 // Navigate to dashboard or any other page
             }
@@ -300,7 +299,10 @@ const CompanyLogin = () => {
                                         <span>Remember me</span>
                                     </div>
                                     <p
-                                        style={{ marginTop: '10px' }}
+                                        style={{
+                                            marginTop: '10px',
+                                            cursor: 'pointer'
+                                        }}
                                         onClick={naigateForgetpassword}
                                     >
                                         Forgot Password?

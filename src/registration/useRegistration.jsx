@@ -47,7 +47,7 @@ const useRegistration = () => {
                 formData
             );
             if (response.status === 200) {
-                toast.success('Successfull!');
+                toast.success('Company Registered Successfull!');
                 navigate('/company-registration');
                 setSuccessMessage('Registration successful!');
                 setErrorMessage('');
@@ -69,8 +69,8 @@ const useRegistration = () => {
                 `${BaseUrl}candidate/reg`,
                 formData
             );
-            if (response.status === 200) {
-                toast.success('Candidate Successfull!');
+            if (response?.status == 200 || response?.status == 201) {
+                toast.success('Candidate Registered Successfully');
                 navigate('/');
             }
 

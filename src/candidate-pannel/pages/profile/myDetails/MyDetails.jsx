@@ -67,7 +67,8 @@ function MyDetails() {
                             Name:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.basic_details?.name}
+                            {CandidateProfile?.data?.basic_details?.name ||
+                                'N/A'}
                         </td>
                         <td>
                             <OverlayTrigger placement="top" overlay={EditBasic}>
@@ -93,7 +94,8 @@ function MyDetails() {
                             Email:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.basic_details?.email}
+                            {CandidateProfile?.data?.basic_details?.email ||
+                                'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -108,7 +110,8 @@ function MyDetails() {
                             Mobile no:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.basic_details?.mobile}
+                            {CandidateProfile?.data?.basic_details?.mobile ||
+                                'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -123,7 +126,8 @@ function MyDetails() {
                             LinkedIn:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.basic_details?.linkedIn}
+                            {CandidateProfile?.data?.basic_details?.linkedIn ||
+                                'N/A'}
                         </td>
                     </tr>
                     {CandidateProfile?.data?.basic_details?.other_profile?.map(
@@ -138,7 +142,7 @@ function MyDetails() {
                                             padding: '2px'
                                         }}
                                     >
-                                        {item?.profile_name}:
+                                        {item?.profile_name || 'N/A'}:
                                     </td>
                                     <td
                                         style={{
@@ -146,7 +150,7 @@ function MyDetails() {
                                             fontSize: '12px'
                                         }}
                                     >
-                                        {item?.link}
+                                        {item?.link || 'N/A'}
                                     </td>
                                 </tr>
                             </>
@@ -173,7 +177,8 @@ function MyDetails() {
                             Aadhaar Card No.:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.personal_details?.aadhar_number}
+                            {CandidateProfile?.data?.personal_details
+                                ?.aadhar_number || 'N/A'}
                         </td>
                         <td>
                             <OverlayTrigger
@@ -204,8 +209,10 @@ function MyDetails() {
                             PAN:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.personal_details?.PAN}
-                        </td>                    </tr>
+                            {CandidateProfile?.data?.personal_details?.PAN ||
+                                'N/A'}
+                        </td>{' '}
+                    </tr>
                     <tr>
                         <td
                             style={{
@@ -218,7 +225,8 @@ function MyDetails() {
                             Gender:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.personal_details?.gender}
+                            {CandidateProfile?.data?.personal_details?.gender ||
+                                'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -233,7 +241,8 @@ function MyDetails() {
                             Age:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.personal_details?.age}
+                            {CandidateProfile?.data?.personal_details?.age ||
+                                'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -248,10 +257,8 @@ function MyDetails() {
                             Marriage Status:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {
-                                CandidateProfile?.data?.personal_details
-                                    ?.marriag_status
-                            }
+                            {CandidateProfile?.data?.personal_details
+                                ?.marriag_status || 'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -266,10 +273,8 @@ function MyDetails() {
                             Members in family:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {
-                                CandidateProfile?.data?.personal_details
-                                    ?.family_member
-                            }
+                            {CandidateProfile?.data?.personal_details
+                                ?.family_member || 'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -284,10 +289,8 @@ function MyDetails() {
                             Father/Mother Name:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {
-                                CandidateProfile?.data?.personal_details
-                                    ?.father_name
-                            }
+                            {CandidateProfile?.data?.personal_details
+                                ?.father_name || 'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -302,7 +305,8 @@ function MyDetails() {
                             Son/Daughter:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {CandidateProfile?.data?.personal_details?.son_name}
+                            {CandidateProfile?.data?.personal_details
+                                ?.son_name || 'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -317,10 +321,8 @@ function MyDetails() {
                             Spouse Profession:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {
-                                CandidateProfile?.data?.personal_details
-                                    ?.spouse_profession
-                            }
+                            {CandidateProfile?.data?.personal_details
+                                ?.spouse_profession || 'N/A'}
                         </td>
                     </tr>
                     <tr>
@@ -335,11 +337,11 @@ function MyDetails() {
                             Disabilities:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
-                            {
-                                CandidateProfile?.data?.personal_details
-                                    ?.disbility_name? CandidateProfile?.data?.personal_details
-                                    ?.disbility_name: 'No'
-                            }
+                            {CandidateProfile?.data?.personal_details
+                                ?.disbility_name
+                                ? CandidateProfile?.data?.personal_details
+                                      ?.disbility_name
+                                : 'N/A'}
                         </td>
                     </tr>
                 </table>

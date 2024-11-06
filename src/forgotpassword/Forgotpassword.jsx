@@ -3,6 +3,7 @@ import { Col, Form, Row, Button, InputGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import background from '../assets/images/AdminLoginPanelBackGround.png';
+import blackCross from '../assets/images/blackCross.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForgotPassword } from '../context/ForgotpasswordContext';
 import { useNavigate } from 'react-router-dom';
@@ -147,14 +148,14 @@ const Forgotpassword = () => {
                                         style={{
                                             color: '#3B96E1',
                                             fontWeight: '600',
-                                            fontSize: '1.5rem'
+                                            fontSize: '1.2rem'
                                         }}
                                     >
                                         Forgot Password <br />
                                     </p>
                                     <p
                                         style={{
-                                            fontSize: '0.7rem',
+                                            fontSize: '0.8rem',
                                             marginTop: '-10px',
                                             color: '#333333'
                                         }}
@@ -165,11 +166,18 @@ const Forgotpassword = () => {
                                     </p>
                                 </Col>
                                 <Col
-                                    onClick={() => console.log('Close form')}
+                                    onClick={() => navigate('/')}
                                     xs={1}
                                     style={{ cursor: 'pointer' }}
                                 >
-                                    X
+                                    <img
+                                        src={blackCross}
+                                        alt=""
+                                        style={{
+                                            width: '24px',
+                                            marginTop: '6px'
+                                        }}
+                                    />
                                 </Col>
                             </Row>
 
@@ -254,7 +262,7 @@ const Forgotpassword = () => {
                                         style={{
                                             color: '#3B96E1',
                                             fontWeight: '600',
-                                            fontSize: '1.5rem'
+                                            fontSize: '1.2rem'
                                         }}
                                     >
                                         Reset Password <br />
@@ -265,7 +273,14 @@ const Forgotpassword = () => {
                                     xs={1}
                                     style={{ cursor: 'pointer' }}
                                 >
-                                    X
+                                    <img
+                                        src={blackCross}
+                                        alt=""
+                                        style={{
+                                            width: '24px',
+                                            marginTop: '6px'
+                                        }}
+                                    />
                                 </Col>
                             </Row>
 

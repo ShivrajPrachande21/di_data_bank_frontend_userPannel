@@ -21,7 +21,7 @@ function Education() {
         fetchCandidateProfile
     } = useContext(CandidateProfileContext);
 
-    const { highest_education, board_represent, articles,certificates} =
+    const { highest_education, board_represent, articles, certificates } =
         CandidateProfile?.data?.education_details || {};
 
     const formatDate = dateString => {
@@ -115,7 +115,7 @@ function Education() {
                                         Highest level of education:
                                     </td>
                                     <td className="data">
-                                        {highest_education}
+                                        {highest_education || 'N/A'}
                                     </td>
                                 </tr>
                                 <tr>
@@ -128,7 +128,9 @@ function Education() {
                                     >
                                         Boards represented names:
                                     </td>
-                                    <td className="data">{board_represent}</td>
+                                    <td className="data">
+                                        {board_represent || 'N/A'}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td
@@ -140,31 +142,38 @@ function Education() {
                                     >
                                         Book Published/Article:
                                     </td>
-                                    <td className="data ">{articles}</td>
-                                </tr>
-                                {certificates&&certificates.map((item,index)=>(
-                                <tr>
-                                    <td
-                                        style={{
-                                            color: '#AEAEAE',
-                                            fontSize: '0.8rem',
-                                            width: '56%'
-                                        }}
-                                    >
-                                        {item?.Certificate}:
+                                    <td className="data ">
+                                        {articles || 'N/A'}
                                     </td>
-                                    <td className="data">
-                                    <div className="exp-pdf">
+                                </tr>
+                                {certificates &&
+                                    certificates.map((item, index) => (
+                                        <tr>
+                                            <td
+                                                style={{
+                                                    color: '#AEAEAE',
+                                                    fontSize: '0.8rem',
+                                                    width: '56%'
+                                                }}
+                                            >
+                                                {item?.Certificate || 'N/A'}:
+                                            </td>
+                                            <td className="data">
+                                                <div className="exp-pdf">
                                                     <div className="exp-pdf-name">
                                                         PDF
                                                     </div>
                                                     <p>
-                                                    {item?.image ? item.image.slice(-10) : 'No Image Selected'}
+                                                        {item?.image
+                                                            ? item.image.slice(
+                                                                  -10
+                                                              )
+                                                            : 'No Image Selected'}
                                                     </p>
                                                 </div>
-                                    </td>
-                                </tr>
-                                ))}
+                                            </td>
+                                        </tr>
+                                    ))}
                             </table>
                         </Col>
                     </Row>

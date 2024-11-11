@@ -6,14 +6,14 @@ import useDashboardData from '../../../hooks/company_dashboard/useDashboardData'
 import CandidateHiredIcon from '../../../assets/images/CandidateHiredIcon.png';
 import CandidateOnboardedIcon from '../../../assets/images/CandidateOnboardedIcon.png';
 import building from '../../../assets/images/building.png';
+import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
         useDashboardData();
+    const naviagte = useNavigate();
     const [PAN, setPAN] = useState(null);
     const [isValid, setIsValid] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
-
-    console.log('dashboard', data);
 
     const handleVerifyJob = e => {
         e.preventDefault();
@@ -45,6 +45,21 @@ const Dashboard = () => {
             sethide(null);
         }, 10000);
     }, [hide]);
+
+    // function rendering() {
+    //     const render = localStorage.getItem('render');
+
+    //     if (render == 'company') {
+    //         const token = localStorage.getItem('companyToken');
+    //         if (!token) {
+    //             naviagte('/');
+    //         }
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     rendering();
+    // }, []);
     return (
         <div style={{ color: 'black' }}>
             <Container fluid style={{ background: '', paddingLeft: '20px' }}>
@@ -58,7 +73,7 @@ const Dashboard = () => {
                             <p className="h1 dashboard-p">Total Job Created</p>
                             <p className="h1 loading">
                                 {' '}
-                                {data?.jobCreatedCount || 'loading'}
+                                {data?.jobCreatedCount || 0}
                             </p>
                         </div>
                     </div>
@@ -101,7 +116,7 @@ const Dashboard = () => {
                                 }}
                             >
                                 {' '}
-                                {data?.applicationRecieved || 'loading'}
+                                {data?.applicationRecieved || 0}
                             </p>
                         </div>
                     </div>
@@ -138,7 +153,7 @@ const Dashboard = () => {
                                     fontSize: '1rem'
                                 }}
                             >
-                                {data?.HiredCount}
+                                {data?.HiredCount || 0}
                             </p>
                         </div>
                     </div>
@@ -148,7 +163,7 @@ const Dashboard = () => {
                         <div className="col-12  mt-2 dashboard-div d-flex">
                             <p className="myplan-p ">My Plan:</p>
                             <p className="myplan-btn">
-                                {data?.subscriptionData[0].plane_name}
+                                {data?.subscriptionData[0].plane_name || 'N/A'}
                             </p>
                         </div>
 
@@ -156,30 +171,33 @@ const Dashboard = () => {
                             <p className="Candidates">Candidates Searches</p>
                             <h3 className="Candidates-s">
                                 {' '}
-                                {
-                                    data?.subscriptionData[0]
-                                        ?.AdminSubscription[0]?.search_limit
-                                }
+                                {data?.subscriptionData[0]?.AdminSubscription[0]
+                                    ?.search_limit || 0}
                             </h3>
                         </div>
                         <div className="col-12">
                             <p className="Candidates">CV Views</p>
                             <h3 className="Candidates-s">
-                                {
-                                    data?.subscriptionData[0]
-                                        .AdminSubscription[0]?.cv_view_limit
-                                }{' '}
-                                { data?.subscriptionData[0].cv_view_limit=="Unlimited"?null:`/${data?.subscriptionData[0].cv_view_limit}`}
-                                {data?.subscriptionData[0].cv_view_limit=="Unlimited"?null:(
-                                     <span style={{ marginLeft: '4px' }}>
-                                     Remaining
-                                 </span>
+                                {data?.subscriptionData[0].AdminSubscription[0]
+                                    ?.cv_view_limit || 0}{' '}
+                                {data?.subscriptionData[0].cv_view_limit ==
+                                'Unlimited'
+                                    ? null
+                                    : `/${
+                                          data?.subscriptionData[0]
+                                              .cv_view_limit || ''
+                                      }`}
+                                {data?.subscriptionData[0].cv_view_limit ==
+                                'Unlimited' ? null : (
+                                    <span style={{ marginLeft: '4px' }}>
+                                        Remaining
+                                    </span>
                                 )}
                             </h3>
                         </div>
                         <div className="col-12">
                             <p className="Candidates">Ai Searches</p>
-                            <h3 className="Candidates-s">Remaining</h3>
+                            <h3 className="Candidates-s">0</h3>
                         </div>
                         <div className="col-12">
                             <p className="Candidates-cv">

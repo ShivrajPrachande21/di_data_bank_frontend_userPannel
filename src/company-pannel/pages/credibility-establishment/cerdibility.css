@@ -1,0 +1,43 @@
+.CredibilityEstablishment {
+    padding: 10px;
+}
+.cerdibility-search {
+    display: flex;
+    margin-top: 10px;
+}
+.c-search {
+    display: flex;
+    align-items: center;
+    margin-top: -8px;
+    width: 66%;
+
+    margin-right: 8px;
+}
+.c-search p {
+    font-size: 0.8rem;
+    color: #051f50;
+    margin-top: 15px;
+    font-weight: 500;
+    margin-right: 4px;
+}
+.c-search input {
+    width: 72%;
+    border-radius: 8px;
+    margin-left: 4px;
+}
+.c-search button img {
+    width: 24px;
+}
+.accpeted-rejected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffff;
+    border-radius: 8px;
+    padding: 10px;
+}
+.accpeted-rejected p {
+    font-size: 0.8rem;
+
+    margin-bottom: 0px;
+}

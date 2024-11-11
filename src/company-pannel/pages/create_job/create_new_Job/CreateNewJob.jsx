@@ -14,8 +14,13 @@ import { CreateJobContext } from '../../../../context/CreateJobContext';
 import Loader from '../../loader/Loader';
 
 const CreateNewJob = () => {
-    const { lgShow, setLgShow, initiate_Payment, paymentLoading, fetch_job_status } =
-        useContext(CreateJobContext);
+    const {
+        lgShow,
+        setLgShow,
+        initiate_Payment,
+        paymentLoading,
+        fetch_job_status
+    } = useContext(CreateJobContext);
     const [createJobData, setcreateJobData] = useState({
         job_title: '',
         industry: '',
@@ -26,7 +31,17 @@ const CreateNewJob = () => {
         job_type: '',
         work_type: '',
         education: '',
-        country: ''
+        country: '',
+        phone_screening: false,
+        hr_round: false,
+        technical_round: false,
+        managerial_round: false,
+        panel_round: false,
+        leadership_round: false,
+        project_round: false,
+        gd_round: false,
+        behavioral_testing: false,
+        peer_round: false
     });
     const [modalShowhide, setModalShow] = React.useState(false);
     const [suggestion, setSuggestion] = useState(null);
@@ -78,6 +93,13 @@ const CreateNewJob = () => {
         }));
     };
 
+    const handleCheckboxChange = field => {
+        // Toggle the specified checkbox field
+        setcreateJobData(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
+    };
     const fetch_suggestion = async () => {
         try {
             const response = await axios.get(
@@ -108,7 +130,7 @@ const CreateNewJob = () => {
             return;
         }
 
-        console.log('searchTerm', plainText);
+        // console.log('searchTerm', plainText);
 
         // Filter suggestion data and ensure description is defined
         const filtered = suggestion.filter(item => {
@@ -126,7 +148,7 @@ const CreateNewJob = () => {
         setShowSuggestions(false); // Hide suggestions after selection
     };
 
-    console.log('Suggestion', suggestion);
+    // console.log('Suggestion', suggestion);
     const handleSubmit = async e => {
         e.preventDefault(); // Prevent default form submission
         setModalShow(prev => !prev);
@@ -143,18 +165,33 @@ const CreateNewJob = () => {
             skills: skills, // Add skills array
             description: editorHtml // Add the description from the editor
         };
-        try {
-            const response = await axios.post(
-                `${BaseUrl}company/create_job/${companyId}`,
-                jobDataWithSkillsAndDescription
-            );
-            if (response?.status == 201 || response?.status == 200) {
-                toast.success('Job created successfully');
-                setLgShow(false);
-                await fetch_job_status()
+        if (
+            createJobData.phone_screening == false &&
+            createJobData.hr_round == false &&
+            createJobData.technical_round == false &&
+            createJobData.managerial_round == false &&
+            createJobData.panel_round == false &&
+            createJobData.leadership_round == false &&
+            createJobData.project_round == false &&
+            createJobData.gd_round == false &&
+            createJobData.behavioral_testing == false &&
+            createJobData.peer_round == false
+        ) {
+            toast.error('Please select atleast one interview round');
+        } else {
+            try {
+                const response = await axios.post(
+                    `${BaseUrl}company/create_job/${companyId}`,
+                    jobDataWithSkillsAndDescription
+                );
+                if (response?.status == 201 || response?.status == 200) {
+                    toast.success('Job created successfully');
+                    setLgShow(false);
+                    await fetch_job_status();
+                }
+            } catch (error) {
+                toast.error(error?.response?.data?.error);
             }
-        } catch (error) {
-            toast.error(error?.response?.data?.error);
         }
     };
 
@@ -181,6 +218,7 @@ const CreateNewJob = () => {
     useEffect(() => {
         fetch_suggestion();
     }, []);
+
     return (
         <>
             {paymentLoading ? (
@@ -424,6 +462,119 @@ const CreateNewJob = () => {
                             </Button>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Phone Screening"
+                                checked={createJobData.phone_screening}
+                                onChange={() =>
+                                    handleCheckboxChange('phone_screening')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Hr round"
+                                checked={createJobData.hr_round}
+                                onChange={() =>
+                                    handleCheckboxChange('hr_round')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Technical round"
+                                checked={createJobData.technical_round}
+                                onChange={() =>
+                                    handleCheckboxChange('technical_round')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Managerial round"
+                                checked={createJobData.managerial_round}
+                                onChange={() =>
+                                    handleCheckboxChange('managerial_round')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Panel round"
+                                checked={createJobData.panel_round}
+                                onChange={() =>
+                                    handleCheckboxChange('panel_round')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Leadership round"
+                                checked={createJobData.leadership_round}
+                                onChange={() =>
+                                    handleCheckboxChange('leadership_round')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Project round"
+                                checked={createJobData.project_round}
+                                onChange={() =>
+                                    handleCheckboxChange('project_round')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Gd round"
+                                checked={createJobData.gd_round}
+                                onChange={() =>
+                                    handleCheckboxChange('gd_round')
+                                }
+                            />
+                        </Col>
+
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Behavioral Testing"
+                                checked={createJobData.behavioral_testing}
+                                onChange={() =>
+                                    handleCheckboxChange('behavioral_testing')
+                                }
+                            />
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Peer Round"
+                                checked={createJobData.peer_round}
+                                onChange={() =>
+                                    handleCheckboxChange('peer_round')
+                                }
+                            />
+                        </Col>
+                    </Row>
 
                     <Row>
                         <Col>
@@ -464,9 +615,10 @@ const CreateNewJob = () => {
                                         onClick={() =>
                                             handleSuggestionClick(item)
                                         }
-                                    >
-                                        {item.description}
-                                    </div>
+                                        dangerouslySetInnerHTML={{
+                                            __html: item.description
+                                        }} // Correctly using dangerouslySetInnerHTML
+                                    />
                                 ))}
                             </div>
                         )}

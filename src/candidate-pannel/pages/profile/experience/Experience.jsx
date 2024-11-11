@@ -232,7 +232,9 @@ const Experience = () => {
                                                     -
                                                     {items?.current_workingStatus
                                                         ? '   Present'
-                                                        : items?.end_date}
+                                                        : formatDate(
+                                                              items?.end_date
+                                                          )}
                                                 </span>{' '}
                                                 <span className="mx-1">
                                                     <li>
@@ -461,7 +463,7 @@ const Experience = () => {
                 <Modal.Body>
                     <div
                         style={{
-                            padding: '2px',
+                            padding: '5px',
 
                             overflowY: 'auto',
                             position: 'relative',
@@ -508,7 +510,7 @@ const Experience = () => {
                 <Modal.Body>
                     <div
                         style={{
-                            padding: '2px',
+                            padding: '5px',
                             overflow: 'hidden',
                             overflowY: 'auto',
                             position: 'relative',

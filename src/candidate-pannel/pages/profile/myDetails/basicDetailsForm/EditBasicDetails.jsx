@@ -14,7 +14,8 @@ const EditBasicDetails = () => {
         email: '',
         mobile: '',
         linkedIn: '',
-        name: ''
+        name: '',
+        contact_email: ''
     });
 
     // State for errors
@@ -135,7 +136,7 @@ const EditBasicDetails = () => {
 
                 const { email, mobile, linkedIn, name } =
                     response?.data?.basic_details;
-                    setInputFields(response.data?.basic_details?.other_profile)
+                setInputFields(response.data?.basic_details?.other_profile);
                 // Set the API data into formData
                 setFormData({
                     email: email || '',
@@ -155,151 +156,225 @@ const EditBasicDetails = () => {
     }, [locate]);
     return (
         <>
-           <div style={{ padding: '10px' }}>
-    <p
-        style={{
-            marginTop: '0',
-            textAlign: 'center',
-            color: '#051F50',
-            fontWeight: '600',
-        }}
-    >
-        Basic Details
-    </p>
-    <Form noValidate onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <Form.Group controlId="name" style={{ marginTop: '-8px' }}>
-            <Form.Label style={{ fontSize: '0.8rem', fontWeight: '500' }}>Name</Form.Label>
-            <Form.Control
-                type="text"
-                name="name"
-                placeholder="Enter Name"
-                value={formData.name}
-                onChange={handleChange}
-                style={{
-                    marginTop: '-6px',
-                    height: '30px',
-                    border: '1.3px solid #AEAEAE',
-                }}
-            />
-        </Form.Group>
-
-        <Form.Group controlId="email" className="mt-3">
-            <Form.Label style={{ fontSize: '0.8rem', fontWeight: '500' }}>Email address</Form.Label>
-            <Form.Control
-                type="email"
-                name="email"
-                placeholder="Enter email"
-                value={formData.email}
-                onChange={handleChange}
-                isInvalid={validated && !!errors.email}
-                style={{
-                    marginTop: '-6px',
-                    height: '30px',
-                    border: '1.3px solid #AEAEAE',
-                }}
-            />
-            <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group controlId="phone" className="mt-3">
-            <Form.Label style={{ fontSize: '0.8rem', fontWeight: '500' }}>Phone Number</Form.Label>
-            <Form.Control
-                type="text"
-                name="mobile"
-                placeholder="Enter phone number"
-                value={formData.mobile}
-                onChange={handleChange}
-                isInvalid={validated && !!errors.phone}
-                style={{
-                    marginTop: '-6px',
-                    height: '30px',
-                    border: '1.3px solid #AEAEAE',
-                }}
-            />
-            <Form.Control.Feedback type="invalid">{errors.phone}</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group controlId="linkedin" className="mt-3">
-            <Form.Label style={{ fontSize: '0.8rem', fontWeight: '500' }}>LinkedIn Profile</Form.Label>
-            <Form.Control
-                type="text"
-                name="linkedIn"
-                placeholder="Enter LinkedIn profile URL"
-                value={formData.linkedIn}
-                onChange={handleChange}
-                isInvalid={validated && !!errors.linkedin}
-                style={{
-                    marginTop: '-6px',
-                    height: '30px',
-                    border: '1.3px solid #AEAEAE',
-                }}
-            />
-            <Form.Control.Feedback type="invalid">{errors.linkedin}</Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group controlId="profile" className="mt-3">
-            <Form.Label style={{ fontSize: '0.8rem', fontWeight: '500' }}>Add other profiles</Form.Label>
-            {other_profile.map((field, index) => (
-                <Row key={index} className="mt-2">
-                    <Col xs={4}>
+            <div style={{ padding: '10px' }}>
+                <p
+                    style={{
+                        marginTop: '0',
+                        textAlign: 'center',
+                        color: '#051F50',
+                        fontWeight: '600'
+                    }}
+                >
+                    Basic Details
+                </p>
+                <Form
+                    noValidate
+                    onSubmit={handleSubmit}
+                    style={{ maxWidth: '600px', margin: '0 auto' }}
+                >
+                    <Form.Group controlId="name" style={{ marginTop: '-8px' }}>
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Name
+                        </Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Ex: Github"
-                            style={{ height: '30px', border: '1.3px solid #AEAEAE' }}
-                            value={field.profile_name}
-                            onChange={(e) => handleProfileChange(index, 'profile_name', e.target.value)}
+                            name="name"
+                            placeholder="Enter Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            style={{
+                                marginTop: '-6px',
+                                height: '30px',
+                                border: '1.3px solid #AEAEAE'
+                            }}
                         />
-                    </Col>
-                    <Col xs={8}>
+                    </Form.Group>
+
+                    <Form.Group controlId="email" className="mt-3">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Email Address
+                        </Form.Label>
+                        <Form.Control
+                            type="email"
+                            name="email"
+                            placeholder="Enter email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            disabled
+                            isInvalid={validated && !!errors.email}
+                            style={{
+                                marginTop: '-6px',
+                                height: '30px',
+                                border: '1.3px solid #AEAEAE'
+                            }}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.email}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group controlId="email" className="mt-3">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Contact Email Address
+                        </Form.Label>
+                        <Form.Control
+                            type="email"
+                            name="contact_email"
+                            placeholder="Enter Contact email"
+                            value={formData.contact_email}
+                            onChange={handleChange}
+                            isInvalid={validated && !!errors.email}
+                            style={{
+                                marginTop: '-6px',
+                                height: '30px',
+                                border: '1.3px solid #AEAEAE'
+                            }}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.email}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="phone" className="mt-3">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Phone Number
+                        </Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Paste or Enter Link"
-                            style={{ height: '30px', border: '1.3px solid #AEAEAE' }}
-                            value={field.link}
-                            onChange={(e) => handleProfileChange(index, 'link', e.target.value)}
+                            name="mobile"
+                            placeholder="Enter phone number"
+                            value={formData.mobile}
+                            onChange={handleChange}
+                            isInvalid={validated && !!errors.phone}
+                            style={{
+                                marginTop: '-6px',
+                                height: '30px',
+                                border: '1.3px solid #AEAEAE'
+                            }}
                         />
-                    </Col>
-                </Row>
-            ))}
-        </Form.Group>
+                        <Form.Control.Feedback type="invalid">
+                            {errors.phone}
+                        </Form.Control.Feedback>
+                    </Form.Group>
 
-        <div className="text-start mt-3">
-            <Button
-                size="sm"
-                style={{
-                    background: '#F8F8F8',
-                    color: '#141416',
-                    border: 'none',
-                    fontWeight: '500',
-                }}
-                onClick={handleAddProfile}
-            >
-                + ADD
-            </Button>
-        </div>
+                    <Form.Group controlId="linkedin" className="mt-3">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            LinkedIn Profile
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="linkedIn"
+                            placeholder="Enter LinkedIn profile URL"
+                            value={formData.linkedIn}
+                            onChange={handleChange}
+                            isInvalid={validated && !!errors.linkedin}
+                            style={{
+                                marginTop: '-6px',
+                                height: '30px',
+                                border: '1.3px solid #AEAEAE'
+                            }}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.linkedin}
+                        </Form.Control.Feedback>
+                    </Form.Group>
 
-        <div className="text-end mt-4">
-            <Button
-                style={{
-                    background: '#3B96E1',
-                    padding: '6px 30px',
-                    borderRadius: '4px',
-                    fontSize: '0.9rem',
-                }}
-                type="submit"
-            >
-                Save
-            </Button>
-        </div>
-    </Form>
+                    <Form.Group controlId="profile" className="mt-3">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                            Add other profiles
+                        </Form.Label>
+                        {other_profile.map((field, index) => (
+                            <Row key={index} className="mt-2">
+                                <Col xs={4}>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Ex: Github"
+                                        style={{
+                                            height: '30px',
+                                            border: '1.3px solid #AEAEAE'
+                                        }}
+                                        value={field.profile_name}
+                                        onChange={e =>
+                                            handleProfileChange(
+                                                index,
+                                                'profile_name',
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                </Col>
+                                <Col xs={8}>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Paste or Enter Link"
+                                        style={{
+                                            height: '30px',
+                                            border: '1.3px solid #AEAEAE'
+                                        }}
+                                        value={field.link}
+                                        onChange={e =>
+                                            handleProfileChange(
+                                                index,
+                                                'link',
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                </Col>
+                            </Row>
+                        ))}
+                    </Form.Group>
 
-    {validated && !errors.email && !errors.phone && !errors.linkedin && (
-        <Alert variant="success" className="mt-4">
-            Form is valid!
-        </Alert>
-    )}
-</div>
+                    <div className="text-start mt-3">
+                        <Button
+                            size="sm"
+                            style={{
+                                background: '#F8F8F8',
+                                color: '#141416',
+                                border: 'none',
+                                fontWeight: '500'
+                            }}
+                            onClick={handleAddProfile}
+                        >
+                            + ADD
+                        </Button>
+                    </div>
 
+                    <div className="text-end mt-4">
+                        <Button
+                            style={{
+                                background: '#3B96E1',
+                                padding: '6px 30px',
+                                borderRadius: '4px',
+                                fontSize: '0.9rem'
+                            }}
+                            type="submit"
+                        >
+                            Save
+                        </Button>
+                    </div>
+                </Form>
+
+                {validated &&
+                    !errors.email &&
+                    !errors.phone &&
+                    !errors.linkedin && (
+                        <Alert variant="success" className="mt-4">
+                            Form is valid!
+                        </Alert>
+                    )}
+            </div>
         </>
     );
 };

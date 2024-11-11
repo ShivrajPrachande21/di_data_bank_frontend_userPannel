@@ -7,6 +7,7 @@ import BaseUrl from '../../../../../services/BaseUrl';
 import { boolean } from 'yup';
 import { toast, useToast } from 'react-toastify';
 import { CandidateProfileContext } from '../../../../../context/candidateContext/CandidateProfileContext';
+import Verified from '../../../../../assets/images/Verified.png';
 
 function EditPersonalForm() {
     const { EditPersonalDetails } = useContext(CandidateProfileContext);
@@ -41,7 +42,11 @@ function EditPersonalForm() {
 
     const handleInputChange = e => {
         const { name, value } = e.target;
-        setPersonalData({ ...personalData, [name]: value });
+        if (personalData.age <= 0 && value < 0) {
+            return;
+        } else {
+            setPersonalData({ ...personalData, [name]: value });
+        }
     };
 
     const fetchPersonalDetail = async () => {
@@ -265,7 +270,9 @@ function EditPersonalForm() {
                                         fontSize: '0.8rem'
                                     }}
                                 />
-                                {aadharverify ? null : (
+                                {aadharverify ? (
+                                    <img src={Verified} alt="" width="30px" />
+                                ) : (
                                     <Button
                                         size="sm"
                                         className="verify-pan-adhar-btn"
@@ -387,7 +394,9 @@ function EditPersonalForm() {
                                     }}
                                 />
 
-                                {PanVerify ? null : (
+                                {PanVerify ? (
+                                    <img src={Verified} alt="" width="30px" />
+                                ) : (
                                     <Button
                                         size="sm"
                                         className="verify-pan-adhar-btn"
@@ -495,7 +504,7 @@ function EditPersonalForm() {
                         <Form.Control
                             type="number"
                             name="age"
-                            value={personalData?.age}
+                            value={personalData?.age || 0}
                             onChange={handleInputChange}
                             placeholder="Enter Age"
                             style={{

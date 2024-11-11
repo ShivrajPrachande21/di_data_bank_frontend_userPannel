@@ -36,6 +36,20 @@ const CandidateSupport = () => {
             SeacrhInput.toLowerCase()
         );
     });
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render === 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            }
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
 
     return (
         <>

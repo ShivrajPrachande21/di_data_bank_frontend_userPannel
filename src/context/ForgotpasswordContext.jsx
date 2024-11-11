@@ -47,22 +47,6 @@ export const ForgotPasswordProvider = ({ children }) => {
     };
     console.log('OTPPP', OTP);
 
-    const changePassword = async data => {
-        console.log('datatata', data);
-        try {
-            const response = await axios.post(`${BaseUrl}company/newpassword`, {
-                email,
-                password: data?.password,
-                confirmpassword: data?.confirmpassword
-            });
-            if (response.status === 200) {
-                toast.success('password changed successfully!');
-            }
-        } catch (error) {
-            toast.error(error.response?.data?.error);
-        }
-    };
-
     return (
         <ForgotPasswordContext.Provider
             value={{
@@ -74,8 +58,7 @@ export const ForgotPasswordProvider = ({ children }) => {
                 successMessage,
                 handleForgotPassword,
                 currentStep,
-                setcurrentStep,
-                changePassword
+                setcurrentStep
             }}
         >
             {children}

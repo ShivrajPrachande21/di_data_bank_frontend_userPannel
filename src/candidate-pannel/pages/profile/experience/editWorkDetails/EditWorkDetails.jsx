@@ -27,13 +27,16 @@ const EditWorkDetails = () => {
         country: '',
         skill: ''
     });
-    console.log('checking ', workDetails);
+
     const handleFileChange = e => {
         setResumeFile(e.target.files[0]); // Capture the uploaded file
     };
 
     const handle_Upload_resume = () => {
         resumeRef.current.click();
+    };
+    const deleteFile = () => {
+        setResumeFile(null);
     };
 
     const handleInputChange = e => {
@@ -102,7 +105,7 @@ const EditWorkDetails = () => {
                     formData
                 );
                 if (response?.status == 200 || response?.status == 201) {
-                    toast.success('Work Detials Updated SUccesfully');
+                    toast.success('Work details updated successfully');
                     handleShowWork();
                     await fetchCandidateProfile();
                 }
@@ -118,7 +121,7 @@ const EditWorkDetails = () => {
         };
         fun();
     }, [locate]);
-                        
+
     return (
         <>
             <div>
@@ -133,7 +136,7 @@ const EditWorkDetails = () => {
                 </p>
                 <Form noValidate onSubmit={e => handle_Edit_submit(e)}>
                     <Form.Group controlId="Role" style={{ marginTop: '-8px' }}>
-                    <Form.Label
+                        <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Aspiring Position/Role
@@ -151,24 +154,27 @@ const EditWorkDetails = () => {
                                 }}
                             >
                                 <Form.Control
-    type="text"
-    name="aspiring_position"
-    value={workDetails?.aspiring_position}
-    onChange={e => handleInputChange(e)}
-    placeholder="Enter Aspiring Position/Role"
-    style={{
-        marginTop: '1px',
-        fontSize: '0.8rem',
-        height: '34px',
-        border: '1.4px solid #AEAEAE',
-        marginLeft:'-10px'
-    }}
-/>
+                                    type="text"
+                                    name="aspiring_position"
+                                    value={workDetails?.aspiring_position}
+                                    onChange={e => handleInputChange(e)}
+                                    placeholder="Enter Aspiring Position/Role"
+                                    style={{
+                                        marginTop: '1px',
+                                        fontSize: '0.8rem',
+                                        height: '34px',
+                                        border: '1.4px solid #AEAEAE',
+                                        marginLeft: '-10px'
+                                    }}
+                                />
                             </Col>
                         </Row>
                     </Form.Group>
-                    <Form.Group controlId="industry" style={{ marginTop: '3px' }}>
-                    <Form.Label
+                    <Form.Group
+                        controlId="industry"
+                        style={{ marginTop: '3px' }}
+                    >
+                        <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Industry
@@ -186,19 +192,19 @@ const EditWorkDetails = () => {
                                 }}
                             >
                                 <Form.Control
-    type="text"
-    name="industry"
-    value={workDetails?.industry}
-    onChange={e => handleInputChange(e)}
-    placeholder="Enter industry"
-    style={{
-        marginTop: '1px',
-        fontSize: '0.8rem',
-        height: '34px',
-        border: '1.4px solid #AEAEAE',
-        marginLeft:'-10px'
-    }}
-/>
+                                    type="text"
+                                    name="industry"
+                                    value={workDetails?.industry}
+                                    onChange={e => handleInputChange(e)}
+                                    placeholder="Enter industry"
+                                    style={{
+                                        marginTop: '1px',
+                                        fontSize: '0.8rem',
+                                        height: '34px',
+                                        border: '1.4px solid #AEAEAE',
+                                        marginLeft: '-10px'
+                                    }}
+                                />
                             </Col>
                         </Row>
                     </Form.Group>
@@ -239,47 +245,47 @@ const EditWorkDetails = () => {
                         </Row>
                     </Form.Group>
 
-                    <Form.Group controlId="mobile" className="mt-2 " >
+                    <Form.Group controlId="mobile" className="mt-2 ">
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Total year of Experience
                         </Form.Label>
                         <Form.Control
-                         type="number"
-                         name="work_experience"
-                         value={workDetails?.work_experience}
-                         onChange={e => handleInputChange(e)}
-                         placeholder="Enter total experience"
-                         style={{
-                             outline: 'none',
-                             height: '35px',
-                             border: '1px solid gray',
-                             marginLeft: '1px',
-                             fontSize: '0.8rem'
-                         }}
-                     />
+                            type="number"
+                            name="work_experience"
+                            value={workDetails?.work_experience}
+                            onChange={e => handleInputChange(e)}
+                            placeholder="Enter total experience"
+                            style={{
+                                outline: 'none',
+                                height: '35px',
+                                border: '1px solid gray',
+                                marginLeft: '1px',
+                                fontSize: '0.8rem'
+                            }}
+                        />
                     </Form.Group>
-                    <Form.Group controlId="mobile" className="mt-2 " >
+                    <Form.Group controlId="mobile" className="mt-2 ">
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            function(s)
+                            Function(s)
                         </Form.Label>
                         <Form.Control
-                         type="text"
-                         name="functions"
-                         value={workDetails?.functions}
-                         onChange={e => handleInputChange(e)}
-                         placeholder="Ex: Marketing, sale,Human resources"
-                         style={{
-                             outline: 'none',
-                             height: '35px',
-                             border: '1px solid gray',
-                             marginLeft: '1px',
-                             fontSize: '0.8rem'
-                         }}
-                     />
+                            type="text"
+                            name="functions"
+                            value={workDetails?.functions}
+                            onChange={e => handleInputChange(e)}
+                            placeholder="Ex: Marketing, sale,Human resources"
+                            style={{
+                                outline: 'none',
+                                height: '35px',
+                                border: '1px solid gray',
+                                marginLeft: '1px',
+                                fontSize: '0.8rem'
+                            }}
+                        />
                     </Form.Group>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label
@@ -305,7 +311,7 @@ const EditWorkDetails = () => {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                           Preferred location
+                            Preferred location
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -378,21 +384,33 @@ const EditWorkDetails = () => {
                             style={{
                                 border: '1.4px dashed #AEAEAE',
                                 borderRadius: '6px',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                color: '#3B96E1'
                             }}
-                            onClick={handle_Upload_resume}
                         >
                             <p
                                 style={{
                                     marginTop: '6px',
                                     fontSize: '0.8rem',
                                     marginBottom: '6px',
-                                    textDecoration: 'underline',
-                                    color: '#3B96E1'
+                                    textDecoration: 'underline'
                                 }}
+                                onClick={handle_Upload_resume}
                             >
-                                Browse from files
+                                {resumeFile
+                                    ? resumeFile.name
+                                    : 'Browse from files'}
                             </p>
+                            <span
+                                style={{
+                                    marginTop: '-3.5px',
+                                    marginLeft: '6px',
+                                    fontSize: '1.5rem'
+                                }}
+                                onClick={deleteFile}
+                            >
+                                {resumeFile && resumeFile.name ? 'x' : ''}
+                            </span>
                         </div>
                     </Form.Group>
 

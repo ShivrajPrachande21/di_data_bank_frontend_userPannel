@@ -18,24 +18,35 @@ import transactions from '../../assets/images/transactions.png';
 import SupportIcon from '../../assets/images/SupportIcon.png';
 import createjobblue from '../../assets/images/createjobblue.png';
 import SearchJob from '../../assets/images/SearchJob.png';
+import CDE from '../../assets/images/CDE.png';
 import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import CompanyNotification from '../../company-pannel/pages/company_Notification/CompanyNotification';
 import { HireCandidateContext } from '../../context/HireCandidateContex';
 import HireCandidateNotification from '../../company-pannel/pages/company_Notification/HireCandidateNotification';
-import GreenBatch from "../../company-pannel/pages/GreenBatch/GreenBatch";
+import GreenBatch from '../../company-pannel/pages/GreenBatch/GreenBatch';
 import Verified from '../../assets/images/Verified.png';
 import altprofile from '../../assets/images/altprofile.jpg';
-import {useSubscription} from '../../context/SubscriptionContext';
+import { useSubscription } from '../../context/SubscriptionContext';
 import { CandidateProfileContext } from '../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 const SideBar = () => {
-    const { handleCloseHire, showHire, show, setShow ,Identity,SetIdentity,profile,greenBatch,CompanyProfile,SetProfile} =
-        useContext(HireCandidateContext);
-       const { ShowGreen,SetGreenBatch}=useSubscription()
-       const {
-        CandidateProfile,
-        fetchCandidateProfile} = useContext(CandidateProfileContext);
+    const {
+        handleCloseHire,
+        showHire,
+        show,
+        setShow,
+        Identity,
+        SetIdentity,
+        profile,
+        greenBatch,
+        CompanyProfile,
+        SetProfile
+    } = useContext(HireCandidateContext);
+    const { ShowGreen, SetGreenBatch } = useSubscription();
+    const { CandidateProfile, fetchCandidateProfile } = useContext(
+        CandidateProfileContext
+    );
     const navigate = useNavigate();
     const [hidelogout, sethidelogout] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
@@ -52,7 +63,7 @@ const SideBar = () => {
         setActiveButton(buttonId);
     };
     const handle_logOut = async () => {
-       // const email = localStorage.getItem('email');
+        // const email = localStorage.getItem('email');
         const token = localStorage.getItem('companyToken');
         const decodedToken = jwtDecode(token);
         const company_id = decodedToken?._id;
@@ -66,7 +77,7 @@ const SideBar = () => {
                 navigate('/');
             }
         } catch (error) {
-            toast.error(`${error.response?.data?.error}`)
+            toast.error(`${error.response?.data?.error}`);
         }
     };
 
@@ -97,18 +108,24 @@ const SideBar = () => {
         },
         {
             id: 4,
+            label: 'Credibility Establishment',
+            icon: CDE,
+            link: 'credibility-establishment'
+        },
+        {
+            id: 5,
             label: 'Subscription Plans',
             icon: SubscriptionIcon,
             link: 'subscription-plan/subscription'
         },
         {
-            id: 5,
+            id: 6,
             label: 'Transactions',
             icon: transactions,
             link: 'transaction'
         },
         {
-            id: 6,
+            id: 7,
             label: 'Support',
             icon: SupportIcon,
             link: 'support'
@@ -164,18 +181,20 @@ const SideBar = () => {
     //Notification count
     const [notifications, setNotifications] = useState([]);
     const [notiCount, SetCount] = useState([]);
-    const [profileview,SetProfileView]=useState([])
-    const [shortlist,SetShortlist]=useState([])
-    const [RenderVerify,SetRenderVerify]=useState('')
-    async function CandidateProfiles(id){
+    const [profileview, SetProfileView] = useState([]);
+    const [shortlist, SetShortlist] = useState([]);
+    const [RenderVerify, SetRenderVerify] = useState('');
+    async function CandidateProfiles(id) {
         try {
-           const response = await axios.get(`${BaseUrl}candidate.profile/details/${id}`);
-           if (response.status === 200) {
-            SetIdentity(response?.data?.basic_details?.name)
-            SetProfile(response?.data?.profile)
-           }
-       } catch (error) {}
-   }
+            const response = await axios.get(
+                `${BaseUrl}candidate.profile/details/${id}`
+            );
+            if (response.status === 200) {
+                SetIdentity(response?.data?.basic_details?.name);
+                SetProfile(response?.data?.profile);
+            }
+        } catch (error) {}
+    }
 
     useEffect(() => {
         const render = localStorage.getItem('render');
@@ -183,7 +202,7 @@ const SideBar = () => {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const company_id = decodedToken?._id;
-            CompanyProfile(company_id)
+            CompanyProfile(company_id);
             socket.connect();
 
             socket.emit('issuenotification', company_id);
@@ -211,7 +230,7 @@ const SideBar = () => {
             const token = localStorage.getItem('Candidate_token');
             const decodedToken = jwtDecode(token);
             const candidate_id = decodedToken?._id;
-            CandidateProfiles(candidate_id)
+            CandidateProfiles(candidate_id);
             socket.connect();
 
             socket.emit('CandidateIssuenotification', candidate_id);
@@ -220,11 +239,11 @@ const SideBar = () => {
                 setNotifications(newNotification);
             });
 
-             //Shortlist notification 
-             socket.emit('getshortlistnotification',candidate_id);
-             socket.on('shortlistenotification',data=>{
-                 SetShortlist(data)
-             })
+            //Shortlist notification
+            socket.emit('getshortlistnotification', candidate_id);
+            socket.on('shortlistenotification', data => {
+                SetShortlist(data);
+            });
 
             socket.emit('newCompannynotification', candidate_id);
 
@@ -232,12 +251,12 @@ const SideBar = () => {
                 SetCount(newNotification);
                 ///setNotifications(newNotification);
             });
-            
-            //profile View notification 
-            socket.emit('getcvviewnotification',candidate_id);
-            socket.on('companyViewnotification',data=>{
-                SetProfileView(data)
-            })
+
+            //profile View notification
+            socket.emit('getcvviewnotification', candidate_id);
+            socket.on('companyViewnotification', data => {
+                SetProfileView(data);
+            });
 
             socket.on('disconnect', () => {
                 console.log('User disconnected');
@@ -260,21 +279,19 @@ const SideBar = () => {
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
 
-
     useEffect(() => {
         const render = localStorage.getItem('render');
-        SetRenderVerify(render)
+        SetRenderVerify(render);
         if (render == 'candidate') {
             const Candiatetoken = localStorage.getItem('Candidate_token');
 
             const decodedToken = jwtDecode(Candiatetoken);
             const company_id = decodedToken?._id;
             setCandidateToken(company_id);
-            fetchCandidateProfile()
+            fetchCandidateProfile();
         } else {
         }
     }, []);
-    
 
     return (
         <>
@@ -304,14 +321,20 @@ const SideBar = () => {
                                 width="20px"
                                 onClick={handleShow}
                             />
-                            {notifications.length + notiCount.length + profileview.lengthv + shortlist.length == 0 ? (
+                            {notifications.length +
+                                notiCount.length +
+                                profileview.lengthv +
+                                shortlist.length ==
+                            0 ? (
                                 ''
                             ) : (
                                 <div className="noti">
                                     <p>
                                         {' '}
                                         {notifications.length +
-                                            notiCount.length+ profileview.length + shortlist.length}
+                                            notiCount.length +
+                                            profileview.length +
+                                            shortlist.length}
                                     </p>
                                 </div>
                             )}
@@ -325,76 +348,73 @@ const SideBar = () => {
                         // onClick={handleTogale}
                         style={{
                             background: 'white',
-                            borderRadius: '12px',
-                            width: '90%'
+                            borderRadius: '12px'
                         }}
                     >
                         <div className="Select">
                             <img
-                                src={profile?bindUrlOrPath(profile):altprofile}
+                                src={
+                                    profile
+                                        ? bindUrlOrPath(profile)
+                                        : altprofile
+                                }
                                 class="rounded-circle"
                                 style={{
                                     width: '20px',
-                                     height:'20px',
+                                    height: '20px',
                                     marginLeft: '10px'
                                 }}
                                 alt="Avatar"
-                                onClick={navigateProfile}
                             />
 
-                            <p>{Identity?.length > 10 ? Identity.substring(0,12) + "..." : Identity}</p>
+                            <span>
+                                {Identity?.length > 10
+                                    ? Identity.substring(0, 12) + '...'
+                                    : Identity}
+                            </span>
 
                             <img
                                 src={iconamoon_arrowd}
                                 alt=""
                                 width="20px"
-                                style={{ marginLeft: '60px' }}
+                                style={{ marginLeft: '50px' }}
                                 onClick={toggleLogoout}
                             />
                         </div>
                     </Col>
-                    <Col xs={12}>
+                    <Col>
                         {hidelogout && (
-                            <Col xs={12}>
-                                <p
-                                    style={{
-                                        margin: '8px',
-                                        fontSize: '1vw'
-                                    }}
-                                >
-                                    Your account
-                                </p>
-                                <Row>
+                            <Col className="your-account">
+                                <p>Your account</p>
+                                <Row onClick={navigateProfile}>
                                     <Col xs={2} className="logout-img">
                                         <img
-                                            src={profile?bindUrlOrPath(profile):altprofile}
+                                            src={
+                                                profile
+                                                    ? bindUrlOrPath(profile)
+                                                    : altprofile
+                                            }
                                             class="rounded-circle"
                                             style={{
                                                 width: '20px',
-                                                height:'20px'
+                                                height: '20px'
                                             }}
                                             alt="Avatar"
                                         />
                                     </Col>
                                     <Col xs={8}>
-                                        <h4 style={{ fontSize: '0.7rem' }}>
-                                       {Identity?.length > 10 ? Identity.substring(0,12) + "..." : Identity}
-                                        </h4>
-                                        <div className="account">
-                                            <p
-                                                style={{
-                                                    fontSize: '0.4rem'
-                                                }}
-                                            >
-                                               
-                                            </p>
-                                            <p
-                                                style={{
-                                                    fontSize: '0.4rem'
-                                                }}
-                                            >
-                                            </p>
-                                        </div>
+                                        <p
+                                            style={{
+                                                fontSize: '0.7rem',
+                                                marginTop: '5px',
+                                                marginLeft: '-8px'
+                                            }}
+                                        >
+                                            {Identity?.length > 10
+                                                ? Identity.substring(0, 12) +
+                                                  '...'
+                                                : Identity}
+                                        </p>
                                     </Col>
                                 </Row>
                                 <Col
@@ -442,42 +462,36 @@ const SideBar = () => {
                         }}
                         className="User-pannel-percentage"
                     >
-                        {RenderVerify=='company'?
-                        (greenBatch&&greenBatch?.length==0?(
-                           <h1 style={{ border: '1.32px solid #3B96E1' }} onClick={()=>SetGreenBatch(true)}>
-                           Get Verified Batch
-                           <img
-                                               src={Verified}
-                                               alt="Verified"
-                                               width="19"
-                                           />
-                       </h1>  
-                        ):
-                        (
+                        {RenderVerify == 'company' ? (
+                            greenBatch && greenBatch?.length == 0 ? (
+                                <h1
+                                    style={{ border: '1.32px solid #3B96E1' }}
+                                    onClick={() => SetGreenBatch(true)}
+                                >
+                                    Get Verified Batch
+                                    <img
+                                        src={Verified}
+                                        alt="Verified"
+                                        width="19"
+                                    />
+                                </h1>
+                            ) : (
+                                <h1 style={{ border: '1.32px solid #3B96E1' }}>
+                                    Profile verified
+                                    <img
+                                        src={Verified}
+                                        alt="Verified"
+                                        width="19"
+                                    />
+                                </h1>
+                            )
+                        ) : CandidateProfile?.profileCompletionPercentage ==
+                          100 ? (
                             <h1 style={{ border: '1.32px solid #3B96E1' }}>
-                            Profile verified
-                            <img
-                                                src={Verified}
-                                                alt="Verified"
-                                                width="19"
-                                            />
-                        </h1>   
-                        )
-                    ):
-                    (CandidateProfile?.profileCompletionPercentage==100?
-                        (
-                            <h1 style={{ border: '1.32px solid #3B96E1' }}>
-                            Profile verified
-                            <img
-                                                src={Verified}
-                                                alt="Verified"
-                                                width="19"
-                                            />
-                        </h1>  
-                        )
-                        :null)
-                    }
-                       
+                                Profile verified
+                                <img src={Verified} alt="Verified" width="19" />
+                            </h1>
+                        ) : null}
                     </Col>
                 </Row>
                 <div className="sidebar-btns mt-1">
@@ -630,7 +644,7 @@ const SideBar = () => {
                 </Offcanvas.Body>
             </Offcanvas>
 
-             <GreenBatch/>
+            <GreenBatch />
 
             {/* to view Hired Candidate Notification */}
 

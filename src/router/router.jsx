@@ -20,7 +20,7 @@ import CompanyAiSearch from '../company-pannel/pages/hireCandidate/aiSearches/Co
 import ViewCandidateDetails from '../company-pannel/pages/hireCandidate/viewCandidateDetails/ViewCandidateDetails';
 import ViewJobApplication from '../company-pannel/pages/create_job/viewJobApplication/ViewJobApplication';
 import Applications from '../company-pannel/pages/create_job/viewJobApplication/applications/Applications';
-import Longlist from '../company-pannel/pages/create_job/viewJobApplication/Longlist/Longlist'
+import Longlist from '../company-pannel/pages/create_job/viewJobApplication/Longlist/Longlist';
 import ShortListed from '../company-pannel/pages/create_job/viewJobApplication/shortlisted/ShortListed';
 import JobOffered from '../company-pannel/pages/create_job/viewJobApplication/job_offered/JobOffered';
 import Hired from '../company-pannel/pages/create_job/viewJobApplication/hired/Hired';
@@ -48,6 +48,11 @@ import MyDetails from '../candidate-pannel/pages/profile/myDetails/MyDetails';
 import Experience from '../candidate-pannel/pages/profile/experience/Experience';
 import Education from '../candidate-pannel/pages/profile/education/Education';
 import CandidateReviews from '../candidate-pannel/pages/profile/reviews/CandidateReviews';
+import Protectedroutes from '../services/Protectedroutes';
+import NotFound from '../components/NotFound/NotFound';
+import TermsAndCondition from '../components/termsAndCondition/TermsAndCondition';
+import PrivacyPolicy from '../components/privacyPolicy/PrivacyPolicy';
+import CredibilityEstablishment from '../company-pannel/pages/credibility-establishment/CredibilityEstablishment';
 
 const router = createBrowserRouter([
     {
@@ -80,7 +85,13 @@ const router = createBrowserRouter([
     },
     {
         path: 'main',
-        element: <DashboardLayout />,
+        element: (
+            <Protectedroutes
+                element={DashboardLayout}
+                tokenType="companyToken"
+            />
+        ),
+        // element: <DashboardLayout />,
         children: [
             {
                 path: 'dashboard',
@@ -117,8 +128,8 @@ const router = createBrowserRouter([
                         element: <Applications />
                     },
                     {
-                      path:'longlist',
-                      element:<Longlist/>
+                        path: 'longlist',
+                        element: <Longlist />
                     },
                     {
                         path: 'shortlisted',
@@ -163,11 +174,21 @@ const router = createBrowserRouter([
             {
                 path: 'support',
                 element: <Support />
+            },
+            {
+                path: 'credibility-establishment',
+                element: <CredibilityEstablishment />
             }
         ]
     },
     {
         path: 'candidate-dashboard',
+        // element: (
+        //     <Protectedroutes
+        //         element={Candidate_Dashboard}
+        //         tokenType="Candidate_token"
+        //     />
+        // ),
         element: <Candidate_Dashboard />,
         children: [
             {
@@ -257,6 +278,18 @@ const router = createBrowserRouter([
     {
         path: 'chat-page/:id',
         element: <Chatpage />
+    },
+    {
+        path: '*',
+        element: <NotFound />
+    },
+    {
+        path: 'terms-condition',
+        element: <TermsAndCondition />
+    },
+    {
+        path: 'privacy-policy',
+        element: <PrivacyPolicy />
     }
 ]);
 

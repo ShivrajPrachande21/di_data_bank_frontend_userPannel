@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Button, Col } from 'react-bootstrap';
 import './appliedjob.css';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -30,8 +30,22 @@ const AppliedJob = () => {
             };
         }
     };
+    // function rendering() {
+    //     const render = localStorage.getItem('render');
+
+    //     if (render === 'candidate') {
+    //         const token = localStorage.getItem('Candidate_token');
+    //         if (!token) {
+    //             navigate('/');
+    //         }
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     rendering();
+    // }, []);
     return (
-        <div>
+        <div className="applied-job">
             <Row>
                 <Col>
                     <div className="applied-btns">

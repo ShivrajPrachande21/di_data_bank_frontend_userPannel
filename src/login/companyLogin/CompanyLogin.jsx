@@ -92,14 +92,15 @@ const CompanyLogin = () => {
                 const company_otp = response?.data?.companyOTP;
                 const Candidate_token = response?.data?.CandidateToken;
                 // set Candidate token to local storage
-                localStorage.setItem('Candidate_token', Candidate_token);
-                localStorage.setItem('render', 'candidate');
+
                 if (company_otp && !Candidate_token) {
                     setDisplayOtp_input(true);
 
                     setresponseOtp(company_otp);
                     toast.success(response?.data?.message);
                 } else if (Candidate_token) {
+                    localStorage.setItem('Candidate_token', Candidate_token);
+                    localStorage.setItem('render', 'candidate');
                     navigate('/candidate-dashboard/search-job');
                     toast.success(response?.data?.message);
                 }
@@ -183,6 +184,26 @@ const CompanyLogin = () => {
         }));
     }, [otp]);
 
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (token) {
+                navigate('/candidate-dashboard/search-job');
+            }
+        } else if (render === 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (token) {
+                navigate('/main/dashboard');
+            }
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
+
     return (
         <>
             <div className="login-main">
@@ -248,7 +269,7 @@ const CompanyLogin = () => {
                                 </Col>
                             </Row>
                             {DisplayOtp_input && (
-                                <Row className="justify-content-center mt-2 mb-2">
+                                <Row className="justify-content-center mt-2 mb-4">
                                     <Col xs={12}>
                                         <p
                                             style={{
@@ -284,31 +305,36 @@ const CompanyLogin = () => {
                                     ))}
                                 </Row>
                             )}
-
-                            <Row className="mt-2">
-                                <div className="login-check-custom">
-                                    {' '}
-                                    <div className="checkboxs">
-                                        <Form.Check
-                                            type="checkbox"
-                                            checked={rememberMe}
-                                            onChange={e =>
-                                                setRememberMe(e.target.checked)
-                                            }
-                                        />
-                                        <span>Remember me</span>
+                            {DisplayOtp_input ? (
+                                ''
+                            ) : (
+                                <Row className="mt-2">
+                                    <div className="login-check-custom">
+                                        {' '}
+                                        <div className="checkboxs">
+                                            <Form.Check
+                                                type="checkbox"
+                                                checked={rememberMe}
+                                                onChange={e =>
+                                                    setRememberMe(
+                                                        e.target.checked
+                                                    )
+                                                }
+                                            />
+                                            <span>Remember me</span>
+                                        </div>
+                                        <p
+                                            style={{
+                                                marginTop: '10px',
+                                                cursor: 'pointer'
+                                            }}
+                                            onClick={naigateForgetpassword}
+                                        >
+                                            Forgot Password?
+                                        </p>
                                     </div>
-                                    <p
-                                        style={{
-                                            marginTop: '10px',
-                                            cursor: 'pointer'
-                                        }}
-                                        onClick={naigateForgetpassword}
-                                    >
-                                        Forgot Password?
-                                    </p>
-                                </div>
-                            </Row>
+                                </Row>
+                            )}
 
                             <Row className="mt-1">
                                 {DisplayOtp_input ? (

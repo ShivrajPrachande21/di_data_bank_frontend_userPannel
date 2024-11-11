@@ -1,0 +1,35 @@
+.btns-div {
+}
+.btns-div button {
+    width: 14%;
+    margin-right: 10px;
+    background: #b4ddff;
+    color: #3b96e1;
+    font-weight: 600;
+}
+.terms-condition {
+    width: 100%;
+    border-top: 1px solid rgb(170, 170, 170);
+    overflow-y: scroll; /* or overflow: auto; */
+    scrollbar-width: none; /* For Firefox */
+}
+
+.terms-condition::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge */
+}
+
+.terms-condition iframe {
+    width: 100%;
+    height: 80vh;
+    overflow-y: auto;
+}
+.slide-up {
+    transform: translateY(100%); /* Start off-screen at the bottom */
+    opacity: 0;
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+.slide-up.active {
+    transform: translateY(0); /* Slide up to its original position */
+    opacity: 1;
+}

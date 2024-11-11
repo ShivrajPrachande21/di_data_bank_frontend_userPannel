@@ -35,27 +35,26 @@ const CreateJob = () => {
     const [modalShow, setModalShow] = React.useState(false);
     const [modalShowhide, setModalShowhide] = React.useState(null);
     const [PromoteJobData, setPromoteJobData] = useState(null);
-        const [modalShows,SetmodalShow]=useState(false);
-        const [orderId,SetOrderId]=useState('')
+    const [modalShows, SetmodalShow] = useState(false);
+    const [orderId, SetOrderId] = useState('');
     const [jobId, setJob_id] = useState('');
     const [PromoteLoading, SetPromoteLoading] = useState(null);
 
     const handleClose = () => {
         const jobPosting0 = job_status?.SubscriptionStatus[0]?.job_posting || 0;
         const jobPosting1 = job_status?.SubscriptionStatus[1]?.job_posting || 0;
-    
+
         if (jobPosting0 + jobPosting1 === 0) {
             if (!job_status?.SubscriptionStatus[0]) {
-                toast.error("Please buy a subscription plan");
+                toast.error('Please buy a subscription plan');
             } else {
-                toast.error("Please upgrade your subscription plan");
+                toast.error('Please upgrade your subscription plan');
             }
             return;
         }
-    
+
         setLgShow(prev => !prev);
     };
-    
 
     const handleToggleDropdown = index => {
         setIsDropdownOpen(prevState => (prevState === index ? null : index)); // Toggle dropdown
@@ -118,7 +117,7 @@ const CreateJob = () => {
     };
     let toUpIntervelId;
     let ToptimeoutId;
-    const fetch_topUp_success_status = async (data) => {
+    const fetch_topUp_success_status = async data => {
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
@@ -135,11 +134,11 @@ const CreateJob = () => {
             );
             if (response?.status === 200 || response?.status === 201) {
                 SetPromoteLoading(false);
-                SetOrderId(response.data?.orderId)
+                SetOrderId(response.data?.orderId);
                 clearInterval(toUpIntervelId);
                 clearTimeout(ToptimeoutId);
-                fetch_job_status()
-                setModalShowhide(false)
+                fetch_job_status();
+                setModalShowhide(false);
                 SetmodalShow(true);
             }
         } catch (error) {
@@ -150,7 +149,7 @@ const CreateJob = () => {
     function Run_Promote_verify(data) {
         toUpIntervelId = setInterval(() => {
             fetch_topUp_success_status(data);
-        }, 1000); 
+        }, 1000);
 
         ToptimeoutId = setTimeout(() => {
             clearInterval(toUpIntervelId);
@@ -178,6 +177,21 @@ const CreateJob = () => {
 
         fetchData();
     }, [location]);
+
+    // function rendering() {
+    //     const render = localStorage.getItem('render');
+
+    //     if (render == 'company') {
+    //         const token = localStorage.getItem('companyToken');
+    //         if (!token) {
+    //             naviagte('/');
+    //         }
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     rendering();
+    // }, []);
 
     return (
         <>
@@ -218,32 +232,32 @@ const CreateJob = () => {
                             Create a Job{' '}
                             <span>
                                 (
-                                    {
-    (job_status?.SubscriptionStatus[0]?.AdminSubscription[0]?.job_posting || 0) + 
-    (job_status?.SubscriptionStatus[1]?.AdminSubscription[0]?.job_posting || 0)
-}
-
+                                {(job_status?.SubscriptionStatus[0]
+                                    ?.AdminSubscription[0]?.job_posting || 0) +
+                                    (job_status?.SubscriptionStatus[1]
+                                        ?.AdminSubscription[0]?.job_posting ||
+                                        0)}
                                 /
-                                {
-                                    (job_status?.SubscriptionStatus[0]?.job_posting || 0) + 
-                                    (job_status?.SubscriptionStatus[1]?.job_posting || 0)
-                                }
-                                {' '}
+                                {(job_status?.SubscriptionStatus[0]
+                                    ?.job_posting || 0) +
+                                    (job_status?.SubscriptionStatus[1]
+                                        ?.job_posting || 0)}{' '}
                                 remaining)
                             </span>
                         </Button>
                     </Col>
                     <Col xs={windowWidth < 768 ? 12 : 8} className="job-data">
                         <div className="job-created-data">
-                            <p>{job_status?.dataWithJobCounts[0]?.jobCount}</p>
+                            <p>
+                                {job_status?.dataWithJobCounts[0]?.jobCount ||
+                                    0}
+                            </p>
                             <p className="total-activ">Total Job Created</p>
                         </div>
                         <div className="job-created-data">
                             <p style={{ color: '#3B96E1' }}>
-                                {
-                                    job_status?.dataWithJobCounts[0]
-                                        ?.activeJobCount
-                                }
+                                {job_status?.dataWithJobCounts[0]
+                                    ?.activeJobCount || 0}
                             </p>
                             <p className="total-activ">Total Active Job</p>
                         </div>
@@ -252,10 +266,8 @@ const CreateJob = () => {
                             style={{ marginLeft: '4px' }}
                         >
                             <p>
-                                {
-                                    job_status?.dataWithJobCounts[0]
-                                        ?.application_recieved
-                                }
+                                {job_status?.dataWithJobCounts[0]
+                                    ?.application_recieved || 0}
                             </p>
                             <p className="total-activ">
                                 Total Applications Received
@@ -266,10 +278,8 @@ const CreateJob = () => {
                             style={{ marginLeft: '4px' }}
                         >
                             <p style={{ color: '#FF6F00' }}>
-                                {
-                                    job_status?.dataWithJobCounts[0]
-                                        ?.candidate_pipeline
-                                }
+                                {job_status?.dataWithJobCounts[0]
+                                    ?.candidate_pipeline || 0}
                             </p>
                             <p className="total-activ">
                                 Total Candidates in Pipeline
@@ -280,10 +290,8 @@ const CreateJob = () => {
                             style={{ border: 'none' }}
                         >
                             <p style={{ color: '#06C306' }}>
-                                {
-                                    job_status?.dataWithJobCounts[0]
-                                        ?.candidate_hired
-                                }
+                                {job_status?.dataWithJobCounts[0]
+                                    ?.candidate_hired || 0}
                             </p>
                             <p className="total-activ">
                                 Total Candidates Hired
@@ -293,279 +301,313 @@ const CreateJob = () => {
                 </Row>
                 {/* card Sections */}
                 <Row className="mt-4">
-                    {job_status?.PostedJobList&&job_status?.PostedJobList.length>0?
-                    job_status?.PostedJobList.map((item, index) => (
-                        <>
-                            <Col
-                                xs={12}
-                                sm={6}
-                                md={4}
-                                lg={3}
-                                key={index}
-                                className="mb-3"
-                            >
-                                <div className="card-job">
-                                    <div className="job-head">
-                                        <h6>{item?.job_title}</h6>
-                                        {item?.Green_Batch?
-                                        <img src={Verified} alt="Verified" width="19" style={{marginTop:'-7px',marginLeft:'-10px'}} />
-                                        :null
-                                        }
-                                        <img
-                                            src={hamburger}
-                                            alt=""
-                                            width="20px"
-                                            style={{ cursor: 'pointer' }}
-                                            onClick={e => {
-                                                handleToggleDropdown(index);
-                                                // Prevent navigation
+                    {job_status?.PostedJobList &&
+                    job_status?.PostedJobList.length > 0 ? (
+                        job_status?.PostedJobList.map((item, index) => (
+                            <>
+                                <Col
+                                    xs={12}
+                                    sm={6}
+                                    md={4}
+                                    lg={3}
+                                    key={index}
+                                    className="mb-3"
+                                >
+                                    <div className="card-job">
+                                        <div className="job-head">
+                                            <h6>{item?.job_title}</h6>
+                                            {item?.Green_Batch ? (
+                                                <img
+                                                    src={Verified}
+                                                    alt="Verified"
+                                                    width="19"
+                                                    style={{
+                                                        marginTop: '-7px',
+                                                        marginLeft: '-10px'
+                                                    }}
+                                                />
+                                            ) : null}
+                                            <img
+                                                src={hamburger}
+                                                alt=""
+                                                width="20px"
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={e => {
+                                                    handleToggleDropdown(index);
+                                                    // Prevent navigation
+                                                }}
+                                            />
+                                            {isDropdownOpen === index ? (
+                                                <div className="dropdown">
+                                                    <p
+                                                        onClick={() =>
+                                                            stop_restar_job(
+                                                                item?._id
+                                                            )
+                                                        }
+                                                    >
+                                                        {!item?.status
+                                                            ? 'restart'
+                                                            : 'stop Applications'}
+                                                    </p>
+
+                                                    <p
+                                                        onClick={() =>
+                                                            delete_job_status(
+                                                                item?._id
+                                                            )
+                                                        }
+                                                    >
+                                                        Delete job post
+                                                    </p>
+                                                </div>
+                                            ) : null}
+                                        </div>
+                                        <p
+                                            style={{
+                                                marginTop: '-18px',
+                                                color: item?.promote_job
+                                                    ? '#3B96E1'
+                                                    : 'white',
+                                                fontSize: '0.8rem',
+
+                                                marginTop: '0px'
                                             }}
-                                        />
-                                        {isDropdownOpen === index ? (
-                                            <div className="dropdown">
-                                                <p
+                                        >
+                                            {item?.promote_job ? (
+                                                'Promoted'
+                                            ) : (
+                                                <button
+                                                    style={{
+                                                        zIndex: '10',
+                                                        borderRadius: '8px',
+                                                        padding: '2px 8px'
+                                                    }}
                                                     onClick={() =>
-                                                        stop_restar_job(
+                                                        handle_promote_job(
                                                             item?._id
                                                         )
                                                     }
                                                 >
-                                                    {!item?.status
-                                                        ? 'restart'
-                                                        : 'stop Applications'}
-                                                </p>
-
-                                                <p
-                                                    onClick={() =>
-                                                        delete_job_status(
-                                                            item?._id
-                                                        )
-                                                    }
-                                                >
-                                                    Delete job post
-                                                </p>
-                                            </div>
-                                        ) : null}
-                                    </div>
-                                    <p
-                                        style={{
-                                            marginTop: '-18px',
-                                            color: item?.promote_job
-                                                ? '#3B96E1'
-                                                : 'white',
-                                            fontSize: '0.8rem',
-
-                                            marginTop: '0px'
-                                        }}
-                                    >
-                                        {item?.promote_job ? (
-                                            'Promoted'
-                                        ) : (
-                                            <button
-                                                style={{
-                                                    zIndex: '10',
-                                                    borderRadius: '8px',
-                                                    padding: '2px 8px'
-                                                }}
+                                                    promote job
+                                                </button>
+                                            )}
+                                        </p>
+                                        <div>
+                                            <table
                                                 onClick={() =>
-                                                    handle_promote_job(
-                                                        item?._id
-                                                    )
+                                                    handleNavigate(item?._id)
                                                 }
+                                                style={{ cursor: 'pointer' }}
                                             >
-                                                promote job
-                                            </button>
-                                        )}
-                                    </p>
-                                    <div>
-                                        <table
-                                            onClick={() =>
-                                                handleNavigate(item?._id)
-                                            }
-                                            style={{ cursor: 'pointer' }}
-                                        >
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Experience:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.experience} Years
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Loction:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.location}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Salary:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.salary} LPA
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Qualification:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.education}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Poasted:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {formatDate(
-                                                            item?.createdDate
-                                                        )}{' '}
-                                                        days ago
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div
-                                            className="div-bnt"
-                                            onClick={handleNavigate}
-                                        >
-                                            <Button
-                                                size="sm"
-                                                style={{
-                                                    background:
-                                                        new Date(
-                                                            item?.job_Expire_Date
-                                                        ) <= new Date()
-                                                            ? 'red'
-                                                            : !item?.status
-                                                            ? '#FFD8CE'
-                                                            : item?.No_openings ===
-                                                              0,
-                                                    color:
-                                                        new Date(
-                                                            item?.job_Expire_Date
-                                                        ) <= new Date()
-                                                            ? 'white'
-                                                            : !item?.status
-                                                            ? 'red'
-                                                            : item?.No_openings ===
-                                                              0
-                                                            ? '#B4FFCE'
-                                                            : '',
-                                                    border: 'none'
-                                                }}
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Experience:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.experience}{' '}
+                                                            Years
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Loction:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.location}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Salary:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.salary} LPA
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Qualification:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.education}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Poasted:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {formatDate(
+                                                                item?.createdDate
+                                                            )}{' '}
+                                                            days ago
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div
+                                                className="div-bnt"
+                                                onClick={handleNavigate}
                                             >
-                                                {new Date(
-                                                    item?.job_Expire_Date
-                                                ) <= new Date() // Convert job_Expire_Date to a Date object
-                                                    ? ''
-                                                    : item?.applied_candidates
-                                                          .length}{' '}
-                                                {new Date(
-                                                    item?.job_Expire_Date
-                                                ) <= new Date() // Convert job_Expire_Date to a Date object
-                                                    ? 'Job Expired'
-                                                    : !item?.status
-                                                    ? 'Applications Stopped'
-                                                    : item?.No_openings === 0
-                                                    ? 'Hired'
-                                                    : 'Applications'}
-                                            </Button>
+                                                <Button
+                                                    size="sm"
+                                                    style={{
+                                                        background:
+                                                            new Date(
+                                                                item?.job_Expire_Date
+                                                            ) <= new Date()
+                                                                ? 'red'
+                                                                : !item?.status
+                                                                ? '#FFD8CE'
+                                                                : item?.No_openings ===
+                                                                  0,
+                                                        color:
+                                                            new Date(
+                                                                item?.job_Expire_Date
+                                                            ) <= new Date()
+                                                                ? 'white'
+                                                                : !item?.status
+                                                                ? 'red'
+                                                                : item?.No_openings ===
+                                                                  0
+                                                                ? '#B4FFCE'
+                                                                : '',
+                                                        border: 'none'
+                                                    }}
+                                                >
+                                                    {new Date(
+                                                        item?.job_Expire_Date
+                                                    ) <= new Date() // Convert job_Expire_Date to a Date object
+                                                        ? ''
+                                                        : item
+                                                              ?.applied_candidates
+                                                              .length}{' '}
+                                                    {new Date(
+                                                        item?.job_Expire_Date
+                                                    ) <= new Date() // Convert job_Expire_Date to a Date object
+                                                        ? 'Job Expired'
+                                                        : !item?.status
+                                                        ? 'Applications Stopped'
+                                                        : item?.No_openings ===
+                                                          0
+                                                        ? 'Hired'
+                                                        : 'Applications'}
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Col>
-                        </>
-                    )):
-                    (
+                                </Col>
+                            </>
+                        ))
+                    ) : (
                         <div className="no-jobs-container">
-                        <span>You haven't created any jobs yet.</span>
-                      </div>
-                    )
-                    }
-                </Row>
-                {modalShows&&
-                (
-                    <Modal
-                    show={modalShows}
-                    size="sm" // Keep small size
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    className="compact-modal" // Custom class for additional styling
-                >
-                    <Modal.Header closeButton style={{ padding: '0.5rem', borderBottom: 'none' }}>
-                        <Modal.Title id="contained-modal-title-vcenter" className="text-center w-100">
-                            <h6 className="text-success mb-0">🎉 Payment Successful!</h6> {/* Smaller header */}
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body style={{ padding: '0.5rem 1rem' }}>
-                        <div className="text-center">
-                            <p className="mb-1" style={{ fontSize: '0.8rem', color: '#6c757d' }}>Order ID:{orderId}</p>
+                            <span>You haven't created any jobs yet.</span>
                         </div>
-                    </Modal.Body>
-                    <Modal.Footer style={{ padding: '0.5rem', borderTop: 'none' }}>
-                        <Button 
-                            onClick={() => SetmodalShow(false)} 
-                            style={{ width: '100%', padding: '0.4rem 0', background: '#3B96E1', border: 'none', fontSize: '0.85rem' }}
+                    )}
+                </Row>
+
+                {modalShows && (
+                    <Modal
+                        show={modalShows}
+                        size="sm" // Keep small size
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        className="compact-modal" // Custom class for additional styling
+                    >
+                        <Modal.Header
+                            closeButton
+                            style={{ padding: '0.5rem', borderBottom: 'none' }}
                         >
-                            OK
-                        </Button>
-                    </Modal.Footer>
-                </Modal> 
-                )
-                }
+                            <Modal.Title
+                                id="contained-modal-title-vcenter"
+                                className="text-center w-100"
+                            >
+                                <h6 className="text-success mb-0">
+                                    🎉 Payment Successful!
+                                </h6>{' '}
+                                {/* Smaller header */}
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body style={{ padding: '0.5rem 1rem' }}>
+                            <div className="text-center">
+                                <p
+                                    className="mb-1"
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        color: '#6c757d'
+                                    }}
+                                >
+                                    Order ID:{orderId}
+                                </p>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer
+                            style={{ padding: '0.5rem', borderTop: 'none' }}
+                        >
+                            <Button
+                                onClick={() => SetmodalShow(false)}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.4rem 0',
+                                    background: '#3B96E1',
+                                    border: 'none',
+                                    fontSize: '0.85rem'
+                                }}
+                            >
+                                OK
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                )}
                 <Modal
                     show={lgShow}
                     onHide={handleClose}
@@ -584,8 +626,7 @@ const CreateJob = () => {
                         <p>
                             Promote job{' '}
                             <span class="custom-color fw-bold custom-font-size">
-                                {'₹' +
-                                    PromoteJobData?.price}
+                                {'₹' + PromoteJobData?.price}
                             </span>
                             {/* <img src={Verified} alt="" width="24px" /> */}
                         </p>

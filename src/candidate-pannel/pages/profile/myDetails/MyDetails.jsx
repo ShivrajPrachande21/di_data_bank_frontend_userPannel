@@ -107,6 +107,22 @@ function MyDetails() {
                                 padding: '2px'
                             }}
                         >
+                            Contact Email Address:
+                        </td>
+                        <td style={{ color: '#051F50', fontSize: '12px' }}>
+                            {CandidateProfile?.data?.basic_details
+                                ?.contact_eamil || 'N/A'}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style={{
+                                color: '#AEAEAE',
+                                fontSize: '12px',
+                                width: '30%',
+                                padding: '2px'
+                            }}
+                        >
                             Mobile no:
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
@@ -379,8 +395,8 @@ function MyDetails() {
                 <Modal.Body>
                     <div
                         style={{
-                            padding: '2px',
-                            overflow: 'hidden',
+                            padding: '4px',
+
                             overflowY: 'auto',
                             position: 'relative',
                             borderRadius: '10px',

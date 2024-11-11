@@ -11,7 +11,7 @@
     margin-right: 4px;
 }
 .job-data {
-    margin-left: -20px;
+    margin-left: -12px;
     display: flex;
     background: #fff;
     align-items: center;
@@ -154,13 +154,11 @@
     }
 }
 
-
-
 .no-jobs-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 16rem;
+    margin-left: 0rem;
     height: 60vh;
     text-align: center;
     font-size: 2rem;
@@ -170,10 +168,12 @@
 }
 
 .no-jobs-container span {
+    margin-left: -30%;
     padding: 20px;
-    border: 2px solid #3B96E1; 
-    border-radius: 8px; 
+    border: 2px solid #3b96e1;
+    border-radius: 8px;
     background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    color: #3B96E1; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #3b96e1;
+    margin-left: -48%;
 }

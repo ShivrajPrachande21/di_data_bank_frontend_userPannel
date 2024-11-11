@@ -22,9 +22,9 @@ export const CandidateProfileProvider = ({ children }) => {
     const [editExp, setEditExp] = useState(null);
 
     const [expData, setExpData] = useState({
-        End_posistion: '',
+        End_posistion: false,
         companyName: '',
-        current_workingStatus: '',
+        current_workingStatus: false,
         designation: '',
         location: '',
         location_type: '',
@@ -59,7 +59,7 @@ export const CandidateProfileProvider = ({ children }) => {
                     End_posistion: fetchedData?.End_posistion,
                     companyName: fetchedData?.companyName,
                     current_workingStatus:
-                        fetchedData?.current_workingStatus || '',
+                        fetchedData?.current_workingStatus || false,
                     designation: fetchedData?.designation,
                     location: fetchedData?.location,
                     location_type: fetchedData?.location,
@@ -89,6 +89,7 @@ export const CandidateProfileProvider = ({ children }) => {
                 );
                 if (response?.status == 200 || response?.status == 201) {
                     toast.success('Experience Edited ');
+                    await fetchCandidateProfile();
                     showEditExp();
                 }
             } catch (error) {
@@ -155,23 +156,22 @@ export const CandidateProfileProvider = ({ children }) => {
 
     const EditPersonalDetails = async data => {
         const token = localStorage.getItem('Candidate_token');
-            const decodedToken = jwtDecode(token);
-            const user_id = decodedToken?._id;
-            try {
-                const response = await axios.put(
-                    `${BaseUrl}candidate/profile/edit_personal/${user_id}`,
+        const decodedToken = jwtDecode(token);
+        const user_id = decodedToken?._id;
+        try {
+            const response = await axios.put(
+                `${BaseUrl}candidate/profile/edit_personal/${user_id}`,
 
-                    data
-                );
-                if (response?.status == 200 || response?.status == 201) {
-                    toast.success('Personal details edited successfully');
-                    showPersonalModal();
-                    await fetchCandidateProfile();
-                }
-            } catch (error) {
-                toast.error(`${error.response.data.error}`);
+                data
+            );
+            if (response?.status == 200 || response?.status == 201) {
+                toast.success('Personal details edited successfully');
+                showPersonalModal();
+                await fetchCandidateProfile();
             }
-        
+        } catch (error) {
+            toast.error(`${error.response.data.error}`);
+        }
     };
 
     return (
@@ -205,7 +205,7 @@ export const CandidateProfileProvider = ({ children }) => {
                 handleShowEducation,
                 showAddeducation,
                 showAdd_new_Education,
-                EditPersonalDetails 
+                EditPersonalDetails
             }}
         >
             {children}

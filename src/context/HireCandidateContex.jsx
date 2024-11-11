@@ -21,9 +21,9 @@ export const HireCandidateProvider = ({ children }) => {
     const [resume_loading, setResume_loading] = useState(null);
 
     const [candidate_detials, set_candidate_detials] = useState(null);
-    const [Identity,SetIdentity]=useState(null)
-    const [profile,SetProfile]=useState(null);
-    const [greenBatch,SetgreenBatch]=useState(null)
+    const [Identity, SetIdentity] = useState(null);
+    const [profile, SetProfile] = useState(null);
+    const [greenBatch, SetgreenBatch] = useState(null);
 
     // states for notification
     const [show, setShow] = useState(null);
@@ -38,7 +38,6 @@ export const HireCandidateProvider = ({ children }) => {
         socket.on('view', data => {
             SetcandidateNoti(data);
         });
-
 
         setShow(false);
         SetShowHire(prev => !prev);
@@ -168,7 +167,7 @@ export const HireCandidateProvider = ({ children }) => {
     };
 
     const get_Candidate_detials = async id => {
-        id = id;
+        console.log('id', id);
         const token = localStorage.getItem('companyToken');
         const decodedToken = jwtDecode(token);
         const companyId = decodedToken?._id;
@@ -207,17 +206,18 @@ export const HireCandidateProvider = ({ children }) => {
         }
     };
 
-    async function CompanyProfile(id){
+    async function CompanyProfile(id) {
         try {
-           const response = await axios.get(`${BaseUrl}company/profile/details/${id}`);
-           if (response.status === 200) {
-               SetIdentity(response?.data.name)
-               SetProfile(response?.data.profile);
-               SetgreenBatch(response?.data?.verified_batch)
-           }
-       } catch (error) {}
-   }
-
+            const response = await axios.get(
+                `${BaseUrl}company/profile/details/${id}`
+            );
+            if (response.status === 200) {
+                SetIdentity(response?.data.company_name);
+                SetProfile(response?.data.profile);
+                SetgreenBatch(response?.data?.verified_batch);
+            }
+        } catch (error) {}
+    }
 
     useEffect(() => {
         fetchCandidates();
@@ -245,8 +245,13 @@ export const HireCandidateProvider = ({ children }) => {
                 candidateNoti,
                 show,
                 setShow,
-                Identity,profile,greenBatch,SetIdentity,SetProfile,
-                CompanyProfile
+                Identity,
+                profile,
+                greenBatch,
+                SetIdentity,
+                SetProfile,
+                CompanyProfile,
+                get_subscription_details
             }}
         >
             {children}

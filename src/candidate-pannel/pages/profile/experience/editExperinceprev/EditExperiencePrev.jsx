@@ -32,11 +32,14 @@ const EditExperiencePrev = () => {
 
     const handleInputChange = e => {
         const { name, type, checked, value } = e.target;
-
-        if (type === 'checkbox') {
-            setExpData({ ...expData, [name]: checked });
+        if (expData.CTC <= 0 && value < 0) {
+            return;
         } else {
-            setExpData({ ...expData, [name]: value });
+            if (type === 'checkbox') {
+                setExpData({ ...expData, [name]: checked });
+            } else {
+                setExpData({ ...expData, [name]: value });
+            }
         }
     };
 
@@ -63,7 +66,7 @@ const EditExperiencePrev = () => {
                         fontWeight: '600'
                     }}
                 >
-                    Experience Details
+                    Edit Experience Details
                 </p>
                 <Form noValidate onSubmit={e => handle_Edit_Exp(e)}>
                     <Form.Group controlId="email" style={{ marginTop: '-8px' }}>
@@ -71,6 +74,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Designation
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -107,6 +111,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Employment type
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -142,6 +147,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Company name
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -162,6 +168,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             CTC
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="number"
@@ -183,6 +190,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Location
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -204,6 +212,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Location type
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -225,6 +234,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Reporting structure
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -325,6 +335,7 @@ const EditExperiencePrev = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Start date
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginLeft: '-2px' }}>
                             <Col xs={6} className="custom-option-exp">
@@ -349,37 +360,44 @@ const EditExperiencePrev = () => {
                         </Row>
                     </Form.Group>
                     {/* End Date */}
-                    <Form.Group controlId="End_date" className="mt-2">
-                        <Form.Label
-                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
-                        >
-                            End date
-                        </Form.Label>
-                        <Row style={{ marginLeft: '-2px' }}>
-                            <Col xs={6} className="custom-option-exp">
-                                <Form.Group controlId="formBasicDate">
-                                    <input
-                                        type="date"
-                                        class="custom-date-input"
-                                        name="end_date"
-                                        value={end_date}
-                                        onChange={e => handleInputChange(e)}
-                                        ref={calederRef2}
-                                        disabled={
-                                            expData?.current_workingStatus
-                                        }
-                                    />
-                                    <img
-                                        src={Calendar}
-                                        alt=""
-                                        width="20px"
-                                        onClick={handleCalederClickEnd}
-                                        className="calender"
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                    </Form.Group>
+                    {expData?.current_workingStatus ? null : (
+                        <Form.Group controlId="End_date" className="mt-2">
+                            <Form.Label
+                                style={{
+                                    fontSize: '0.8rem',
+                                    fontWeight: '500'
+                                }}
+                            >
+                                End date
+                                <span className="text-danger">*</span>
+                            </Form.Label>
+                            <Row style={{ marginLeft: '-2px' }}>
+                                <Col xs={6} className="custom-option-exp">
+                                    <Form.Group controlId="formBasicDate">
+                                        <input
+                                            type="date"
+                                            class="custom-date-input"
+                                            name="end_date"
+                                            value={end_date}
+                                            onChange={e => handleInputChange(e)}
+                                            ref={calederRef2}
+                                            disabled={
+                                                expData?.current_workingStatus
+                                            }
+                                        />
+                                        <img
+                                            src={Calendar}
+                                            alt=""
+                                            width="20px"
+                                            onClick={handleCalederClickEnd}
+                                            className="calender"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                    )}
+
                     <div className="d-flex mt-3 ">
                         <input
                             type="checkbox"

@@ -1,0 +1,13 @@
+.back-to-hire {
+    display: flex;
+    align-items: center;
+}
+.back-to-hire img {
+    width: 20px;
+    cursor: pointer;
+}
+.back-to-hire p {
+    margin-top: 14px;
+    color: #3b96e1;
+    font-size: 0.9rem;
+}

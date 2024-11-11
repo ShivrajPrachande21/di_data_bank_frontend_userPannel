@@ -28,14 +28,14 @@ const EditExperience = () => {
         }
     };
     const [expData, setExpData] = useState({
-        End_posistion: '',
+        End_posistion: false,
         companyName: '',
-        current_workingStatus: '',
+        current_workingStatus: false,
         designation: '',
         location: '',
         location_type: '',
-        negotiation_day: '',
-        notice_period: '',
+        negotiation_day: 0,
+        notice_period: 0,
         reporting_structure: '',
         start_date: '',
         employee_type: '',
@@ -51,10 +51,14 @@ const EditExperience = () => {
     const handleInputChange = e => {
         const { name, type, checked, value } = e.target;
 
-        if (type === 'checkbox') {
-            setExpData({ ...expData, [name]: checked });
+        if (expData.notice_period <= 0 && value < 0) {
+            return;
         } else {
-            setExpData({ ...expData, [name]: value });
+            if (type === 'checkbox') {
+                setExpData({ ...expData, [name]: checked });
+            } else {
+                setExpData({ ...expData, [name]: value });
+            }
         }
     };
 
@@ -74,7 +78,7 @@ const EditExperience = () => {
             expData?.reporting_structure.trim() == '' ||
             expData?.location_type.trim() == ''
         ) {
-            toast.error(' All are fields required');
+            toast.error(' All fields are required');
         } else {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
@@ -97,8 +101,8 @@ const EditExperience = () => {
                 }
             }
         }
-        console.log('isoDate', isoDate);
     };
+    console.log('<span className="text-danger">*</span>', expData);
 
     return (
         <>
@@ -117,7 +121,7 @@ const EditExperience = () => {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Designation
+                            Designation <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -154,6 +158,7 @@ const EditExperience = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Employment type
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -189,7 +194,7 @@ const EditExperience = () => {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Company name
+                            Company name<span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -209,7 +214,7 @@ const EditExperience = () => {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            CTC
+                            CTC<span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="number"
@@ -230,7 +235,7 @@ const EditExperience = () => {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Location
+                            Location<span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -251,14 +256,14 @@ const EditExperience = () => {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Location type
+                            Location type<span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
                             name="location_type"
                             value={expData?.location_type}
                             onChange={handleInputChange}
-                            placeholder="Enter "
+                            placeholder="Ex: Pune , Maharashtra "
                             style={{
                                 marginTop: '-6px',
                                 fontSize: '0.8rem',
@@ -273,6 +278,7 @@ const EditExperience = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Reporting structure
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -307,25 +313,17 @@ const EditExperience = () => {
                     </Form.Group>
 
                     <Form.Group controlId="son_name" className="mt-2">
-                        <Form.Label
-                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
-                        >
-                            Notice Period
-                        </Form.Label>
-                        <Row style={{ marginLeft: '0px' }}>
-                            <Col
-                                xs={5}
-                                className="d-flex p-1"
-                                style={{
-                                    marginTop: '-6px',
-                                    fontSize: '0.8rem',
-                                    height: '34px',
-                                    border: '1.5px solid #AEAEAE',
-                                    borderRadius: '6px',
-                                    marginRight: '22px',
-                                    width: '46%'
-                                }}
-                            >
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Label
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        fontWeight: '500'
+                                    }}
+                                >
+                                    Notice Period
+                                    <span className="text-danger">*</span>
+                                </Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="notice_period"
@@ -333,24 +331,24 @@ const EditExperience = () => {
                                     onChange={handleInputChange}
                                     placeholder="Enter No"
                                     style={{
-                                        border: 'none',
-                                        borderRadius: '6px'
+                                        marginTop: '-6px',
+                                        fontSize: '0.8rem',
+                                        height: '34px',
+                                        border: '1.4px solid #AEAEAE'
                                     }}
                                 />
-                                <p className="days">Days</p>
                             </Col>
-                            <Col
-                                xs={5}
-                                className="d-flex p-1"
-                                style={{
-                                    marginTop: '-6px',
-                                    fontSize: '0.8rem',
-                                    height: '34px',
-                                    border: '1.5px solid #AEAEAE',
-                                    borderRadius: '6px',
-                                    width: '46%'
-                                }}
-                            >
+
+                            <Col xs={6}>
+                                <Form.Label
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        fontWeight: '500'
+                                    }}
+                                >
+                                    Negotiable Days
+                                    <span className="text-danger">*</span>
+                                </Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="negotiation_day"
@@ -358,11 +356,12 @@ const EditExperience = () => {
                                     onChange={handleInputChange}
                                     placeholder="Enter Negotiable No"
                                     style={{
-                                        border: 'none',
-                                        borderRadius: '6px'
+                                        marginTop: '-6px',
+                                        fontSize: '0.8rem',
+                                        height: '34px',
+                                        border: '1.4px solid #AEAEAE'
                                     }}
                                 />
-                                <p className="days">Days</p>
                             </Col>
                         </Row>
                     </Form.Group>
@@ -372,7 +371,7 @@ const EditExperience = () => {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Start date
+                            Start date<span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginLeft: '-2px' }}>
                             <Col xs={6} className="custom-option-exp">
@@ -397,37 +396,45 @@ const EditExperience = () => {
                         </Row>
                     </Form.Group>
                     {/* End Date */}
-                    <Form.Group controlId="End_date" className="mt-2">
-                        <Form.Label
-                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
-                        >
-                            End date
-                        </Form.Label>
-                        <Row style={{ marginLeft: '-2px' }}>
-                            <Col xs={6} className="custom-option-exp">
-                                <Form.Group controlId="formBasicDate">
-                                    <input
-                                        type="date"
-                                        class="custom-date-input"
-                                        name="end_date"
-                                        value={expData?.end_date}
-                                        onChange={handleInputChange}
-                                        ref={calederRef2}
-                                        disabled={
-                                            expData?.current_workingStatus
-                                        }
-                                    />
-                                    <img
-                                        src={Calendar}
-                                        alt=""
-                                        width="20px"
-                                        onClick={handleCalederClickEnd}
-                                        className="calender"
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                    </Form.Group>
+                    {expData?.current_workingStatus ? (
+                        ''
+                    ) : (
+                        <Form.Group controlId="End_date" className="mt-2">
+                            <Form.Label
+                                style={{
+                                    fontSize: '0.8rem',
+                                    fontWeight: '500'
+                                }}
+                            >
+                                End date<span className="text-danger">*</span>
+                            </Form.Label>
+                            <Row style={{ marginLeft: '-2px' }}>
+                                <Col xs={6} className="custom-option-exp">
+                                    <Form.Group controlId="formBasicDate">
+                                        <input
+                                            type="date"
+                                            class="custom-date-input"
+                                            name="end_date"
+                                            value={expData?.end_date}
+                                            onChange={handleInputChange}
+                                            ref={calederRef2}
+                                            disabled={
+                                                expData?.current_workingStatus
+                                            }
+                                        />
+                                        <img
+                                            src={Calendar}
+                                            alt=""
+                                            width="20px"
+                                            onClick={handleCalederClickEnd}
+                                            className="calender"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                    )}
+
                     <div className="d-flex mt-3 ">
                         <input
                             type="checkbox"
@@ -438,6 +445,7 @@ const EditExperience = () => {
                         />
                         <label for="custom-checkbox" className="lable-custom">
                             End current position.
+                            <span className="text-danger">*</span>
                         </label>
                         <span></span>
                     </div>

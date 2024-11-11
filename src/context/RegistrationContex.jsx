@@ -10,14 +10,15 @@ const RegistrationContext = createContext();
 export const RegistrationProvider = ({ children }) => {
     const [OTP, setOtp] = useState('');
 
-    const sendOtp = async mobile => {
-        console.log('email', mobile);
+    const [HideOTP, setHideOTP] = useState(null);
+    const sendOtp = async email => {
         try {
             const response = await axios.post(`${BaseUrl}company/otp`, {
-                mobile
+                email
             });
-            if (response.status === 200) {
-                setOtp(response.data.otp); // Assuming the OTP is returned in response
+            if (response.status == 200 || response.status == 201) {
+                setOtp(response.data.OTP); // Assuming the OTP is returned in response
+                setHideOTP(prev => !prev);
                 toast.success('OTP sent to your email!');
             }
         } catch (error) {
@@ -44,7 +45,9 @@ export const RegistrationProvider = ({ children }) => {
                 OTP,
 
                 sendOtp,
-                verifyOtp
+                verifyOtp,
+                HideOTP,
+                setHideOTP
             }}
         >
             {children}

@@ -102,6 +102,21 @@ const CandidateProfile = () => {
         fetch();
     }, [locate]);
 
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render === 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            }
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
+
     return (
         <>
             <div className="ReportedJob candidate-profile">
@@ -171,7 +186,11 @@ const CandidateProfile = () => {
                                 }}
                             >
                                 <Image
-                                    src={CandidateProfile?.profileUrl?CandidateProfile?.profileUrl:altprofile}
+                                    src={
+                                        CandidateProfile?.profileUrl
+                                            ? CandidateProfile?.profileUrl
+                                            : altprofile
+                                    }
                                     alt=""
                                     width="70px"
                                     height="60px"

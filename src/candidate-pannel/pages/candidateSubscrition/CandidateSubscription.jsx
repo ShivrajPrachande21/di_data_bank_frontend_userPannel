@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Button, Modal} from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import './subscription_.css';
 import Rupees1 from '../../../assets/images/Rupees1.png';
 import rupeeblue from '../../../assets/images/rupeeblue.png';
@@ -21,9 +21,9 @@ const CandidateSubscription = () => {
         fetch_CurrentSubscrtipion,
         currentSubscription
     } = useContext(SubscriptionContext);
-    const {
-        CandidateProfile,
-        fetchCandidateProfile} = useContext(CandidateProfileContext);
+    const { CandidateProfile, fetchCandidateProfile } = useContext(
+        CandidateProfileContext
+    );
 
     const navigate = useNavigate();
 
@@ -75,30 +75,28 @@ const CandidateSubscription = () => {
         fetch_CurrentSubscrtipion();
         fetchCandidateProfile();
     }, []);
-    const [locading,SetEarlyLoading]=useState(false)
-    const [orderID,SetOrderID]=useState('');
-    const [SuccessModal,SetSuccessModal]=useState(false);
+    const [locading, SetEarlyLoading] = useState(false);
+    const [orderID, SetOrderID] = useState('');
+    const [SuccessModal, SetSuccessModal] = useState(false);
 
     const initiatePayment = async sub_id => {
-        if(CandidateProfile?.profileCompletionPercentage!=100){
-            toast.error("Please complete your profile before purchasing a subscription plan.");
-            return
+        if (CandidateProfile?.profileCompletionPercentage != 100) {
+            toast.error(
+                'Please complete your profile before purchasing a subscription plan.'
+            );
+            return;
         }
         SetEarlyLoading(true);
         try {
             const token = localStorage.getItem('Candidate_token');
-             const decodedToken = jwtDecode(token);
-                const userId = decodedToken?._id;
-           
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
 
-            const response = await axios.post(
-                `${BaseUrl}candidate/payment`,
-                {
-                    userId:userId, subId:sub_id
-                }
-            );
-            if (response.status === 200||response.status === 201) {
-              
+            const response = await axios.post(`${BaseUrl}candidate/payment`, {
+                userId: userId,
+                subId: sub_id
+            });
+            if (response.status === 200 || response.status === 201) {
                 const paymentLink = response?.data?.payment_link;
                 if (paymentLink) {
                     window.open(paymentLink, '_blank');
@@ -110,30 +108,27 @@ const CandidateSubscription = () => {
         }
     };
     let toUpIntervelId;
-    let ToptimeoutId 
-    const fetch_EarlyBuy_success_status = async (data) => {
+    let ToptimeoutId;
+    const fetch_EarlyBuy_success_status = async data => {
         try {
             const token = localStorage.getItem('Candidate_token');
-             const decodedToken = jwtDecode(token);
-                const userId = decodedToken?._id;
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
 
-            const response = await axios.post(
-                `${BaseUrl}candidate/verify`,
-                {
-                    orderId: data?.order_id,
-                    subscriptionId: data?.subscription_id,
-                    userId: userId,
-                    paymentMethod:data?.payment_methods
-                }
-            );
+            const response = await axios.post(`${BaseUrl}candidate/verify`, {
+                orderId: data?.order_id,
+                subscriptionId: data?.subscription_id,
+                userId: userId,
+                paymentMethod: data?.payment_methods
+            });
             if (response?.status === 200 || response?.status === 201) {
                 SetEarlyLoading(false);
-                clearInterval(toUpIntervelId); 
+                clearInterval(toUpIntervelId);
                 clearTimeout(ToptimeoutId);
                 SetOrderID(response?.data?.orderId);
-                SetSuccessModal(true)
-               await fetch_Subscrtipion();
-               await fetch_CurrentSubscrtipion();
+                SetSuccessModal(true);
+                await fetch_Subscrtipion();
+                await fetch_CurrentSubscrtipion();
             }
         } catch (error) {
             console.error('Error during verification:', error);
@@ -143,19 +138,31 @@ const CandidateSubscription = () => {
     function RunEarlyBuy_verify(data) {
         toUpIntervelId = setInterval(() => {
             fetch_EarlyBuy_success_status(data);
-        }, 1000); 
+        }, 1000);
 
-         ToptimeoutId = setTimeout(() => {
+        ToptimeoutId = setTimeout(() => {
             clearInterval(toUpIntervelId);
         }, 1000 * 60 * 5);
     }
 
+    function rendering() {
+        const render = localStorage.getItem('render');
 
+        if (render === 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            }
+        }
+    }
 
+    useEffect(() => {
+        rendering();
+    }, []);
 
     return (
         <>
-         {SuccessModal && (
+            {SuccessModal && (
                 <Modal
                     show={SuccessModal}
                     onHide={() => SetSuccessModal(false)}
@@ -184,7 +191,7 @@ const CandidateSubscription = () => {
                     </Modal.Footer>
                 </Modal>
             )}
-             {locading ? (
+            {locading ? (
                 <div className="loader-div">
                     <Loader />
                 </div>

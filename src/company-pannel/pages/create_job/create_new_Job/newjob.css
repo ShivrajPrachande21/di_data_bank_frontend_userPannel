@@ -43,16 +43,19 @@
     margin-left: 10px;
     background: #b4ddff;
     width: 60%;
-    height: 20vh;
+    height: 40vh;
 
     font-size: 0.7rem;
     padding: 8px;
     /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflow */
+    overflow-y: auto;
     text-overflow: ellipsis;
 }
 .suggection-click {
     margin-top: 4px;
     padding: 4px;
     cursor: pointer;
+}
+.check-boxes {
+    margin-top: 4px;
 }

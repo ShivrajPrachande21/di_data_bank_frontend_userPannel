@@ -19,10 +19,11 @@ import EditprofileData from '../../../hooks/company_dashboard/EditprofileData';
 import ProfileComplete from '../../../components/dynamicProgress/ProfileComplete';
 
 const Profile = () => {
-    const { profileData, loading, error,fetchProfileData } = useProfileData();
+    const { profileData, loading, error, fetchProfileData } = useProfileData();
     const { hideForm, lgShow, setLgShow } = EditprofileData();
     const rating = profileData?.updatedData?.Candidate_Feed_Back[0]?.rating;
-   const location =useLocation()
+    const location = useLocation();
+    const naviagte = useNavigate();
     const handleClose = () => setLgShow(prev => !prev);
 
     const navigate = useNavigate();
@@ -30,9 +31,9 @@ const Profile = () => {
         navigate(-1);
     };
 
-    useEffect(()=>{
-        fetchProfileData()
-    },[location])
+    useEffect(() => {
+        fetchProfileData();
+    }, [location]);
 
     const navigate_Edit = () => {
         setLgShow(prev => !prev);
@@ -47,6 +48,7 @@ const Profile = () => {
 
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
+
     return (
         <>
             <div className="ReportedJob">
@@ -66,10 +68,12 @@ const Profile = () => {
                                 marginBottom: '-1px'
                             }}
                         >
-                            {profileData?.updatedData?.status === 'processing'
+                            {profileData?.updatedData?.status ===
+                                'processing' &&
+                            profileData?.updatedData?.GST &&
+                            profileData?.updatedData?.PAN
                                 ? 'Your status is being processed. The admin will update the status after verification.'
-                                : profileData?.updatedData?.message ||
-                                  'loading'}
+                                : profileData?.updatedData?.message || ''}
                         </p>
                     </div>
                 ) : null}
@@ -220,31 +224,40 @@ const Profile = () => {
                             <div className="cards">
                                 <div className="tables">
                                     <p style={{ color: '#051F50' }}>
-                                        {
-                                            profileData?.updatedData
-                                                ?.contact_email?profileData?.updatedData
-                                                ?.contact_email:'N/A'
-                                        }
+                                        {profileData?.updatedData?.contact_email
+                                            ? profileData?.updatedData
+                                                  ?.contact_email
+                                            : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.contact_No?profileData?.updatedData?.contact_No:'N/A'}
+                                        {profileData?.updatedData?.contact_No
+                                            ? profileData?.updatedData
+                                                  ?.contact_No
+                                            : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.location?profileData?.updatedData?.location:'N/A'}
+                                        {profileData?.updatedData?.location
+                                            ? profileData?.updatedData?.location
+                                            : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                         {profileData?.updatedData?.website_url?profileData?.updatedData?.website_url:'N/A'}
+                                        {profileData?.updatedData?.website_url
+                                            ? profileData?.updatedData
+                                                  ?.website_url
+                                            : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.company_size?profileData?.updatedData?.company_size:'N/A'}
-                                        + Employees
+                                        {profileData?.updatedData?.company_size
+                                            ? profileData?.updatedData
+                                                  ?.company_size
+                                            : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {
-                                            profileData?.updatedData
-                                                ?.headQuater_add? profileData?.updatedData
-                                                ?.headQuater_add:'N/A'
-                                        }
+                                        {profileData?.updatedData
+                                            ?.headQuater_add
+                                            ? profileData?.updatedData
+                                                  ?.headQuater_add
+                                            : 'N/A'}
                                     </p>
                                 </div>
                             </div>
@@ -267,15 +280,17 @@ const Profile = () => {
                             <div className="cards">
                                 <div className="tables">
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.email}
+                                        {profileData?.updatedData?.email ||
+                                            'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.mobile}
+                                        {profileData?.updatedData?.mobile ||
+                                            'N/A'}
                                     </p>
                                     <br></br>
-                                    {/* <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.GST}
-                                    </p> */}
+                                    <p style={{ color: '#051F50' }}>
+                                        {profileData?.updatedData?.GST || 'N/A'}
+                                    </p>
                                     <img
                                         src={
                                             profileData?.updatedData
@@ -287,9 +302,9 @@ const Profile = () => {
                                             width: '30%'
                                         }}
                                     />
-                                    {/* <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.PAN}
-                                    </p> */}
+                                    <p style={{ color: '#051F50' }}>
+                                        {profileData?.updatedData?.PAN || 'N/A'}
+                                    </p>
                                     <br></br>
                                     <br></br>
                                     <img

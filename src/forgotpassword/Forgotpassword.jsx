@@ -7,6 +7,9 @@ import blackCross from '../assets/images/blackCross.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForgotPassword } from '../context/ForgotpasswordContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import BaseUrl from '../services/BaseUrl';
 
 const Forgotpassword = () => {
     const {
@@ -18,8 +21,7 @@ const Forgotpassword = () => {
         successMessage,
         handleForgotPassword,
         currentStep,
-        setcurrentStep,
-        changePassword
+        setcurrentStep
     } = useForgotPassword();
     const navigate = useNavigate();
 
@@ -28,6 +30,10 @@ const Forgotpassword = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+    const [Resetdata, setRestdata] = useState({
+        password: '',
+        confirmpassword: ''
+    });
 
     const ValidateOTP = e => {
         e.preventDefault();
@@ -49,7 +55,15 @@ const Forgotpassword = () => {
             SetOTPerror('');
         }
     };
-    const handleClickAddinput = () => {};
+    const naviagteBack = () => {
+        setcurrentStep(1);
+        setEmail('');
+        setRestdata({
+            password: '',
+            confirmpassword: ''
+        });
+        navigate('/');
+    };
     // Yup validation schema
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -62,25 +76,63 @@ const Forgotpassword = () => {
     });
 
     const navigate_back = () => {
-        navigate('/');
-    };
-
-    const handleReset = async e => {
-        e.preventDefault();
-        await changePassword(Resetdata);
-
+        setcurrentStep(1);
+        setEmail('');
         setRestdata({
             password: '',
             confirmpassword: ''
         });
-
-        console.log('ResetData:', Resetdata);
+        navigate('/');
     };
 
-    const [Resetdata, setRestdata] = useState({
-        password: '',
-        confirmpassword: ''
-    });
+    const changePassword = async data => {
+        try {
+            const response = await axios.post(`${BaseUrl}company/newpassword`, {
+                email,
+                password: data?.password,
+                confirmpassword: data?.confirmpassword
+            });
+            if (response.status == 200 || response.status == 201) {
+                toast.success('password changed successfully!');
+                setcurrentStep(0);
+                navigate('/');
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.error);
+        }
+    };
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,15}$/;
+
+    const handleReset = async e => {
+        e.preventDefault();
+
+        if (!Resetdata.password || !Resetdata.confirmpassword) {
+            toast.error('Both password fields are required.');
+            return;
+        }
+
+        if (!passwordRegex.test(Resetdata.password)) {
+            toast.error(
+                'Password must be 8-15 characters, including 1 uppercase, 1 lowercase, and 1 number.'
+            );
+            return;
+        }
+
+        if (Resetdata.password !== Resetdata.confirmpassword) {
+            toast.error('Passwords do not match.');
+            return;
+        }
+
+        // Proceed to change password if all validations pass
+        await changePassword(Resetdata);
+
+        setResetdata({
+            password: '',
+            confirmpassword: ''
+        });
+    };
+
     const handleInputChange = e => {
         const { name, value } = e.target;
         setRestdata(prevState => ({
@@ -108,6 +160,12 @@ const Forgotpassword = () => {
     const handle_change_password = async e => {
         e.preventDefault();
     };
+
+    const handleNavigate = () => {
+        setEmail('');
+        navigate('/');
+    };
+
     return (
         <>
             {currentStep === 1 && (
@@ -166,7 +224,7 @@ const Forgotpassword = () => {
                                     </p>
                                 </Col>
                                 <Col
-                                    onClick={() => navigate('/')}
+                                    onClick={() => handleNavigate()}
                                     xs={1}
                                     style={{ cursor: 'pointer' }}
                                 >
@@ -269,7 +327,7 @@ const Forgotpassword = () => {
                                     </p>
                                 </Col>
                                 <Col
-                                    onClick={handleClickAddinput}
+                                    onClick={naviagteBack}
                                     xs={1}
                                     style={{ cursor: 'pointer' }}
                                 >
@@ -344,8 +402,7 @@ const Forgotpassword = () => {
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                         width: '100%',
-                        height: '100vh',
-                        background: 'rgba(81, 81, 81, 0.448)'
+                        height: '100vh'
                     }}
                 >
                     <div
@@ -419,11 +476,11 @@ const Forgotpassword = () => {
                                             )}
                                         </InputGroup.Text>
                                     </InputGroup>
-                                    <p style={{ fontSize: '0.6rem' }}>
+                                    {/* <p style={{ fontSize: '0.6rem' }}>
                                         Password must contain: Min 8 Characters,
                                         Max 15 Characters, 1 Lowercase, 1
                                         Uppercasse, 1 Number.
-                                    </p>
+                                    </p> */}
                                 </Col>
                             </Row>
                             <Row>

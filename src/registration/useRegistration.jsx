@@ -9,7 +9,8 @@ const useRegistration = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        setpassword: ''
+        setpassword: '',
+        terms: false
     });
 
     const [errors, setErrors] = useState({});
@@ -18,11 +19,21 @@ const useRegistration = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = e => {
-        const { name, value } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
+        const { name, value, type, checked } = e.target;
+
+        if (type == 'checkbox') {
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: checked
+            }));
+        } else {
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: value
+            }));
+        }
+
+        console.log('fomrm', formData);
     };
 
     const validate = () => {
@@ -37,7 +48,6 @@ const useRegistration = () => {
     };
 
     const handleSubmit = async e => {
-        console.log('FOrm data', formData);
         sessionStorage.setItem('formData', JSON.stringify(formData));
         e.preventDefault();
 
@@ -46,8 +56,7 @@ const useRegistration = () => {
                 `${BaseUrl}company/registration`,
                 formData
             );
-            if (response.status === 200) {
-                toast.success('Company Registered Successfull!');
+            if (response.status == 200 || response.status == 201) {
                 navigate('/company-registration');
                 setSuccessMessage('Registration successful!');
                 setErrorMessage('');

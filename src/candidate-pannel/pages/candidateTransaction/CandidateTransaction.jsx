@@ -13,6 +13,7 @@ const CandidateTransaction = () => {
 
     const handleSelect = e => {
         const value = parseInt(e.target.value, 10);
+        setselectValue(value);
         setItemsPerPage(value);
         setCurrentPage(1); // Reset to first page when items per page change
     };
@@ -43,6 +44,20 @@ const CandidateTransaction = () => {
 
     useEffect(() => {
         fetch_transaction();
+    }, []);
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render === 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            }
+        }
+    }
+
+    useEffect(() => {
+        rendering();
     }, []);
     return (
         <>
@@ -174,7 +189,7 @@ const CandidateTransaction = () => {
                             {/* Pagination controls */}
                             <span
                                 style={{
-                                    fontSize: '0.7rem',
+                                    fontSize: '0.8rem',
                                     marginRight: '20px',
                                     fontWeight: '600'
                                 }}
@@ -188,7 +203,7 @@ const CandidateTransaction = () => {
                                     onChange={handleSelect}
                                     value={selectValue}
                                     style={{
-                                        fontSize: '0.6rem',
+                                        fontSize: '0.7rem',
                                         background: '#3B96E1',
                                         color: 'white',
                                         fontWeight: '600',
@@ -212,7 +227,7 @@ const CandidateTransaction = () => {
                             <Col
                                 xs={2}
                                 style={{
-                                    fontSize: '0.7rem',
+                                    fontSize: '0.8rem',
                                     fontWeight: '600'
                                 }}
                             >
@@ -237,7 +252,16 @@ const CandidateTransaction = () => {
                                         disabled={currentPage === 1}
                                     />
                                     <Pagination.Item active>
-                                        {currentPage}
+                                        <p
+                                            style={{
+                                                fontSize: '0.8rem',
+                                                marginBottom: '0px',
+                                                marginTop: '4px',
+                                                fontWeight: '600'
+                                            }}
+                                        >
+                                            {currentPage}
+                                        </p>
                                     </Pagination.Item>
                                     <Pagination.Next
                                         onClick={() =>

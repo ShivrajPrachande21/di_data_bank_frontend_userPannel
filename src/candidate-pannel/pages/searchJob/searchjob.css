@@ -17,22 +17,23 @@
 }
 
 .searchJob input {
-    width: 94%;
+    width: 90%;
     padding: 6px;
-    background: transparent;
+    background: white;
     color: black;
     border: none;
     border-radius: 8px;
     outline: none;
 }
 .searchJob input:focus {
-    outline: 1px solid #3b96e1; /* Adds a blue outline on focus */
+    border: 1px solid #3b96e1; /* Adds a blue outline on focus */
 }
 .search-inductiers {
     width: 26%;
-    margin-top: 40px;
 
+    background: #f9f9f9;
     border-radius: 8px;
+    margin-top: 2px;
     outline: none;
 }
 .search-inductiers input {
@@ -40,7 +41,7 @@
     margin-top: 4px;
     padding: 6px;
     color: black;
-    border: 1px solid #3b96e1;
+    border: 1px solid #6ebeff;
     border-radius: 8px;
     outline: none;
 }
@@ -60,7 +61,7 @@
     border-radius: 8px;
     padding: 1px;
     margin-right: 10px;
-    margin-top: 44px;
+    margin-top: 6px;
 }
 .search-select select {
     font-size: 12px;
@@ -95,7 +96,7 @@
     padding: 6px;
     display: flex;
     flex-wrap: wrap;
-    margin-top: -18px;
+    margin-top: -14px;
     gap: 9px;
     margin-left: 8px;
 }
@@ -131,7 +132,6 @@
 }
 
 .searchresult {
-    margin-top: 14px;
     font-size: 0.8rem;
     font-family: Poppins;
 
@@ -154,9 +154,24 @@
 
 .no-jobs-container span {
     padding: 20px;
-    border: 2px solid #3B96E1; 
-    border-radius: 8px; 
+    border: 2px solid #3b96e1;
+    border-radius: 8px;
     background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    color: #3B96E1; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #3b96e1;
+}
+.search-btn {
+    border-radius: 8px;
+    width: 80px;
+    margin-top: -2px;
+    background: #3b96e1;
+    margin-left: 2px;
+}
+.Search-input-div {
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 12px;
 }

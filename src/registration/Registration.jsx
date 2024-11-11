@@ -4,7 +4,7 @@ import './registration.css';
 import backgroundImage from '../assets/images/AdminLoginPanelBackGround.png';
 import { Form, Button, InputGroup, Row, Col, Alert } from 'react-bootstrap';
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useRegistration from './useRegistration';
 
 const Registration = () => {
@@ -46,6 +46,12 @@ const Registration = () => {
     const handleNavigate = () => {
         navigate('/');
     };
+    const isFormValid =
+        formData.email &&
+        formData.password &&
+        formData.setpassword &&
+        formData.password === formData.setpassword &&
+        formData.terms;
 
     return (
         <>
@@ -168,17 +174,28 @@ const Registration = () => {
 
                             <Row>
                                 <div className="check-custom">
-                                    <Form.Check type="checkbox" />
+                                    <Form.Check
+                                        type="checkbox"
+                                        name="terms"
+                                        value={formData.terms}
+                                        onChange={handleChange}
+                                    />
                                     <span>Accept</span>
-                                    <p>Terms & Conditions</p>
+                                    <p>
+                                        <Link to="/terms-condition">
+                                            Terms & Conditions
+                                        </Link>
+                                    </p>
                                 </div>
                             </Row>
 
                             <Row className="px-2">
                                 <Button
+                                    disabled={!isFormValid}
                                     type="submit"
-                                    className="register no-hover-effect"
-                                    disabled={isSubmitting} // Disable button while submitting
+                                    size="sm"
+                                    className="register "
+                                    // disabled={!isSubmitting} // Disable button while submitting
                                 >
                                     {isSubmitting
                                         ? 'Registering...'

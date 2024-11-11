@@ -8,7 +8,7 @@ import {
     OverlayTrigger,
     Tooltip
 } from 'react-bootstrap';
-import { Link, useNavigate, Outlet } from 'react-router-dom';
+import { Link, useNavigate, Outlet, useLocation } from 'react-router-dom';
 import Ai from '../../../assets/images/Ai.png';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import Crown from '../../../assets/images/Crown.png';
@@ -31,9 +31,11 @@ const HireCandidate = () => {
         handleDownload_Resume,
         get_Candidate_detials,
         fetchCandidates,
-        Search_bye_keyWord
+        Search_bye_keyWord,
+        get_subscription_details
     } = useContext(HireCandidateContext);
-    const navigate = useNavigate();
+    const naviagte = useNavigate();
+    const locate = useLocation();
     const [fiedEmpty, setfiedEmpty] = useState('');
 
     const [seachBarData, setseachBarData] = useState({
@@ -146,11 +148,9 @@ const HireCandidate = () => {
         }
     };
     const naviagte_view_candidate = async id => {
-        console.log('IDDD', id);
         if (!id) {
             return;
         } else {
-            console.log('jhgasgajsg', Subscription_Data[0]?.cv_view_limit);
             if (
                 (typeof Subscription_Data[0]?.cv_view_limit == 'number' &&
                     Subscription_Data[0]?.cv_view_limit > 0) ||
@@ -158,7 +158,7 @@ const HireCandidate = () => {
                     Subscription_Data[0]?.cv_view_limit == 'Unlimited')
             ) {
                 await get_Candidate_detials(id);
-                navigate('/main/view-candidate-details');
+                naviagte('/main/view-candidate-details');
             } else {
                 if (
                     typeof Subscription_Data[0]?.cv_view_limit == 'number' &&
@@ -176,7 +176,8 @@ const HireCandidate = () => {
 
     useEffect(() => {
         fetchCandidates();
-    }, []);
+        get_subscription_details();
+    }, [locate]);
     const searchLimit =
         Subscription_Data[1]?.search_limit === 'Unlimited'
             ? Subscription_Data[1]?.search_limit

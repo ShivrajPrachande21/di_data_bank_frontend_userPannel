@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './subscription.css';
 import { Button, Row } from 'react-bootstrap';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 const SubscriptionPlan = () => {
     const [activeButton, setActiveButton] = useState('subscription');
-    const navigate = useNavigate();
+    const naviagte = useNavigate();
 
     const handle_navigate = data => {
         setActiveButton(data);
-        navigate(data);
+        naviagte(data);
     };
 
     // Inline styles for active and inactive buttons

@@ -8,19 +8,19 @@ import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import { toast } from 'react-toastify';
 const CompanyRegistration = () => {
-    const { OTP, sendOtp, verifyOtp } = useRegistration();
-
+    const { OTP, sendOtp, verifyOtp, HideOTP, setHideOTP } = useRegistration();
+    const [timeLeft, setTimeLeft] = useState(0);
     const [company_reg, setcompany_reg] = useState({
         email: '',
         password: '',
         company_name: '',
-        mobile: '',
-        location: '',
+
         setpassword: ''
     });
 
     const handleInputChange = e => {
         const { name, value } = e.target;
+
         setcompany_reg(prevData => ({
             ...prevData,
             [name]: value
@@ -33,9 +33,10 @@ const CompanyRegistration = () => {
                 `${BaseUrl}company/reg`,
                 company_reg
             );
-            if (response.status === 200) {
+            if (response.status == 200 || response.status == 201) {
                 toast.success('companay registered Successfully !');
-                navigate('');
+                setHideOTP(prev => !prev);
+                navigate('/');
             }
         } catch (error) {
             toast.error('Failed to register the company');
@@ -51,7 +52,6 @@ const CompanyRegistration = () => {
         return { email: '', password: '', setpassword: '' }; // Default empty values
     };
 
-    // Use it in your component
     const [formData, setFormData] = useState(retrieveFormData());
 
     console.log('form data in Company', formData);
@@ -86,16 +86,41 @@ const CompanyRegistration = () => {
     const handleFormSubmit = async e => {
         e.preventDefault();
         const otpCode = otp.join('');
-        console.log('Entered OTP:', otpCode);
-        if (OTP === otpCode) {
+
+        if (OTP == otpCode) {
             await register_company();
+        } else {
+            toast.error(
+                'The OTP you entered did not match. Please check and try again.'
+            );
         }
         // Handle OTP validation here (e.g., sending to an API)
     };
 
     const handle_otp = async () => {
-        await sendOtp(company_reg.mobile);
+        if (company_reg.company_name == '') {
+            toast.error(' Please Enter Company Name');
+        } else if (company_reg.email == '') {
+            toast.error('Please Enter Mobile Number');
+        } else {
+            startTimer();
+            await sendOtp(company_reg.email);
+        }
     };
+
+    // Timer
+
+    useEffect(() => {
+        if (timeLeft <= 0) {
+            setTimeLeft(0);
+            setHideOTP(false); // Toggle hideOTP when timeLeft reaches 0
+            return;
+        }
+        const timer = setInterval(() => setTimeLeft(time => time - 1), 1000);
+        return () => clearInterval(timer);
+    }, [timeLeft]);
+
+    const startTimer = () => setTimeLeft(120);
 
     useEffect(() => {
         retrieveFormData();
@@ -122,7 +147,10 @@ const CompanyRegistration = () => {
                         <Form onSubmit={handleFormSubmit}>
                             <Row>
                                 <Col>
-                                    <Form.Label className="custom-lable">
+                                    <Form.Label
+                                        className="custom-lable"
+                                        style={{ fontSize: '1rem' }}
+                                    >
                                         Company name
                                     </Form.Label>
                                     <Form.Control
@@ -139,16 +167,20 @@ const CompanyRegistration = () => {
                             <Row>
                                 <Col xs={9}>
                                     {' '}
-                                    <Form.Label className="custom-lable">
+                                    <Form.Label
+                                        className="custom-lable"
+                                        style={{ fontSize: '1rem' }}
+                                    >
                                         Mobile No.
                                     </Form.Label>
                                     <Form.Control
                                         className="custom-input"
-                                        type="number"
-                                        name="mobile"
+                                        type="email"
+                                        name="email"
                                         placeholder="Enter your mobile no"
-                                        value={company_reg.mobile}
+                                        value={company_reg.email}
                                         onChange={handleInputChange}
+                                        disabled
                                         required
                                     />
                                 </Col>
@@ -173,47 +205,47 @@ const CompanyRegistration = () => {
                                         Enter the OTP sent to number
                                     </p>
                                 </Col>
-                                {otp.map((digit, index) => (
-                                    <Col key={index} xs={2}>
-                                        <Form.Control
-                                            type="text"
-                                            maxLength="1"
-                                            value={digit}
-                                            onChange={e =>
-                                                handleChange(e.target, index)
-                                            }
-                                            onKeyDown={e =>
-                                                handleKeyDown(e, index)
-                                            }
-                                            ref={el =>
-                                                (inputRefs.current[index] = el)
-                                            }
-                                            className="text-center otp-input"
-                                            style={{
-                                                fontSize: '14px',
-                                                padding: '8px 8px',
-                                                textAlign: 'center',
-                                                width: '3.4vw'
-                                            }}
-                                        />
-                                    </Col>
-                                ))}
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Form.Label className="custom-lable">
-                                        Location
-                                    </Form.Label>
-                                    <Form.Control
-                                        className="custom-input"
-                                        type="text"
-                                        name="location"
-                                        value={company_reg.location}
-                                        onChange={handleInputChange}
-                                        placeholder="Enter location"
-                                        required
-                                    />
-                                </Col>
+                                {HideOTP && (
+                                    <p className="Otp-timer">
+                                        {String(
+                                            Math.floor(timeLeft / 60)
+                                        ).padStart(2, '0')}
+                                        :
+                                        {String(timeLeft % 60).padStart(2, '0')}
+                                    </p>
+                                )}
+                                {HideOTP
+                                    ? otp.map((digit, index) => (
+                                          <Col key={index} xs={2}>
+                                              <Form.Control
+                                                  type="text"
+                                                  maxLength="1"
+                                                  value={digit}
+                                                  onChange={e =>
+                                                      handleChange(
+                                                          e.target,
+                                                          index
+                                                      )
+                                                  }
+                                                  onKeyDown={e =>
+                                                      handleKeyDown(e, index)
+                                                  }
+                                                  ref={el =>
+                                                      (inputRefs.current[
+                                                          index
+                                                      ] = el)
+                                                  }
+                                                  className="text-center otp-input"
+                                                  style={{
+                                                      fontSize: '14px',
+                                                      padding: '8px 8px',
+                                                      textAlign: 'center',
+                                                      width: '3.4vw'
+                                                  }}
+                                              />
+                                          </Col>
+                                      ))
+                                    : ''}
                             </Row>
 
                             {/* <Button

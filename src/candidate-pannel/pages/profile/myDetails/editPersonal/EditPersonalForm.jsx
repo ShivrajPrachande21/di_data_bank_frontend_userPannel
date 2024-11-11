@@ -240,7 +240,8 @@ function EditPersonalForm() {
                         <Form.Label
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
-                            Aadhaar Card No.
+                            Aadhaar Card No
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -364,6 +365,7 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             PAN
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -436,6 +438,7 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Gender
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Select
                             name="gender"
@@ -459,6 +462,7 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Country
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -479,6 +483,7 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Location
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -500,6 +505,7 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Age
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="number"
@@ -521,6 +527,7 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Members in Family
+                           
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -602,6 +609,7 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Spouse Profession
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"

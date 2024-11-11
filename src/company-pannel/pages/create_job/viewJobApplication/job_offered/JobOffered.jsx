@@ -3,9 +3,9 @@ import './joboffered.css';
 import arrow_back from '../../../../../assets/images/arrow_back.png';
 import avatar from '../../../../../assets/images/avatar.png';
 import alternet from '../../../../../assets/images/alternet.jpg';
-import { Modal, Row } from 'react-bootstrap';
+import Calendar from '../../../../../assets/images/Calendar.png';
 import { CreateJobContext } from '../../../../../context/CreateJobContext';
-
+import { Button, Col, Form, Row,Modal } from 'react-bootstrap';
 import { toast, useToast } from 'react-toastify';
 import axios from 'axios';
 import BaseUrl from '../../../../../services/BaseUrl';
@@ -292,7 +292,7 @@ const isoDate = dateValue.toISOString();
                             onClick={handle_file_upload}
                         >
                             <span>
-                                {file ? file?.name : 'browres from file'}
+                                {file ? file?.name : 'browser from file'}
                             </span>
                         </button>
                         <input
@@ -302,31 +302,51 @@ const isoDate = dateValue.toISOString();
                             onChange={handle_file_change}
                         />{' '}
                         <div style={{ position: 'relative', display: 'inline-block' }}>
-  <input 
-    type="date" 
-    style={{ 
-      backgroundColor: 'white', 
-      padding: '10px 40px 10px 10px', 
-      borderRadius: '4px', 
-      border: '1px solid #ccc',
-      width: '100%',
-      fontSize: '16px'
+                        <Form.Group controlId="Start_date" className="mt-2">
+                        <Form.Label
+                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
+                        >
+                        </Form.Label>
+                        <Row style={{ marginLeft: '-2px' }}>
+                            <Col lg={8} className="custom-option-exp">
+                            <Form.Group controlId="formBasicDate" style={{ backgroundColor: "white", padding: "3px", borderRadius: "4px", display: "flex", alignItems: "center" }}>
+  <input
+    type="date"
+    name="start_date"
+    value={date}
+    onChange={(e) => SetDate(e.target.value)}
+    style={{
+      backgroundColor: "white",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      padding: "5px",
+      flex: "1",
+      outline: "none",
+      color:'black'
     }}
-    onChange={(e)=>SetDate(e.target.value)}
   />
-  <i 
-    className="calendar-icon" 
-    style={{ 
-      position: 'absolute', 
-      top: '50%', 
-      right: '10px', 
-      transform: 'translateY(-50%)',
-      pointerEvents: 'none', 
-      color: '#ccc', 
-      fontSize: '20px'
+  <img
+    src={Calendar}
+    alt=""
+    width="30px"
+    //onClick={handleCalendarClick}
+    className="calendar"
+    style={{
+      marginLeft: "5px",
+      cursor: "pointer",
+      backgroundColor: "white",
+      padding: "5px",
+      borderRadius: "50%",
     }}
-  >📅</i>
-</div>   
+  />
+</Form.Group>
+
+                            </Col>
+                        </Row>
+                    </Form.Group>  
+ 
+</div> 
+
 
                         <br />
                         <button

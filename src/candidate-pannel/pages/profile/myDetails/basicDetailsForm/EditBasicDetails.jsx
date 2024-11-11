@@ -134,7 +134,7 @@ const EditBasicDetails = () => {
                     `${BaseUrl}candidate/profile/get_basic/${id}`
                 );
 
-                const { email, mobile, linkedIn, name } =
+                const { email, mobile, linkedIn, name ,contact_email} =
                     response?.data?.basic_details;
                 setInputFields(response.data?.basic_details?.other_profile);
                 // Set the API data into formData
@@ -142,7 +142,8 @@ const EditBasicDetails = () => {
                     email: email || '',
                     mobile: mobile || '',
                     linkedIn: linkedIn || '',
-                    name: name || ''
+                    name: name || '',
+                    contact_email:contact_email||''
                 });
             } catch (error) {}
         }
@@ -177,6 +178,7 @@ const EditBasicDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Name
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -197,6 +199,7 @@ const EditBasicDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Email Address
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="email"
@@ -222,6 +225,7 @@ const EditBasicDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Contact Email Address
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="email"
@@ -245,6 +249,7 @@ const EditBasicDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Phone Number
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -269,6 +274,7 @@ const EditBasicDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             LinkedIn Profile
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"

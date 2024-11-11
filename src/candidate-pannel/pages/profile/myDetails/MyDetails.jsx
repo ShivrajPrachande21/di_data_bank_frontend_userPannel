@@ -111,7 +111,7 @@ function MyDetails() {
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
                             {CandidateProfile?.data?.basic_details
-                                ?.contact_eamil || 'N/A'}
+                                ?.contact_email || 'N/A'}
                         </td>
                     </tr>
                     <tr>

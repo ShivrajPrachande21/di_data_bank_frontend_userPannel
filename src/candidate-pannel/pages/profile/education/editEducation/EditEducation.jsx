@@ -149,6 +149,7 @@ const EditEducation = () => {
                 <Form.Group controlId="highestEducation" style={{ marginTop: '-8px' }}>
                     <Form.Label className="edit-label-edu" style={{ fontSize: '0.8rem', fontWeight: '500' }}>
                         Highest level of education
+                        <span className="text-danger">*</span>
                     </Form.Label>
                     <Form.Control
                         type="text"
@@ -162,7 +163,8 @@ const EditEducation = () => {
                 </Form.Group>
                 <Form.Group controlId="boardRepresent" style={{ marginTop: '4px' }}>
                     <Form.Label className="edit-label-edu" style={{ fontSize: '0.8rem', fontWeight: '500' }}>
-                        Boards represented names
+                        Boards represented name
+                        <span className="text-danger">*</span>
                     </Form.Label>
                     <Form.Control
                         name="board_represent"
@@ -184,7 +186,6 @@ const EditEducation = () => {
                         onChange={handleInputChange}
                         placeholder="Ex: World Development Corporation"
                         className="education-form"
-                        required
                     />
                 </Form.Group>
                 {rows.map((cert, index) => (

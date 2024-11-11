@@ -140,6 +140,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Aspiring Position/Role
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -178,6 +179,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Industry
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -213,6 +215,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Current CTC
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Row style={{ marginTop: '-6px' }}>
                             <Col
@@ -250,6 +253,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Total year of Experience
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="number"
@@ -271,6 +275,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Function(s)
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -292,6 +297,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Skills
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -312,6 +318,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Preferred location
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -332,6 +339,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Current location
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -352,6 +360,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Country
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -372,6 +381,7 @@ const EditWorkDetails = () => {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Resume
+                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="file"

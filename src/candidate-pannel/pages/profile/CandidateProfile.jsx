@@ -24,6 +24,7 @@ import useProfileData from '../../../hooks/company_dashboard/useProfiledata';
 import profileimg from '../../../assets/images/profileimg.png';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import ProfileEdit from './myDetails/profileEdit/ProfileEdit';
+import CandidateProfileComplete from '../../../components/dynamicProgress/CandidateProfileComplete';
 
 const CandidateProfile = () => {
     const {
@@ -148,9 +149,14 @@ const CandidateProfile = () => {
                     <Row>
                         <div className="topsection">
                             <div className="profile-percentage">
-                                <p onClick={navigateProfile}>
-                                    <img src={arrow_back} alt="" width="20px" />
-                                </p>
+                            <div style={{ display: "flex", alignItems: "center" }}>
+  <p onClick={navigateProfile} style={{ marginRight: "10px", cursor: "pointer" }}>
+    <img src={arrow_back} alt="Back Arrow" width="20px" />
+  </p>
+  <CandidateProfileComplete progress={CandidateProfile?.profileCompletionPercentage} />
+</div>
+
+                              
                                 <p className="pro">
                                     {' '}
                                     {/* <ProfileComplete /> */}
@@ -172,6 +178,7 @@ const CandidateProfile = () => {
                             </div>
                         </div>
                     </Row>
+                   
                     <Row>
                         <Col xs={2}>
                             <div

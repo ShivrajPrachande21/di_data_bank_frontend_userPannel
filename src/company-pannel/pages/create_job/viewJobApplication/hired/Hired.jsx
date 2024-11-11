@@ -315,20 +315,15 @@ const Hired = () => {
                                 <img
                                     src={hiredCandidateData?.offerletterUrl}
                                     alt=""
-                                    style={{ width: '100%' }}
+                                    style={{width:'100%',height:'100%'}}
                                 />
                             ) : (
-                                <iframe
-                                    src={hiredCandidateData?.offerletterUrl}
-                                    style={{
-                                        width: '89%',
-                                        height: '80vh',
-                                        zoom: '1',
-                                        margin: '0px 20px',
-                                        width: '100%'
-                                    }}
-                                    title="Resume"
-                                />
+                                <img
+                                src={hiredCandidateData?.offerletterUrl}
+                                alt=""
+                               style={{width:'100%',height:'100%'}}
+                            />
+                               
                             )}
 
                             <div className="job-right">
@@ -367,22 +362,15 @@ const Hired = () => {
                         <img
                             src={hiredCandidateData?.offerletterUrl}
                             alt=""
-                            style={{ width: '110%' }}
+                            style={{ width: '100%',height:'100%' }}
                         />
                     ) : (
-                        <iframe
-                            src={hiredCandidateData?.offerletterUrl}
-                            // Ensure the src is set
-                            frameBorder="0"
-                            style={{
-                                width: '89%',
-                                height: '80vh',
-                                zoom: '1',
-                                margin: '0px 20px',
-                                width: '100%'
-                            }}
-                            title="Resume"
-                        ></iframe>
+                        <img
+                        src={hiredCandidateData?.offerletterUrl}
+                        alt=""
+                        style={{ width: '100%',height:"100%" }}
+                    />
+                       
                     )}
 
                     <button

@@ -143,8 +143,6 @@ const ApplicationStatus = () => {
     return ` ${day}${daySuffix(day)} ${month} ${year}`;
   };
 
-  // Example usage:
-  console.log(formatDate("2024-08-12")); // Output: Offer received on : 12th Aug 2024
 
   const [modalShow, setModalShow] = useState(null);
   const showModal = (user_id) => {
@@ -239,7 +237,7 @@ const ApplicationStatus = () => {
           <img
             src={applicationState?.offerletterUrl}
             alt=""
-            style={{ width: "110%" }}
+            style={{ width: "100%",height:"100%" }}
           />
           {/* ) : (
                         <iframe
@@ -448,7 +446,7 @@ const ApplicationStatus = () => {
           {currentStep == 4 && (
             <div className="main-view-offered">
               <div className="view-applied-offered-letter">
-                <img src={applicationState?.offerletterUrl} alt="" style={{width:"8rem"}} />
+                <img src={applicationState?.offerletterUrl} alt="" style={{width:"8rem",marginLeft:"12px"}} />
                 <div className="view-pdf-btn">
                   <Button
                     size="sm"
@@ -462,6 +460,7 @@ const ApplicationStatus = () => {
                 <Button
                   style={{
                     width: "70%",
+                    marginLeft:"43px",
                     background:
                       applicationState?.jobs?.Shortlisted[0]?.short_Candidate
                         ?.offer_accepted_status == "Rejected"
@@ -487,6 +486,7 @@ const ApplicationStatus = () => {
                   color: "#AEAEAE",
                   fontSize: "0.8rem",
                   marginTop: "10px",
+                  marginLeft:'-22px'
                 }}
               >
                 Offer received on

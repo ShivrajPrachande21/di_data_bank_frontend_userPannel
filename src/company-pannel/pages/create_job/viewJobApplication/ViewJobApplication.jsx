@@ -275,7 +275,7 @@ const ViewJobApplication = () => {
                                     size="sm"
                                     // onClick={() => navigate('job-offred')}
                                     style={getButtonStyle('job-offred')}
-                                    onClick={() => handleNavigate('job-offred')}
+                                    //onClick={() => handleNavigate('job-offred')}
                                 >
                                     Job Offered
                                 </Button>
@@ -285,7 +285,7 @@ const ViewJobApplication = () => {
                                 <Button
                                     size="sm"
                                     style={getButtonStyle('hired')}
-                                    onClick={() => handleNavigate('hired')}
+                                    //onClick={() => handleNavigate('hired')}
                                 >
                                     Hired
                                 </Button>

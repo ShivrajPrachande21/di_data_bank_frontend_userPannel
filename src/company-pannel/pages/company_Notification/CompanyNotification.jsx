@@ -173,7 +173,8 @@ const CompanyNotification = ({ handleClose }) => {
                         style={{
                             color: '#3B96E1',
                             fontSize: '0.8rem',
-                            marginLeft: '10px'
+                            marginLeft: '10px',
+                             cursor:'pointer'
                         }}
                     >
                         View
@@ -189,7 +190,8 @@ const CompanyNotification = ({ handleClose }) => {
                             style={{
                                 color: '#3B96E1',
                                 fontSize: '0.8rem',
-                                marginLeft: '10px'
+                                marginLeft: '10px',
+                                cursor:'pointer'
                             }}
                         >
                             View
@@ -207,7 +209,8 @@ const CompanyNotification = ({ handleClose }) => {
                         style={{
                             color: '#3B96E1',
                             fontSize: '0.8rem',
-                            marginLeft: '10px'
+                            marginLeft: '10px',
+                             cursor:'pointer'
                         }}
                     >
                         View
@@ -225,7 +228,8 @@ const CompanyNotification = ({ handleClose }) => {
                             style={{
                                 color: '#3B96E1',
                                 fontSize: '0.8rem',
-                                marginLeft: '10px'
+                                marginLeft: '10px',
+                                 cursor:'pointer'
                             }}
                         >
                             View
@@ -243,7 +247,8 @@ const CompanyNotification = ({ handleClose }) => {
                             style={{
                                 color: '#3B96E1',
                                 fontSize: '0.8rem',
-                                marginLeft: '10px'
+                                marginLeft: '10px',
+                                 cursor:'pointer'
                             }}
                         >
                             View

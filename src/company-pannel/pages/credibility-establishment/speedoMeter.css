@@ -1,0 +1,57 @@
+progress[value] {
+    --w: 100%; /* the width*/
+    --color:  /* the progress color */ linear-gradient(
+            90deg,
+            hsl(0, 100%, 50%),
+            #f9f106,
+            #06f906
+        )
+        0 / var(--w);
+    --background: lightgrey; /* the background color */
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    width: var(--w);
+    margin: 0 0px;
+    border-radius: 10em;
+    background: var(--background);
+}
+progress[value]::-webkit-progress-bar {
+    border-radius: 10em;
+    background: var(--background);
+}
+progress[value]::-webkit-progress-value {
+    border-radius: 10em;
+
+    background: var(--color);
+}
+progress[value]::-moz-progress-bar {
+    border-radius: 10em;
+    background: var(--color);
+}
+
+.LABLES {
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin: 20px 0;
+}
+.speed-cards {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgb(255, 255, 255);
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px 0.2px rgb(224, 224, 224);
+}
+.speed-cards h4 {
+    font-size: 0.8rem;
+    margin-bottom: -4px;
+}
+.speed-cards h2 {
+    margin-top: -14px;
+    font-size: 1.5rem;
+    color: rgb(24, 166, 243);
+}

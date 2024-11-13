@@ -15,7 +15,7 @@ const DashboardLayout = () => {
                     className="custom-scroll"
                     style={{
                         background: 'rgba(248, 248, 248, 1)',
-                        width: '80vw',
+                        width: '81vw',
                         height: '100vh',
                         overflow: 'hidden',
                         overflowY: 'auto'

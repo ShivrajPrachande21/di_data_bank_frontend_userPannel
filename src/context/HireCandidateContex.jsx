@@ -167,7 +167,6 @@ export const HireCandidateProvider = ({ children }) => {
     };
 
     const get_Candidate_detials = async id => {
-        console.log('id', id);
         const token = localStorage.getItem('companyToken');
         const decodedToken = jwtDecode(token);
         const companyId = decodedToken?._id;

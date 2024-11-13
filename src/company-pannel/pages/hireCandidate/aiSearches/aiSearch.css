@@ -7,7 +7,111 @@
     cursor: pointer;
 }
 .back-to-hire p {
-    margin-top: 14px;
+    margin-top: 16px;
     color: #3b96e1;
     font-size: 0.9rem;
+    margin-left: 10px;
+}
+.ai-seachBar {
+    padding: 4px 14px;
+    height: 8vh;
+    width: 100%;
+    background: #ffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    border: 1px solid #3b96e1;
+    border-radius: 12px;
+}
+.ai-seachBar img {
+    cursor: pointer;
+    width: 20px;
+    margin-right: 10px;
+}
+.ai-seachBar button {
+    background: white;
+    padding: 4px;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ai-seachBar button:hover {
+    box-shadow: 0 0 5px rgba(163, 163, 163, 0.5);
+}
+.ai-seachBar button img {
+}
+.ai-seachBar input {
+    width: 100%;
+    padding: 4px;
+    margin-right: 10px;
+    background: white;
+    color: black;
+    outline: none;
+    border: none;
+}
+.ai-seachBar input:focus {
+}
+.download-btn1 {
+    margin-top: 6px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    padding: 6px 20px;
+    height: 32px;
+    margin-right: 8px;
+    background: #3b96e1;
+}
+.para1 {
+    margin-top: 12px;
+}
+.top-ai-search-section {
+    /* position: fixed; */
+    /* background-color: rgb(248, 248, 248); */
+}
+.ai-search-result-section {
+    /* margin-top: 13%; */
+
+    height: 100vh;
+    /* position: fixed;
+    width: 80%; */
+    /* overflow-y: auto; */
+}
+.ai-file-uplaod {
+    padding: 14px;
+    width: 230px;
+    background: #ffffff;
+    z-index: 10;
+    position: absolute;
+    border-radius: 8px;
+    margin-top: 4px;
+    box-shadow: 0px 0px 10px 0px rgb(166, 166, 166);
+}
+.ai-file-uplaod button {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 8px 4px;
+    border: 1.6px dashed #aeaeae;
+    border-radius: 10px;
+    background: transparent;
+    color: #aeaeae;
+    margin-bottom: 4px;
+}
+.ai-file-uplaod button img {
+    width: 16px;
+    margin-left: 8px;
+}
+.ai-file-uplaod p {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #3b96e1;
+    font-weight: 500;
+}
+.ai-file-uplaod span {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin-left: 12px;
 }

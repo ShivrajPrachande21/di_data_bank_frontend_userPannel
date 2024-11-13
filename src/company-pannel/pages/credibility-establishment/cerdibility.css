@@ -1,43 +1,94 @@
 .CredibilityEstablishment {
-    padding: 10px;
+    padding: 12px;
 }
 .cerdibility-search {
     display: flex;
+
     margin-top: 10px;
+    position: relative;
 }
 .c-search {
     display: flex;
     align-items: center;
-    margin-top: -8px;
-    width: 66%;
-
-    margin-right: 8px;
+    margin-top: -14px;
+    width: 68%;
 }
-.c-search p {
+.CredibilityEstablishment p {
     font-size: 0.8rem;
     color: #051f50;
     margin-top: 15px;
     font-weight: 500;
     margin-right: 4px;
 }
-.c-search input {
-    width: 72%;
-    border-radius: 8px;
-    margin-left: 4px;
-}
+
 .c-search button img {
     width: 24px;
+}
+.c-search .seacrhbar {
+    display: flex;
+    width: 81.5%;
+    background: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0px 0px 0.8px 0.2px rgb(203, 203, 203);
+}
+.c-search .seacrhbar input {
+    width: 100%;
+    border-radius: 8px 0px 0px 8px;
+}
+.seacrhbar button {
+    border-radius: 0px 8px 8px 0px;
 }
 .accpeted-rejected {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: #ffff;
-    border-radius: 8px;
-    padding: 10px;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 9px;
+
+    width: 34%;
+    margin-right: 0px;
+    height: 6.8vh;
+    margin-top: -8px;
+    box-shadow: 0px 0px 1px 0.2px rgb(157, 156, 156);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .accpeted-rejected p {
     font-size: 0.8rem;
+}
+.accpeted-rejected span {
+    width: 1.4px;
+    height: 26px;
+    background: #f2f2f2;
+    z-index: 10;
+    margin-right: 4px;
+}
+.table-credibilty {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 0px 2px 0.2px rgb(157, 156, 156);
+}
+.compact-table th,
+.compact-table td {
+    padding: 6px 12px; /* Reduces padding for smaller cells */
+    font-size: 0.85rem; /* Decreases font size */
+}
 
-    margin-bottom: 0px;
+.compact-table th {
+    font-weight: 500; /* Optionally, keep the header bold for readability */
+}
+
+.pan-error-in-cerdibility {
+    position: absolute;
+    right: 44%;
+    top: 40px;
+}
+.cerdibility-search-count {
+    position: absolute;
+    right: 30%;
+    top: 38px;
+}
+.is-invalid {
+    border-color: red !important;
 }

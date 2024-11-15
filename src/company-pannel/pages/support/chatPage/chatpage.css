@@ -127,12 +127,12 @@
     height: 20px;
     width: 20px;
     border-radius: 50px;
-    background: red;
+
     overflow: hidden;
     object-fit: cover;
     margin-left: 16px;
     margin-right: 8px;
-    margin-top: -14px;
+    margin-top: -16px;
 }
 
 .show_img1 {
@@ -148,6 +148,7 @@
     margin-top: -5px;
 }
 .show_img1 p {
+    font-size: 0.8rem;
     color: #787878;
 }
 .show_message1 {

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
         useDashboardData();
-    const naviagte = useNavigate();
+    const navigate = useNavigate();
     const [PAN, setPAN] = useState(null);
     const [isValid, setIsValid] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
@@ -46,20 +46,24 @@ const Dashboard = () => {
         }, 10000);
     }, [hide]);
 
-    // function rendering() {
-    //     const render = localStorage.getItem('render');
+    function rendering() {
+        const render = localStorage.getItem('render');
 
-    //     if (render == 'company') {
-    //         const token = localStorage.getItem('companyToken');
-    //         if (!token) {
-    //             naviagte('/');
-    //         }
-    //     }
-    // }
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/main/dashboard');
+            }
+        } else {
+            navigate('/');
+        }
+    }
 
-    // useEffect(() => {
-    //     rendering();
-    // }, []);
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <div style={{ color: 'black' }}>
             <Container fluid style={{ background: '', paddingLeft: '20px' }}>

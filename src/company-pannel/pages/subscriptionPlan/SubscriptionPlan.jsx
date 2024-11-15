@@ -23,6 +23,24 @@ const SubscriptionPlan = () => {
         color: 'black' // Original text color
     };
 
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                naviagte('/');
+            } else {
+                naviagte('main/subscription-plan/subscription');
+            }
+        } else {
+            naviagte('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <div className="sub-scription">
             <Row>

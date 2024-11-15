@@ -21,19 +21,23 @@ export const CreateJobProvider = ({ children }) => {
     const [job_offered, setjob_offered] = useState(null);
     const [paymentLoading, SetPropaymentLoading] = useState(null);
     const [PromotpaymentData, SetPromotpaymentData] = useState('');
-    const [longlistData,SetlonglistData]=useState(null);
+    const [longlistData, SetlonglistData] = useState(null);
     const fetch_job_status = async () => {
         const token = localStorage.getItem('companyToken');
 
-        // Decode the token to get the payload
-        const decodedToken = jwtDecode(token);
-        const companyId = decodedToken?._id;
-        try {
-            const response = await axios.get(
-                `${BaseUrl}company/job_status/${companyId}`
-            );
-            setJob_status(response?.data);
-        } catch (error) {}
+        if (!token) {
+            return;
+        } else {
+            const decodedToken = jwtDecode(token);
+            const companyId = decodedToken?._id;
+
+            try {
+                const response = await axios.get(
+                    `${BaseUrl}company/job_status/${companyId}`
+                );
+                setJob_status(response?.data);
+            } catch (error) {}
+        }
     };
 
     const stop_restar_job = async job_id => {
@@ -79,8 +83,6 @@ export const CreateJobProvider = ({ children }) => {
     const fetch_Job_applicant = async () => {
         const jobid = localStorage.getItem('job_id');
 
-        console.log('appp', jobid);
-
         try {
             const response = await axios.get(
                 `${BaseUrl}company/listout_applicant/${jobid}`
@@ -89,7 +91,7 @@ export const CreateJobProvider = ({ children }) => {
         } catch (error) {}
     };
 
-    const fetch_Job_Longlist=async()=>{
+    const fetch_Job_Longlist = async () => {
         const jobid = localStorage.getItem('job_id');
         try {
             const response = await axios.get(
@@ -97,7 +99,7 @@ export const CreateJobProvider = ({ children }) => {
             );
             SetlonglistData(response?.data);
         } catch (error) {}
-    }
+    };
 
     const shortlis_candidate = async user_id => {
         const jobid = localStorage.getItem('job_id');
@@ -299,7 +301,7 @@ export const CreateJobProvider = ({ children }) => {
                 fetch_Job_applicant,
                 fetch_job_status,
                 fetch_Job_Longlist,
-                longlistData,
+                longlistData
             }}
         >
             {children}

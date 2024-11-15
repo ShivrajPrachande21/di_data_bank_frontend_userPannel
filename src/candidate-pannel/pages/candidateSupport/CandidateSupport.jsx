@@ -43,7 +43,11 @@ const CandidateSupport = () => {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
                 navigate('/');
+            } else {
+                navigate('/candidate-dashboard/support-candidate');
             }
+        } else {
+            navigate('/');
         }
     }
 

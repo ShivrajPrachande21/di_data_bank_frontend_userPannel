@@ -1,12 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 import { Button, Image } from 'react-bootstrap';
 import Verified from '../../../../assets/images/Verified.png';
 import avatar from '../../../../assets/images/avatar.png';
+import { useLocation, useNavigate } from 'react-router-dom';
 function CandidateReviews() {
     const { CandidateProfile } = useContext(CandidateProfileContext);
-    console.log('CandidateProfile', CandidateProfile);
+    const navigate = useNavigate();
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/profile-candidate/reviews');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="exp-review">

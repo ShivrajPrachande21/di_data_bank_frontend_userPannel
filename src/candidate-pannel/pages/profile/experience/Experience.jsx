@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import EditExperience from './editExperience/EditExperience';
 import EditExperiencePrev from './editExperinceprev/EditExperiencePrev';
 import EditWorkDetails from './editWorkDetails/EditWorkDetails';
+import { useNavigate } from 'react-router-dom';
 
 const Experience = () => {
     const {
@@ -24,7 +25,7 @@ const Experience = () => {
         showWork,
         handleShowWork
     } = useContext(CandidateProfileContext);
-    console.log('CandidateProfile', CandidateProfile);
+    const navigate = useNavigate();
     const formatDate = dateString => {
         const date = new Date(dateString);
 
@@ -129,6 +130,24 @@ const Experience = () => {
         CandidateProfile?.data?.work_details?.resume
     );
 
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/profile-candidate/experience');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="experience p-2">

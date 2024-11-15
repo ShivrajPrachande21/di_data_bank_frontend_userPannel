@@ -29,7 +29,7 @@ export const HireCandidateProvider = ({ children }) => {
     const [show, setShow] = useState(null);
     const [showHire, SetShowHire] = useState(null);
     const [candidateNoti, SetcandidateNoti] = useState(null);
-    console.log('harshendra canidai notification', candidateNoti);
+
     const handleCloseHire = id => {
         const token = localStorage.getItem('companyToken');
         const decodedToken = jwtDecode(token);
@@ -40,7 +40,6 @@ export const HireCandidateProvider = ({ children }) => {
         });
 
         setShow(false);
-        SetShowHire(prev => !prev);
     };
 
     // subsciption data

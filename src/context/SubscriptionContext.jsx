@@ -216,18 +216,24 @@ export const SubscriptionProvider = ({ children }) => {
     // Fetch Early buy Data
     const fetch_all_early = async () => {
         setloading(true);
+
         const token = localStorage.getItem('companyToken');
-        const decodedToken = jwtDecode(token);
-        const companyId = decodedToken?._id;
-        try {
-            const response = await axios.get(
-                `${BaseUrl}company/get_renewplane/${companyId}`
-            );
-            SetRenewData(response?.data);
-            if (response?.status == 200) {
-                setloading(false);
-            }
-        } catch (error) {}
+
+        if (!token) {
+            return;
+        } else {
+            const decodedToken = jwtDecode(token);
+            const companyId = decodedToken?._id;
+            try {
+                const response = await axios.get(
+                    `${BaseUrl}company/get_renewplane/${companyId}`
+                );
+                SetRenewData(response?.data);
+                if (response?.status == 200) {
+                    setloading(false);
+                }
+            } catch (error) {}
+        }
     };
 
     useEffect(() => {

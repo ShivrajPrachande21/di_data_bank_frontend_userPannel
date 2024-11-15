@@ -58,6 +58,27 @@ const ViewAppliedJobDetails = () => {
         fetchAppliedDetails();
         // getApplicationData();
     }, []);
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate(
+                    '/candidate-dashboard/viewAppliedJobDetails/6708f19552123b3e11a17214'
+                );
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="ViewAppliedJobDetails">

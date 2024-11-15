@@ -53,6 +53,7 @@ import NotFound from '../components/NotFound/NotFound';
 import TermsAndCondition from '../components/termsAndCondition/TermsAndCondition';
 import PrivacyPolicy from '../components/privacyPolicy/PrivacyPolicy';
 import CredibilityEstablishment from '../company-pannel/pages/credibility-establishment/CredibilityEstablishment';
+import DashboardCandidate from '../candidate-pannel/pages/Dashboard/DashboardCandidate';
 
 const router = createBrowserRouter([
     {
@@ -183,14 +184,18 @@ const router = createBrowserRouter([
     },
     {
         path: 'candidate-dashboard',
-        // element: (
-        //     <Protectedroutes
-        //         element={Candidate_Dashboard}
-        //         tokenType="Candidate_token"
-        //     />
-        // ),
-        element: <Candidate_Dashboard />,
+        element: (
+            <Protectedroutes
+                element={Candidate_Dashboard}
+                tokenType="Candidate_token"
+            />
+        ),
+
         children: [
+            {
+                path: 'dashboard',
+                element: <DashboardCandidate />
+            },
             {
                 path: 'search-job',
                 element: <SearchJob />

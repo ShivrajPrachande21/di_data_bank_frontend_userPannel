@@ -9,6 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 const Addissue = () => {
     const { modalShow, setModalShow } = useSupport();
     const [loading, setLoading] = useState(false);
+    const [FileData, setFileData] = useState(null);
     const [formData, setFormData] = useState({
         Issue_type: '',
         description: '',
@@ -32,13 +33,13 @@ const Addissue = () => {
             ...formData,
             file: e.target.files[0] // Only select the first file if multiple files are selected
         });
+        const file = e.target.files[0];
+        setFileData(file);
     };
 
     // Handle form submission
     const handleSubmit = async e => {
         e.preventDefault();
-
-        console.log('Form Submitted:', formData);
 
         try {
             // Prepare form data
@@ -152,7 +153,9 @@ const Addissue = () => {
                         style={{ marginRight: '10px' }}
                     />
                     <p style={{ fontSize: '0.8rem' }}>
-                        Upload a screenshot of the Issue
+                        {FileData
+                            ? FileData?.name
+                            : 'Upload a screenshot of the Issue'}
                     </p>
                 </div>
 

@@ -13,19 +13,18 @@ const SavedJobs = () => {
     const { fetchSavedJob, savedJobData } = useContext(AppliedJobContext);
     const locate = useLocation();
     const navigate = useNavigate();
-    const {
-        CandidateProfile,
-        fetchCandidateProfile} = useContext(CandidateProfileContext);
+    const { CandidateProfile, fetchCandidateProfile } = useContext(
+        CandidateProfileContext
+    );
     const formatDate = dateString => {
         const options = { day: '2-digit' };
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
 
     const handleApply = async id => {
-        if(CandidateProfile?.profileCompletionPercentage!=100){
-            toast.error("Please complete your profile before apply jobs.");
-            return 
-
+        if (CandidateProfile?.profileCompletionPercentage != 100) {
+            toast.error('Please complete your profile before apply jobs.');
+            return;
         }
         await applyTo_job(id);
         await fetchSavedJob();
@@ -38,197 +37,216 @@ const SavedJobs = () => {
     const handleNavigate = async id => {
         navigate(`/candidate-dashboard/view-job-details/${id}`);
     };
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/candidate-dashboard/applied-job/saved-jobs');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="saved-jobs-card">
-                {savedJobData && savedJobData.length > 0
-                    ? savedJobData.map((item, index) => (
-                          <div
-                              className="card-job search"
-                              onClick={() => handleNavigate(item?._id)}
-                              key={index}
-                          >
-                              <div className="search-job-top">
-                                
-                                  <Image
-                                      src={item?.profileUrl?item?.profileUrl:altprofile}
-                                     
-                                      roundedCircle
+                {savedJobData && savedJobData.length > 0 ? (
+                    savedJobData.map((item, index) => (
+                        <div
+                            className="card-job search"
+                            onClick={() => handleNavigate(item?._id)}
+                            key={index}
+                        >
+                            <div className="search-job-top">
+                                <Image
+                                    src={
+                                        item?.profileUrl
+                                            ? item?.profileUrl
+                                            : altprofile
+                                    }
+                                    roundedCircle
                                     // alt={altprofile}
-                                      width="40" // Set the desired width
-                                      height="40" // Set the desired height
-                                  />
-                                  <h6>
-                                      {item?.job_title}{' '}
-                                      <p
-                                          style={{
-                                              color: '#3B96E1',
+                                    width="40" // Set the desired width
+                                    height="40" // Set the desired height
+                                />
+                                <h6>
+                                    {item?.job_title}{' '}
+                                    <p
+                                        style={{
+                                            color: '#3B96E1',
 
-                                              fontSize: '0.8rem',
-                                              width: '180px' /* Adjust this value to your desired width */,
-                                              wordWrap: 'break-word'
-                                          }}
-                                      >
-                                          {item?.company_details
-                                              ?.company_name || ''}
-                                      </p>
-                                  </h6>
-                                  <div className="green-thik">
-                                      {item?.Green_Batch?(
-                                          <img
-                                              src={Verified}
-                                              alt=""
-                                              height="20px"
-                                          />
-                                      ) : null}
-                                  </div>
-                              </div>
+                                            fontSize: '0.8rem',
+                                            width: '180px' /* Adjust this value to your desired width */,
+                                            wordWrap: 'break-word'
+                                        }}
+                                    >
+                                        {item?.company_details?.company_name ||
+                                            ''}
+                                    </p>
+                                </h6>
+                                <div className="green-thik">
+                                    {item?.Green_Batch ? (
+                                        <img
+                                            src={Verified}
+                                            alt=""
+                                            height="20px"
+                                        />
+                                    ) : null}
+                                </div>
+                            </div>
 
-                              <div>
-                                  <table
-                                      style={{
-                                          cursor: 'pointer',
-                                          marginTop: '-4px'
-                                      }}
-                                  >
-                                      <tr>
-                                          <th></th>
-                                          <th></th>
-                                      </tr>
-                                      <tr>
-                                          <td
-                                              style={{
-                                                  paddingRight: '30px'
-                                              }}
-                                          >
-                                              <span className="card-table-span">
-                                                  Experience:
-                                              </span>{' '}
-                                          </td>
-                                          <td>
-                                              {' '}
-                                              <span className="card-table-span">
-                                                  {item?.experience} Years
-                                              </span>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td
-                                              style={{
-                                                  paddingRight: '30px'
-                                              }}
-                                          >
-                                              <span className="card-table-span">
-                                                  Loction:
-                                              </span>{' '}
-                                          </td>
-                                          <td>
-                                              {' '}
-                                              <span className="card-table-span">
-                                                  {item?.location}
-                                              </span>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td
-                                              style={{
-                                                  paddingRight: '30px'
-                                              }}
-                                          >
-                                              <span className="card-table-span">
-                                                  Salary:
-                                              </span>{' '}
-                                          </td>
-                                          <td>
-                                              {' '}
-                                              <span className="card-table-span">
-                                                  {item?.salary} LPA
-                                              </span>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td
-                                              style={{
-                                                  paddingRight: '30px'
-                                              }}
-                                          >
-                                              <span className="card-table-span">
-                                                  Qualification:
-                                              </span>{' '}
-                                          </td>
-                                          <td>
-                                              {' '}
-                                              <span className="card-table-span">
-                                                  {item?.education}
-                                              </span>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td
-                                              style={{
-                                                  paddingRight: '30px'
-                                              }}
-                                          >
-                                              <span className="card-table-span">
-                                                  Posted:
-                                              </span>{' '}
-                                          </td>
-                                          <td>
-                                              {' '}
-                                              <span className="card-table-span">
-                                                  {formatDate(
-                                                      item?.createdDate
-                                                  )}{' '}
-                                                  days ago
-                                              </span>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td
-                                              style={{
-                                                  paddingRight: '30px'
-                                              }}
-                                          >
-                                              <span className="card-table-span">
-                                                  Applicants:
-                                              </span>{' '}
-                                          </td>
-                                          <td>
-                                              {' '}
-                                              <span className="card-table-span">
-                                                  {
-                                                      item?.applied_candidates
-                                                          ?.length
-                                                  }
-                                              </span>
-                                          </td>
-                                      </tr>
-                                  </table>
-                                  <div
-                                      className="search-job-bnt mt-2"
-                                      // onClick={handleNavigate}
-                                  >
-                                      <Button
-                                          size="sm"
-                                          style={{
-                                              background: '#B4DDFF',
-                                              color: '#3B96E1',
-                                              width: '100%',
-                                              border: 'none'
-                                          }}
-                                          onClick={() => handleApply(item?._id)}
-                                      >
-                                          Apply
-                                      </Button>
-                                  </div>
-                              </div>
-                          </div>
-                      ))
-                    :(
-                        <div className="no-jobs-container">
+                            <div>
+                                <table
+                                    style={{
+                                        cursor: 'pointer',
+                                        marginTop: '-4px'
+                                    }}
+                                >
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                paddingRight: '30px'
+                                            }}
+                                        >
+                                            <span className="card-table-span">
+                                                Experience:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {item?.experience} Years
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                paddingRight: '30px'
+                                            }}
+                                        >
+                                            <span className="card-table-span">
+                                                Loction:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {item?.location}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                paddingRight: '30px'
+                                            }}
+                                        >
+                                            <span className="card-table-span">
+                                                Salary:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {item?.salary} LPA
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                paddingRight: '30px'
+                                            }}
+                                        >
+                                            <span className="card-table-span">
+                                                Qualification:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {item?.education}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                paddingRight: '30px'
+                                            }}
+                                        >
+                                            <span className="card-table-span">
+                                                Posted:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {formatDate(item?.createdDate)}{' '}
+                                                days ago
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                paddingRight: '30px'
+                                            }}
+                                        >
+                                            <span className="card-table-span">
+                                                Applicants:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {
+                                                    item?.applied_candidates
+                                                        ?.length
+                                                }
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div
+                                    className="search-job-bnt mt-2"
+                                    // onClick={handleNavigate}
+                                >
+                                    <Button
+                                        size="sm"
+                                        style={{
+                                            background: '#B4DDFF',
+                                            color: '#3B96E1',
+                                            width: '100%',
+                                            border: 'none'
+                                        }}
+                                        onClick={() => handleApply(item?._id)}
+                                    >
+                                        Apply
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="no-jobs-container">
                         <span>No jobs have been saved.</span>
-                      </div>
-                    )}
+                    </div>
+                )}
             </div>
         </>
     );

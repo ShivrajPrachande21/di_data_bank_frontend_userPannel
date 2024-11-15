@@ -31,8 +31,7 @@ const ShortListed = () => {
     const finalise_candidate = async user_id => {
         const jobid = localStorage.getItem('job_id');
         localStorage.setItem('getJobofferId', user_id);
-                navigate('/main/view-job-application/job-offred');
-         
+        navigate('/main/view-job-application/job-offred');
     };
     const reject_finalise_candidate = async user_id => {
         console.log('user_id finalise', user_id);
@@ -64,11 +63,11 @@ const ShortListed = () => {
     };
 
     const getEmbedLink = link => {
-        const fileId = link.split('/d/')[1].split('/')[0]; 
+        const fileId = link.split('/d/')[1].split('/')[0];
         return `https://drive.google.com/file/d/${fileId}/preview`;
     };
 
-    const [comment, setComment] = useState(''); 
+    const [comment, setComment] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
     const [isModalfinalise, setisModalfinalise] = useState(false);
 
@@ -83,10 +82,10 @@ const ShortListed = () => {
     };
 
     const handle_finalise_candidate = data => {
-        if (data =='yes') {
+        if (data == 'yes') {
             finalise_candidate(Finalise_userId);
             setisModalfinalise(prev => !prev);
-        } else if (data =='no') {
+        } else if (data == 'no') {
             reject_finalise_candidate(Finalise_userId);
             setisModalfinalise(prev => !prev);
         }
@@ -102,15 +101,14 @@ const ShortListed = () => {
     const handleCommentChange = e => {
         setComment(e.target.value);
     };
-    const confirmAction = async ( feedBack) => {
+    const confirmAction = async feedBack => {
         if (!feedBack || feedBack.trim() === '') {
-            toast.error("Please provide valid feedback.")
+            toast.error('Please provide valid feedback.');
             return;
         }
         await handle_feedback(feedBack, user_id);
-       
-            showModal(false);
-        
+
+        showModal(false);
     };
 
     return (
@@ -148,7 +146,7 @@ const ShortListed = () => {
                 style={{
                     background: 'white',
                     padding: '10px',
-                    marginLeft: '12px',
+                    marginLeft: '2px',
                     borderRadius: '8px'
                 }}
             >

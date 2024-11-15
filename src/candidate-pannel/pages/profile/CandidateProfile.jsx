@@ -106,18 +106,21 @@ const CandidateProfile = () => {
     function rendering() {
         const render = localStorage.getItem('render');
 
-        if (render === 'candidate') {
+        if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
                 navigate('/');
+            } else {
+                navigate('/profile-candidate/my-detials');
             }
+        } else {
+            navigate('/');
         }
     }
 
     useEffect(() => {
         rendering();
     }, []);
-
     return (
         <>
             <div className="ReportedJob candidate-profile">
@@ -149,14 +152,32 @@ const CandidateProfile = () => {
                     <Row>
                         <div className="topsection">
                             <div className="profile-percentage">
-                            <div style={{ display: "flex", alignItems: "center" }}>
-  <p onClick={navigateProfile} style={{ marginRight: "10px", cursor: "pointer" }}>
-    <img src={arrow_back} alt="Back Arrow" width="20px" />
-  </p>
-  <CandidateProfileComplete progress={CandidateProfile?.profileCompletionPercentage} />
-</div>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center'
+                                    }}
+                                >
+                                    <p
+                                        onClick={navigateProfile}
+                                        style={{
+                                            marginRight: '10px',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        <img
+                                            src={arrow_back}
+                                            alt="Back Arrow"
+                                            width="20px"
+                                        />
+                                    </p>
+                                    <CandidateProfileComplete
+                                        progress={
+                                            CandidateProfile?.profileCompletionPercentage
+                                        }
+                                    />
+                                </div>
 
-                              
                                 <p className="pro">
                                     {' '}
                                     {/* <ProfileComplete /> */}
@@ -178,7 +199,7 @@ const CandidateProfile = () => {
                             </div>
                         </div>
                     </Row>
-                   
+
                     <Row>
                         <Col xs={2}>
                             <div

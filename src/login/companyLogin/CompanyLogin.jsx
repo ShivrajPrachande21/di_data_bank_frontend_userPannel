@@ -192,7 +192,7 @@ const CompanyLogin = () => {
             if (token) {
                 navigate('/candidate-dashboard/search-job');
             }
-        } else if (render === 'company') {
+        } else if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (token) {
                 navigate('/main/dashboard');

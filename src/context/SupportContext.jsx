@@ -12,14 +12,19 @@ export const SupportProvider = ({ children }) => {
 
     const fetch_all_issue = async () => {
         const token = localStorage.getItem('companyToken');
-        const decodedToken = jwtDecode(token);
-        const companyId = decodedToken?._id;
-        try {
-            const response = await axios.get(
-                `${BaseUrl}company/get_issue/${companyId}`
-            );
-            setData(response?.data);
-        } catch (error) {}
+
+        if (!token) {
+            return;
+        } else {
+            const decodedToken = jwtDecode(token);
+            const companyId = decodedToken?._id;
+            try {
+                const response = await axios.get(
+                    `${BaseUrl}company/get_issue/${companyId}`
+                );
+                setData(response?.data);
+            } catch (error) {}
+        }
     };
 
     useEffect(() => {

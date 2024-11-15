@@ -103,6 +103,7 @@ const HireCandidateNotification = () => {
                         </tr>
                     </table>
                 </div>
+                <button>CLear ALl</button>
             </div>
         </>
     );

@@ -22,9 +22,9 @@ import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 const ViewJobDescription = () => {
     const { applyTo_job, save_job } = useContext(SearchJobContext);
-    const {
-        CandidateProfile,
-        fetchCandidateProfile} = useContext(CandidateProfileContext);
+    const { CandidateProfile, fetchCandidateProfile } = useContext(
+        CandidateProfileContext
+    );
     const { id } = useParams();
     const navigate = useNavigate();
     const [modalShow, setModalShow] = React.useState(true);
@@ -61,9 +61,9 @@ const ViewJobDescription = () => {
     const sanitizedDescription = DOMPurify.sanitize(JobData?.description);
 
     const handleApplyJob = async id => {
-        if(CandidateProfile?.profileCompletionPercentage!=100){
-            toast.error("Please complete your profile before apply jobs.");
-        return 
+        if (CandidateProfile?.profileCompletionPercentage != 100) {
+            toast.error('Please complete your profile before apply jobs.');
+            return;
         }
         await applyTo_job(id);
         navigate('/candidate-dashboard/search-job');
@@ -89,27 +89,45 @@ const ViewJobDescription = () => {
             Apply for this job
         </Tooltip>
     );
-const [userId,SetUserId]=useState(null)
+    const [userId, SetUserId] = useState(null);
     useEffect(() => {
-        getSingleJobDetails();
-        const token = localStorage.getItem('Candidate_token');
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            getSingleJobDetails();
+            const token = localStorage.getItem('Candidate_token');
             const decodedToken = jwtDecode(token);
             const userId = decodedToken?._id;
-            SetUserId(userId)
+            SetUserId(userId);
+        }
     }, [id]);
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/candidate-dashboard/view-job-details/:id');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
-          
             <img
-                            src={ep_back}
-                            alt=""
-                            style={{ height: '20px', cursor: 'pointer' }}
-                            onClick={() =>
-                                navigate(
-                                    '/candidate-dashboard/search-job'
-                                )
-                            }
-                        />
+                src={ep_back}
+                alt=""
+                style={{ height: '20px', cursor: 'pointer' }}
+                onClick={() => navigate('/candidate-dashboard/search-job')}
+            />
             <div className="view-job-description">
                 <Row>
                     <Col>
@@ -293,59 +311,58 @@ const [userId,SetUserId]=useState(null)
                             className="search-job-bnt mt-2"
                             // onClick={handleNavigate}
                         >
-                            
-                                {JobData?.applied_candidates.some((candidate) => candidate.candidate_id.toString() ==userId)? (
-        <Button
-        size="sm"
-        style={{
-            background: '#B4DDFF',
-            color: '#3B96E1',
-            width: '100%',
-            border: 'none'
-        }}
-    >
-        Applied
-    </Button>
-    ) :
-    (
-        <>
-        <OverlayTrigger
-                                placement="top"
-                                overlay={renderSaveTooltip}
-                            >
-                                <Button
-                                    size="sm"
-                                    style={{
-                                        background: 'white',
-                                        color: '#3B96E1',
-                                        border: '1px solid #3B96E1'
-                                    }}
-                                    onClick={() => handle_Save_jobs(id)}
-                                >
-                                    Save
-                                </Button>
-                            </OverlayTrigger>
-
-                            <OverlayTrigger
-                                placement="top"
-                                overlay={renderApplyTooltip}
-                            >
+                            {JobData?.applied_candidates.some(
+                                candidate =>
+                                    candidate.candidate_id.toString() == userId
+                            ) ? (
                                 <Button
                                     size="sm"
                                     style={{
                                         background: '#B4DDFF',
                                         color: '#3B96E1',
+                                        width: '100%',
                                         border: 'none'
                                     }}
-                                    onClick={() => handleApplyJob(id)}
                                 >
-                                    Apply
+                                    Applied
                                 </Button>
-                            </OverlayTrigger>
-        </>
-    )
-    }
-    
+                            ) : (
+                                <>
+                                    <OverlayTrigger
+                                        placement="top"
+                                        overlay={renderSaveTooltip}
+                                    >
+                                        <Button
+                                            size="sm"
+                                            style={{
+                                                background: 'white',
+                                                color: '#3B96E1',
+                                                border: '1px solid #3B96E1'
+                                            }}
+                                            onClick={() => handle_Save_jobs(id)}
+                                        >
+                                            Save
+                                        </Button>
+                                    </OverlayTrigger>
+
+                                    <OverlayTrigger
+                                        placement="top"
+                                        overlay={renderApplyTooltip}
+                                    >
+                                        <Button
+                                            size="sm"
+                                            style={{
+                                                background: '#B4DDFF',
+                                                color: '#3B96E1',
+                                                border: 'none'
+                                            }}
+                                            onClick={() => handleApplyJob(id)}
+                                        >
+                                            Apply
+                                        </Button>
+                                    </OverlayTrigger>
+                                </>
+                            )}
                         </div>
                         <p
                             style={{

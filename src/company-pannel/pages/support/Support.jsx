@@ -28,11 +28,28 @@ const Support = () => {
         );
     });
 
-    console.log('fiteredData', fiteredData);
     useEffect(() => {
         fetch_all_issue();
     }, []);
 
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/main/support');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <Modal

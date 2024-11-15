@@ -17,9 +17,25 @@ function CandidateChat() {
     const [chat, setChat] = useState([]);
     const [timeStamp, settimeStamp] = useState('');
 
+    // const token = localStorage.getItem('Candidate_token');
+    // const decodedToken = jwtDecode(token);
+    // const companyId = decodedToken?._id;
+
     const token = localStorage.getItem('Candidate_token');
-    const decodedToken = jwtDecode(token);
-    const companyId = decodedToken?._id;
+    let companyId = null;
+
+    if (token) {
+        try {
+            const decodedToken = jwtDecode(token);
+            companyId = decodedToken?._id;
+        } catch (error) {
+            console.error('Failed to decode token:', error);
+            // Optionally handle invalid token case here
+            companyId = null;
+        }
+    } else {
+        console.warn('No token found in localStorage.');
+    }
 
     const formatDateTime = dateString => {
         const options = {
@@ -82,6 +98,26 @@ function CandidateChat() {
         settimeStamp(timestamps);
     };
 
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigateBack('/');
+            } else {
+                navigateBack(
+                    '/candidate-dashboard/candidate-chat/6722227ffaabccf3abb083f6'
+                );
+            }
+        } else {
+            navigateBack('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="Chatpage">

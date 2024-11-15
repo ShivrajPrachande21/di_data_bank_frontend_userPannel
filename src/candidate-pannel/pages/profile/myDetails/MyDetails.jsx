@@ -6,7 +6,7 @@ import EditProfile from '../../../../assets/images/EditProfile.png';
 import EditBasicDetails from './basicDetailsForm/EditBasicDetails';
 import BaseUrl from '../../../../services/BaseUrl';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 import EditPersonalForm from './editPersonal/EditPersonalForm';
 import './mydetials.css';
@@ -23,7 +23,7 @@ function MyDetails() {
         personalModal
     } = useContext(CandidateProfileContext);
     const locate = useLocation();
-
+    const navigate = useNavigate();
     // Toottip
     const EditBasic = props => (
         <Tooltip id="save-tooltip" {...props}>
@@ -45,6 +45,25 @@ function MyDetails() {
         };
         fun();
     }, [locate]);
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/profile-candidate/my-detials');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="myDetials">

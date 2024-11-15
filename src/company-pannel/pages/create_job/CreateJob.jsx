@@ -178,20 +178,24 @@ const CreateJob = () => {
         fetchData();
     }, [location]);
 
-    // function rendering() {
-    //     const render = localStorage.getItem('render');
+    function rendering() {
+        const render = localStorage.getItem('render');
 
-    //     if (render == 'company') {
-    //         const token = localStorage.getItem('companyToken');
-    //         if (!token) {
-    //             naviagte('/');
-    //         }
-    //     }
-    // }
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                naviagte('/');
+            } else {
+                naviagte('/main/create-job');
+            }
+        } else {
+            naviagte('/');
+        }
+    }
 
-    // useEffect(() => {
-    //     rendering();
-    // }, []);
+    useEffect(() => {
+        rendering();
+    }, []);
 
     return (
         <>
@@ -311,7 +315,7 @@ const CreateJob = () => {
                                     md={4}
                                     lg={3}
                                     key={index}
-                                    className="mb-3"
+                                    className="mb-2"
                                 >
                                     <div className="card-job">
                                         <div className="job-head">
@@ -389,7 +393,7 @@ const CreateJob = () => {
                                                         )
                                                     }
                                                 >
-                                                    promote job
+                                                    Promote job
                                                 </button>
                                             )}
                                         </p>

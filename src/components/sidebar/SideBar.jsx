@@ -63,27 +63,32 @@ const SideBar = () => {
         setActiveButton(buttonId);
     };
     const handle_logOut = async () => {
-        // const email = localStorage.getItem('email');
-        const token = localStorage.getItem('companyToken');
-        const decodedToken = jwtDecode(token);
-        const company_id = decodedToken?._id;
-        try {
-            const response = await axios.post(`${BaseUrl}company/logout`, {
-                company_id
-            });
-            if (response.status === 200) {
-                localStorage.removeItem('companyToken');
-                localStorage.removeItem('email');
-                navigate('/');
+        const render = localStorage.getItem('render');
+
+        if (render == 'company') {
+            // const email = localStorage.getItem('email');
+            const token = localStorage.getItem('companyToken');
+            const decodedToken = jwtDecode(token);
+            const company_id = decodedToken?._id;
+            try {
+                const response = await axios.post(`${BaseUrl}company/logout`, {
+                    company_id
+                });
+                if (response.status === 200) {
+                    localStorage.removeItem('companyToken');
+                    localStorage.removeItem('email');
+                    navigate('/');
+                }
+            } catch (error) {
+                toast.error(`${error.response?.data?.error}`);
             }
-        } catch (error) {
-            toast.error(`${error.response?.data?.error}`);
         }
     };
 
     // handle Logout Candidate
     const handle_logOut_candidate = async () => {
         localStorage.removeItem('Candidate_token');
+        localStorage.removeItem('render');
         navigate('/');
     };
 
@@ -138,31 +143,37 @@ const SideBar = () => {
     const sidebarButtonsCanditas = [
         {
             id: 1,
+            label: 'Dashboard',
+            icon: dashboard,
+            link: 'dashboard'
+        },
+        {
+            id: 2,
             label: 'Search Jobs',
             icon: SearchJob,
             link: 'search-job'
         },
         {
-            id: 2,
+            id: 3,
             label: 'Applied Jobs',
             icon: SearchJob,
             link: 'applied-job/applied-jobs'
         },
 
         {
-            id: 3,
+            id: 4,
             label: 'Subscription Plans',
             icon: SubscriptionIcon,
             link: 'subscription-candidate'
         },
         {
-            id: 4,
+            id: 5,
             label: 'Transactions',
             icon: transactions,
             link: 'transaction-candidate'
         },
         {
-            id: 5,
+            id: 6,
             label: 'Support',
             icon: SupportIcon,
             link: 'support-candidate'
@@ -228,44 +239,49 @@ const SideBar = () => {
             };
         } else {
             const token = localStorage.getItem('Candidate_token');
-            const decodedToken = jwtDecode(token);
-            const candidate_id = decodedToken?._id;
-            CandidateProfiles(candidate_id);
-            socket.connect();
 
-            socket.emit('CandidateIssuenotification', candidate_id);
+            if (!token) {
+                return;
+            } else {
+                const decodedToken = jwtDecode(token);
+                const candidate_id = decodedToken?._id;
+                CandidateProfiles(candidate_id);
+                socket.connect();
 
-            socket.on('CandidateNotification', newNotification => {
-                setNotifications(newNotification);
-            });
+                socket.emit('CandidateIssuenotification', candidate_id);
 
-            //Shortlist notification
-            socket.emit('getshortlistnotification', candidate_id);
-            socket.on('shortlistenotification', data => {
-                SetShortlist(data);
-            });
+                socket.on('CandidateNotification', newNotification => {
+                    setNotifications(newNotification);
+                });
 
-            socket.emit('newCompannynotification', candidate_id);
+                //Shortlist notification
+                socket.emit('getshortlistnotification', candidate_id);
+                socket.on('shortlistenotification', data => {
+                    SetShortlist(data);
+                });
 
-            socket.on('companynotification', newNotification => {
-                SetCount(newNotification);
-                ///setNotifications(newNotification);
-            });
+                socket.emit('newCompannynotification', candidate_id);
 
-            //profile View notification
-            socket.emit('getcvviewnotification', candidate_id);
-            socket.on('companyViewnotification', data => {
-                SetProfileView(data);
-            });
+                socket.on('companynotification', newNotification => {
+                    SetCount(newNotification);
+                    ///setNotifications(newNotification);
+                });
 
-            socket.on('disconnect', () => {
-                console.log('User disconnected');
-            });
+                //profile View notification
+                socket.emit('getcvviewnotification', candidate_id);
+                socket.on('companyViewnotification', data => {
+                    SetProfileView(data);
+                });
 
-            return () => {
-                socket.off('notification');
-                socket.disconnect();
-            };
+                socket.on('disconnect', () => {
+                    console.log('User disconnected');
+                });
+
+                return () => {
+                    socket.off('notification');
+                    socket.disconnect();
+                };
+            }
         }
     }, [show]);
 
@@ -645,8 +661,6 @@ const SideBar = () => {
             </Offcanvas>
 
             <GreenBatch />
-
-            {/* to view Hired Candidate Notification */}
 
             <Offcanvas show={showHire} onHide={handleCloseHire} placement="top">
                 <Offcanvas.Body>

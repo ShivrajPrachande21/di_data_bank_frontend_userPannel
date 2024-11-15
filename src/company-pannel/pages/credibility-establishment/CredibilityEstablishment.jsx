@@ -10,6 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 import BaseUrl from './../../../services/BaseUrl';
 import { set } from 'date-fns';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const CredibilityEstablishment = () => {
     const [CredibilityData, setCredibilityData] = useState(null);
     const [PAN, setPAN] = useState('');
@@ -20,6 +21,7 @@ const CredibilityEstablishment = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectValue, setselectValue] = useState(itemsPerPage);
+    const navigte = useNavigate();
 
     const handleSelect = e => {
         const value = parseInt(e.target.value, 10);
@@ -64,25 +66,30 @@ const CredibilityEstablishment = () => {
     };
 
     const fetchCeridibilityDetails = async () => {
-        setLoading(true);
-        const token = localStorage.getItem('companyToken');
-        if (!token) {
+        if (PAN.trim() == '') {
+            toast.error('Please enter PAN number to search');
             return;
         } else {
-            const decodedToken = jwtDecode(token);
-            const companyId = decodedToken?._id;
-            try {
-                const response = await axios.get(
-                    `${BaseUrl}company/offer_verifier/${companyId}/${PAN}`
-                );
-                setCredibilityData(response?.data);
-                if (response.status == 200 || response.status == 201) {
+            setLoading(true);
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                return;
+            } else {
+                const decodedToken = jwtDecode(token);
+                const companyId = decodedToken?._id;
+                try {
+                    const response = await axios.get(
+                        `${BaseUrl}company/offer_verifier/${companyId}/${PAN}`
+                    );
+                    setCredibilityData(response?.data);
+                    if (response.status == 200 || response.status == 201) {
+                        setLoading(false);
+                    }
+                } catch (error) {
+                    toast.error(`${error?.response?.data?.error}`);
+                    setCredibilityData(null);
                     setLoading(false);
                 }
-            } catch (error) {
-                toast.error(`${error?.response?.data?.error}`);
-                setCredibilityData(null);
-                setLoading(false);
             }
         }
     };
@@ -111,6 +118,25 @@ const CredibilityEstablishment = () => {
 
     useEffect(() => {
         getSubscriptionStatus();
+    }, []);
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                navigte('/');
+            } else {
+                navigte('/main/credibility-establishment');
+            }
+        } else {
+            navigte('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
     }, []);
     return (
         <div className="CredibilityEstablishment">
@@ -168,7 +194,7 @@ const CredibilityEstablishment = () => {
                 className="cerdibility-search-count"
                 style={{ color: 'grey', fontSize: '0.75rem' }}
             >
-                Search Limite {123}
+                Search Limite {0}
             </p>
             <p className="text-danger pan-error-in-cerdibility">
                 {errorMessage}
@@ -186,6 +212,7 @@ const CredibilityEstablishment = () => {
                             <th>Company name</th>
                             <th>Candidate name</th>
                             <th>Offered date</th>
+                            <th>Offer Validity</th>
                             <th>Status</th>
                             <th>Action date</th>
                         </tr>
@@ -202,6 +229,7 @@ const CredibilityEstablishment = () => {
                                     }
                                 </td>
                                 <td>{formatDate(item?.offer_date)}</td>
+                                <td>{formatDate(item?.offer_validity)}</td>
                                 <td
                                     className={
                                         item?.offer_status == 'Accepted'
@@ -219,76 +247,86 @@ const CredibilityEstablishment = () => {
                     </tbody>
                 </Table>
             </div>
-            <Row>
-                {' '}
-                <Col xs={6}></Col>
-                <Col xs={2}>
-                    <select
-                        className="form-select"
-                        aria-label="Default select example"
-                        onChange={handleSelect}
-                        value={itemsPerPage}
+            {currentItems <= 0 ? (
+                ''
+            ) : (
+                <Row>
+                    {' '}
+                    <Col xs={6}></Col>
+                    <Col xs={2}>
+                        <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={handleSelect}
+                            value={itemsPerPage}
+                            style={{
+                                fontSize: '0.6rem',
+                                background: '#3B96E1',
+                                color: 'white',
+                                fontWeight: '600',
+                                width: '60px',
+                                height: '36px',
+                                backgroundImage: `url(${arrowdown})`,
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'right 0.5rem center',
+                                appearance: 'none',
+                                backgroundSize: '20px',
+                                padding: '10px 10px',
+                                marginTop: '8px'
+                            }}
+                        >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </Col>
+                    <Col
+                        xs={2}
                         style={{
-                            fontSize: '0.6rem',
-                            background: '#3B96E1',
-                            color: 'white',
+                            fontSize: '0.7rem',
                             fontWeight: '600',
-                            width: '60px',
-                            height: '36px',
-                            backgroundImage: `url(${arrowdown})`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 0.5rem center',
-                            appearance: 'none',
-                            backgroundSize: '20px',
-                            padding: '10px 10px',
-                            marginTop: '8px'
+                            marginTop: '18px'
                         }}
                     >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="8">8</option>
-                        <option value="10">10</option>
-                    </select>
-                </Col>
-                <Col
-                    xs={2}
-                    style={{
-                        fontSize: '0.7rem',
-                        fontWeight: '600',
-                        marginTop: '18px'
-                    }}
-                >
-                    {currentPage}-{itemsPerPage} out of {totalItems}
-                </Col>
-                <Col
-                    xs={2}
-                    style={{
-                        marginTop: '8px',
-                        marginLeft: '-10px'
-                    }}
-                >
-                    <Pagination className="custom-pagination">
-                        <Pagination.First
-                            onClick={() => handlePageChange(1)}
-                            disabled={currentPage === 1}
-                        />
-                        <Pagination.Prev
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            disabled={currentPage === 1}
-                        />
-                        <Pagination.Item active>{currentPage}</Pagination.Item>
-                        <Pagination.Next
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                        />
-                        <Pagination.Last
-                            onClick={() => handlePageChange(totalPages)}
-                            disabled={currentPage === totalPages}
-                        />
-                    </Pagination>
-                </Col>
-            </Row>
+                        {currentPage}-{itemsPerPage} out of {totalItems}
+                    </Col>
+                    <Col
+                        xs={2}
+                        style={{
+                            marginTop: '8px',
+                            marginLeft: '-10px'
+                        }}
+                    >
+                        <Pagination className="custom-pagination">
+                            <Pagination.First
+                                onClick={() => handlePageChange(1)}
+                                disabled={currentPage === 1}
+                            />
+                            <Pagination.Prev
+                                onClick={() =>
+                                    handlePageChange(currentPage - 1)
+                                }
+                                disabled={currentPage === 1}
+                            />
+                            <Pagination.Item active>
+                                {currentPage}
+                            </Pagination.Item>
+                            <Pagination.Next
+                                onClick={() =>
+                                    handlePageChange(currentPage + 1)
+                                }
+                                disabled={currentPage === totalPages}
+                            />
+                            <Pagination.Last
+                                onClick={() => handlePageChange(totalPages)}
+                                disabled={currentPage === totalPages}
+                            />
+                        </Pagination>
+                    </Col>
+                </Row>
+            )}
         </div>
     );
 };

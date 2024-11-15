@@ -4,6 +4,7 @@ import arrow_back from '../../../../assets/images/arrow_back.png';
 import aiIcon from '../../../../assets/images/aiIcon.png';
 import attachment from '../../../../assets/images/attachment.png';
 import upload from '../../../../assets/images/upload.png';
+import Verified from '../../../../assets/images/Verified.png';
 import { useNavigate } from 'react-router-dom';
 import { Button, Col, Form, OverlayTrigger, Row } from 'react-bootstrap';
 import { Axis } from 'echarts';
@@ -48,34 +49,30 @@ const CompanyAiSearch = () => {
             formData.append('file', fileData);
         }
 
-        if (description.trim() == '') {
-            toast.error('Enter a prompt to Search');
-        } else {
-            try {
-                setLoading(true);
-                const response = await axios.post(
-                    'http://65.20.91.47:5000/pythonapi/company_process_input',
+        try {
+            setLoading(true);
+            const response = await axios.post(
+                'http://65.20.91.47:5000/pythonapi/company_process_input',
 
-                    // description: description
+                // description: description
 
-                    description ? { description: description } : formData
-                );
-                response && console.log('AI data:', response.data);
-                setAiData(response?.data);
-                if (response?.status == 200 || response?.status == 201) {
-                    setLoading(false);
-                    setHideFile(false);
-                    setFileData(null);
-                }
-            } catch (error) {
+                description ? { description: description } : formData
+            );
+            response && console.log('AI data:', response.data);
+            setAiData(response?.data);
+            if (response?.status == 200 || response?.status == 201) {
                 setLoading(false);
-                setFileData(null);
                 setHideFile(false);
-                const errorMessage =
-                    error?.response?.data?.error || 'An unknown error occurred';
-                toast.error(errorMessage);
-                console.error('Error fetching AI data:', error);
+                setFileData(null);
             }
+        } catch (error) {
+            setLoading(false);
+            setFileData(null);
+            setHideFile(false);
+            const errorMessage =
+                error?.response?.data?.error || 'An unknown error occurred';
+            toast.error(errorMessage);
+            console.error('Error fetching AI data:', error);
         }
     };
     let len = AiData ? AiData.length : 0;
@@ -118,7 +115,10 @@ const CompanyAiSearch = () => {
                         <p>Upload Job Description</p>
                         <button onClick={handleFileUpload}>
                             {fileData ? fileData?.name : 'Browse from files'}{' '}
-                            <img src={upload} alt="" />
+                            <img
+                                src={fileData?.name ? Verified : upload}
+                                alt=""
+                            />
                         </button>
                         <input
                             type="file"

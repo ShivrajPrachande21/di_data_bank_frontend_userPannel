@@ -232,68 +232,61 @@ const ViewJobApplication = () => {
                         </Row>
                     </div>
                 </Row>
-                <Row className="mt-2">
-                    <div className="view-btn">
-                        <ul>
-                            <li>
-                                <Button
-                                    size="sm"
-                                    style={getButtonStyle('applications')}
-                                    onClick={() =>
-                                        handleNavigate('applications')
-                                    }
-                                >
-                                    Applications
-                                </Button>
-                            </li>
-                            <li>
-                                <Button
-                                    size="sm"
-                                    style={getButtonStyle('longlist')}
-                                    onClick={() =>
-                                        handleNavigate('longlist')
-                                    }
-                                >
-                                    Longlist
-                                </Button>
-                            </li>
-                            <li>
-                                {' '}
-                                <Button
-                                    size="sm"
-                                    style={getButtonStyle('shortlisted')}
-                                    onClick={() =>
-                                        handleNavigate('shortlisted')
-                                    }
-                                >
-                                    shortlisted
-                                </Button>
-                            </li>
-                            <li>
-                                {' '}
-                                <Button
-                                    size="sm"
-                                    // onClick={() => navigate('job-offred')}
-                                    style={getButtonStyle('job-offred')}
-                                    //onClick={() => handleNavigate('job-offred')}
-                                >
-                                    Job Offered
-                                </Button>
-                            </li>
-                            <li>
-                                {' '}
-                                <Button
-                                    size="sm"
-                                    style={getButtonStyle('hired')}
-                                    //onClick={() => handleNavigate('hired')}
-                                >
-                                    Hired
-                                </Button>
-                            </li>
-                        </ul>
-                    </div>
-                    <Outlet />
-                </Row>
+
+                <div className="view-btn">
+                    <ul>
+                        <li>
+                            <Button
+                                size="sm"
+                                style={getButtonStyle('applications')}
+                                onClick={() => handleNavigate('applications')}
+                            >
+                                Applications
+                            </Button>
+                        </li>
+                        <li>
+                            <Button
+                                size="sm"
+                                style={getButtonStyle('longlist')}
+                                onClick={() => handleNavigate('longlist')}
+                            >
+                                Longlist
+                            </Button>
+                        </li>
+                        <li>
+                            {' '}
+                            <Button
+                                size="sm"
+                                style={getButtonStyle('shortlisted')}
+                                onClick={() => handleNavigate('shortlisted')}
+                            >
+                                shortlisted
+                            </Button>
+                        </li>
+                        <li>
+                            {' '}
+                            <Button
+                                size="sm"
+                                // onClick={() => navigate('job-offred')}
+                                style={getButtonStyle('job-offred')}
+                                //onClick={() => handleNavigate('job-offred')}
+                            >
+                                Job Offered
+                            </Button>
+                        </li>
+                        <li>
+                            {' '}
+                            <Button
+                                size="sm"
+                                style={getButtonStyle('hired')}
+                                //onClick={() => handleNavigate('hired')}
+                            >
+                                Hired
+                            </Button>
+                        </li>
+                    </ul>
+                </div>
+                <Outlet />
             </div>
         </>
     );

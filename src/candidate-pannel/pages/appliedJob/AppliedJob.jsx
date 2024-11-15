@@ -30,20 +30,24 @@ const AppliedJob = () => {
             };
         }
     };
-    // function rendering() {
-    //     const render = localStorage.getItem('render');
+    function rendering() {
+        const render = localStorage.getItem('render');
 
-    //     if (render === 'candidate') {
-    //         const token = localStorage.getItem('Candidate_token');
-    //         if (!token) {
-    //             navigate('/');
-    //         }
-    //     }
-    // }
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/candidate-dashboard/applied-job/applied-jobs');
+            }
+        } else {
+            navigate('/');
+        }
+    }
 
-    // useEffect(() => {
-    //     rendering();
-    // }, []);
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <div className="applied-job">
             <Row>

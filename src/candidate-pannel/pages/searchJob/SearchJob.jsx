@@ -110,12 +110,16 @@ const SearchJob = () => {
     };
 
     useEffect(() => {
-        fetch_search_job();
-        fetchCandidateProfile();
-        const token = localStorage.getItem('Candidate_token');
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken?._id;
-        SetID(userId);
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            fetch_search_job();
+            fetchCandidateProfile();
+            const token = localStorage.getItem('Candidate_token');
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
+            SetID(userId);
+        }
     }, [locate]);
 
     // Animation code
@@ -138,6 +142,8 @@ const SearchJob = () => {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
                 navigate('/');
+            } else {
+                navigate('/candidate-dashboard/search-job');
             }
         } else {
             navigate('/');

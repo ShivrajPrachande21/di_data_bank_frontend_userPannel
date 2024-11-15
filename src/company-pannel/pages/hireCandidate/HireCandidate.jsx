@@ -34,7 +34,7 @@ const HireCandidate = () => {
         Search_bye_keyWord,
         get_subscription_details
     } = useContext(HireCandidateContext);
-    const naviagte = useNavigate();
+    const navigate = useNavigate();
     const locate = useLocation();
     const [fiedEmpty, setfiedEmpty] = useState('');
 
@@ -158,7 +158,7 @@ const HireCandidate = () => {
                     Subscription_Data[0]?.cv_view_limit == 'Unlimited')
             ) {
                 await get_Candidate_detials(id);
-                naviagte('/main/view-candidate-details');
+                navigate('/main/view-candidate-details');
             } else {
                 if (
                     typeof Subscription_Data[0]?.cv_view_limit == 'number' &&
@@ -186,6 +186,25 @@ const HireCandidate = () => {
             : Subscription_Data[0]?.search_limit !== 0
             ? Subscription_Data[0]?.search_limit
             : Subscription_Data[1]?.search_limit || '';
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/main/hire-candidate');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
 
     return (
         <div className="hire-candidate">

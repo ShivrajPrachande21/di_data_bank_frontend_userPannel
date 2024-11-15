@@ -82,7 +82,10 @@
 }
 .view-btn {
     background: white;
-    margin-left: 12px;
+    margin-left: 1px;
+    padding: 4px;
+    margin-top: 8px;
+    border-radius: 8px;
 }
 .view-btn ul li {
     list-style-type: none;
@@ -92,6 +95,8 @@
 }
 .view-btn button {
     padding: 4px 14px;
+    margin-right: 14px;
+    margin-bottom: -14px;
 }
 .job-discription {
     line-height: 1.6;

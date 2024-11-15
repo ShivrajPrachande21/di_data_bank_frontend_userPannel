@@ -148,11 +148,15 @@ const CandidateSubscription = () => {
     function rendering() {
         const render = localStorage.getItem('render');
 
-        if (render === 'candidate') {
+        if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
                 navigate('/');
+            } else {
+                navigate('/candidate-dashboard/subscription-candidate');
             }
+        } else {
+            navigate('/');
         }
     }
 

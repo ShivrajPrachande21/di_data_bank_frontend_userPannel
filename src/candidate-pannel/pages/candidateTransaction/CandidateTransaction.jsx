@@ -2,15 +2,16 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Col, Pagination, Row, Table } from 'react-bootstrap';
 import arrowdown from '../../../assets/images/arrowdown.png';
 import { TransactionContext } from '../../../context/candidateContext/TransactionContext';
+import { useNavigate } from 'react-router-dom';
 
 const CandidateTransaction = () => {
     const { transactionData, fetch_transaction } =
         useContext(TransactionContext);
-    console.log('appus  transction', transactionData);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectValue, setselectValue] = useState(itemsPerPage);
-
+    const navigate = useNavigate();
     const handleSelect = e => {
         const value = parseInt(e.target.value, 10);
         setselectValue(value);
@@ -52,7 +53,11 @@ const CandidateTransaction = () => {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
                 navigate('/');
+            } else {
+                navigate('/candidate-dashboard/transaction-candidate');
             }
+        } else {
+            navigate('/');
         }
     }
 

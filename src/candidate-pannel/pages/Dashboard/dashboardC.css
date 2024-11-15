@@ -1,0 +1,92 @@
+.DashboardCandidate {
+    width: 100%;
+    padding: 10px 12px;
+}
+.card-title-text {
+    font-size: 0.8rem;
+    margin-bottom: -10px;
+}
+.card-text-text {
+    font-size: 1.2rem;
+}
+.candidate-dashboard-subscription-card {
+    height: 50vh;
+    background: #ffffff;
+    width: 100%;
+    border-radius: 8px;
+    padding: 14px;
+    position: relative;
+}
+.my-plan-dashboard {
+    display: flex;
+    align-items: center;
+}
+.my-plan-dashboard h2 {
+    font-size: 1.6rem;
+    margin-right: 12px;
+}
+.my-plan-dashboard span {
+    margin-top: -8px;
+    padding: 2px 16px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: 500;
+    background: linear-gradient(
+        99.52deg,
+        #3b96e1 -8.78%,
+        #a3d6ff 19.78%,
+        #3280c0 65.7%,
+        #a3d6ff 103.21%
+    );
+}
+.expiry-date-sub {
+    position: absolute;
+    bottom: 0px;
+}
+.expiry-date-sub p {
+    color: #051f50;
+    font-size: 0.9rem;
+}
+.ai-sub-cards-details {
+    margin-top: 8px;
+}
+.left-card-ai {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: #e9e9e9b6;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+}
+.ai-cards-div {
+    width: 320px;
+    padding: 6px;
+    background: #ffffff;
+
+    border-radius: 8px;
+}
+.ai-cards-div h4 {
+    font-size: 1.4rem;
+    margin-top: -14px;
+}
+.drop-down-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-select-sub {
+    width: 100px;
+    padding: 2px;
+
+    height: 30px;
+}
+.custom-select-sub p {
+    margin-bottom: -10px;
+}
+.selecte {
+    border: 1px solid rgb(155, 156, 156);
+}
+.selecte:hover {
+    border: 1.2px solid rgb(38, 161, 255);
+}

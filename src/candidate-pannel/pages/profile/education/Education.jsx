@@ -10,6 +10,7 @@ import EditEducation from './editEducation/EditEducation';
 import AddNewEducation from './addNewEducation/AddNewEducation';
 import BaseUrl from '../../../../services/BaseUrl';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Education() {
     const {
@@ -23,7 +24,7 @@ function Education() {
 
     const { highest_education, board_represent, articles, certificates } =
         CandidateProfile?.data?.education_details || {};
-
+    const navigate = useNavigate();
     const formatDate = dateString => {
         const date = new Date(dateString);
 
@@ -72,7 +73,25 @@ function Education() {
             toast.error('Failed to Delete Education');
         }
     };
-    // console.log('CandidateProfile', CandidateProfile);
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/');
+            } else {
+                navigate('/profile-candidate/education');
+            }
+        } else {
+            navigate('/');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="education">

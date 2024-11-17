@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState} from 'react';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
 import Verified from '../../../../assets/images/Verified.png';
 import altprofile from '../../../../assets/images/altprofile.jpg';
@@ -8,9 +8,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AppliedJobs from './../appliedJobs/AppliedJobs';
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
+import ProfileCompletionModal from '../../ProfileAlert/ProfileCompletion';
 const SavedJobs = () => {
     const { applyTo_job } = useContext(SearchJobContext);
     const { fetchSavedJob, savedJobData } = useContext(AppliedJobContext);
+    const [showModal, setShowModal] = useState(false);
     const locate = useLocation();
     const navigate = useNavigate();
     const { CandidateProfile, fetchCandidateProfile } = useContext(
@@ -32,7 +34,7 @@ const SavedJobs = () => {
 
     const handleApply = async id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
-            toast.error('Please complete your profile before apply jobs.');
+            setShowModal(true);
             return;
         }
         await applyTo_job(id);
@@ -256,6 +258,11 @@ const SavedJobs = () => {
                     </div>
                 )}
             </div>
+            {showModal && (
+        <ProfileCompletionModal
+          onClose={() => setShowModal(false)} // Close modal handler
+        />
+      )}
         </>
     );
 };

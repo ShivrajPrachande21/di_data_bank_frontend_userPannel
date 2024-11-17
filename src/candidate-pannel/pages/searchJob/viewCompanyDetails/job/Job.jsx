@@ -7,6 +7,7 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { SearchJobContext } from '../../../../../context/candidateContext/SearchJobContext';
 import SavedJobs from './../../../appliedJob/savedJobs/SavedJobs';
+import ProfileCompletionModal from '../../../ProfileAlert/ProfileCompletion';
 const Job = () => {
     const { applyTo_job, save_job } = useContext(SearchJobContext);
     const { id } = useParams();
@@ -42,7 +43,7 @@ const Job = () => {
         const diffDays = Math.floor(diffHours / 24);
         return `${diffDays} days ago`;
     };
-
+    const [showModal, setShowModal] = useState(false);
     const handleApplyJob = async id => {
         await applyTo_job(id);
         await getJobs();
@@ -184,7 +185,7 @@ const Job = () => {
                                         }}
                                     >
                                         <span className="card-table-span">
-                                            Poasted:
+                                            Posted:
                                         </span>{' '}
                                     </td>
                                     <td>
@@ -227,6 +228,11 @@ const Job = () => {
                     </div>
                 </>
             ))}
+             {showModal && (
+        <ProfileCompletionModal
+          onClose={() => setShowModal(false)} // Close modal handler
+        />
+      )}
         </div>
     );
 };

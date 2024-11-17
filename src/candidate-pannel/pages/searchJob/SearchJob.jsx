@@ -14,6 +14,7 @@ import BaseUrl from '../../../services/BaseUrl';
 import axios from 'axios';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
+import ProfileCompletionModal from '../ProfileAlert/ProfileCompletion';
 const SearchJob = () => {
     const locate = useLocation();
 
@@ -41,6 +42,7 @@ const SearchJob = () => {
         job_type: '',
         date_posted: ''
     });
+    const [showModal, setShowModal] = useState(false);
     const [loading, Setloading] = useState(false);
     const [id, SetID] = useState(null);
     const handleInputChange = e => {
@@ -107,7 +109,8 @@ const SearchJob = () => {
     // function for Apply job
     const ApplyTOJob = id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
-            toast.error('Please complete your profile before apply jobs.');
+            setShowModal(true);
+            //toast.error('Please complete your profile before apply jobs.');
             return;
         }
         applyTo_job(id);
@@ -534,6 +537,11 @@ const SearchJob = () => {
                     </div>
                 </Row>
             </div>
+            {showModal && (
+        <ProfileCompletionModal
+          onClose={() => setShowModal(false)} // Close modal handler
+        />
+      )}
         </>
     );
 };

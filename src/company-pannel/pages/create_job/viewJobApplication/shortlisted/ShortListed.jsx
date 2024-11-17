@@ -58,8 +58,17 @@ const ShortListed = () => {
         setModalShow(true);
     };
     const formatDate = dateString => {
-        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        return new Date(dateString).toLocaleDateString('en-GB', options);
+        const now = new Date();
+        const date = new Date(dateString);
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
+    
+        if (diffMins < 1) return "just now";
+        if (diffMins < 60) return `${diffMins} minutes ago`;
+        const diffHours = Math.floor(diffMins / 60);
+        if (diffHours < 24) return `${diffHours} hours ago`;
+        const diffDays = Math.floor(diffHours / 24);
+        return `${diffDays} days ago`;
     };
 
     const getEmbedLink = link => {

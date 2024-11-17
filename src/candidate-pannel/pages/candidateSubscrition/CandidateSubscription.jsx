@@ -13,6 +13,7 @@ import BaseUrl from '../../../services/BaseUrl';
 import Loader from '../../../company-pannel/pages/loader/Loader';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
+import ProfileCompletionModal from '../ProfileAlert/ProfileCompletion';
 
 const CandidateSubscription = () => {
     const {
@@ -78,12 +79,10 @@ const CandidateSubscription = () => {
     const [locading, SetEarlyLoading] = useState(false);
     const [orderID, SetOrderID] = useState('');
     const [SuccessModal, SetSuccessModal] = useState(false);
-
+    const [showModal, setShowModal] = useState(false);
     const initiatePayment = async sub_id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
-            toast.error(
-                'Please complete your profile before purchasing a subscription plan.'
-            );
+            setShowModal(true);
             return;
         }
         SetEarlyLoading(true);
@@ -322,6 +321,11 @@ const CandidateSubscription = () => {
                         )}
                 </div>
             </div>
+            {showModal && (
+        <ProfileCompletionModal
+          onClose={() => setShowModal(false)} // Close modal handler
+        />
+      )}
         </>
     );
 };

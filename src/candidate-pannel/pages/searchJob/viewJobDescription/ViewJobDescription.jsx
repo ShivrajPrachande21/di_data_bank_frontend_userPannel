@@ -20,6 +20,7 @@ import { SearchJobContext } from '../../../../context/candidateContext/SearchJob
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
+import ProfileCompletionModal from '../../ProfileAlert/ProfileCompletion';
 const ViewJobDescription = () => {
     const { applyTo_job, save_job } = useContext(SearchJobContext);
     const { CandidateProfile, fetchCandidateProfile } = useContext(
@@ -68,10 +69,10 @@ const ViewJobDescription = () => {
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
     const sanitizedDescription = DOMPurify.sanitize(JobData?.description);
-
+    const [showModal, setShowModal] = useState(false);
     const handleApplyJob = async id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
-            toast.error('Please complete your profile before apply jobs.');
+            setShowModal(true)
             return;
         }
         await applyTo_job(id);
@@ -420,6 +421,11 @@ const ViewJobDescription = () => {
                     </Button>
                 </Modal.Footer>
             </Modal> */}
+            {showModal && (
+        <ProfileCompletionModal
+          onClose={() => setShowModal(false)} // Close modal handler
+        />
+      )}
         </>
     );
 };

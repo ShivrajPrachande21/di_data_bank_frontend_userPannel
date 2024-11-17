@@ -32,16 +32,16 @@ const CreateNewJob = () => {
         work_type: '',
         education: '',
         country: '',
-        phone_screening: false,
-        hr_round: false,
-        technical_round: false,
-        managerial_round: false,
-        panel_round: false,
-        leadership_round: false,
-        project_round: false,
-        gd_round: false,
-        behavioral_testing: false,
-        peer_round: false
+        Phone_Screening: false,
+        HR_Round: false,
+        Technical_Round: false,
+        Managerial_Round: false,
+        Panel_Round: false,
+        Leadership_Round: false,
+        Project_Round: false,
+        GD_Round: false,
+        Behavioral_Testing: false,
+        Peer_Round: false
     });
     const [modalShowhide, setModalShow] = React.useState(false);
     const [suggestion, setSuggestion] = useState(null);
@@ -166,16 +166,16 @@ const CreateNewJob = () => {
             description: editorHtml // Add the description from the editor
         };
         if (
-            createJobData.phone_screening == false &&
-            createJobData.hr_round == false &&
-            createJobData.technical_round == false &&
-            createJobData.managerial_round == false &&
-            createJobData.panel_round == false &&
-            createJobData.leadership_round == false &&
-            createJobData.project_round == false &&
-            createJobData.gd_round == false &&
-            createJobData.behavioral_testing == false &&
-            createJobData.peer_round == false
+            createJobData.Phone_Screening == false &&
+            createJobData.HR_Round == false &&
+            createJobData.Technical_Round == false &&
+            createJobData.Managerial_Round == false &&
+            createJobData.Panel_Round == false &&
+            createJobData.Leadership_Round == false &&
+            createJobData.Project_Round == false &&
+            createJobData.GD_Round == false &&
+            createJobData.Behavioral_Testing == false &&
+            createJobData.Peer_Round == false
         ) {
             toast.error('Please select atleast one interview round');
         } else {
@@ -238,6 +238,7 @@ const CreateNewJob = () => {
                         <Col xs={6}>
                             <Form.Label className="custom-input-group-label">
                                 Job Title
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup
                                 size="sm"
@@ -257,6 +258,7 @@ const CreateNewJob = () => {
                         <Col xs={6}>
                             <Form.Label className="custom-input-group-label">
                                 Industry
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup
                                 size="sm"
@@ -279,6 +281,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 Salary
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup
                                 size="sm"
@@ -297,6 +300,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 Experience Required
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup
                                 size="sm"
@@ -314,6 +318,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 No. of Openings
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup
                                 size="sm"
@@ -331,6 +336,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 Location
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup
                                 size="sm"
@@ -351,6 +357,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 Job Type
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup>
                                 <Form.Select
@@ -369,6 +376,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 Workplace Type
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup>
                                 <Form.Select
@@ -387,6 +395,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 Education Required
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <Form.Control
                                 placeholder="Ex:Degree"
@@ -398,6 +407,7 @@ const CreateNewJob = () => {
                         <Col xs={3}>
                             <Form.Label className="custom-input-group-label">
                                 Country
+                                <span className="text-danger">*</span>
                             </Form.Label>
                             <Form.Control
                                 placeholder="Ex: India"
@@ -412,6 +422,7 @@ const CreateNewJob = () => {
                         <Col xs={12}>
                             <p className="skills-required">
                                 Skills Required (Upto 5 keywords)
+                                <span className="text-danger">*</span>
                             </p>
                         </Col>
                         <div className="sekils-display-section">
@@ -468,9 +479,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Phone Screening"
-                                checked={createJobData.phone_screening}
+                                checked={createJobData.Phone_Screening}
                                 onChange={() =>
-                                    handleCheckboxChange('phone_screening')
+                                    handleCheckboxChange('Phone_Screening')
                                 }
                             />
                         </Col>
@@ -479,9 +490,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Hr round"
-                                checked={createJobData.hr_round}
+                                checked={createJobData.HR_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('hr_round')
+                                    handleCheckboxChange('HR_Round')
                                 }
                             />
                         </Col>
@@ -490,9 +501,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Technical round"
-                                checked={createJobData.technical_round}
+                                checked={createJobData.Technical_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('technical_round')
+                                    handleCheckboxChange('Technical_Round')
                                 }
                             />
                         </Col>
@@ -501,9 +512,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Managerial round"
-                                checked={createJobData.managerial_round}
+                                checked={createJobData.Managerial_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('managerial_round')
+                                    handleCheckboxChange('Managerial_Round')
                                 }
                             />
                         </Col>
@@ -512,9 +523,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Panel round"
-                                checked={createJobData.panel_round}
+                                checked={createJobData.Panel_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('panel_round')
+                                    handleCheckboxChange('Panel_Round')
                                 }
                             />
                         </Col>
@@ -523,9 +534,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Leadership round"
-                                checked={createJobData.leadership_round}
+                                checked={createJobData.Leadership_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('leadership_round')
+                                    handleCheckboxChange('Leadership_Round')
                                 }
                             />
                         </Col>
@@ -534,9 +545,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Project round"
-                                checked={createJobData.project_round}
+                                checked={createJobData.Project_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('project_round')
+                                    handleCheckboxChange('Project_Round')
                                 }
                             />
                         </Col>
@@ -545,9 +556,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Gd round"
-                                checked={createJobData.gd_round}
+                                checked={createJobData.GD_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('gd_round')
+                                    handleCheckboxChange('GD_Round')
                                 }
                             />
                         </Col>
@@ -557,9 +568,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Behavioral Testing"
-                                checked={createJobData.behavioral_testing}
+                                checked={createJobData.Behavioral_Testing}
                                 onChange={() =>
-                                    handleCheckboxChange('behavioral_testing')
+                                    handleCheckboxChange('Behavioral_Testing')
                                 }
                             />
                         </Col>
@@ -568,9 +579,9 @@ const CreateNewJob = () => {
                                 className="check-boxes"
                                 type="checkbox"
                                 label="Peer Round"
-                                checked={createJobData.peer_round}
+                                checked={createJobData.Peer_Round}
                                 onChange={() =>
-                                    handleCheckboxChange('peer_round')
+                                    handleCheckboxChange('Peer_Round')
                                 }
                             />
                         </Col>
@@ -580,6 +591,7 @@ const CreateNewJob = () => {
                         <Col>
                             <Form.Label className="custom-input-group-label">
                                 Description
+                                <span className="text-danger">*</span>
                             </Form.Label>
                         </Col>
                     </Row>

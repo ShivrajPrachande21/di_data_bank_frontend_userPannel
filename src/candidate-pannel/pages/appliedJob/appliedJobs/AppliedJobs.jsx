@@ -11,6 +11,7 @@ const AppliedJobs = () => {
     const { fetch_applied_job, appliedJobData } = useContext(AppliedJobContext);
     const navigate = useNavigate();
     const handleNavigate = id => {
+        localStorage.setItem('job_id',id)
         navigate(`/candidate-dashboard/viewAppliedJobDetails/${id}`);
     };
     const formatDate = dateString => {

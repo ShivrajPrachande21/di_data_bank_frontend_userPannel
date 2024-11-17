@@ -226,7 +226,8 @@ function MyDetails() {
                                     height="20px"
                                     style={{
                                         marginLeft: '-100px',
-                                        marginTop: '-50px'
+                                        marginTop: '-50px',
+                                         cursor: 'pointer'
                                     }}
                                     onClick={showPersonalModal}
                                 />

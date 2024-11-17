@@ -122,7 +122,7 @@ function CandidateChat() {
         <>
             <div className="Chatpage">
                 <div className="chatCenter" style={{ width: '66%' }}>
-                    <div className="arrowback" onClick={() => navigateBack(-1)}>
+                    <div className="arrowback" onClick={() => navigateBack('/candidate-dashboard/support-candidate')}>
                         <img src={arrow_back} alt="" width="24px" />
                     </div>
 

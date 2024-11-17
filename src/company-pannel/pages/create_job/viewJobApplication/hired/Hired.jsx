@@ -8,8 +8,6 @@ import { CreateJobContext } from '../../../../../context/CreateJobContext';
 const Hired = () => {
     const { hiredCandidateData, fetch_hire_candidate } =
         useContext(CreateJobContext);
-
-    console.log('hred', hiredCandidateData);
     const handle_download = () => {};
 
     const formatDate = dateString => {
@@ -184,11 +182,12 @@ const Hired = () => {
                             >
                                 <div className="cmp-img">
                                     <img
-                                        // src={
-                                        //     viewJobDesciptionData?.profileUrl ||
-                                        //     alternet
-                                        // }
+                                        src={
+                                            hiredCandidateData?.profileUrl ||
+                                            alternet
+                                        }
                                         alt=""
+                                        style={{width:"100%", height:"100%"}}
                                     />{' '}
                                 </div>
                                 <div className="view-top-content mx-2">
@@ -224,7 +223,7 @@ const Hired = () => {
                                 <tr>
                                     <td style={{ paddingRight: '30px' }}>
                                         <span className="card-table-span">
-                                            Current Company::
+                                           
                                         </span>{' '}
                                     </td>
                                     <td>

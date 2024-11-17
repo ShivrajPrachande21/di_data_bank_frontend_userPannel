@@ -9,8 +9,9 @@ import { Button, Col, Form, Row,Modal } from 'react-bootstrap';
 import { toast, useToast } from 'react-toastify';
 import axios from 'axios';
 import BaseUrl from '../../../../../services/BaseUrl';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const JobOffered = () => {
+    const locate=useLocation()
     const navigate = useNavigate();
     const { job_offered, get_job_offered } = useContext(CreateJobContext);
     const [job_offerede, setjob_offered] = useState(job_offered);
@@ -37,6 +38,14 @@ const JobOffered = () => {
     const upload_offered_letter = async () => {
         const jobid = localStorage.getItem('job_id');
         const user_id = localStorage.getItem('getJobofferId');
+        if(!file){
+            toast.error("Please upload offer letter")
+            return
+        }
+        if(!date){
+            toast.error("Please select offer validity")
+            return
+        }
         const dateValue = new Date(date);  
 const isoDate = dateValue.toISOString();
         const formData = new FormData();
@@ -81,7 +90,7 @@ const isoDate = dateValue.toISOString();
 
     useEffect(() => {
         get_job_offered();
-    }, []);
+    }, [locate]);
 
     const isGoogleDriveLink = url => {
         return url && url.includes('drive.google.com');
@@ -147,6 +156,7 @@ const isoDate = dateValue.toISOString();
                             >
                                 <div className="cmp-img">
                                     <img
+                                    style={{width:"100%",height:"100%"}}
                                         src={
                                             job_offered?.profileUrl || alternet
                                         }
@@ -264,8 +274,7 @@ const isoDate = dateValue.toISOString();
                                             className="hired-table-span"
                                             onClick={() =>
                                                 hanlde_resume_view(
-                                                    job_offered?.workdetails
-                                                        ?.resume
+                                                    job_offered?.resumeUrl 
                                                 )
                                             }
                                         >

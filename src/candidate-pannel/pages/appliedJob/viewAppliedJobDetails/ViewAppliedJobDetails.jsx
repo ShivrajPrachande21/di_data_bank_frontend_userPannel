@@ -10,8 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../../services/BaseUrl';
 const ViewAppliedJobDetails = () => {
-    const { id } = useParams();
-
+    const id=localStorage.getItem('job_id')
+    //const { id } = useParams();
     const navigate = useNavigate();
     const [isClicked, setIsClicked] = useState(false);
 
@@ -25,8 +25,17 @@ const ViewAppliedJobDetails = () => {
     );
 
     const formatDate = dateString => {
-        const options = { day: '2-digit' };
-        return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
+        const now = new Date();
+        const date = new Date(dateString);
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
+    
+        if (diffMins < 1) return "just now";
+        if (diffMins < 60) return `${diffMins} minutes ago`;
+        const diffHours = Math.floor(diffMins / 60);
+        if (diffHours < 24) return `${diffHours} hours ago`;
+        const diffDays = Math.floor(diffHours / 24);
+        return `${diffDays} days ago`;
     };
 
     const fetchAppliedDetails = async () => {
@@ -222,7 +231,6 @@ const ViewAppliedJobDetails = () => {
                                             appliedJob?.jobDescription
                                                 ?.createdDate
                                         )}
-                                        days ago
                                     </span>
                                 </td>
                             </tr>

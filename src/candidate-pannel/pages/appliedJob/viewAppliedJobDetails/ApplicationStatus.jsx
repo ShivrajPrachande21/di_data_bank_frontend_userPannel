@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import BaseUrl from "../../../../services/BaseUrl";
-import { Button, Row, Col, ProgressBar, Modal } from "react-bootstrap";
+import { Button, Row, Col, ProgressBar, Modal,Form} from "react-bootstrap";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppliedJobContext } from "../../../../context/candidateContext/AppliedJobContext";
 import harsh from "../../../../assets/images/harsh.pdf";
 const ApplicationStatus = () => {
-  const { id } = useParams();
+  const id=localStorage.getItem('job_id')
+  //const { id } = useParams();
   const { reject_Offered_letter,Accept_offer_lettter} = useContext(AppliedJobContext);
   const [currentStep, setCurrentStep] = useState(null);
   //const [rating, setRating] = useState(0); // Set default rating to 5
@@ -58,7 +59,7 @@ const ApplicationStatus = () => {
           `${BaseUrl}candidate/application_status/flow/${id}/${userId}`
         );
         SetApplicationStatus(
-          response?.data?.jobs?.Shortlisted[0]?.feed_back_status
+          response?.data?.jobs?.Shortlisted[0]?.Candidate_feed_back_Status
         );
         setApplicationState(response?.data);
 
@@ -209,10 +210,75 @@ const ApplicationStatus = () => {
     }
   };
 
-  console.log("isValidFile", isValidFile);
   useEffect(() => {
     checkFileType(applicationState?.offerletterUrl);
   }, [location]);
+
+  const [RejectShowModel, SetRejectShowModel] = useState(false);
+  const [OTP, setOtp] = useState("");
+  const [reason, setReason] = useState("");
+  const [error, setError] = useState("");
+  const [EmailSend, SetEmailSend] = useState(false);
+
+  const RejectModelFun = () => {
+    SetRejectShowModel((prev) => !prev);
+    setOtp("");
+    setReason("");
+    setError("");
+  };
+
+  const handleRejectOfferAgain = async () => {
+    const token = localStorage.getItem("Candidate_token");
+    if (!token) return;
+
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken?._id;
+
+    try {
+      const response = await axios.get(
+        `${BaseUrl}candidate/offer/reject/otp/:jobId/${userId}`
+      );
+      if (response.status === 200 || response.status === 201) {
+        SetRejectShowModel(true);
+        SetEmailSend(true);
+        setTimeout(() => SetEmailSend(false), 10000); // Reset after 10 seconds
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Something went wrong.");
+    }
+  };
+
+  const handleSubmit = async (id) => {
+    const token = localStorage.getItem("Candidate_token");
+    if (!token) return;
+
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken?._id;
+
+    if (!OTP) {
+      setError("OTP is required.");
+      return;
+    }
+
+    if (!reason) {
+      setError("Please provide a reason for rejecting the offer.");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `${BaseUrl}candidate/offer/rejected/otp/confirm/${id}/${userId}`,
+        { OTP, reason }
+      );
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Offer rejected successfully.");
+        SetRejectShowModel(false);
+        await getApplicationData();
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to reject the offer.");
+    }
+  };
 
   return (
     <div>
@@ -310,6 +376,25 @@ const ApplicationStatus = () => {
                       ? " Rejected"
                       : "Hired"
                     : stepTexts[index]}
+                    <br/>
+                    { applicationState?.jobs?.Shortlisted[0]?.short_Candidate
+                        ?.offer_accepted_status === "Accepted"&&index === steps - 1?
+                        (
+<Button
+                  style={{
+                    background: "#FFBEBE",
+                    color: "red",
+                    border: "none",
+                    width: "100%",
+                  }}
+                  size="sm"
+                  onClick={() => handleRejectOfferAgain()}
+                >
+                  Reject offer 
+                </Button>
+                        ):null
+                      }
+                    
                 </div>
 
                 {index < steps - 1 && (
@@ -393,7 +478,7 @@ const ApplicationStatus = () => {
           )}
           {currentStep == 3 && (
             <div className="main-view-offered">
-              <div className="view-applied-offered-letter">
+              <div style={{ height:"15rem"}} className="view-applied-offered-letter">
                 <img src={applicationState?.offerletterUrl} alt="" />
 
                 <div className="view-pdf-btn">
@@ -499,6 +584,50 @@ const ApplicationStatus = () => {
           )}
         </div>
       </div>
+
+      <Modal
+        show={RejectShowModel}
+        onHide={RejectModelFun}
+        centered
+        className="custom-comment"
+      >
+        <Modal.Header closeButton>
+          {EmailSend && (
+            <p className="text-success mt-1" style={{ fontSize: "0.675rem" }}>
+            An email has been sent successfully. Please check your inbox for details.
+          </p>
+          )}
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group>
+            <Form.Label style={{ fontSize: "0.875rem" }}>OTP</Form.Label>
+            <Form.Control
+            style={{ fontSize: "0.875rem" }}
+              type="number"
+              placeholder="Enter OTP here"
+              value={OTP}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+          </Form.Group>
+          {error && <p className="text-danger mt-2">{error}</p>}
+
+          <Form.Group className="mt-3">
+            <Form.Label style={{ fontSize: "0.875rem" }}>Reason for Rejecting the Offer</Form.Label>
+            <Form.Control
+            style={{ fontSize: "0.875rem" }}
+              type="text"
+              placeholder="Enter reason here"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn-addcomment" onClick={()=>handleSubmit(id)}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

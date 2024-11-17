@@ -184,7 +184,7 @@ const Experience = () => {
                                         alt=""
                                         width="18px"
                                         className="mx-1"
-                                        style={{ marginTop: '8px' }}
+                                        style={{ marginTop: '8px', cursor: 'pointer' }}
                                     />
                                 </Col>
                             </Row>
@@ -210,7 +210,8 @@ const Experience = () => {
                                                         width="18px"
                                                         style={{
                                                             marginLeft: '4px',
-                                                            marginTop: '4px'
+                                                            marginTop: '4px',
+                                                             cursor: 'pointer'
                                                         }}
                                                         onClick={() =>
                                                             showEditExp(
@@ -319,7 +320,7 @@ const Experience = () => {
                                             alt=""
                                             width="18px"
                                             className="mx-1"
-                                            style={{ marginTop: '8px' }}
+                                            style={{ marginTop: '8px', cursor: 'pointer'}}
                                             onClick={handleShowWork}
                                         />
                                     </Col>

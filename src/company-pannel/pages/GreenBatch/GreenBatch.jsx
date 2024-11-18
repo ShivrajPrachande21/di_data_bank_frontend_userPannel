@@ -108,6 +108,10 @@ const GreenBatch = () => {
         }, 1000 * 60 * 5);
     };
 
+    function CloseFun(){
+        SetGreenBatch(false);
+    }
+
     return (
         <>
             {paymentLoading && (
@@ -117,6 +121,7 @@ const GreenBatch = () => {
             )}
             <Modal
                 show={ShowGreen}
+                onHide={CloseFun}
                 aria-labelledby="example-modal-sizes-title-lg"
                 className="custom-modal-promote"
             >

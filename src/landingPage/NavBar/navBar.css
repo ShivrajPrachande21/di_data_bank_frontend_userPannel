@@ -1,0 +1,19 @@
+.navbar {
+}
+.navbar .nav-bar-top-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+}
+.nav-bar-top-right h3 a {
+    margin-top: 8px;
+    color: white;
+    font-weight: 400;
+}
+.nav-bar-top-right button {
+    padding: 4px 20px;
+    width: 140px;
+    background-color: #3b96e1;
+    border-color: white;
+}

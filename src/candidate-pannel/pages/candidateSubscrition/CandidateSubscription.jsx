@@ -150,12 +150,12 @@ const CandidateSubscription = () => {
         if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/candidate-dashboard/subscription-candidate');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 
@@ -322,10 +322,10 @@ const CandidateSubscription = () => {
                 </div>
             </div>
             {showModal && (
-        <ProfileCompletionModal
-          onClose={() => setShowModal(false)} // Close modal handler
-        />
-      )}
+                <ProfileCompletionModal
+                    onClose={() => setShowModal(false)} // Close modal handler
+                />
+            )}
         </>
     );
 };

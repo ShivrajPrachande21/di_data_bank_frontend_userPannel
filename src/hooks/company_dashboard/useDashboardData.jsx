@@ -17,7 +17,7 @@ const useDashboardData = url => {
             // Decode the token to get the payload
             const decodedToken = jwtDecode(token);
             const companyId = decodedToken?._id; // Assuming the token contains an 'id' for the company
-            console.log('token', decodedToken);
+
             if (!companyId) {
                 throw new Error('Invalid token');
             }

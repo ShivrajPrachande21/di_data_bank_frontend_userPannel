@@ -136,12 +136,12 @@ const Experience = () => {
         if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/profile-candidate/experience');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 
@@ -184,7 +184,10 @@ const Experience = () => {
                                         alt=""
                                         width="18px"
                                         className="mx-1"
-                                        style={{ marginTop: '8px', cursor: 'pointer' }}
+                                        style={{
+                                            marginTop: '8px',
+                                            cursor: 'pointer'
+                                        }}
                                     />
                                 </Col>
                             </Row>
@@ -211,7 +214,7 @@ const Experience = () => {
                                                         style={{
                                                             marginLeft: '4px',
                                                             marginTop: '4px',
-                                                             cursor: 'pointer'
+                                                            cursor: 'pointer'
                                                         }}
                                                         onClick={() =>
                                                             showEditExp(
@@ -320,7 +323,10 @@ const Experience = () => {
                                             alt=""
                                             width="18px"
                                             className="mx-1"
-                                            style={{ marginTop: '8px', cursor: 'pointer'}}
+                                            style={{
+                                                marginTop: '8px',
+                                                cursor: 'pointer'
+                                            }}
                                             onClick={handleShowWork}
                                         />
                                     </Col>

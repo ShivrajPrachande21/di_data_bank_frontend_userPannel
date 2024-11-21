@@ -77,7 +77,7 @@ const SideBar = () => {
                 if (response.status === 200) {
                     localStorage.removeItem('companyToken');
                     localStorage.removeItem('email');
-                    navigate('/');
+                    navigate('/login');
                 }
             } catch (error) {
                 toast.error(`${error.response?.data?.error}`);
@@ -89,7 +89,7 @@ const SideBar = () => {
     const handle_logOut_candidate = async () => {
         localStorage.removeItem('Candidate_token');
         localStorage.removeItem('render');
-        navigate('/');
+        navigate('/login');
     };
 
     const sidebarButtons = [
@@ -393,7 +393,10 @@ const SideBar = () => {
                                 src={iconamoon_arrowd}
                                 alt=""
                                 width="20px"
-                                style={{ marginLeft: '50px' }}
+                                style={{
+                                    marginLeft: '50px',
+                                    cursor: 'pointer'
+                                }}
                                 onClick={toggleLogoout}
                             />
                         </div>

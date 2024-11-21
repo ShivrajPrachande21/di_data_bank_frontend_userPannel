@@ -193,12 +193,12 @@ const HireCandidate = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/main/hire-candidate');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 

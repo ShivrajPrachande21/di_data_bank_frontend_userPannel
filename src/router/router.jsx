@@ -54,10 +54,15 @@ import TermsAndCondition from '../components/termsAndCondition/TermsAndCondition
 import PrivacyPolicy from '../components/privacyPolicy/PrivacyPolicy';
 import CredibilityEstablishment from '../company-pannel/pages/credibility-establishment/CredibilityEstablishment';
 import DashboardCandidate from '../candidate-pannel/pages/Dashboard/DashboardCandidate';
+import LandingPage from '../landingPage/LandingPage';
 
 const router = createBrowserRouter([
     {
         path: '/',
+        element: <LandingPage />
+    },
+    {
+        path: '/login',
         element: <CompanyLogin />
     },
 

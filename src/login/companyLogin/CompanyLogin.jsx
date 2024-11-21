@@ -171,7 +171,7 @@ const CompanyLogin = () => {
     };
     // forgot password
     const naigateForgetpassword = () => {
-        navigate('forgot-password');
+        navigate('/forgot-password');
     };
 
     useEffect(() => {

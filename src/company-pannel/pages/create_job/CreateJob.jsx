@@ -70,8 +70,8 @@ const CreateJob = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -193,12 +193,12 @@ const CreateJob = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                naviagte('/');
+                naviagte('/login');
             } else {
                 naviagte('/main/create-job');
             }
         } else {
-            naviagte('/');
+            naviagte('/login');
         }
     }
 

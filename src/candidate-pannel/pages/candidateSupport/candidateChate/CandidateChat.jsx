@@ -104,14 +104,14 @@ function CandidateChat() {
         if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigateBack('/');
+                navigateBack('/login');
             } else {
                 navigateBack(
                     '/candidate-dashboard/candidate-chat/6722227ffaabccf3abb083f6'
                 );
             }
         } else {
-            navigateBack('/');
+            navigateBack('/login');
         }
     }
 
@@ -122,7 +122,14 @@ function CandidateChat() {
         <>
             <div className="Chatpage">
                 <div className="chatCenter" style={{ width: '66%' }}>
-                    <div className="arrowback" onClick={() => navigateBack('/candidate-dashboard/support-candidate')}>
+                    <div
+                        className="arrowback"
+                        onClick={() =>
+                            navigateBack(
+                                '/candidate-dashboard/support-candidate'
+                            )
+                        }
+                    >
                         <img src={arrow_back} alt="" width="24px" />
                     </div>
 

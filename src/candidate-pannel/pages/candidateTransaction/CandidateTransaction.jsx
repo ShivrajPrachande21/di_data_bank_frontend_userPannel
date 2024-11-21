@@ -52,12 +52,12 @@ const CandidateTransaction = () => {
         if (render === 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/candidate-dashboard/transaction-candidate');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 

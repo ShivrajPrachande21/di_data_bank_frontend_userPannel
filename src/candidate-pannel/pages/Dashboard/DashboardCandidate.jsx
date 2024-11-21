@@ -108,7 +108,25 @@ const DashboardCandidate = () => {
         };
         fun();
     }, [locate]);
-    console.log('sas', DashboardData);
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'candidate') {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                navigate('/login');
+            } else {
+                navigate('/candidate-dashboard/dashboard');
+            }
+        } else {
+            navigate('/login');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="DashboardCandidate">

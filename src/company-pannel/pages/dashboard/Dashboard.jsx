@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row } from 'react-bootstrap';
+import { jwtDecode } from 'jwt-decode';
 import './dashboard.css';
 import carbon_send from '../../../assets/images/carbon_send.png';
 import useDashboardData from '../../../hooks/company_dashboard/useDashboardData';
 import CandidateHiredIcon from '../../../assets/images/CandidateHiredIcon.png';
 import CandidateOnboardedIcon from '../../../assets/images/CandidateOnboardedIcon.png';
 import building from '../../../assets/images/building.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import BaseUrl from '../../../services/BaseUrl';
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
         useDashboardData();
     const navigate = useNavigate();
+    const loacate = useLocation();
     const [PAN, setPAN] = useState(null);
     const [isValid, setIsValid] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [SelectedData, setSelectedData] = useState('All');
+    const [dasboardData, setDashboardData] = useState(null);
 
     const handleVerifyJob = e => {
         e.preventDefault();
@@ -40,6 +46,39 @@ const Dashboard = () => {
         }
     };
 
+    const getSelectedData = async () => {
+        const token = localStorage.getItem('companyToken');
+        if (!token) {
+            return;
+        } else {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
+            try {
+                const response = await axios.get(
+                    `${BaseUrl}company/subscription/count/${userId}/${SelectedData}`
+                );
+                setDashboardData(response?.data);
+            } catch (error) {}
+        }
+    };
+    const handlSelectChange = async e => {
+        const selectedText = e.target.value;
+        setSelectedData(selectedText);
+        const token = localStorage.getItem('companyToken');
+        if (!token) {
+            return;
+        } else {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
+            try {
+                const response = await axios.get(
+                    `${BaseUrl}company/subscription/count/${userId}/${selectedText}`
+                );
+                setDashboardData(response?.data);
+            } catch (error) {}
+        }
+    };
+
     useEffect(() => {
         setTimeout(() => {
             sethide(null);
@@ -52,118 +91,75 @@ const Dashboard = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/main/dashboard');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 
     useEffect(() => {
+        const fun = async () => {
+            await getSelectedData();
+        };
+        fun();
         rendering();
     }, []);
+
     return (
-        <div style={{ color: 'black' }}>
-            <Container fluid style={{ background: '', paddingLeft: '20px' }}>
+        <div style={{ padding: '10px' }}>
+            <>
                 {/*First Row Card */}
-                <div class="row">
-                    <div class="col-4  d-flex align-items-center justify-content-center dashboard-card  first-row ">
-                        <div className="col-2 dashboard-div ">
-                            <img src={building} width="40vw" alt="" />
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <div className="c-dsahboard-top-cards">
+                        <img src={building} alt="" />
+                        <div className="c-card-content">
+                            <h3>Total Job Created</h3>
+                            <p>{dasboardData?.data?.totalJobs || 0}</p>
                         </div>
-                        <div className="col-10 ">
-                            <p className="h1 dashboard-p">Total Job Created</p>
-                            <p className="h1 loading">
-                                {' '}
-                                {data?.jobCreatedCount || 0}
+                        <div className="custom-select-company">
+                            <Form.Select
+                                aria-label="Default select example"
+                                size="sm"
+                                className="selecte"
+                                onChange={e => handlSelectChange(e)}
+                            >
+                                <option>select</option>
+                                <option value="All">All</option>
+                                <option value="Today">Today</option>
+                                <option value="Thisweek">This Week</option>
+                                <option value="Thismonth">This Month</option>
+                                <option value="Thisyear">This Year</option>
+                            </Form.Select>
+                        </div>
+                    </div>
+
+                    <div className="c-dsahboard-top-cards">
+                        <img src={CandidateOnboardedIcon} alt="" />
+                        <div className="c-card-content">
+                            <h3>Total Applications Received</h3>
+                            <p>
+                                {dasboardData?.count[0]
+                                    ?.totalAppliedCandidates || 0}
                             </p>
                         </div>
                     </div>
-                    {/*2 Row Card */}
-                    <div
-                        class="col-4 d-flex align-items-center justify-content-center  first-row  "
-                        style={{
-                            marginLeft: '6px',
-                            padding: '15px 10px',
-                            background: 'rgba(255, 255, 255, 1)',
-                            borderRadius: '8px'
-                        }}
-                    >
-                        <div className="col-2 " style={{ marginRight: '8px' }}>
-                            <img
-                                src={CandidateOnboardedIcon}
-                                width="40vw"
-                                alt=""
-                            />
-                        </div>
-                        <div className="col-10 ">
-                            <p
-                                className="h1"
-                                style={{
-                                    color: 'var(--text-color, #343434)',
-                                    fontFamily: 'Poppins',
-                                    fontSize: '0.8rem',
 
-                                    fontWeight: '500'
-                                }}
-                            >
-                                Total Applications Received
-                            </p>
-                            <p
-                                className="h1"
-                                style={{
-                                    color: 'var(--Primary-color, #3B96E1)',
-                                    fontWeight: ' 500;',
-                                    fontSize: '1rem'
-                                }}
-                            >
-                                {' '}
-                                {data?.applicationRecieved || 0}
-                            </p>
-                        </div>
-                    </div>
-                    {/*3 Row Card */}
-                    <div
-                        class="col-3 d-flex align-items-center justify-content-center first-row "
-                        style={{
-                            marginLeft: '6px',
-                            background: 'rgba(255, 255, 255, 1)',
-                            borderRadius: '8px'
-                        }}
-                    >
-                        <div className="col-2 " style={{ marginRight: '8px' }}>
-                            <img src={CandidateHiredIcon} width="40vw" alt="" />
-                        </div>
-                        <div className="col-10 ">
-                            <p
-                                className="h1"
-                                style={{
-                                    color: 'var(--text-color, #343434)',
-                                    fontFamily: 'Poppins',
-                                    fontSize: '0.8rem',
-
-                                    fontWeight: '500'
-                                }}
-                            >
-                                Total Candidates Hired
-                            </p>
-                            <p
-                                className="h1"
-                                style={{
-                                    color: 'var(--Primary-color, #3B96E1)',
-                                    fontWeight: ' 500;',
-                                    fontSize: '1rem'
-                                }}
-                            >
-                                {data?.HiredCount || 0}
+                    <div className="c-dsahboard-top-cards">
+                        <img src={CandidateHiredIcon} alt="" />
+                        <div className="c-card-content">
+                            <h3>Total Candidates Hired</h3>
+                            <p>
+                                {dasboardData?.count[0]?.totalHiredCandidates ||
+                                    0}
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-4  dashboard-card  first-row  ">
+                <div className="row mt-2 mx-1 ">
+                    <div class="col-5  dashboard-card  first-row  ">
                         <div className="col-12  mt-2 dashboard-div d-flex">
                             <p className="myplan-p ">My Plan:</p>
                             <p className="myplan-btn">
@@ -245,74 +241,58 @@ const Dashboard = () => {
                         </div>
                     </div>
                     {/*2 Row Card */}
-                    <div
-                        class="col-4 "
-                        style={{
-                            marginLeft: '6px',
-                            padding: '15px 10px',
-                            background: 'rgba(255, 255, 255, 1)',
-                            borderRadius: '8px',
-                            height: '170px'
-                        }}
-                    >
-                        <div className="col-2 " style={{ marginRight: '8px' }}>
-                            {/* <img src={Cadidate} width="40vw" alt="" /> */}
-                        </div>
-                        <div className="col-10 ">
-                            <p
-                                className="h1"
-                                style={{
-                                    color: 'var(--text-color, #343434)',
-                                    fontFamily: 'Poppins',
-                                    fontSize: '0.8rem',
 
-                                    fontWeight: '500'
-                                }}
-                            >
-                                Offer Verifier
-                            </p>
-                            <p
-                                className="h1"
-                                style={{
-                                    color: '#AEAEAE',
-                                    fontWeight: ' 100;',
-                                    fontSize: '0.8rem',
-                                    marginTop: '30px'
-                                }}
-                            >
-                                Enter pan number
-                            </p>
-                            <div className="input-pan">
-                                {' '}
-                                <form onSubmit={handleVerifyJob}>
-                                    <input
-                                        type="text"
-                                        placeholder="Ex: PGDHG4651G"
-                                        name="PAN"
-                                        value={PAN}
-                                        onChange={handleChange}
-                                    />
-                                    <button
-                                        style={{
-                                            border: 'none',
-                                            background: 'white'
-                                        }}
-                                    >
-                                        {' '}
-                                        <img src={carbon_send} alt="" />
-                                    </button>
-                                </form>
+                    <div className="col-12 col-md-7">
+                        <div className="company-dashboard-card">
+                            <div className="companydashboaord-child-card">
+                                <h3>Total Shortlisted Candidate</h3>
+                                <p>
+                                    {' '}
+                                    {dasboardData?.count[0]
+                                        ?.totalShortlistedCandidates || 0}
+                                </p>
                             </div>
-                            {hide && (
-                                <div className="input-success">
-                                    <p>{verfifyOffer}</p>
-                                </div>
-                            )}
-                            <p className="pan-error">{errorMessage}</p>
+                            <div className="companydashboaord-child-card">
+                                <h3>Total Offer Letters</h3>
+                                <p>
+                                    {' '}
+                                    {dasboardData?.count[0]
+                                        ?.totalOfferLetters || 0}
+                                </p>
+                            </div>
+                            <div className="companydashboaord-child-card">
+                                <h3>Total CV View Count</h3>
+                                <p>
+                                    {' '}
+                                    {dasboardData?.cv_view_count?.totalViewCV ||
+                                        0}
+                                </p>
+                            </div>
+                            <div className="companydashboaord-child-card">
+                                <h3>Total CV Download Count</h3>
+                                <p>
+                                    {dasboardData?.cv_view_count
+                                        ?.totalDownloadCount || 0}
+                                </p>
+                            </div>
+                            <div className="companydashboaord-child-card">
+                                <h3>Total Promoted Jobs</h3>
+                                <p>
+                                    {' '}
+                                    {dasboardData?.data?.totalPromotedJobs || 0}
+                                </p>
+                            </div>
+                            <div className="companydashboaord-child-card">
+                                <h3>Total Unpromoted Jobs</h3>
+                                <p>
+                                    {dasboardData?.data?.totalUnpromotedJobs ||
+                                        0}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </Container>
+            </>
         </div>
     );
 };

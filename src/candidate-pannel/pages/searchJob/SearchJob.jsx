@@ -87,8 +87,8 @@ const SearchJob = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -153,12 +153,12 @@ const SearchJob = () => {
         if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/candidate-dashboard/search-job');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 
@@ -538,10 +538,10 @@ const SearchJob = () => {
                 </Row>
             </div>
             {showModal && (
-        <ProfileCompletionModal
-          onClose={() => setShowModal(false)} // Close modal handler
-        />
-      )}
+                <ProfileCompletionModal
+                    onClose={() => setShowModal(false)} // Close modal handler
+                />
+            )}
         </>
     );
 };

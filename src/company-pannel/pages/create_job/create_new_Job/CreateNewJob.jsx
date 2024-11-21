@@ -211,12 +211,29 @@ const CreateNewJob = () => {
         initiate_Payment(createJobData);
     };
 
-    useEffect(() => {
-        console.log('Filered Suggestion', filteredData);
-    }, [filteredData]);
+    useEffect(() => {}, [filteredData]);
 
     useEffect(() => {
         fetch_suggestion();
+    }, []);
+
+    function rendering() {
+        const render = localStorage.getItem('render');
+
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                naviagte('/login');
+            } else {
+                naviagte('/main/create-job');
+            }
+        } else {
+            naviagte('/login');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
     }, []);
 
     return (

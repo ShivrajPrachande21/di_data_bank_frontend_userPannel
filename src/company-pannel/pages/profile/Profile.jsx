@@ -28,7 +28,7 @@ const Profile = () => {
 
     const navigate = useNavigate();
     const navigateProfile = () => {
-        navigate(-1);
+        navigate('/main/dashboard');
     };
 
     useEffect(() => {
@@ -48,7 +48,24 @@ const Profile = () => {
 
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
+    function rendering() {
+        const render = localStorage.getItem('render');
 
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                naviagte('/login');
+            } else {
+                naviagte('/profile-page');
+            }
+        } else {
+            naviagte('/login');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="ReportedJob">

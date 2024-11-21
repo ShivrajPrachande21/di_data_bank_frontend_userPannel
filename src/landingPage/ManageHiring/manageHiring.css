@@ -1,0 +1,68 @@
+.manage-hiring-conatiner {
+    background: #3b96e1;
+
+    width: 100%;
+}
+.manage-hiring-child {
+    width: 84%;
+
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 80px;
+    padding-bottom: 100px;
+}
+.manage-hiring-left {
+    width: 45%;
+}
+.manage-hiring-left h1 {
+    font-weight: 500;
+    color: white;
+}
+.manage-hiring-left p {
+    font-size: 0.9rem;
+    color: white;
+}
+.manage-hiring-right {
+    width: 60%;
+    margin-top: 80px;
+    display: flex;
+
+    gap: 19px;
+    flex-wrap: wrap;
+}
+.manage-right-cards {
+    padding: 20px;
+    width: 48%;
+    background: #ffffff11;
+    border-radius: 8px;
+
+    border: 1px solid #ffffff;
+}
+.manage-right-cards h4 {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.manage-right-cards p {
+    color: white;
+    font-size: 0.7rem;
+    margin-bottom: -2px;
+}
+@media (max-width: 575.98px) {
+    .manage-hiring-child {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0px;
+    }
+    .manage-right-cards {
+        width: 100%;
+    }
+    .manage-hiring-left {
+        width: 60%;
+        margin-top: 20px;
+        margin-bottom: -50px;
+    }
+}

@@ -1,0 +1,70 @@
+.verified-badge-container {
+    width: 100%;
+
+    background: rgb(255, 255, 255);
+}
+.verified-badge-child {
+    width: 84%;
+    margin: 0px auto;
+}
+.verified-badge-h1 {
+    text-align: center;
+}
+.verified-badge-h1 h1 {
+    padding-top: 40px;
+    color: #3b96e1;
+    font-weight: 600;
+}
+.verified-badge-h1 p {
+    text-align: center;
+    color: #051f50;
+}
+.verified-contents-div {
+    margin-top: 40px;
+    padding: 10px 20px;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+.verified-left-image {
+    width: 50%;
+}
+.verified-left-image img {
+    width: 100%;
+}
+.verified-right {
+    margin-top: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.verifired-right-card {
+    display: flex;
+    align-items: center;
+}
+
+.verifired-right-card img {
+    height: 30px;
+    margin-right: 10px;
+}
+.verified-card-content h4 {
+    color: #3b96e1;
+}
+.verified-card-content p {
+    font-size: 0.8rem;
+    color: #aeaeae;
+    margin-top: -6px;
+    margin-bottom: -0px;
+}
+@media (max-width: 575.98px) {
+    .verified-contents-div {
+        flex-wrap: wrap;
+    }
+    .verified-left-image {
+        width: 100%;
+    }
+    .verified-right {
+        width: 100%;
+    }
+}

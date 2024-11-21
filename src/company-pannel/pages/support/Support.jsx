@@ -38,12 +38,12 @@ const Support = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/main/support');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 

@@ -14,12 +14,12 @@ function CandidateReviews() {
         if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/profile-candidate/reviews');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 

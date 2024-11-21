@@ -34,9 +34,9 @@ const CompanyRegistration = () => {
                 company_reg
             );
             if (response.status == 200 || response.status == 201) {
-                toast.success('companay registered Successfully !');
+                toast.success('Companay registered Successfully !');
                 setHideOTP(prev => !prev);
-                navigate('/');
+                navigate('/login');
             }
         } catch (error) {
             toast.error('Failed to register the company');
@@ -54,7 +54,6 @@ const CompanyRegistration = () => {
 
     const [formData, setFormData] = useState(retrieveFormData());
 
-    console.log('form data in Company', formData);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const hnadleNaviagte = () => {
@@ -132,7 +131,6 @@ const CompanyRegistration = () => {
         }));
     }, []);
 
-    console.log('foromData', company_reg);
     return (
         <>
             <div className="login-main">

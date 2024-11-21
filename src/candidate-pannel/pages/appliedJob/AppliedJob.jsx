@@ -36,12 +36,12 @@ const AppliedJob = () => {
         if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate('/candidate-dashboard/applied-job/applied-jobs');
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 

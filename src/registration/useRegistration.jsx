@@ -32,8 +32,6 @@ const useRegistration = () => {
                 [name]: value
             }));
         }
-
-        console.log('fomrm', formData);
     };
 
     const validate = () => {
@@ -80,7 +78,7 @@ const useRegistration = () => {
             );
             if (response?.status == 200 || response?.status == 201) {
                 toast.success('Candidate Registered Successfully');
-                navigate('/');
+                navigate('/login');
             }
 
             // Optionally redirect or perform additional actions here

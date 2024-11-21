@@ -10,7 +10,8 @@ const TermsAndCondition = () => {
     const navigate = useNavigate();
     const handleBack = path => {
         if (path == 'registration') {
-            navigate('/registration');
+            // navigate('/registration');
+            navigate(-1);
         } else {
             navigate('/privacy-policy');
         }

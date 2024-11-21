@@ -126,12 +126,12 @@ const CredibilityEstablishment = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                navigte('/');
+                navigte('/login');
             } else {
                 navigte('/main/credibility-establishment');
             }
         } else {
-            navigte('/');
+            navigte('/login');
         }
     }
 

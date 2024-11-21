@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../../services/BaseUrl';
 const ViewAppliedJobDetails = () => {
-    const id=localStorage.getItem('job_id')
+    const id = localStorage.getItem('job_id');
     //const { id } = useParams();
     const navigate = useNavigate();
     const [isClicked, setIsClicked] = useState(false);
@@ -29,8 +29,8 @@ const ViewAppliedJobDetails = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -74,14 +74,14 @@ const ViewAppliedJobDetails = () => {
         if (render == 'candidate') {
             const token = localStorage.getItem('Candidate_token');
             if (!token) {
-                navigate('/');
+                navigate('/login');
             } else {
                 navigate(
                     '/candidate-dashboard/viewAppliedJobDetails/6708f19552123b3e11a17214'
                 );
             }
         } else {
-            navigate('/');
+            navigate('/login');
         }
     }
 

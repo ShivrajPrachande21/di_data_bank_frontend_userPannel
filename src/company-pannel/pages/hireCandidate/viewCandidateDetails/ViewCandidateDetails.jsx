@@ -72,8 +72,24 @@ const ViewCandidateDetails = () => {
 
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
+    function rendering() {
+        const render = localStorage.getItem('render');
 
-    console.log(' p', candidate_detials?.profile);
+        if (render == 'company') {
+            const token = localStorage.getItem('companyToken');
+            if (!token) {
+                naviagte('/login');
+            } else {
+                naviagte('/main/view-candidate-details');
+            }
+        } else {
+            naviagte('/login');
+        }
+    }
+
+    useEffect(() => {
+        rendering();
+    }, []);
     return (
         <>
             <div className="viewCandidate-main">
@@ -134,7 +150,14 @@ const ViewCandidateDetails = () => {
                     <Row style={{ marginTop: '-8px' }}>
                         <Col xs={1}>
                             <div className="view-images">
-                                <img src={candidate_detials?.profile?candidate_detials?.profile:altprofile} alt="" />
+                                <img
+                                    src={
+                                        candidate_detials?.profile
+                                            ? candidate_detials?.profile
+                                            : altprofile
+                                    }
+                                    alt=""
+                                />
                             </div>
                         </Col>
                         <Col xs={10}>
@@ -276,8 +299,7 @@ const ViewCandidateDetails = () => {
                                             </p>
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails
-                                                    ?.career_highlight ||
-                                                    'N/A'}
+                                                    ?.career_highlight || 'N/A'}
                                             </p>
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails
@@ -350,8 +372,7 @@ const ViewCandidateDetails = () => {
                                                                 color: '#051F50'
                                                             }}
                                                         >
-                                                            {item?.CTC ||
-                                                                'N/A'}
+                                                            {item?.CTC || 'N/A'}
                                                         </p>
                                                         <p
                                                             style={{
@@ -430,15 +451,13 @@ const ViewCandidateDetails = () => {
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
-                                                    ?.marriag_status ||
-                                                    'N/A'}
+                                                    ?.marriag_status || 'N/A'}
                                             </p>
                                             <p>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
-                                                    ?.family_member ||
-                                                    'N/A'}
+                                                    ?.family_member || 'N/A'}
                                             </p>
                                             <p>
                                                 {' '}

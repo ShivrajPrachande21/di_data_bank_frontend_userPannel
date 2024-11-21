@@ -74,7 +74,7 @@ const PrivacyPolicy = () => {
                     src={blackCross}
                     alt=""
                     width="20px"
-                    onClick={() => navigate('/terms-condition')}
+                    onClick={() => navigate(-1)}
                     style={{ cursor: 'pointer' }}
                 />
             </div>

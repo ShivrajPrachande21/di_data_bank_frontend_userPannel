@@ -29,12 +29,12 @@ const SubscriptionPlan = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                naviagte('/');
+                naviagte('/login');
             } else {
-                naviagte('main/subscription-plan/subscription');
+                naviagte('/main/subscription-plan/subscription');
             }
         } else {
-            naviagte('/');
+            naviagte('/login');
         }
     }
 

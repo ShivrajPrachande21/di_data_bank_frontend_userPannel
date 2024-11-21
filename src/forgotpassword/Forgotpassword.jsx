@@ -62,7 +62,7 @@ const Forgotpassword = () => {
             password: '',
             confirmpassword: ''
         });
-        navigate('/');
+        navigate('/login');
     };
     // Yup validation schema
     const validationSchema = Yup.object().shape({
@@ -82,7 +82,7 @@ const Forgotpassword = () => {
             password: '',
             confirmpassword: ''
         });
-        navigate('/');
+        navigate('/login');
     };
 
     const changePassword = async data => {
@@ -95,7 +95,7 @@ const Forgotpassword = () => {
             if (response.status == 200 || response.status == 201) {
                 toast.success('password changed successfully!');
                 setcurrentStep(0);
-                navigate('/');
+                navigate('/login');
             }
         } catch (error) {
             toast.error(error.response?.data?.error);
@@ -148,7 +148,7 @@ const Forgotpassword = () => {
         validationSchema,
         onSubmit: async e => {
             e.preventDefault();
-            console.log('Form data:', values);
+
             await handleForgotPassword(email); // Pass the email from form values
             setcurrentStep(2); // Move to the next step after the email is processed
         }
@@ -163,7 +163,7 @@ const Forgotpassword = () => {
 
     const handleNavigate = () => {
         setEmail('');
-        navigate('/');
+        navigate('/login');
     };
 
     return (

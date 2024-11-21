@@ -276,6 +276,9 @@ details {
 .profile-percentage {
     display: flex;
 }
+.profile-percentage p {
+    cursor: pointer;
+}
 .pro {
     margin-top: -10px;
     margin-left: 14px;

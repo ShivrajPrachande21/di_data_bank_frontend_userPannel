@@ -75,6 +75,10 @@ const ShortListed = () => {
         const fileId = link.split('/d/')[1].split('/')[0];
         return `https://drive.google.com/file/d/${fileId}/preview`;
     };
+    
+const isGoogleDriveLink = url => {
+    return url && url.includes('drive.google.com');
+};
 
     const [comment, setComment] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
@@ -246,7 +250,7 @@ const ShortListed = () => {
                                             height="20px"
                                             onClick={() =>
                                                 handleShow(
-                                                    item?.WorkDetails?.resume
+                                                    item?.resumeUrl
                                                 )
                                             } // Pass the correct resume link
                                         />
@@ -347,10 +351,17 @@ const ShortListed = () => {
                         <div>
                             {currentResume ? (
                                 <iframe
-                                    src={getEmbedLink(currentResume)} // Ensure the src is set
+                                    //src={getEmbedLink(currentResume)} // Ensure the src is set
+                                    src={
+                                        currentResume
+                                            ? isGoogleDriveLink(currentResume)
+                                                ? getEmbedLink(currentResume)
+                                                : currentResume
+                                            : null
+                                    }
                                     frameBorder="0"
                                     style={{
-                                        width: '89%',
+                                        width: '100%',
                                         height: '80vh',
                                         zoom: '1',
                                         margin: '0px 20px' // Prevent zoom feature

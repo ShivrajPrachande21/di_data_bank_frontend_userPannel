@@ -12,8 +12,10 @@ import debounce from 'lodash.debounce';
 import { toast } from 'react-toastify';
 import { CreateJobContext } from '../../../../context/CreateJobContext';
 import Loader from '../../loader/Loader';
+import { useNavigate } from 'react-router-dom';
 
 const CreateNewJob = () => {
+    const navigate=useNavigate()
     const {
         lgShow,
         setLgShow,
@@ -223,12 +225,12 @@ const CreateNewJob = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                naviagte('/login');
+                navigate('/login');
             } else {
-                naviagte('/main/create-job');
+                navigate('/main/create-job');
             }
         } else {
-            naviagte('/login');
+            navigate('/login');
         }
     }
 

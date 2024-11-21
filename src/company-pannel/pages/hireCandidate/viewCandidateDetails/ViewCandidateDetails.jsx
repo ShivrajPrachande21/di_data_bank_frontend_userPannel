@@ -78,12 +78,12 @@ const ViewCandidateDetails = () => {
         if (render == 'company') {
             const token = localStorage.getItem('companyToken');
             if (!token) {
-                naviagte('/login');
+                navigate('/login');
             } else {
-                naviagte('/main/view-candidate-details');
+                navigate('/main/view-candidate-details');
             }
         } else {
-            naviagte('/login');
+            navigate('/login');
         }
     }
 
@@ -156,6 +156,7 @@ const ViewCandidateDetails = () => {
                                             ? candidate_detials?.profile
                                             : altprofile
                                     }
+                                    style={{width:'100%',height:'100%'}}
                                     alt=""
                                 />
                             </div>
@@ -206,17 +207,7 @@ const ViewCandidateDetails = () => {
                     <Row className="mt-2">
                         <Col className="Overview">
                             <p>
-                                With 5 years of experience in user experience
-                                design, I have honed my skills in creating
-                                intuitive and user-friendly interfaces that
-                                enhance the overall user journey. My expertise
-                                includes conducting user research, creating
-                                wireframes and prototypes, and collaborating
-                                with cross-functional teams to deliver
-                                exceptional digital experiences. I am passionate
-                                about solving complex design challenges and
-                                continuously strive to stay updated with the
-                                latest industry trends and best practices.
+                                {candidate_detials?.summary}
                             </p>
                         </Col>
                     </Row>
@@ -228,6 +219,7 @@ const ViewCandidateDetails = () => {
                                     <div className="cards">
                                         <div className="tables">
                                             <p>Email:</p>
+                                            <p>Contact Email:</p>
                                             <p>Mobile No.:</p>
                                             <p>LinkedIn:</p>
                                         </div>
@@ -238,6 +230,10 @@ const ViewCandidateDetails = () => {
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.basicDetails
                                                     ?.email || 'N/A'}
+                                            </p>
+                                            <p style={{ color: '#051F50' }}>
+                                                {candidate_detials?.basicDetails
+                                                    ?.contact_email || 'N/A'}
                                             </p>
                                             <p>
                                                 {' '}

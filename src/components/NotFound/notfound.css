@@ -1,0 +1,83 @@
+.error-page-wrapper {
+    text-align: center;
+    color: #f0f8ff; /* Light complementary font color */
+    padding: 20px;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.error-heading {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #3b96e1; /* Same as verified badge */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.error-code-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 8rem;
+    font-weight: bold;
+}
+
+.error-digit {
+    display: inline-block;
+    color: #f0f8ff; /* Light complementary font color */
+    text-shadow: 0 0 10px #f0f8ff, 0 0 20px #3b96e1, 0 0 30px #73c2fb, 0 0 40px #3b96e1;
+    animation: glow 1.5s infinite alternate;
+}
+
+.error-digit:nth-child(2) {
+    color: #73c2fb;
+    text-shadow: 0 0 10px #73c2fb, 0 0 20px #3b96e1, 0 0 30px #73c2fb, 0 0 40px #3b96e1;
+    animation-delay: 0.2s;
+}
+
+.error-message {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #f0f8ff; /* Same light complementary font color */
+}
+
+.error-link-container {
+    margin-top: 30px;
+}
+
+.error-link {
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(90deg, #3b96e1, #73c2fb); /* Matches the new blue theme */
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(59, 150, 225, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.error-link:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(59, 150, 225, 0.6);
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px #3b96e1, 0 0 30px #73c2fb, 0 0 40px #3b96e1, 0 0 50px #73c2fb;
+    }
+    to {
+        text-shadow: 0 0 30px #73c2fb, 0 0 40px #3b96e1, 0 0 50px #73c2fb, 0 0 60px #3b96e1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -51,7 +51,9 @@ const Longlist = () => {
         const fileId = link.split('/d/')[1].split('/')[0]; // Extract file ID
         return `https://drive.google.com/file/d/${fileId}/preview`; // Create preview link
     };
-
+    const isGoogleDriveLink = url => {
+        return url && url.includes('drive.google.com');
+    };
     const handle_ShortList = user_id => {
         setUser_id(user_id);
         showModal();
@@ -197,11 +199,11 @@ const Longlist = () => {
                                             src={View}
                                             alt=""
                                             height="20px"
-                                            // onClick={() =>
-                                            //     handleShow(
-                                            //         item?.resumeUrl
-                                            //     )
-                                            // } // Pass the correct resume link
+                                            onClick={() =>
+                                                handleShow(
+                                                    item?.resumeUrl
+                                                )
+                                            } // Pass the correct resume link
                                         />
                                     </td>
                                     <td>
@@ -331,7 +333,14 @@ const Longlist = () => {
                             <div>
                                 {currentResume ? (
                                     <iframe
-                                        src={getEmbedLink(currentResume)} 
+                                       // src={getEmbedLink(currentResume)} 
+                                        src={
+                                            currentResume
+                                                ? isGoogleDriveLink(currentResume)
+                                                    ? getEmbedLink(currentResume)
+                                                    : currentResume
+                                                : null
+                                        }
                                         frameBorder="0"
                                         style={{
                                             width: '89%',

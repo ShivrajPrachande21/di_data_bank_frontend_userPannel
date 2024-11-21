@@ -46,6 +46,10 @@ const Applications = () => {
         return `https://drive.google.com/file/d/${fileId}/preview`; // Create preview link
     };
 
+    const isGoogleDriveLink = url => {
+        return url && url.includes('drive.google.com');
+    };
+
     const handle_ShortList = user_id => {
         setUser_id(user_id);
         showModal();
@@ -163,7 +167,7 @@ const Applications = () => {
                                             height="20px"
                                             onClick={() =>
                                                 handleShow(
-                                                    item?.WorkDetails?.resume
+                                                    item?.resumeUrl
                                                 )
                                             } // Pass the correct resume link
                                         />
@@ -217,7 +221,14 @@ const Applications = () => {
                             <div>
                                 {currentResume ? (
                                     <iframe
-                                        src={getEmbedLink(currentResume)} // Ensure the src is set
+                                       // src={getEmbedLink(currentResume)} // Ensure the src is set
+                                        src={
+                                            currentResume
+                                                ? isGoogleDriveLink(currentResume)
+                                                    ? getEmbedLink(currentResume)
+                                                    : currentResume
+                                                : null
+                                        }
                                         frameBorder="0"
                                         style={{
                                             width: '89%',

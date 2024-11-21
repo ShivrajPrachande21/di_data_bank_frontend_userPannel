@@ -44,7 +44,7 @@ const Registration = () => {
     };
 
     const handleNavigate = () => {
-        navigate('/');
+        navigate('/login');
     };
     const isFormValid =
         formData.email &&

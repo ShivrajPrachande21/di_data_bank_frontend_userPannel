@@ -28,3 +28,9 @@
 .card-table-span {
     font-size: 0.7rem;
 }
+    .custom-option-exps {
+        width: 98%;
+        border-radius: 6px;
+        padding: 4px;
+        border: 1.5px solid #aeaeae;
+}

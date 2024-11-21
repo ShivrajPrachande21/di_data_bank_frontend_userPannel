@@ -195,8 +195,8 @@ const ViewJobApplication = () => {
                                         <td>
                                             {' '}
                                             <span className="card-table-span">
-                                                {
-                                                    viewJobDesciptionData?.createdDate
+                                                { formatDate( viewJobDesciptionData?.createdDate)
+                                                   
                                                 }{' '}
                                             </span>
                                         </td>

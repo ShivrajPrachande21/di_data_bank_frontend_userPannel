@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import arrow_back from '../../../../../assets/images/arrow_back.png';
 import avatar from '../../../../../assets/images/avatar.png';
 import harsh from '../../../../../assets/images/harsh.pdf';
+import alternet from '../../../../../assets/images/alternet.jpg';
 import { Modal, Row } from 'react-bootstrap';
 import './hired.css';
 import { CreateJobContext } from '../../../../../context/CreateJobContext';

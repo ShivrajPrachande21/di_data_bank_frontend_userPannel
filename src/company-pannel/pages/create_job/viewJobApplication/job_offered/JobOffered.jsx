@@ -326,7 +326,7 @@ const isoDate = dateValue.toISOString();
                         >
                         </Form.Label>
                         <Row style={{ marginLeft: '-2px' }}>
-                            <Col lg={8} className="custom-option-exp">
+                            <Col lg={8} className="custom-option-exps">
                             <Form.Group controlId="formBasicDate" style={{ backgroundColor: "white", padding: "3px", borderRadius: "4px", display: "flex", alignItems: "center" }}>
   <input
     type="date"

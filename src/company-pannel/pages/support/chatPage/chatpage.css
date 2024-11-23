@@ -19,6 +19,7 @@
     position: relative;
     padding: 16px;
     height: 90vh;
+    box-shadow: 0px 0px 4px 0px rgba(182, 182, 182, 0.528);
 }
 .arrowback {
     width: 30px;
@@ -27,6 +28,8 @@
     cursor: pointer;
 }
 .chatinput {
+    display: flex;
+    justify-content: space-between;
     width: 94%;
     position: absolute;
 
@@ -36,7 +39,7 @@
     box-shadow: 0px 0px 4px 0px rgb(229, 229, 229);
 }
 .chatinput input {
-    width: 87%;
+    width: 100%;
     padding: 2px;
     background: rgba(255, 255, 255, 0);
     outline: none;
@@ -164,4 +167,22 @@
     padding: 6px 8px;
     color: #2c3a52;
     text-align: end;
+}
+@media (max-width: 575.98px) {
+    .chatCenter {
+        width: 100%;
+        display: block;
+        margin: 0px;
+    }
+    .chatinput {
+        width: auto;
+    }
+    .chatinput input {
+        width: auto;
+    }
+}
+@media (max-width: 767.98px) {
+    .chatinput {
+        width: 84%;
+    }
 }

@@ -209,13 +209,13 @@ const HireCandidate = () => {
     return (
         <div className="hire-candidate">
             <Row>
-                <Col xs={3}>
+                <Col xs={12} md={3}>
                     <Button className="ai-btn">
                         <img src={Ai} alt="" width="20px" />
                         <Link to="/main/ai-search">AI Assistant Search</Link>
                     </Button>
                 </Col>
-                <Col xs={9}>
+                <Col xs={12} md={9}>
                     <div className="Search">
                         <input
                             type="text"
@@ -393,13 +393,13 @@ const HireCandidate = () => {
                                     </h4>
                                     <p>
                                         {
-                                            candidate?.personalDetails[0]
-                                                ?.spouse_profession
+                                            candidate?.workDetails[0]
+                                                ?.aspiring_position
                                         }
                                     </p>
                                 </div>
                             </div>
-                            <div className="right">
+                            <div className="right-">
                                 <Form>
                                     <Form.Check
                                         type="checkbox"

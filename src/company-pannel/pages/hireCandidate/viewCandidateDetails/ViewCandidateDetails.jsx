@@ -24,7 +24,7 @@ const ViewCandidateDetails = () => {
     const handleCertificateClose = () => setCertificateModalShow(false);
     const navigate = useNavigate();
     const navigateProfile = () => {
-        navigate(-1);
+        navigate('/main/hire-candidate');
     };
     const handleClose = () => setModalShow(false);
     const googleDrivePDFLink = candidate_detials?.workDetails?.resume;
@@ -156,7 +156,7 @@ const ViewCandidateDetails = () => {
                                             ? candidate_detials?.profile
                                             : altprofile
                                     }
-                                    style={{width:'100%',height:'100%'}}
+                                    style={{ width: '100%', height: '100%' }}
                                     alt=""
                                 />
                             </div>
@@ -206,9 +206,7 @@ const ViewCandidateDetails = () => {
                     </Row>
                     <Row className="mt-2">
                         <Col className="Overview">
-                            <p>
-                                {candidate_detials?.summary}
-                            </p>
+                            <p>{candidate_detials?.summary}</p>
                         </Col>
                     </Row>
                     <Row>

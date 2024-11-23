@@ -168,15 +168,13 @@ const CompanyNotification = ({ handleClose }) => {
     };
     const handleClearALLCandidate = async () => {
         for (const item of profileView || []) {
-            await handleCloseViewProfile(
-                item?.profile_view_company?.company_id
-            );
+            handleCloseViewProfile(item?.profile_view_company?.company_id);
         }
         for (const item of ShortlistNot || []) {
-            await handleCloseShortlist(item?._id);
+            handleCloseShortlist(item?._id);
         }
         for (const item of newCompanyNot || []) {
-            await handleCloseNewCompany(item?._id);
+            handleCloseNewCompany(item?._id);
         }
     };
 

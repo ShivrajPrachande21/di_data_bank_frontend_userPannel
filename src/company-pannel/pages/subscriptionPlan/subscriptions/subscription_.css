@@ -62,7 +62,7 @@
     bottom: 16px;
     left: 9%;
     background: #19588c;
-    width: 15vw;
+
     font-weight: 700;
     padding: 5px;
     border-radius: 8px;
@@ -166,4 +166,9 @@
     margin: 0;
     padding: 0;
     font-size: 0.8rem;
+}
+@media (max-width: 575.98px) {
+    .sub1 {
+        height: 50vh;
+    }
 }

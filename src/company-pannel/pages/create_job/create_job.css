@@ -136,24 +136,6 @@
     min-height: 100vh; /* Makes sure the modal takes up full viewport height */
 }
 
-@media (max-width: 480px) {
-    .job-data {
-        flex-wrap: wrap;
-        margin-left: 10px;
-        margin-top: 20px;
-    }
-    .job-created-data {
-        border-bottom: 1px solid #aeaeae;
-        border-right: none;
-        margin-left: 0px;
-        width: 200px;
-    }
-    .create-job {
-        margin: 0px auto;
-        padding: 20px 40px;
-    }
-}
-
 .no-jobs-container {
     display: flex;
     justify-content: center;
@@ -176,4 +158,21 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #3b96e1;
     margin-left: -48%;
+}
+@media (max-width: 575.98px) {
+    .job-data {
+        flex-wrap: wrap;
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+    .job-created-data {
+        border-bottom: 1px solid #aeaeae;
+        border-right: none;
+        margin-left: 0px;
+        width: 200px;
+    }
+    .create-job {
+        margin: 0px auto;
+        padding: 20px 40px;
+    }
 }

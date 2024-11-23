@@ -62,7 +62,7 @@
     bottom: 16px;
     left: 9%;
     background: #19588c;
-    width: 15vw;
+
     font-weight: 700;
     padding: 5px;
     border-radius: 8px;
@@ -149,4 +149,15 @@
         0.943
     ); /* Optional: Semi-transparent background */
     z-index: 9999; /* Ensure it stays on top of other elements */
+}
+@media (max-width: 575.98px) {
+    .sub1 {
+        height: 50vh;
+    }
+    .sub2 {
+        height: 50vh;
+    }
+    .early-renew button {
+        width: 100%;
+    }
 }

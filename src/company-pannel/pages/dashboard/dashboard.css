@@ -204,4 +204,15 @@
     .companydashboaord-child-card {
         width: 100%;
     }
+    .c-dsahboard-top-cards {
+        width: 100%;
+    }
+    .dashboard-card {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .company-dashboard-card {
+        margin-left: 0px;
+        width: 100%;
+    }
 }

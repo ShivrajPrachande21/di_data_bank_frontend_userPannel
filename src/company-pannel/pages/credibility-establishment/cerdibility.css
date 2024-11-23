@@ -92,3 +92,15 @@
 .is-invalid {
     border-color: red !important;
 }
+@media (max-width: 575.98px) {
+    .cerdibility-search {
+        display: block;
+    }
+    .c-search {
+        width: 100%;
+    }
+    .accpeted-rejected {
+        width: 100%;
+        height: auto;
+    }
+}

@@ -24,13 +24,15 @@
 .error-digit {
     display: inline-block;
     color: #f0f8ff; /* Light complementary font color */
-    text-shadow: 0 0 10px #f0f8ff, 0 0 20px #3b96e1, 0 0 30px #73c2fb, 0 0 40px #3b96e1;
+    text-shadow: 0 0 10px #f0f8ff, 0 0 20px #3b96e1, 0 0 30px #73c2fb,
+        0 0 40px #3b96e1;
     animation: glow 1.5s infinite alternate;
 }
 
 .error-digit:nth-child(2) {
-    color: #73c2fb;
-    text-shadow: 0 0 10px #73c2fb, 0 0 20px #3b96e1, 0 0 30px #73c2fb, 0 0 40px #3b96e1;
+    color: #f1f1f1;
+    text-shadow: 0 0 10px #73c2fb, 0 0 20px #3b96e1, 0 0 30px #73c2fb,
+        0 0 40px #3b96e1;
     animation-delay: 0.2s;
 }
 
@@ -46,9 +48,14 @@
 }
 
 .error-link {
+    cursor: pointer;
     text-decoration: none;
     color: #fff;
-    background: linear-gradient(90deg, #3b96e1, #73c2fb); /* Matches the new blue theme */
+    background: linear-gradient(
+        90deg,
+        #3b96e1,
+        #73c2fb
+    ); /* Matches the new blue theme */
     padding: 12px 25px;
     border-radius: 25px;
     font-weight: 600;
@@ -64,10 +71,12 @@
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 20px #3b96e1, 0 0 30px #73c2fb, 0 0 40px #3b96e1, 0 0 50px #73c2fb;
+        text-shadow: 0 0 20px #3b96e1, 0 0 30px #73c2fb, 0 0 40px #3b96e1,
+            0 0 50px #73c2fb;
     }
     to {
-        text-shadow: 0 0 30px #73c2fb, 0 0 40px #3b96e1, 0 0 50px #73c2fb, 0 0 60px #3b96e1;
+        text-shadow: 0 0 30px #73c2fb, 0 0 40px #3b96e1, 0 0 50px #73c2fb,
+            0 0 60px #3b96e1;
     }
 }
 

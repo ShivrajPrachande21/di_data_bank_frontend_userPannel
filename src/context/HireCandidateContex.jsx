@@ -4,7 +4,7 @@ import BaseUrl from '../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import io from 'socket.io-client';
-const socket = io('http://localhost:4000');
+const socket = io('http://65.20.91.47:4000');
 
 // Create the context
 export const HireCandidateContext = createContext();

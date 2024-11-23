@@ -145,7 +145,6 @@ const CredibilityEstablishment = () => {
                     <p>Track Offer letters</p>
                     <div className="seacrhbar">
                         <Form.Control
-                            width="20%"
                             placeholder="Search by PAN No. "
                             name="PAN"
                             value={PAN}

@@ -8,7 +8,6 @@ const HireCandidateNotification = () => {
         useContext(HireCandidateContext);
 
     const bindUrlOrPath = url => {
-        console.log('url', url);
         if (url) {
             let cleanBaseUrl = BaseUrl.replace(/\/api\b/, '');
             let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${url.replace(

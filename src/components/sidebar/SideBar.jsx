@@ -135,11 +135,9 @@ const SideBar = () => {
             icon: SupportIcon,
             link: 'support'
         }
-
-        // Add more buttons if needed
     ];
 
-    // Candidate oject to render based on login credentials
+    // Candidate object to render based on login credentials
     const sidebarButtonsCanditas = [
         {
             id: 1,
@@ -195,6 +193,7 @@ const SideBar = () => {
     const [profileview, SetProfileView] = useState([]);
     const [shortlist, SetShortlist] = useState([]);
     const [RenderVerify, SetRenderVerify] = useState('');
+
     async function CandidateProfiles(id) {
         try {
             const response = await axios.get(
@@ -207,6 +206,7 @@ const SideBar = () => {
         } catch (error) {}
     }
 
+    // socket for notifactions
     useEffect(() => {
         const render = localStorage.getItem('render');
         if (render == 'company') {
@@ -295,6 +295,7 @@ const SideBar = () => {
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
 
+    // uasEfect  to render Side Based on Token
     useEffect(() => {
         const render = localStorage.getItem('render');
         SetRenderVerify(render);
@@ -400,73 +401,69 @@ const SideBar = () => {
                                 onClick={toggleLogoout}
                             />
                         </div>
-                    </Col>
-                    <Col>
-                        {hidelogout && (
-                            <Col className="your-account">
-                                <p>Your account</p>
-                                <Row onClick={navigateProfile}>
-                                    <Col xs={2} className="logout-img">
-                                        <img
-                                            src={
-                                                profile
-                                                    ? bindUrlOrPath(profile)
-                                                    : altprofile
-                                            }
-                                            class="rounded-circle"
-                                            style={{
-                                                width: '20px',
-                                                height: '20px'
-                                            }}
-                                            alt="Avatar"
-                                        />
-                                    </Col>
-                                    <Col xs={8}>
-                                        <p
-                                            style={{
-                                                fontSize: '0.7rem',
-                                                marginTop: '5px',
-                                                marginLeft: '-8px'
-                                            }}
-                                        >
-                                            {Identity?.length > 10
-                                                ? Identity.substring(0, 12) +
-                                                  '...'
-                                                : Identity}
-                                        </p>
-                                    </Col>
-                                </Row>
-                                <Col
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        paddingBottom: '10px'
-                                    }}
-                                    onClick={
-                                        candidateToken
-                                            ? handle_logOut_candidate
-                                            : handle_logOut
-                                    }
-                                >
-                                    <button
-                                        className="logout-btn"
-                                        // onClick={handleLogout}
+                        <Col xs={12}>
+                            {hidelogout && (
+                                <Col className="your-account">
+                                    <p>Your account</p>
+                                    <Row onClick={navigateProfile}>
+                                        <Col xs={2} className="logout-img">
+                                            <img
+                                                src={
+                                                    profile
+                                                        ? bindUrlOrPath(profile)
+                                                        : altprofile
+                                                }
+                                                class="rounded-circle"
+                                                style={{
+                                                    width: '20px',
+                                                    height: '20px'
+                                                }}
+                                                alt="Avatar"
+                                            />
+                                        </Col>
+                                        <Col xs={8}>
+                                            <p
+                                                style={{
+                                                    fontSize: '0.7rem',
+                                                    marginTop: '5px',
+                                                    marginLeft: '-8px'
+                                                }}
+                                            >
+                                                {Identity?.length > 10
+                                                    ? Identity.substring(
+                                                          0,
+                                                          12
+                                                      ) + '...'
+                                                    : Identity}
+                                            </p>
+                                        </Col>
+                                    </Row>
+                                    <Col
+                                        onClick={
+                                            candidateToken
+                                                ? handle_logOut_candidate
+                                                : handle_logOut
+                                        }
                                     >
-                                        <img
-                                            src={logoutButton}
-                                            class="rounded-circle"
-                                            style={{
-                                                width: '16px',
-                                                marginRight: '10px'
-                                            }}
-                                            alt="Avatar"
-                                        />
-                                        Logout
-                                    </button>
+                                        <button
+                                            className="logout-btn"
+                                            // onClick={handleLogout}
+                                        >
+                                            <img
+                                                src={logoutButton}
+                                                class="rounded-circle"
+                                                style={{
+                                                    width: '16px',
+                                                    marginRight: '10px'
+                                                }}
+                                                alt="Avatar"
+                                            />
+                                            Logout
+                                        </button>
+                                    </Col>
                                 </Col>
-                            </Col>
-                        )}
+                            )}
+                        </Col>
                     </Col>
                 </Row>
 

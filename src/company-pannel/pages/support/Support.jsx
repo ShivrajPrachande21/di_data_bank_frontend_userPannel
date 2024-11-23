@@ -83,7 +83,7 @@ const Support = () => {
                     </div>
                 </Row>
                 <Row className="mt-2">
-                    <Table bordered className="custom-table">
+                    <Table bordered responsive className="custom-table">
                         <thead>
                             <tr style={{ borderTop: 'none' }}>
                                 <th

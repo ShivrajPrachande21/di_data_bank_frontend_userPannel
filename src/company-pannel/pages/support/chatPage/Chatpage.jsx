@@ -7,6 +7,7 @@ import './chatpage.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
+import { toast } from 'react-toastify';
 const socket = io('http://65.20.91.47:4000');
 const Chatpage = () => {
     const { id } = useParams();
@@ -70,17 +71,24 @@ const Chatpage = () => {
     }, []);
 
     const handleSendMessage = () => {
-        const timestamps = new Date();
-        const data = {
-            refference_id: companyId,
-            Issue_id: id,
-            message: message
-        };
-        socket.emit('newMessage', data);
-        setMessage('');
-        settimeStamp(timestamps);
+        if (message.trim() == '') {
+            toast.error('Please enter a message in the chat input box');
+        } else {
+            const timestamps = new Date();
+            const data = {
+                refference_id: companyId,
+                Issue_id: id,
+                message: message
+            };
+            socket.emit('newMessage', data);
+            setMessage('');
+            settimeStamp(timestamps);
+        }
     };
 
+    const handleInputChange = e => {
+        setMessage(e.target.value);
+    };
     return (
         <>
             <div className="Chatpage">
@@ -183,7 +191,7 @@ const Chatpage = () => {
                                 type="text"
                                 placeholder="write a message..."
                                 value={message}
-                                onChange={e => setMessage(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             <Button
                                 size="sm"

@@ -54,6 +54,9 @@
     align-items: center;
     justify-content: space-between;
 }
+.topsection-veiw img {
+    cursor: pointer;
+}
 .pdf-view {
     margin-top: 4px;
     width: 250px;

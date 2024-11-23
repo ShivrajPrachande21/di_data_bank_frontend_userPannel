@@ -16,6 +16,7 @@ const CompanyAiSearch = () => {
     const [fileData, setFileData] = useState(null);
     const [description, setSearchData] = useState('');
     const [AiData, setAiData] = useState(null);
+    const [aiPrompts, setAiprompts] = useState(null);
     const [loading, setLoading] = useState(false);
     const nvaigate = useNavigate();
     const fileRef = useRef();
@@ -36,31 +37,66 @@ const CompanyAiSearch = () => {
     const handleFileUpload = () => {
         fileRef.current.click();
     };
-    const handleFileChange = e => {
+    const handleFileChange = async e => {
         const file = e.target.files[0];
         if (file) {
             setFileData(file);
+            await UploadFileWithGetSuggetion(file);
         }
     };
 
-    const fetchAIData = async () => {
+    async function UploadFileWithGetSuggetion(file) {
         const formData = new FormData();
-        if (fileData?.name) {
-            formData.append('file', fileData);
-        }
+
+        formData.append('file', file);
 
         try {
             setLoading(true);
             const response = await axios.post(
                 'http://65.20.91.47:5000/pythonapi/company_process_input',
-
-                // description: description
-
-                description ? { description: description } : formData
+                formData
             );
-            response && console.log('AI data:', response.data);
-            setAiData(response?.data);
+
+            setAiprompts(response?.data);
+
             if (response?.status == 200 || response?.status == 201) {
+                setLoading(false);
+                setHideFile(false);
+                // setFileData(null);
+            }
+        } catch (error) {
+            setLoading(false);
+            setFileData(null);
+            setHideFile(false);
+            const errorMessage =
+                error?.response?.data?.error || 'An unknown error occurred';
+            toast.error(errorMessage);
+        }
+        console.log('aidata and Aiprompts', aiPrompts);
+    }
+
+    const fetchAIData = async () => {
+        try {
+            setLoading(true);
+            let response;
+            if (fileData && description) {
+                response = await axios.post(
+                    'http://65.20.91.47:5000/pythonapi/company_process_input',
+
+                    { description: description }
+                );
+            } else {
+                response = await axios.post(
+                    'http://65.20.91.47:5000/pythonapi/company_process_input/one',
+
+                    { description: description }
+                );
+            }
+
+            setAiData(response?.data?.basic_results);
+
+            if (response?.status == 200 || response?.status == 201) {
+                setAiprompts(null);
                 setLoading(false);
                 setHideFile(false);
                 setFileData(null);
@@ -70,9 +106,8 @@ const CompanyAiSearch = () => {
             setFileData(null);
             setHideFile(false);
             const errorMessage =
-                error?.response?.data?.error || 'An unknown error occurred';
+                error?.response?.data?.error || 'A error occurred';
             toast.error(errorMessage);
-            console.error('Error fetching AI data:', error);
         }
     };
     let len = AiData ? AiData.length : 0;
@@ -133,61 +168,98 @@ const CompanyAiSearch = () => {
                     ''
                 )}
 
-                {/* <p
-                style={{
-                    color: '#051F50',
-                    fontSize: '0.8rem',
-                    marginTop: '6px'
-                }}
-            >
-                Example:
-            </p> */}
-                <Row className="mt-2">
-                    <Col xs={12}>
-                        <div className="serach-result">
-                            <div className="para1">
-                                <p>AI Based Search Results : Top {len} </p>
-                            </div>
-
-                            <div className="download-email">
-                                <Button
-                                    size="sm"
-                                    className="download-btn1"
-
-                                    // disabled={isEmail_Disabled}
-                                    // onClick={download_emails}
+                <p
+                    style={{
+                        color: '#051F50',
+                        fontSize: '0.8rem',
+                        marginTop: '6px'
+                    }}
+                >
+                    Example:
+                </p>
+                {aiPrompts && (
+                    <Row>
+                        <Col>
+                            <div className="ai-prompts-suggescton">
+                                <div
+                                    className="ai-prompts-cards"
+                                    onClick={() =>
+                                        setSearchData(aiPrompts?.suggestion1)
+                                    }
                                 >
-                                    <span>Download Resume</span>
-                                </Button>
-                                <Button
-                                    className="download-btn1"
-                                    size="sm"
-
-                                    // onClick={download_resumes}
-                                    // disabled={
-                                    //     Subscription_Data[0]?.download_cv_limit ===
-                                    //     false
-                                    // }
+                                    <p>{aiPrompts?.suggestion1}</p>
+                                </div>
+                                <div
+                                    className="ai-prompts-cards"
+                                    onClick={() =>
+                                        setSearchData(aiPrompts?.suggestion2)
+                                    }
                                 >
-                                    <span style={{ fontSize: '0.7rem' }}>
-                                        Download Resume
-                                    </span>
-                                </Button>
-                                <div className="select-all">
-                                    <label htmlFor="">Select all</label>
-                                    <Form>
-                                        <Form.Check
-                                            type="checkbox"
-                                            id="custom-checkbox"
-                                            // checked={selectAllChecked}
-                                            // onChange={handleSelectAllChange}
-                                        />
-                                    </Form>
+                                    <p>{aiPrompts?.suggestion2}</p>
+                                </div>
+                                <div
+                                    className="ai-prompts-cards"
+                                    onClick={() =>
+                                        setSearchData(aiPrompts?.suggestion3)
+                                    }
+                                >
+                                    <p>{aiPrompts?.suggestion3}</p>
                                 </div>
                             </div>
-                        </div>
-                    </Col>
-                </Row>
+                        </Col>
+                    </Row>
+                )}
+
+                {AiData ? (
+                    <Row className="mt-2">
+                        <Col xs={12}>
+                            <div className="serach-result">
+                                <div className="para1">
+                                    <p>AI Based Search Results : Top {len} </p>
+                                </div>
+
+                                <div className="download-email">
+                                    <Button
+                                        size="sm"
+                                        className="download-btn1"
+
+                                        // disabled={isEmail_Disabled}
+                                        // onClick={download_emails}
+                                    >
+                                        <span>Download Resume</span>
+                                    </Button>
+                                    <Button
+                                        className="download-btn1"
+                                        size="sm"
+
+                                        // onClick={download_resumes}
+                                        // disabled={
+                                        //     Subscription_Data[0]?.download_cv_limit ===
+                                        //     false
+                                        // }
+                                    >
+                                        <span style={{ fontSize: '0.7rem' }}>
+                                            Download Resume
+                                        </span>
+                                    </Button>
+                                    <div className="select-all">
+                                        <label htmlFor="">Select all</label>
+                                        <Form>
+                                            <Form.Check
+                                                type="checkbox"
+                                                id="custom-checkbox"
+                                                // checked={selectAllChecked}
+                                                // onChange={handleSelectAllChange}
+                                            />
+                                        </Form>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                ) : (
+                    ''
+                )}
             </div>
 
             <div className="ai-search-result-section">

@@ -61,6 +61,7 @@
 }
 .serach-result {
 }
+
 .serach-result p {
     font-size: 0.76rem;
 
@@ -69,6 +70,8 @@
 .serach-result {
     display: flex;
     justify-content: space-between;
+
+    flex-wrap: wrap-reverse;
 }
 .download-btn {
     width: 180px;
@@ -130,7 +133,9 @@
     object-fit: cover;
 }
 .result-left {
+    width: 96%;
     display: flex;
+    cursor: pointer;
 }
 .result-text h4 {
     font-family: Poppins;
@@ -181,4 +186,45 @@
     border-radius: 4px; /* Optional: Add border radius */
     padding: 5px; /* Optional: Add padding */
     font-size: 14px; /* Optional: Set font size */
+}
+@media (max-width: 575.98px) {
+    .Search {
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+    .serach-result {
+        margin-top: -20px;
+        display: flex;
+        flex-direction: column;
+
+        flex-wrap: wrap-reverse;
+    }
+    .download-email {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .download-btn {
+        width: 190px;
+    }
+    .select-all {
+        width: 100%;
+        margin-left: -0px;
+        margin-bottom: 6px;
+    }
+
+    .Search select {
+        width: auto;
+        font-size: 0.6rem;
+    }
+}
+@media (max-width: 767.98px) {
+    .Search {
+        margin-left: 0px;
+        margin-top: 4px;
+    }
+    .Search select {
+        padding: 0px;
+        width: auto;
+    }
 }

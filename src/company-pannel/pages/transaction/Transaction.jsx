@@ -53,7 +53,7 @@ const Transaction = () => {
                     }}
                 >
                     <Col xs={12} style={{ marginTop: '6px' }}>
-                        <Table bordered className="custom-table">
+                        <Table bordered className="custom-table" responsive>
                             <thead>
                                 <tr style={{ borderTop: 'none' }}>
                                     <th

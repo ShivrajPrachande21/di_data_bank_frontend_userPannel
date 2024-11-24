@@ -35,15 +35,20 @@ const Forgotpassword = () => {
         confirmpassword: ''
     });
 
-    const ValidateOTP = e => {
+    const ValidateOTP =async e => {
         e.preventDefault();
-        if (OTP === userOTP) {
-            setcurrentStep(3);
-            console.log('hello');
-        } else {
-            SetOTPerror('Wrong otp');
+        try{
+            const response = await axios.post(`${BaseUrl}company/forget/verify`, {
+                email,
+                OTP:userOTP
+            });
+            if (response.status == 200 || response.status == 201) {
+                setcurrentStep(3);
+            }
+            setUserOtp('');
+        }catch(error){
+            SetOTPerror(error.response.data.error);
         }
-        setUserOtp('');
     };
 
     // Clear OTP Error On the Change
@@ -127,7 +132,7 @@ const Forgotpassword = () => {
         // Proceed to change password if all validations pass
         await changePassword(Resetdata);
 
-        setResetdata({
+        setRestdata({
             password: '',
             confirmpassword: ''
         });

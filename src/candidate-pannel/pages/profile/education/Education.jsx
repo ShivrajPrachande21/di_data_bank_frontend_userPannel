@@ -97,7 +97,8 @@ function Education() {
             <div className="education">
                 <Row>
                     <Col
-                        xs={5}
+                        xs={10}
+                        md={5}
                         style={{
                             color: '#051F50',
                             fontWeight: '500',
@@ -107,7 +108,7 @@ function Education() {
                     >
                         Education Details
                     </Col>
-                    <Col xs={1}>
+                    <Col xs={2} md={1}>
                         <img
                             src={EditProfile}
                             alt=""

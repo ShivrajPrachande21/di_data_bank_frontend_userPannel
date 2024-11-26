@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Modal, Table,Form } from 'react-bootstrap';
+import { Button, Modal, Table, Form } from 'react-bootstrap';
 import './Longlist';
 import View from '../../../../../assets/images/View.png';
 import { CreateJobContext } from '../../../../../context/CreateJobContext';
@@ -8,7 +8,6 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import BaseUrl from '../../../../../services/BaseUrl';
 
-
 const Longlist = () => {
     const {
         viewJobDesciptionData,
@@ -16,7 +15,7 @@ const Longlist = () => {
         shortlis_candidate,
         fetch_Job_Longlist
     } = useContext(CreateJobContext);
-    console.log("appud Longolis",longlistData)
+    console.log('appud Longolis', longlistData);
     const [modalShow, setModalShow] = useState(false);
     const [currentResume, setCurrentResume] = useState('');
     const [user_id, setUser_id] = useState('');
@@ -38,8 +37,8 @@ const Longlist = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -74,24 +73,28 @@ const Longlist = () => {
 
     const handleRoundChange = (candidateIndex, event) => {
         const selectedIndex = event.target.value;
-        setSelectedRounds((prevState) => ({
-          ...prevState,
-          [candidateIndex]: selectedIndex,
+        setSelectedRounds(prevState => ({
+            ...prevState,
+            [candidateIndex]: selectedIndex
         }));
-      };
+    };
 
-      const handle_Interview_RoundAction=async(user_id,interviewRound, status)=>{
+    const handle_Interview_RoundAction = async (
+        user_id,
+        interviewRound,
+        status
+    ) => {
         const jobid = localStorage.getItem('job_id');
         try {
             const response = await axios.put(
                 `${BaseUrl}company/change_status/interview_round/${jobid}/${user_id}`,
-                {interviewRound, status}
+                { interviewRound, status }
             );
-             if(response.status==200||201){
-                fetch_Job_Longlist()
-             }
+            if (response.status == 200 || 201) {
+                fetch_Job_Longlist();
+            }
         } catch (error) {}
-      }
+    };
     return (
         <>
             <Modal show={isModalVisible} onHide={showModal} centered>
@@ -111,7 +114,7 @@ const Longlist = () => {
                 </Modal.Footer>
             </Modal>
             <div className="applications mt-2">
-                <Table bordered>
+                <Table bordered responsive>
                     <thead>
                         <tr style={{ borderTop: 'none' }}>
                             <th
@@ -164,7 +167,7 @@ const Longlist = () => {
                                 scope="col"
                                 style={{ fontSize: '0.7rem' }}
                             >
-                            Interview Round
+                                Interview Round
                             </th>
                             <th
                                 className="p-1"
@@ -176,141 +179,165 @@ const Longlist = () => {
                         </tr>
                     </thead>
                     <tbody style={{ fontSize: '0.7rem' }}>
-                                {longlistData&&longlistData.map((item, candidateIndex) => {
-                                    const selectedRoundIndex = selectedRounds[candidateIndex] || 0; // Use 0 as default if not selected
-                                    const selectedRound = item?.applied_candidates?.interviewRound[selectedRoundIndex]; // Get current selected round
-                        
-                                    return (
-                                <tr key={candidateIndex}>
-                                    <td style={{ borderLeft: 'none' }}>
-                                        {candidateIndex + 1}
-                                    </td>
-                                    <td>{item?.BasicDetails?.name}</td>
-                                    <td>{item?.BasicDetails?.email}</td>
-                                    <td>{item?.BasicDetails?.mobile}</td>
-                                    <td
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between'
-                                        }}
-                                    >
-                                        resume.pdf
-                                        <img
-                                            src={View}
-                                            alt=""
-                                            height="20px"
-                                            onClick={() =>
-                                                handleShow(
-                                                    item?.resumeUrl
-                                                )
-                                            } // Pass the correct resume link
-                                        />
-                                    </td>
-                                    <td>
-                                        {formatDate(
-                                            item?.applied_candidates
-                                                ?.applied_date
-                                        )}
-                                    </td>
-                                    <td style={{ width: '15%' }}>
-                                    
-                    <Form.Group controlId="email" className="mt-2">
-                       
-                        <Form.Select
-                            name="gender"
-                            value={selectedRoundIndex}
-                            onChange={(event) =>
-                                handleRoundChange(candidateIndex, event)
-                              }
-                            style={{
-                                marginTop: '-6px',
-                                height: '35px',
-                                border: '1.3px solid #AEAEAE',
-                                fontSize: '0.8rem'
-                            }}
-                        >
-                                   
-                    {item?.applied_candidates?.interviewRound.map((round, roundIndex) => (
-                        <option key={roundIndex} value={roundIndex}> {round.roundName}</option>
-                    ))}
-               </Form.Select>
-               </Form.Group>
-                                    </td>
-                                    <td style={{ width: '25%' }}>
-                                    {selectedRound.roundAction === "Pending" ? (
-                                  <>  <Button
-                                            size="sm"
-                                            style={{
-                                                background: '#3B96E1',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 28px',
-                                                width: '40%'
-                                            }}
-                                            onClick={() =>
-                                                handle_Interview_RoundAction(
-                                                    item?.
-                                                    applied_candidates
-                                                    ?.candidate_id,selectedRound?.roundName,'Selected'
+                        {longlistData &&
+                            longlistData.map((item, candidateIndex) => {
+                                const selectedRoundIndex =
+                                    selectedRounds[candidateIndex] || 0; // Use 0 as default if not selected
+                                const selectedRound =
+                                    item?.applied_candidates?.interviewRound[
+                                        selectedRoundIndex
+                                    ]; // Get current selected round
 
-                                                )
-                                            }
-                                        >
-                                            Select
-                                        </Button>
-                                        <Button
-                                            size="sm"
+                                return (
+                                    <tr key={candidateIndex}>
+                                        <td style={{ borderLeft: 'none' }}>
+                                            {candidateIndex + 1}
+                                        </td>
+                                        <td>{item?.BasicDetails?.name}</td>
+                                        <td>{item?.BasicDetails?.email}</td>
+                                        <td>{item?.BasicDetails?.mobile}</td>
+                                        <td
                                             style={{
-                                                background: 'red',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 28px',
-                                                width: '40%'
+                                                display: 'flex',
+                                                justifyContent: 'space-between'
                                             }}
-                                            onClick={() =>
-                                                handle_Interview_RoundAction(
-                                                    item?.
-                                                    applied_candidates
-                                                    ?.candidate_id,selectedRound?.roundName,'Rejected'
-
-                                                )
-                                            }
                                         >
-                                        Reject
-                                        </Button>
-                                        </>
-                                          ) : selectedRound.roundAction == "Selected" ? (
-                                            <Button
-                                            size="sm"
-                                            style={{
-                                                background: '#3B96E1',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 40px',
-                                                width: '70%'
-                                            }}
-                                            
-                                        >
-                                            Selected
-                                        </Button>
-                                        ) : (
-                                            <Button
-                                            size="sm"
-                                            style={{
-                                                background: 'red',
-                                                color: 'white',
-                                                border: 'none',
-                                                padding: '6px 40px',
-                                                width: '70%'
-                                            }}
-                                            
-                                        >
-                                        Rejected
-                                        </Button>
-                                        )}
-                                    </td>
-                                </tr>
-                             )})}
+                                            resume.pdf
+                                            <img
+                                                src={View}
+                                                alt=""
+                                                height="20px"
+                                                onClick={() =>
+                                                    handleShow(item?.resumeUrl)
+                                                } // Pass the correct resume link
+                                            />
+                                        </td>
+                                        <td>
+                                            {formatDate(
+                                                item?.applied_candidates
+                                                    ?.applied_date
+                                            )}
+                                        </td>
+                                        <td style={{ width: '15%' }}>
+                                            <Form.Group
+                                                controlId="email"
+                                                className="mt-2"
+                                            >
+                                                <Form.Select
+                                                    name="gender"
+                                                    value={selectedRoundIndex}
+                                                    onChange={event =>
+                                                        handleRoundChange(
+                                                            candidateIndex,
+                                                            event
+                                                        )
+                                                    }
+                                                    style={{
+                                                        marginTop: '-6px',
+                                                        height: '35px',
+                                                        border: '1.3px solid #AEAEAE',
+                                                        fontSize: '0.8rem'
+                                                    }}
+                                                >
+                                                    {item?.applied_candidates?.interviewRound.map(
+                                                        (round, roundIndex) => (
+                                                            <option
+                                                                key={roundIndex}
+                                                                value={
+                                                                    roundIndex
+                                                                }
+                                                            >
+                                                                {' '}
+                                                                {
+                                                                    round.roundName
+                                                                }
+                                                            </option>
+                                                        )
+                                                    )}
+                                                </Form.Select>
+                                            </Form.Group>
+                                        </td>
+                                        <td style={{ width: '25%' }}>
+                                            {selectedRound.roundAction ===
+                                            'Pending' ? (
+                                                <>
+                                                    {' '}
+                                                    <Button
+                                                        size="sm"
+                                                        style={{
+                                                            background:
+                                                                '#3B96E1',
+                                                            color: 'white',
+                                                            border: 'none',
+                                                            padding: '6px 28px',
+                                                            width: '40%'
+                                                        }}
+                                                        onClick={() =>
+                                                            handle_Interview_RoundAction(
+                                                                item
+                                                                    ?.applied_candidates
+                                                                    ?.candidate_id,
+                                                                selectedRound?.roundName,
+                                                                'Selected'
+                                                            )
+                                                        }
+                                                    >
+                                                        Select
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        style={{
+                                                            background: 'red',
+                                                            color: 'white',
+                                                            border: 'none',
+                                                            padding: '6px 28px',
+                                                            width: '40%'
+                                                        }}
+                                                        onClick={() =>
+                                                            handle_Interview_RoundAction(
+                                                                item
+                                                                    ?.applied_candidates
+                                                                    ?.candidate_id,
+                                                                selectedRound?.roundName,
+                                                                'Rejected'
+                                                            )
+                                                        }
+                                                    >
+                                                        Reject
+                                                    </Button>
+                                                </>
+                                            ) : selectedRound.roundAction ==
+                                              'Selected' ? (
+                                                <Button
+                                                    size="sm"
+                                                    style={{
+                                                        background: '#3B96E1',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        padding: '6px 40px',
+                                                        width: '70%'
+                                                    }}
+                                                >
+                                                    Selected
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    size="sm"
+                                                    style={{
+                                                        background: 'red',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        padding: '6px 40px',
+                                                        width: '70%'
+                                                    }}
+                                                >
+                                                    Rejected
+                                                </Button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </Table>
 
@@ -333,11 +360,15 @@ const Longlist = () => {
                             <div>
                                 {currentResume ? (
                                     <iframe
-                                       // src={getEmbedLink(currentResume)} 
+                                        // src={getEmbedLink(currentResume)}
                                         src={
                                             currentResume
-                                                ? isGoogleDriveLink(currentResume)
-                                                    ? getEmbedLink(currentResume)
+                                                ? isGoogleDriveLink(
+                                                      currentResume
+                                                  )
+                                                    ? getEmbedLink(
+                                                          currentResume
+                                                      )
                                                     : currentResume
                                                 : null
                                         }

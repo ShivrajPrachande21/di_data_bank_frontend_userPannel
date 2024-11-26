@@ -76,7 +76,7 @@ const CandidateTransaction = () => {
                     }}
                 >
                     <Col xs={12} style={{ marginTop: '6px' }}>
-                        <Table bordered className="custom-table">
+                        <Table bordered responsive className="custom-table">
                             <thead>
                                 <tr style={{ borderTop: 'none' }}>
                                     <th
@@ -184,7 +184,8 @@ const CandidateTransaction = () => {
                         }}
                     >
                         <Col
-                            xs={8}
+                            xs={4}
+                            md={8}
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
@@ -201,7 +202,7 @@ const CandidateTransaction = () => {
                             >
                                 Result per page
                             </span>
-                            <Col xs={2}>
+                            <Col xs={8} md={2}>
                                 <select
                                     className="form-select"
                                     aria-label="Default select example"
@@ -230,7 +231,9 @@ const CandidateTransaction = () => {
                                 </select>
                             </Col>
                             <Col
-                                xs={2}
+                                xs={12}
+                                md={2}
+                                className="d-none d-md-block"
                                 style={{
                                     fontSize: '0.8rem',
                                     fontWeight: '600'
@@ -239,7 +242,8 @@ const CandidateTransaction = () => {
                                 {currentPage}-{itemsPerPage} out of {totalItems}
                             </Col>
                             <Col
-                                xs={2}
+                                xs={4}
+                                md={2}
                                 style={{
                                     marginTop: '20px',
                                     marginRight: '-160px'

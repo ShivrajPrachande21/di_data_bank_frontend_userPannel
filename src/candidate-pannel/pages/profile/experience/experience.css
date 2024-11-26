@@ -223,3 +223,14 @@
     height: 20px;
     cursor: pointer;
 }
+@media (max-width: 575.98px) {
+    .work-detials {
+        margin-left: 0px;
+    }
+    .education-card {
+        width: 100%;
+    }
+    .add-new-edu {
+        width: 100%;
+    }
+}

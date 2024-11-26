@@ -115,7 +115,7 @@ const Profile = () => {
                         </div>
                     </Row>
                     <Row>
-                        <Col xs={2}>
+                        <Col xs={6} md={2}>
                             <div
                                 className="div-img"
                                 style={{
@@ -138,7 +138,7 @@ const Profile = () => {
                                 />
                             </div>
                         </Col>
-                        <Col xs={10}>
+                        <Col xs={6} md={10}>
                             <div
                                 style={{
                                     display: 'flex',
@@ -188,13 +188,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 <div className="divice-loged-in">
-                                    <p
-                                        style={{
-                                            color: '#3B96E1',
-                                            fontSize: '0.8rem',
-                                            fontWeight: '500'
-                                        }}
-                                    >
+                                    <p>
                                         Device Logged In :
                                         {
                                             profileData?.updatedData
@@ -252,15 +246,26 @@ const Profile = () => {
                                                   ?.contact_No
                                             : 'N/A'}
                                     </p>
-                                    <p style={{ color: '#051F50' }}>
+                                    <p
+                                        style={{
+                                            color: '#051F50'
+                                        }}
+                                    >
                                         {profileData?.updatedData?.location
                                             ? profileData?.updatedData?.location
                                             : 'N/A'}
                                     </p>
-                                    <p style={{ color: '#051F50' }}>
+                                    <p
+                                        style={{
+                                            color: '#051F50'
+                                        }}
+                                    >
                                         {profileData?.updatedData?.website_url
-                                            ? profileData?.updatedData
-                                                  ?.website_url
+                                            .length > 26
+                                            ? profileData?.updatedData?.website_url.substring(
+                                                  0,
+                                                  26
+                                              ) + '...'
                                             : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
@@ -286,7 +291,7 @@ const Profile = () => {
                             <div className="cards">
                                 <div className="tables">
                                     <p>Email:</p>
-                                    <p style={{ width: '140px' }}>Mobile No:</p>
+                                    <p>Mobile No:</p>
                                     <br></br>
                                     <p>GSTIN:</p>
                                     <br></br>

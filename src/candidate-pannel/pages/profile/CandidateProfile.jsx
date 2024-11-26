@@ -201,7 +201,7 @@ const CandidateProfile = () => {
                     </Row>
 
                     <Row>
-                        <Col xs={2}>
+                        <Col xs={6} md={2}>
                             <div
                                 className="div-img"
                                 style={{
@@ -225,7 +225,7 @@ const CandidateProfile = () => {
                                 />
                             </div>
                         </Col>
-                        <Col xs={10}>
+                        <Col xs={5} md={10}>
                             <div
                                 style={{
                                     display: 'flex',

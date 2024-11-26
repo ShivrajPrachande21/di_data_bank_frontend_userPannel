@@ -32,8 +32,8 @@ const Applications = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -87,7 +87,7 @@ const Applications = () => {
                 </Modal.Footer>
             </Modal>
             <div className="applications mt-2">
-                <Table bordered>
+                <Table bordered responsive>
                     <thead>
                         <tr style={{ borderTop: 'none' }}>
                             <th
@@ -166,9 +166,7 @@ const Applications = () => {
                                             alt=""
                                             height="20px"
                                             onClick={() =>
-                                                handleShow(
-                                                    item?.resumeUrl
-                                                )
+                                                handleShow(item?.resumeUrl)
                                             } // Pass the correct resume link
                                         />
                                     </td>
@@ -221,11 +219,15 @@ const Applications = () => {
                             <div>
                                 {currentResume ? (
                                     <iframe
-                                       // src={getEmbedLink(currentResume)} // Ensure the src is set
+                                        // src={getEmbedLink(currentResume)} // Ensure the src is set
                                         src={
                                             currentResume
-                                                ? isGoogleDriveLink(currentResume)
-                                                    ? getEmbedLink(currentResume)
+                                                ? isGoogleDriveLink(
+                                                      currentResume
+                                                  )
+                                                    ? getEmbedLink(
+                                                          currentResume
+                                                      )
                                                     : currentResume
                                                 : null
                                         }

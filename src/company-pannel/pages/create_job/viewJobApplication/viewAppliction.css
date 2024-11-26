@@ -61,6 +61,7 @@
     display: flex;
     justify-content: space-between;
     padding-right: 20px;
+    flex-wrap: wrap;
 }
 .view-dropdown {
     display: flex;
@@ -116,4 +117,15 @@
 .job-discription ul li {
     margin-bottom: 5px;
     font-size: 0.8rem;
+}
+
+@media (max-width: 575.98px) {
+    .header-view {
+        margin-left: 0px;
+    }
+    .view-btn ul li {
+        display: flex;
+
+        margin-top: 20px;
+    }
 }

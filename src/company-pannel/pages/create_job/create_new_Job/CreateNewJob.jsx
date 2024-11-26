@@ -6,6 +6,7 @@ import './newjob.css';
 import { Button, Col, Form, InputGroup, Modal, Row } from 'react-bootstrap';
 import oui_cross from '../../../../assets/images/oui_cross.png';
 import Plus from '../../../../assets/images/Plus.png';
+
 import axios from 'axios';
 import BaseUrl from '../../../../services/BaseUrl';
 import debounce from 'lodash.debounce';
@@ -15,7 +16,7 @@ import Loader from '../../loader/Loader';
 import { useNavigate } from 'react-router-dom';
 
 const CreateNewJob = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate();
     const {
         lgShow,
         setLgShow,
@@ -249,12 +250,18 @@ const CreateNewJob = () => {
                 ''
             )}
             <div className="new-job">
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{ float: 'right', width: '24px', cursor: 'pointer' }}
+                    onClick={() => setLgShow(prev => !prev)}
+                />
                 <div className="heading-new-job">
                     <p>Create Job</p>
                 </div>
                 <Form onSubmit={handleSubmit}>
                     <Row>
-                        <Col xs={6}>
+                        <Col xs={12} md={6}>
                             <Form.Label className="custom-input-group-label">
                                 Job Title
                                 <span className="text-danger">*</span>
@@ -274,7 +281,7 @@ const CreateNewJob = () => {
                                 />
                             </InputGroup>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={12} md={6}>
                             <Form.Label className="custom-input-group-label">
                                 Industry
                                 <span className="text-danger">*</span>
@@ -297,7 +304,7 @@ const CreateNewJob = () => {
                     </Row>
 
                     <Row>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Salary
                                 <span className="text-danger">*</span>
@@ -316,7 +323,7 @@ const CreateNewJob = () => {
                                 />
                             </InputGroup>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Experience Required
                                 <span className="text-danger">*</span>
@@ -334,7 +341,7 @@ const CreateNewJob = () => {
                                 />
                             </InputGroup>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 No. of Openings
                                 <span className="text-danger">*</span>
@@ -352,7 +359,7 @@ const CreateNewJob = () => {
                                 />
                             </InputGroup>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Location
                                 <span className="text-danger">*</span>
@@ -373,7 +380,7 @@ const CreateNewJob = () => {
                     </Row>
 
                     <Row>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Job Type
                                 <span className="text-danger">*</span>
@@ -392,7 +399,7 @@ const CreateNewJob = () => {
                                 </Form.Select>
                             </InputGroup>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Workplace Type
                                 <span className="text-danger">*</span>
@@ -411,7 +418,7 @@ const CreateNewJob = () => {
                                 </Form.Select>
                             </InputGroup>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Education Required
                                 <span className="text-danger">*</span>
@@ -423,7 +430,7 @@ const CreateNewJob = () => {
                                 onChange={handleFormChange}
                             />
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Country
                                 <span className="text-danger">*</span>
@@ -493,7 +500,7 @@ const CreateNewJob = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"
@@ -504,7 +511,7 @@ const CreateNewJob = () => {
                                 }
                             />
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"
@@ -515,7 +522,7 @@ const CreateNewJob = () => {
                                 }
                             />
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"
@@ -526,7 +533,7 @@ const CreateNewJob = () => {
                                 }
                             />
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"
@@ -537,7 +544,7 @@ const CreateNewJob = () => {
                                 }
                             />
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"
@@ -548,29 +555,7 @@ const CreateNewJob = () => {
                                 }
                             />
                         </Col>
-                        <Col xs={3}>
-                            <Form.Check
-                                className="check-boxes"
-                                type="checkbox"
-                                label="Leadership round"
-                                checked={createJobData.Leadership_Round}
-                                onChange={() =>
-                                    handleCheckboxChange('Leadership_Round')
-                                }
-                            />
-                        </Col>
-                        <Col xs={3}>
-                            <Form.Check
-                                className="check-boxes"
-                                type="checkbox"
-                                label="Project round"
-                                checked={createJobData.Project_Round}
-                                onChange={() =>
-                                    handleCheckboxChange('Project_Round')
-                                }
-                            />
-                        </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"
@@ -581,8 +566,30 @@ const CreateNewJob = () => {
                                 }
                             />
                         </Col>
+                        <Col xs={6} md={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Leadership round"
+                                checked={createJobData.Leadership_Round}
+                                onChange={() =>
+                                    handleCheckboxChange('Leadership_Round')
+                                }
+                            />
+                        </Col>
+                        <Col xs={6} md={3}>
+                            <Form.Check
+                                className="check-boxes"
+                                type="checkbox"
+                                label="Project round"
+                                checked={createJobData.Project_Round}
+                                onChange={() =>
+                                    handleCheckboxChange('Project_Round')
+                                }
+                            />
+                        </Col>
 
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"
@@ -593,7 +600,7 @@ const CreateNewJob = () => {
                                 }
                             />
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={6} md={3}>
                             <Form.Check
                                 className="check-boxes"
                                 type="checkbox"

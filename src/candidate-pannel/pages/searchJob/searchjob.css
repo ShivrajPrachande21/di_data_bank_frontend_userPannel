@@ -175,3 +175,12 @@
     margin-top: 10px;
     border-radius: 12px;
 }
+@media (max-width: 575.98px) {
+    .search {
+        width: 100%;
+    }
+    .search-job-card-div {
+        margin-left: 0px;
+        padding: 20px;
+    }
+}

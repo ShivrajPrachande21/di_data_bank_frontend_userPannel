@@ -22,3 +22,9 @@
         background-position: calc(100% / 3) 0, calc(100% / -3) 100%;
     }
 }
+@media (max-width: 575.98px) {
+    .loader {
+        top: 26%;
+        left: 20%;
+    }
+}

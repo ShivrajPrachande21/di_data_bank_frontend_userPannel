@@ -18,7 +18,6 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-
 .viewOutlet {
     margin-top: 16px;
 }
@@ -82,4 +81,12 @@
     height: 20px;
     margin-top: 40px;
     cursor: pointer;
+}
+@media (max-width: 575.98px) {
+    .candidate-profile-btns button {
+        margin-bottom: 10px;
+    }
+    .edit-profile-btn {
+        margin-left: 0px;
+    }
 }

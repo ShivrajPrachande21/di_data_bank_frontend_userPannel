@@ -121,7 +121,7 @@ function CandidateChat() {
     return (
         <>
             <div className="Chatpage">
-                <div className="chatCenter" style={{ width: '66%' }}>
+                <div className="chatCenter">
                     <div
                         className="arrowback"
                         onClick={() =>

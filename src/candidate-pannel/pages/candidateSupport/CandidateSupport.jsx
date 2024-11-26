@@ -90,6 +90,7 @@ const CandidateSupport = () => {
                 <Row className="mt-2">
                     <Table
                         bordered
+                        responsive
                         className="custom-table "
                         style={{
                             overflowX: 'auto',

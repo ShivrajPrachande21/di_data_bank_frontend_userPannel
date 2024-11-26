@@ -221,14 +221,10 @@ function MyDetails() {
                                 overlay={EditPersonal}
                             >
                                 <img
+                                    className="edit-profile-btn"
                                     src={EditProfile}
                                     alt=""
                                     height="20px"
-                                    style={{
-                                        marginLeft: '-100px',
-                                        marginTop: '-50px',
-                                         cursor: 'pointer'
-                                    }}
                                     onClick={showPersonalModal}
                                 />
                             </OverlayTrigger>

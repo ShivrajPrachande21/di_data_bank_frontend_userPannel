@@ -171,6 +171,7 @@ details {
     gap: 12px;
 }
 .public {
+    overflow: hidden;
     width: 50%;
     background: white;
     padding: 10px;
@@ -284,6 +285,11 @@ details {
     margin-left: 14px;
 }
 
+.divice-loged-in {
+    color: #3b96e1;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
 /* For WebKit browsers (Chrome, Safari) */
 .align::-webkit-scrollbar {
     height: 6px; /* Horizontal scrollbar height */
@@ -309,5 +315,16 @@ details {
     }
     .private {
         width: 100%;
+    }
+}
+@media (max-width: 575.98px) {
+    .subReportedjob {
+        width: 100%;
+    }
+    .info {
+        width: 100%;
+    }
+    .divice-loged-in p {
+        font-size: 0.6rem;
     }
 }

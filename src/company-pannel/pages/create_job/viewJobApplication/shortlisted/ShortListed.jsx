@@ -62,8 +62,8 @@ const ShortListed = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -75,10 +75,10 @@ const ShortListed = () => {
         const fileId = link.split('/d/')[1].split('/')[0];
         return `https://drive.google.com/file/d/${fileId}/preview`;
     };
-    
-const isGoogleDriveLink = url => {
-    return url && url.includes('drive.google.com');
-};
+
+    const isGoogleDriveLink = url => {
+        return url && url.includes('drive.google.com');
+    };
 
     const [comment, setComment] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
@@ -163,7 +163,7 @@ const isGoogleDriveLink = url => {
                     borderRadius: '8px'
                 }}
             >
-                <Table bordered>
+                <Table bordered responsive>
                     <thead>
                         <tr style={{ borderTop: 'none' }}>
                             <th
@@ -249,9 +249,7 @@ const isGoogleDriveLink = url => {
                                             alt=""
                                             height="20px"
                                             onClick={() =>
-                                                handleShow(
-                                                    item?.resumeUrl
-                                                )
+                                                handleShow(item?.resumeUrl)
                                             } // Pass the correct resume link
                                         />
                                     </td>

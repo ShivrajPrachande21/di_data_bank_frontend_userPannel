@@ -17,11 +17,17 @@
     border-radius: 12px;
 }
 .Head {
-    height: 50px;
+    height: 60px;
     width: 160px;
-    background-color: rgb(234, 234, 234);
+
     border-radius: 20px;
     margin-top: 12px;
+    overflow: hidden;
+    object-fit: cover;
+}
+.Head img {
+    width: 100%;
+    aspect-ratio: 6/2;
 }
 .Select {
     display: flex;

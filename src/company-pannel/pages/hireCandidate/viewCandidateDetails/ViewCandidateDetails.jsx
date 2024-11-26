@@ -148,7 +148,7 @@ const ViewCandidateDetails = () => {
                         </div>
                     </Row>
                     <Row style={{ marginTop: '-8px' }}>
-                        <Col xs={1}>
+                        <Col xs={3} md={1}>
                             <div className="view-images">
                                 <img
                                     src={
@@ -161,7 +161,7 @@ const ViewCandidateDetails = () => {
                                 />
                             </div>
                         </Col>
-                        <Col xs={10}>
+                        <Col xs={9} md={10}>
                             <div
                                 style={{
                                     display: 'flex',

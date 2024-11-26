@@ -282,3 +282,17 @@ h4 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #3b96e1;
 }
+@media (max-width: 575.98px) {
+    .step-line {
+        width: 100%;
+        left: calc(100% + -27px);
+    }
+    .view-applied-details {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .no-jobs-container {
+        margin-left: 10rem;
+        font-size: 0.8rem;
+    }
+}

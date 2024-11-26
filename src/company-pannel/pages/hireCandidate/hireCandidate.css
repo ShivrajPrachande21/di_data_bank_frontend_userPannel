@@ -205,7 +205,8 @@
         gap: 10px;
     }
     .download-btn {
-        width: 190px;
+        width: 160px;
+        font-size: 0.6rem;
     }
     .select-all {
         width: 100%;

@@ -102,7 +102,7 @@ const EditExperience = () => {
             }
         }
     };
-    console.log('<span className="text-danger">*</span>', expData);
+  
 
     return (
         <>

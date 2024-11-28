@@ -68,6 +68,8 @@ const CandidateProfile = () => {
             navigate('experience');
         } else if (data == 'education') {
             navigate('education');
+        } else if (data == 'resume') {
+            navigate('resume');
         } else {
             navigate('reviews');
         }
@@ -327,6 +329,13 @@ const CandidateProfile = () => {
                                 onClick={() => handleNavigate('education')}
                             >
                                 Education{' '}
+                            </Button>
+                            <Button
+                                size="sm"
+                                style={getButtonStyle('resume')}
+                                onClick={() => handleNavigate('resume')}
+                            >
+                                Ai Resume
                             </Button>
                             <Button
                                 size="sm"

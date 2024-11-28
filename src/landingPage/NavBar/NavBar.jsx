@@ -3,18 +3,13 @@ import './navBar.css';
 import { Button, Image } from 'react-bootstrap';
 import { Link } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
-
+import favIcon from '../../assets/images/whiteLogo.png';
 const NavBar = () => {
     const navigate = useNavigate();
     return (
         <>
             <div className="navbar">
-                <Image
-                    src="https://via.placeholder.com/150"
-                    rounded
-                    alt="Rounded"
-                    width="50px"
-                />
+                <Image src={favIcon} rounded alt="Rounded" width="100px" />
                 <div className="nav-bar-top-right">
                     <h3>
                         {' '}

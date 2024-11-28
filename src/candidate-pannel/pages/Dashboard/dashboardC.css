@@ -10,7 +10,7 @@
     font-size: 1.2rem;
 }
 .candidate-dashboard-subscription-card {
-    height: 50vh;
+    height: 54vh;
     background: #ffffff;
     width: 100%;
     border-radius: 8px;
@@ -56,8 +56,6 @@
     flex-wrap: wrap;
     gap: 10px;
 
-    justify-content: space-around;
-
     width: 100%;
     border-radius: 8px;
 }
@@ -75,7 +73,7 @@
 }
 .drop-down-list {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .custom-select-sub {
@@ -83,6 +81,18 @@
     padding: 2px;
 
     height: 30px;
+}
+
+.custom-select-sub-date input[type='date'] {
+    background: #0698e6;
+    font-size: 0.8rem;
+    border: none;
+    padding: 4px 4px;
+    border-radius: 4px;
+}
+.custom-select-sub-date p {
+    font-size: 0.8rem;
+    margin-bottom: -1px;
 }
 .custom-select-sub p {
     margin-bottom: -10px;

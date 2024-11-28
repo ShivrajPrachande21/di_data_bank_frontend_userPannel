@@ -18,7 +18,7 @@ const DashboardLayout = () => {
 
         // Initial check on mount
         if (window.innerWidth > 768) {
-            sethidSidebar(prev => !prev);
+            sethidSidebar(false);
         }
 
         // Add event listener

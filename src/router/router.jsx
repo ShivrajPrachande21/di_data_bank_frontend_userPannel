@@ -55,6 +55,7 @@ import PrivacyPolicy from '../components/privacyPolicy/PrivacyPolicy';
 import CredibilityEstablishment from '../company-pannel/pages/credibility-establishment/CredibilityEstablishment';
 import DashboardCandidate from '../candidate-pannel/pages/Dashboard/DashboardCandidate';
 import LandingPage from '../landingPage/LandingPage';
+import Resume from '../candidate-pannel/pages/profile/resume/Resume';
 
 const router = createBrowserRouter([
     {
@@ -278,6 +279,10 @@ const router = createBrowserRouter([
             {
                 path: 'education',
                 element: <Education />
+            },
+            {
+                path: 'resume',
+                element: <Resume />
             },
             {
                 path: 'reviews',

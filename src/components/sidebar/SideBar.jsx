@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 const socket = io('http://65.20.91.47:4000');
 import './sidebar.css';
-import WdcLogo from '../../assets/images/WdcLogo.jpg';
+import WdcLogo from '../../assets/images/Withoutbg.png';
 import bellgray from '../../assets/images/bellgray.png';
 import logoutButton from '../../assets/images/logoutButton.png';
 import iconamoon_arrowd from '../../assets/images/iconamoon_arrowd.png';

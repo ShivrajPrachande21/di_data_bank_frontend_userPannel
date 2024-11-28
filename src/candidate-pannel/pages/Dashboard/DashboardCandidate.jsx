@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import './dashboardC.css';
-import { Container, Row, Col, Card, Form } from 'react-bootstrap';
+import {
+    Container,
+    Row,
+    Col,
+    Card,
+    Form,
+    Button,
+    Spinner
+} from 'react-bootstrap';
 import createjobblue from '../../../assets/images/createjobblue.png';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import { useLocation, useNavigate } from 'react-router-dom';
+import moment from 'moment';
 const DashboardCandidate = () => {
+    const yearStartISO = moment().startOf('year').toISOString();
+    const yearEndISO = moment().endOf('year').toISOString();
     const [DashboardData, setDashboardData] = useState(null);
     const [SelectedData, setSelectedData] = useState('All');
     const [apiResponse, setApiResponse] = useState(null);
     const locate = useLocation();
     const navigate = useNavigate();
+    const [startDate, setStartDate] = useState(yearStartISO);
+    const [EndDate, setEndDate] = useState(yearEndISO);
+    const [loading, setloading] = useState(false);
 
     const getDashboardData = async () => {
         const token = localStorage.getItem('Candidate_token');
@@ -34,13 +48,17 @@ const DashboardCandidate = () => {
         if (!token) {
             return;
         } else {
+            setloading(true);
             const decodedToken = jwtDecode(token);
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/dashboard/job/status/${userId}/${SelectedData}`
+                    `${BaseUrl}candidate/dashboard/job/status/${userId}/${startDate}/${EndDate}`
                 );
                 setApiResponse(response?.data);
+                if (response.status == 200 || response.status == 201) {
+                    setloading(false);
+                }
             } catch (error) {}
         }
     };
@@ -84,8 +102,6 @@ const DashboardCandidate = () => {
     }
 
     const handlSelectChange = async e => {
-        const selectedText = e.target.value;
-        setSelectedData(selectedText);
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
             return;
@@ -94,11 +110,23 @@ const DashboardCandidate = () => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/dashboard/job/status/${userId}/${selectedText}`
+                    `${BaseUrl}candidate/dashboard/job/status/${userId}/${startDate}/${EndDate}`
                 );
                 setApiResponse(response?.data);
             } catch (error) {}
         }
+    };
+
+    const handleStartChange = e => {
+        const date = new Date(e.target.value);
+        const isoDate = date.toISOString();
+        setStartDate(isoDate);
+    };
+    const handleEndChange = e => {
+        const date = new Date(e.target.value);
+        const isoDate = date.toISOString();
+        setEndDate(isoDate);
+        getSelectedData();
     };
 
     useEffect(() => {
@@ -191,34 +219,37 @@ const DashboardCandidate = () => {
                             <div className="left-card-ai">
                                 <div className="ai-cards-div">
                                     <div className="drop-down-list">
-                                        <p>Offere Accpected Count</p>{' '}
-                                        <div className="custom-select-sub">
-                                            <Form.Select
-                                                aria-label="Default select example"
-                                                size="sm"
-                                                className="selecte"
-                                                onChange={e =>
-                                                    handlSelectChange(e)
-                                                }
-                                            >
-                                                <option>select</option>
-                                                <option value="All">All</option>
-                                                <option value="Today">
-                                                    Today
-                                                </option>
-                                                <option value="Thisweek">
-                                                    This Week
-                                                </option>
-                                                <option value="Thismonth">
-                                                    This Month
-                                                </option>
-                                                <option value="Thisyear">
-                                                    This Year
-                                                </option>
-                                            </Form.Select>
+                                        <div className="custom-select-sub-date">
+                                            <p>Start Date</p>
+
+                                            <input
+                                                type="date"
+                                                onChange={handleStartChange}
+                                            />
+                                        </div>
+                                        <div className="custom-select-sub-date">
+                                            <p>End Date</p>
+                                            {loading ? (
+                                                <Button
+                                                    size="sm"
+                                                    style={{ width: '110px' }}
+                                                >
+                                                    <Spinner
+                                                        animation="border"
+                                                        size="sm"
+                                                    />
+                                                </Button>
+                                            ) : (
+                                                <input
+                                                    type="date"
+                                                    onChange={handleEndChange}
+                                                />
+                                            )}
                                         </div>
                                     </div>
-
+                                </div>
+                                <div className="ai-cards-div">
+                                    <p>Offere Accpected Count</p>{' '}
                                     <h4 style={{ color: '#008000' }}>
                                         {' '}
                                         {apiResponse?.offer_accepted_count || 0}

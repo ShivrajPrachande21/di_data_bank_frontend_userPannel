@@ -4,6 +4,8 @@ import { Button, Image } from 'react-bootstrap';
 import instagram from '../../assets/images/instagram.png';
 import facebook from '../../assets/images/facebook.png';
 import twiter from '../../assets/images/twiter.png';
+import WdcLogo from '../../assets/images/whiteLogo.png';
+
 import { Link } from 'react-router-dom';
 function Footer() {
     return (
@@ -11,7 +13,12 @@ function Footer() {
             <div className="footer-container">
                 <div className="footer-child">
                     <div className="footer-left">
-                        <Image src="" roundedCircle alt="Rounded" width="20%" />
+                        <Image
+                            src={WdcLogo}
+                            rounded
+                            alt="Rounded"
+                            width="20%"
+                        />
                     </div>
                     <div className="footer-right">
                         <p>Socials:</p>

@@ -1,0 +1,25 @@
+.resume {
+    background: #ffffff;
+}
+.download-candidate-resume {
+    display: flex;
+    justify-content: center;
+}
+.download-candidate-resume button {
+    margin-right: 14px;
+    background: #3b96e1;
+}
+.resume-view-seaction {
+    display: flex;
+    justify-content: center;
+}
+.spinnerdiv {
+    width: 80%;
+    height: 50vh;
+    background: #efefef;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+}

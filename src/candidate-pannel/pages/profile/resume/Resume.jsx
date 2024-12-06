@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './resume.css';
 import html2pdf from 'html2pdf.js';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import resumeImg from '../../../../assets/images/resume.png';
+import AiSearch from '../../../../assets/images/AiSearch.png';
 const Resume = () => {
     const [resume, setResume] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -80,17 +80,47 @@ const Resume = () => {
                             />
                         </div>
                     ) : (
-                        <img
-                            src={resumeImg}
-                            alt="Resume Preview"
-                            style={{ marginLeft: '330px', height: '80vh' }}
-                        />
+                        <div className="resume-template">
+                            <h4>Resume</h4>
+                        </div>
                     )
                 ) : (
                     <div dangerouslySetInnerHTML={{ __html: resume }} />
                 )}
             </div>
-            <div className="download-candidate-resume">
+            <Row>
+                <Col md={2}></Col>
+                <Col md={8}>
+                    <InputGroup style={{ width: '100%' }}>
+                        <Form.Control
+                            as="textarea"
+                            name="description"
+                            required
+                            rows={1}
+                            // value={formData.description}
+                            // onChange={handleChange}
+                            placeholder="Enter description or Prompt"
+                            style={{
+                                border: '1px solid #B4DDFF',
+                                background: '#F5F5F5',
+                                resize: 'vertical', // Allow the user to resize if needed
+                                fontSize: '0.9rem' // Optional for placeholder text size
+                            }}
+                        />
+                        <Button
+                            size="sm"
+                            style={{
+                                background: 'none',
+                                border: '1px solid #B4DDFF'
+                            }}
+                        >
+                            <img src={AiSearch} alt="" width="30px" />
+                        </Button>
+                    </InputGroup>
+                </Col>
+                <Col md={2}></Col>
+            </Row>
+            <div className="download-candidate-resume mt-2">
                 <Button size="sm" onClick={GenerateResume}>
                     {loading ? (
                         <Button size="sm">

@@ -10,7 +10,7 @@ import iconamoon_arrowd from '../../assets/images/iconamoon_arrowd.png';
 import dashboard from '../../assets/images/AdminPanelmenu iconblue.png';
 import dashboardwhite from '../../assets/images/AdminPanelmenu icons.png';
 import { Button, Col, Offcanvas, Row } from 'react-bootstrap';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import ProfileComplete from '../dynamicProgress/ProfileComplete';
 import hirecandidate from '../../assets/images/hirecandidate.png';
 import createJob from '../../assets/images/createJob.png';
@@ -20,9 +20,15 @@ import SupportIcon from '../../assets/images/SupportIcon.png';
 import createjobblue from '../../assets/images/createjobblue.png';
 import SearchJob from '../../assets/images/SearchJob.png';
 import CDE from '../../assets/images/CDE.png';
+import AccessManagementIcon from '../../assets/images/AccessManagementIcon.png';
+import accessWhite from '../../assets/images/accessWhite.png';
+import SubscritionIconWhite from '../../assets/images/SubscritionIconWhite.png';
+import AdminPanelmenu from '../../assets/images/AdminPanelmenu icons.png';
+import hireWhite from '../../assets/images/hireWhite.png';
 import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import CompanyNotification from '../../company-pannel/pages/company_Notification/CompanyNotification';
+import SupportIconWhite from '../../assets/images/SupportIconWhite.png';
 import { HireCandidateContext } from '../../context/HireCandidateContex';
 import HireCandidateNotification from '../../company-pannel/pages/company_Notification/HireCandidateNotification';
 import GreenBatch from '../../company-pannel/pages/GreenBatch/GreenBatch';
@@ -31,6 +37,7 @@ import altprofile from '../../assets/images/altprofile.jpg';
 import { useSubscription } from '../../context/SubscriptionContext';
 import { CandidateProfileContext } from '../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
+import { AccessManagementContext } from './../../context/AccessManagementContext';
 const SideBar = () => {
     const {
         handleCloseHire,
@@ -44,11 +51,15 @@ const SideBar = () => {
         CompanyProfile,
         SetProfile
     } = useContext(HireCandidateContext);
+    const { getSingleData, formData, sideBarData } = useContext(
+        AccessManagementContext
+    );
     const { ShowGreen, SetGreenBatch } = useSubscription();
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
     );
     const navigate = useNavigate();
+    const locate = useLocation();
     const [hidelogout, sethidelogout] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
@@ -78,7 +89,7 @@ const SideBar = () => {
                 if (response.status === 200) {
                     localStorage.removeItem('companyToken');
                     localStorage.removeItem('email');
-                    navigate('/login');
+                    navigate('/');
                 }
             } catch (error) {
                 toast.error(`${error.response?.data?.error}`);
@@ -90,53 +101,78 @@ const SideBar = () => {
     const handle_logOut_candidate = async () => {
         localStorage.removeItem('Candidate_token');
         localStorage.removeItem('render');
-        navigate('/login');
+        navigate('/');
     };
 
     const sidebarButtons = [
         {
             id: 1,
             label: 'Dashboard',
-            icon: dashboard,
+            backendName: 'dashboard',
+            icon: dashboard, // Active icon
+            inactiveIcon: AdminPanelmenu, // Inactive icon
             link: '/main/dashboard'
         },
         {
             id: 2,
             label: 'Hire Candidate',
+            backendName: 'hire_candidate',
             icon: hirecandidate,
+            inactiveIcon: hireWhite,
             link: 'hire-candidate'
         },
         {
             id: 3,
             label: 'Create Job',
+            backendName: 'create_job',
             icon: createjobblue,
+            inactiveIcon: createJob,
             link: 'create-job'
         },
         {
             id: 4,
             label: 'Credibility Establishment',
+            backendName: 'creadibility',
             icon: CDE,
+            // inactiveIcon: CDEInactive,
             link: 'credibility-establishment'
         },
         {
             id: 5,
             label: 'Subscription Plans',
+            backendName: 'subscription',
             icon: SubscriptionIcon,
+            inactiveIcon: SubscritionIconWhite,
             link: 'subscription-plan/subscription'
         },
         {
             id: 6,
             label: 'Transactions',
+            backendName: 'transaction',
             icon: transactions,
+            // inactiveIcon: transactionsInactive,
             link: 'transaction'
         },
         {
             id: 7,
-            label: 'Support',
+            label: 'Access Management',
+            icon: AccessManagementIcon,
+            backendName: 'access_management',
+            inactiveIcon: accessWhite,
+            link: 'asscess-management/add-new-user'
+        },
+        {
+            id: 8,
+            label: 'support',
             icon: SupportIcon,
+            backendName: 'support',
+            inactiveIcon: SupportIconWhite,
             link: 'support'
         }
     ];
+    const filteredButtons = sidebarButtons.filter(
+        button => sideBarData[button.backendName] === true
+    );
 
     // Candidate object to render based on login credentials
     const sidebarButtonsCanditas = [
@@ -311,6 +347,9 @@ const SideBar = () => {
         }
     }, []);
 
+    useEffect(() => {
+        getSingleData();
+    }, [locate]);
     return (
         <>
             <div className="MainSidebar">
@@ -586,7 +625,7 @@ const SideBar = () => {
                                           </li>
                                       </Link>
                                   ))
-                                : sidebarButtons.map(button => (
+                                : filteredButtons.map(button => (
                                       <Link
                                           to={button.link}
                                           style={{
@@ -635,7 +674,11 @@ const SideBar = () => {
                                               }}
                                           >
                                               <img
-                                                  src={button.icon}
+                                                  src={
+                                                      activeButton == button.id
+                                                          ? button.inactiveIcon
+                                                          : button.icon
+                                                  }
                                                   alt=""
                                                   width="18px"
                                                   style={{

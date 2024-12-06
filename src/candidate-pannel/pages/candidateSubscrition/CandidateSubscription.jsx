@@ -252,6 +252,20 @@ const CandidateSubscription = () => {
                                                 <span>/mon</span>
                                             </h4>
                                             <ul>
+                                                {item?.job_recommandation ? (
+                                                    <li>
+                                                        <img
+                                                            src={CardCheck}
+                                                            alt=""
+                                                            width="14px"
+                                                        />
+                                                        Job Recommendations
+                                                    </li>
+                                                ) : (
+                                                    ''
+                                                )}
+                                            </ul>
+                                            <ul>
                                                 <li>
                                                     <img
                                                         src={
@@ -268,7 +282,53 @@ const CandidateSubscription = () => {
                                                     Candidate
                                                 </li>
                                             </ul>
-
+                                            <ul>
+                                                {item?.resume_write ? (
+                                                    <li>
+                                                        <img
+                                                            src={CardCheck}
+                                                            alt=""
+                                                            width="14px"
+                                                        />
+                                                        {item?.resume_write}{' '}
+                                                        &nbsp; AI Resume Writing
+                                                    </li>
+                                                ) : (
+                                                    ''
+                                                )}
+                                            </ul>
+                                            {item?.customer_support ? (
+                                                <ul>
+                                                    <li>
+                                                        <img
+                                                            src={CardCheck}
+                                                            alt=""
+                                                            width="14px"
+                                                        />
+                                                        Customer Support
+                                                    </li>
+                                                </ul>
+                                            ) : (
+                                                ''
+                                            )}
+                                            <ul>
+                                                {item?.interview_question ? (
+                                                    <li>
+                                                        <img
+                                                            src={CardCheck}
+                                                            alt=""
+                                                            width="14px"
+                                                        />
+                                                        {
+                                                            item?.interview_question
+                                                        }
+                                                        &nbsp; AI Generated
+                                                        Interview Question
+                                                    </li>
+                                                ) : (
+                                                    ''
+                                                )}
+                                            </ul>
                                             {currentSubscription?.plane_name ==
                                             item?.plane_name ? (
                                                 <Button

@@ -35,18 +35,21 @@ const Forgotpassword = () => {
         confirmpassword: ''
     });
 
-    const ValidateOTP =async e => {
+    const ValidateOTP = async e => {
         e.preventDefault();
-        try{
-            const response = await axios.post(`${BaseUrl}company/forget/verify`, {
-                email,
-                OTP:userOTP
-            });
+        try {
+            const response = await axios.post(
+                `${BaseUrl}company/forget/verify`,
+                {
+                    email,
+                    OTP: userOTP
+                }
+            );
             if (response.status == 200 || response.status == 201) {
                 setcurrentStep(3);
             }
             setUserOtp('');
-        }catch(error){
+        } catch (error) {
             SetOTPerror(error.response.data.error);
         }
     };
@@ -107,7 +110,7 @@ const Forgotpassword = () => {
         }
     };
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,15}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8}$/;
 
     const handleReset = async e => {
         e.preventDefault();
@@ -117,12 +120,12 @@ const Forgotpassword = () => {
             return;
         }
 
-        if (!passwordRegex.test(Resetdata.password)) {
-            toast.error(
-                'Password must be 8-15 characters, including 1 uppercase, 1 lowercase, and 1 number.'
-            );
-            return;
-        }
+        // if (!passwordRegex.test(Resetdata.password)) {
+        //     toast.error(
+        //         'Password must be 8-15 characters, including 1 uppercase, 1 lowercase, and 1 number.'
+        //     );
+        //     return;
+        // }
 
         if (Resetdata.password !== Resetdata.confirmpassword) {
             toast.error('Passwords do not match.');

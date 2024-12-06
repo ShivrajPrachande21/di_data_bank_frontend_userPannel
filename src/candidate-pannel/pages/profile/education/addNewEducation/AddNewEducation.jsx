@@ -6,7 +6,7 @@ import BaseUrl from '../../../../../services/BaseUrl';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { CandidateProfileContext } from '../../../../../context/candidateContext/CandidateProfileContext';
-
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 function AddNewEducation() {
     const { fetchCandidateProfile, showAdd_new_Education, CandidateProfile } =
         useContext(CandidateProfileContext);
@@ -64,15 +64,23 @@ function AddNewEducation() {
                 showAdd_new_Education();
             }
         } catch (error) {
-            toast.error(
-                `${error.response?.data?.error}`
-            );
+            toast.error(`${error.response?.data?.error}`);
         }
     };
     console.log('CandidateProfile', CandidateProfile);
     return (
         <div>
             <div className="add-eduction-details">
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{
+                        float: 'right',
+                        width: '24px',
+                        cursor: 'pointer'
+                    }}
+                    onClick={showAdd_new_Education}
+                />
                 <p>Add Education</p>
                 <Form onSubmit={e => handle_submit(e)}>
                     <Form.Group controlId="mobile" className="mt-2">
@@ -103,7 +111,8 @@ function AddNewEducation() {
                     </Form.Group>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label className="edit-lable-edu">
-                            Field of study <span style={{ color: 'red' }}> *</span>
+                            Field of study{' '}
+                            <span style={{ color: 'red' }}> *</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -118,7 +127,8 @@ function AddNewEducation() {
                         <Col xs={10}>
                             <Form.Group controlId="mobile" className="mt-2">
                                 <Form.Label className="edit-lable-edu">
-                                    Start date <span style={{ color: 'red' }}> *</span>
+                                    Start date{' '}
+                                    <span style={{ color: 'red' }}> *</span>
                                 </Form.Label>
                                 <Form.Control
                                     type="date"
@@ -141,7 +151,8 @@ function AddNewEducation() {
                         <Col xs={10}>
                             <Form.Group controlId="mobile" className="mt-2">
                                 <Form.Label className="edit-lable-edu">
-                                    End date (or expected)<span style={{ color: 'red' }}> *</span>
+                                    End date (or expected)
+                                    <span style={{ color: 'red' }}> *</span>
                                 </Form.Label>
                                 <Form.Control
                                     type="date"

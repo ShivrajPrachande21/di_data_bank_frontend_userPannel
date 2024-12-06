@@ -1,0 +1,44 @@
+.access-managment {
+    padding: 10px;
+}
+.add-new-user-container {
+}
+
+.add-new-user-search {
+    display: flex;
+    padding: 10px;
+}
+.add-new-user-search button {
+    border: 1px solid #3b96e1;
+    color: #3b96e1;
+    background: #b4ddff;
+    margin-right: 14px;
+}
+.add-new-user-search input {
+    background: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    width: 86%;
+    padding: 4px;
+}
+.add-new-user-search input:focus {
+    outline: 1px solid rgb(19, 182, 247); /* Removes the default focus outline */
+}
+.custom-table th {
+    font-size: 0.85rem; /* Reduces font size */
+    color: #2c3a52;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+.add-new-user-table {
+    padding: 10px;
+}
+.check-box-hr .form-check-label {
+    font-size: 12px;
+}
+.edit-btns:hover {
+    background: #dedede;
+}
+.delete-btns:hover {
+    background: #f6c8c8;
+}

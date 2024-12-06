@@ -92,6 +92,8 @@ function AddCandidateIssue() {
             }
         } catch (error) {
             console.error('Error submitting the form:', error.message);
+            const customError = error?.response?.data?.error;
+            toast.error(customError);
         }
     };
 
@@ -139,7 +141,8 @@ function AddCandidateIssue() {
                             Describe your Issue
                         </Form.Label>
                         <Form.Control
-                            type="text"
+                            as="textarea"
+                            rows={2}
                             name="description"
                             required
                             value={formData.description}

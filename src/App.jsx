@@ -21,6 +21,7 @@ import { TransactionProvider } from './context/candidateContext/TransactionConte
 import { SubscriptionsProvider } from './context/candidateContext/SubscriptionsContext';
 import { CandidateSupportProvider } from './context/candidateContext/CandidateSupportContext';
 import { CandidateProfileProvider } from './context/candidateContext/CandidateProfileContext';
+import { AccessProvider } from './context/AccessManagementContext';
 function App() {
     const [count, setCount] = useState(0);
 
@@ -39,12 +40,14 @@ function App() {
                                                     <SubscriptionsProvider>
                                                         <CandidateSupportProvider>
                                                             <CandidateProfileProvider>
+                                                                <AccessProvider>
+                                                                    <RouterProvider
+                                                                        router={
+                                                                            router
+                                                                        }
+                                                                    />
+                                                                </AccessProvider>
                                                                 <ToastContainer />
-                                                                <RouterProvider
-                                                                    router={
-                                                                        router
-                                                                    }
-                                                                />
                                                             </CandidateProfileProvider>
                                                         </CandidateSupportProvider>
                                                     </SubscriptionsProvider>

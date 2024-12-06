@@ -8,12 +8,13 @@ const Transaction = () => {
     const { transactionData } = TrasactionsData(); // Fetch the data
     const naviagte = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [itemsPerPage, setItemsPerPage] = useState(7);
     const [selectValue, setselectValue] = useState(itemsPerPage);
 
     const handleSelect = e => {
         const value = parseInt(e.target.value, 10);
         setItemsPerPage(value);
+        setselectValue(value);
         setCurrentPage(1); // Reset to first page when items per page change
     };
 
@@ -202,6 +203,7 @@ const Transaction = () => {
                                 >
                                     <option value="1">1</option>
                                     <option value="2">2</option>
+                                    <option value="6">6</option>
                                     <option value="8">8</option>
                                     <option value="10">10</option>
                                 </select>

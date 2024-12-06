@@ -3,6 +3,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { jwtDecode } from 'jwt-decode';
 import { CandidateProfileContext } from '../../../../../context/candidateContext/CandidateProfileContext';
 import Calendar from '../../../../../assets/images/Calendar.png';
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 const EditExperiencePrev = () => {
     const {
         expData,
@@ -10,7 +11,7 @@ const EditExperiencePrev = () => {
         setEdit_ExpData,
         setExpData,
         Submit_edit_experience,
-        handleShowEducation
+        showEditExp
     } = useContext(CandidateProfileContext);
     // const [start_date, setstart_date] = useState('');
 
@@ -59,6 +60,16 @@ const EditExperiencePrev = () => {
     return (
         <>
             <div style={{ height: '100vh' }}>
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{
+                        float: 'right',
+                        width: '24px',
+                        cursor: 'pointer'
+                    }}
+                    onClick={showEditExp}
+                />
                 <p
                     style={{
                         textAlign: 'center',

@@ -193,7 +193,8 @@ const CreateNewJob = () => {
                     await fetch_job_status();
                 }
             } catch (error) {
-                toast.error(error?.response?.data?.error);
+                const customError = error?.response?.data?.error;
+                toast.error(customError);
             }
         }
     };

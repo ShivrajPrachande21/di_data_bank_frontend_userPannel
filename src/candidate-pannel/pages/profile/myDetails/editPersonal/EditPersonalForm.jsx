@@ -8,9 +8,12 @@ import { boolean } from 'yup';
 import { toast, useToast } from 'react-toastify';
 import { CandidateProfileContext } from '../../../../../context/candidateContext/CandidateProfileContext';
 import Verified from '../../../../../assets/images/Verified.png';
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 
 function EditPersonalForm() {
-    const { EditPersonalDetails } = useContext(CandidateProfileContext);
+    const { EditPersonalDetails, showPersonalModal } = useContext(
+        CandidateProfileContext
+    );
     const locate = useLocation();
     const panRef = useRef();
     const aadharRef = useRef();
@@ -226,6 +229,17 @@ function EditPersonalForm() {
     return (
         <>
             <div style={{ height: '100vh' }}>
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{
+                        float: 'right',
+                        width: '24px',
+                        cursor: 'pointer',
+                        marginTop: '-10px'
+                    }}
+                    onClick={showPersonalModal}
+                />
                 <p
                     style={{
                         textAlign: 'center',
@@ -527,7 +541,6 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Members in Family
-                           
                         </Form.Label>
                         <Form.Control
                             type="text"

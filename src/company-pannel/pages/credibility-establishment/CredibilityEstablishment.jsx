@@ -17,7 +17,7 @@ const CredibilityEstablishment = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [subscription, setSubscription] = useState(null);
-
+    const [errorMesg, setErrorMesg] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectValue, setselectValue] = useState(itemsPerPage);
@@ -87,6 +87,8 @@ const CredibilityEstablishment = () => {
                     }
                 } catch (error) {
                     toast.error(`${error?.response?.data?.error}`);
+                    setErrorMesg(true);
+
                     setCredibilityData(null);
                     setLoading(false);
                 }
@@ -216,33 +218,47 @@ const CredibilityEstablishment = () => {
                             <th>Action date</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {currentItems?.map((item, index) => (
+                        {CredibilityData == null && !errorMesg ? (
                             <tr>
-                                <td>{index + 1}</td>
-                                <td>{item?.company_name}</td>
-                                <td>
-                                    {
-                                        CredibilityData?.data[0]?.basicDetails
-                                            .name
-                                    }
+                                <td colSpan="7" className="text-center">
+                                    No credibility data available at the moment.
                                 </td>
-                                <td>{formatDate(item?.offer_date)}</td>
-                                <td>{formatDate(item?.offer_validity)}</td>
-                                <td
-                                    className={
-                                        item?.offer_status == 'Accepted'
-                                            ? 'text-success'
-                                            : item?.offer_status == 'Pending'
-                                            ? 'text-warning'
-                                            : 'text-danger'
-                                    }
-                                >
-                                    {item?.offer_status}
-                                </td>
-                                <td>{formatDate(item?.hired_date)}</td>
                             </tr>
-                        ))}
+                        ) : currentItems && currentItems.length > 0 ? (
+                            currentItems.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{item?.company_name}</td>
+                                    <td>
+                                        {CredibilityData?.data?.[0]
+                                            ?.basicDetails?.name || 'N/A'}
+                                    </td>
+                                    <td>{formatDate(item?.offer_date)}</td>
+                                    <td>{formatDate(item?.offer_validity)}</td>
+                                    <td
+                                        className={
+                                            item?.offer_status === 'Accepted'
+                                                ? 'text-success'
+                                                : item?.offer_status ===
+                                                  'Pending'
+                                                ? 'text-warning'
+                                                : 'text-danger'
+                                        }
+                                    >
+                                        {item?.offer_status}
+                                    </td>
+                                    <td>{formatDate(item?.hired_date)}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="7" className="text-center">
+                                    No job offer found for this candidate.
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table>
             </div>

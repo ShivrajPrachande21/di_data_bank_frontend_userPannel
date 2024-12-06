@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import BaseUrl from '../../../../../services/BaseUrl';
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 const EditExperience = () => {
     const { showExperiencelModal, fetchCandidateProfile } = useContext(
         CandidateProfileContext
@@ -102,11 +103,21 @@ const EditExperience = () => {
             }
         }
     };
-  
 
     return (
         <>
             <div style={{ height: '100vh' }}>
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{
+                        float: 'right',
+                        width: '24px',
+                        cursor: 'pointer',
+                        marginTop: '-10px'
+                    }}
+                    onClick={showExperiencelModal}
+                />
                 <p
                     style={{
                         textAlign: 'center',

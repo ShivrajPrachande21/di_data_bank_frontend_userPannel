@@ -2,17 +2,22 @@ import React, { useContext, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import './experience.css';
-import { Button, Col, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Modal, Row, Table } from 'react-bootstrap';
 import addPlues from '../../../../assets/images/addPlues.png';
 import DeleteIcon from '../../../../assets/images/delete.png';
 import EditProfile from '../../../../assets/images/EditProfile.png';
+import Delete from '../../../../assets/images/delete.png';
 import { CandidateProfileContext } from './../../../../context/candidateContext/CandidateProfileContext';
 import BaseUrl from '../../../../services/BaseUrl';
+
 import { toast } from 'react-toastify';
 import EditExperience from './editExperience/EditExperience';
 import EditExperiencePrev from './editExperinceprev/EditExperiencePrev';
 import EditWorkDetails from './editWorkDetails/EditWorkDetails';
 import { useNavigate } from 'react-router-dom';
+import AddNewProject from './addNewproject/AddNewProject';
+import oui_cross from '../../../../assets/images/TableEditIcon.png';
+import EditProject from './editProject/EditProject';
 
 const Experience = () => {
     const {
@@ -23,7 +28,15 @@ const Experience = () => {
         showExperiencelModal,
         showEditExp,
         showWork,
-        handleShowWork
+        handleShowWork,
+        showProjectModel,
+        setShowProjectModel,
+        handleShowProject,
+        showEDitProject,
+        setShowEditProject,
+        getSingleProject,
+        UpdateProjectData,
+        handleDelete
     } = useContext(CandidateProfileContext);
     const navigate = useNavigate();
     const formatDate = dateString => {
@@ -145,9 +158,20 @@ const Experience = () => {
         }
     }
 
+    const handleShowEditProject = async project_id => {
+        await getSingleProject(project_id);
+
+        setShowEditProject(prev => !prev);
+    };
+
+    const handleDeteleProject = async project_id => {
+        await handleDelete(project_id);
+    };
+
     useEffect(() => {
         rendering();
     }, []);
+
     return (
         <>
             <div className="experience p-2">
@@ -474,6 +498,253 @@ const Experience = () => {
                                     </table>
                                 </Row>
                             </div>
+                            <div className="projects">
+                                <Row style={{ padding: '14px' }}>
+                                    <Col
+                                        xs={11}
+                                        style={{
+                                            color: '#051F50',
+                                            fontWeight: '500',
+                                            marginTop: '6px',
+                                            fontSize: '0.9rem'
+                                        }}
+                                    >
+                                        Projects Details
+                                    </Col>
+                                    <Col xs={1}>
+                                        <img
+                                            // src={EditProfile}
+                                            src={addPlues}
+                                            alt=""
+                                            width="18px"
+                                            className="mx-1"
+                                            style={{
+                                                marginTop: '8px',
+                                                cursor: 'pointer'
+                                            }}
+                                            onClick={() =>
+                                                setShowProjectModel(
+                                                    prev => !prev
+                                                )
+                                            }
+                                        />
+                                    </Col>
+                                    {CandidateProfile?.data?.work_details?.Projects?.map(
+                                        (item, index) => (
+                                            <>
+                                                <table
+                                                    style={{
+                                                        marginLeft: '10px',
+                                                        marginTop: '16px'
+                                                    }}
+                                                >
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>
+                                                            <img
+                                                                src={oui_cross}
+                                                                alt=""
+                                                                style={{
+                                                                    float: 'right',
+                                                                    width: '20px',
+                                                                    cursor: 'pointer',
+                                                                    marginTop:
+                                                                        '-10px'
+                                                                }}
+                                                                onClick={() =>
+                                                                    handleShowEditProject(
+                                                                        item?._id
+                                                                    )
+                                                                }
+                                                            />
+                                                        </th>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Project Title:
+                                                        </td>
+                                                        <td className="data">
+                                                            {
+                                                                item?.project_title
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Project Duration:
+                                                        </td>
+                                                        <td className="data">
+                                                            {' '}
+                                                            {
+                                                                item?.Project_duration
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Project Url:
+                                                        </td>
+                                                        <td className="data">
+                                                            {' '}
+                                                            <a
+                                                                href={
+                                                                    item?.project_url
+                                                                }
+                                                            >
+                                                                {item?.project_url ||
+                                                                    'N/A'}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Project Status:
+                                                        </td>
+                                                        <td className="data">
+                                                            {' '}
+                                                            {
+                                                                item?.Project_status
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Role:
+                                                        </td>
+                                                        <td className="data">
+                                                            {' '}
+                                                            {item?.role}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Skills Used:
+                                                        </td>
+                                                        <td className="data">
+                                                            {' '}
+                                                            {item?.skills_used}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Project Site:
+                                                        </td>
+                                                        <td className="data">
+                                                            {' '}
+                                                            {item?.project_site}
+                                                        </td>
+                                                    </tr>
+                                                    <tr className="mt-2">
+                                                        <td
+                                                            style={{
+                                                                color: '#AEAEAE',
+                                                                fontSize:
+                                                                    '0.8rem',
+                                                                width: '50%'
+                                                            }}
+                                                        >
+                                                            Project-Details:
+                                                        </td>
+                                                        <td className="data mt-2">
+                                                            {' '}
+                                                            <div
+                                                                style={{
+                                                                    width: '200px',
+                                                                    wordWrap:
+                                                                        'break-word', // Ensures long words break inside the div
+
+                                                                    overflow:
+                                                                        'hidden' // Hides any overflowing content
+                                                                }}
+                                                            >
+                                                                <p
+                                                                    style={{
+                                                                        textAlign:
+                                                                            'justify',
+                                                                        fontSize:
+                                                                            '0.7rem'
+                                                                    }}
+                                                                >
+                                                                    {
+                                                                        item?.project_details
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                            <img
+                                                                src={Delete}
+                                                                alt=""
+                                                                style={{
+                                                                    float: 'right',
+                                                                    width: '20px',
+                                                                    cursor: 'pointer',
+                                                                    marginTop:
+                                                                        '-10px'
+                                                                }}
+                                                                onClick={() =>
+                                                                    handleDeteleProject(
+                                                                        item?._id
+                                                                    )
+                                                                }
+                                                            />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <hr />
+                                            </>
+                                        )
+                                    )}
+                                </Row>
+                            </div>
                         </Col>
                     </Row>
                 </Row>
@@ -546,6 +817,52 @@ const Experience = () => {
                         }}
                     >
                         <EditExperience />
+                    </div>
+                </Modal.Body>
+            </Modal>
+            <Modal
+                show={showProjectModel}
+                onHide={handleShowProject}
+                aria-labelledby="example-modal-sizes-title-lg"
+                centered
+                className="custom-modal-size"
+            >
+                <Modal.Body>
+                    <div
+                        style={{
+                            padding: '5px',
+                            overflow: 'hidden',
+                            overflowY: 'auto',
+                            position: 'relative',
+                            borderRadius: '10px',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
+                        }}
+                    >
+                        <AddNewProject />
+                    </div>
+                </Modal.Body>
+            </Modal>
+            <Modal
+                show={showEDitProject}
+                onHide={handleShowEditProject}
+                aria-labelledby="example-modal-sizes-title-lg"
+                centered
+                className="custom-modal-size"
+            >
+                <Modal.Body>
+                    <div
+                        style={{
+                            padding: '5px',
+                            overflow: 'hidden',
+                            overflowY: 'auto',
+                            position: 'relative',
+                            borderRadius: '10px',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
+                        }}
+                    >
+                        <EditProject />
                     </div>
                 </Modal.Body>
             </Modal>

@@ -6,7 +6,7 @@ import BaseUrl from '../../../../../services/BaseUrl';
 import { replace, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { CandidateProfileContext } from '../../../../../context/candidateContext/CandidateProfileContext';
-
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 const EditWorkDetails = () => {
     const { handleShowWork, fetchCandidateProfile } = useContext(
         CandidateProfileContext
@@ -125,6 +125,17 @@ const EditWorkDetails = () => {
     return (
         <>
             <div>
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{
+                        float: 'right',
+                        width: '24px',
+                        cursor: 'pointer',
+                        marginTop: '-10px'
+                    }}
+                    onClick={handleShowWork}
+                />
                 <p
                     style={{
                         textAlign: 'center',

@@ -229,22 +229,11 @@ const DashboardCandidate = () => {
                                         </div>
                                         <div className="custom-select-sub-date">
                                             <p>End Date</p>
-                                            {loading ? (
-                                                <Button
-                                                    size="sm"
-                                                    style={{ width: '110px' }}
-                                                >
-                                                    <Spinner
-                                                        animation="border"
-                                                        size="sm"
-                                                    />
-                                                </Button>
-                                            ) : (
-                                                <input
-                                                    type="date"
-                                                    onChange={handleEndChange}
-                                                />
-                                            )}
+
+                                            <input
+                                                type="date"
+                                                onChange={handleEndChange}
+                                            />
                                         </div>
                                     </div>
                                 </div>

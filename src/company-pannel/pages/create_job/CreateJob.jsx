@@ -202,6 +202,15 @@ const CreateJob = () => {
         }
     }
 
+    const formatDateExp = isoDate => {
+        const date = new Date(isoDate);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
     useEffect(() => {
         rendering();
     }, []);
@@ -476,13 +485,15 @@ const CreateJob = () => {
                                                         }}
                                                     >
                                                         <span className="card-table-span">
-                                                            Qualification:
+                                                            Posted Date:
                                                         </span>{' '}
                                                     </td>
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {item?.education}
+                                                            {formatDate(
+                                                                item?.createdDate
+                                                            )}{' '}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -493,15 +504,15 @@ const CreateJob = () => {
                                                         }}
                                                     >
                                                         <span className="card-table-span">
-                                                            Poasted:
+                                                            Expiry Date:
                                                         </span>{' '}
                                                     </td>
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {formatDate(
-                                                                item?.createdDate
-                                                            )}{' '}
+                                                            {formatDateExp(
+                                                                item?.job_Expire_Date
+                                                            )}
                                                         </span>
                                                     </td>
                                                 </tr>

@@ -56,6 +56,9 @@ import CredibilityEstablishment from '../company-pannel/pages/credibility-establ
 import DashboardCandidate from '../candidate-pannel/pages/Dashboard/DashboardCandidate';
 import LandingPage from '../landingPage/LandingPage';
 import Resume from '../candidate-pannel/pages/profile/resume/Resume';
+import AccessManagement from '../company-pannel/pages/accessManagement/AccessManagement';
+import AddNewRole from '../company-pannel/pages/accessManagement/addNewRole/AddNewRole';
+import AddNewUser from '../company-pannel/pages/accessManagement/addNewUser/AddNewUser';
 
 const router = createBrowserRouter([
     {
@@ -177,6 +180,17 @@ const router = createBrowserRouter([
             {
                 path: 'transaction',
                 element: <Transaction />
+            },
+            {
+                path: 'asscess-management',
+                element: <AccessManagement />,
+                children: [
+                    { path: 'add-new-role', element: <AddNewRole /> },
+                    {
+                        path: 'add-new-user',
+                        element: <AddNewUser />
+                    }
+                ]
             },
             {
                 path: 'support',

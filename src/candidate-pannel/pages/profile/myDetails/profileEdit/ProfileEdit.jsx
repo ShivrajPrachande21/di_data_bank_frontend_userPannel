@@ -11,6 +11,7 @@ import {
 import { jwtDecode } from 'jwt-decode';
 import avatar from '../../../../../assets/images/avatar.png';
 import Profile from './../../../../../company-pannel/pages/profile/Profile';
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 import { useLocation } from 'react-router-dom';
 import BaseUrl from '../../../../../services/BaseUrl';
 import axios from 'axios';
@@ -126,6 +127,17 @@ const ProfileEdit = () => {
     return (
         <>
             <Form noValidate onSubmit={editProfileData}>
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{
+                        float: 'right',
+                        width: '24px',
+                        cursor: 'pointer',
+                        marginTop: '-10px'
+                    }}
+                    onClick={showEditModle}
+                />
                 <div style={{ height: '100vh' }}>
                     <p
                         style={{

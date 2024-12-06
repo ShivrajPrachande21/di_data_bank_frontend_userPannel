@@ -24,6 +24,7 @@ const Profile = () => {
     const rating = profileData?.updatedData?.Candidate_Feed_Back[0]?.rating;
     const location = useLocation();
     const naviagte = useNavigate();
+    const email = localStorage.getItem('email');
     const handleClose = () => setLgShow(prev => !prev);
 
     const navigate = useNavigate();
@@ -235,13 +236,15 @@ const Profile = () => {
                             <div className="cards">
                                 <div className="tables">
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.contact_email
+                                        {profileData &&
+                                        profileData?.updatedData?.contact_email
                                             ? profileData?.updatedData
                                                   ?.contact_email
                                             : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.contact_No
+                                        {profileData &&
+                                        profileData?.updatedData?.contact_No
                                             ? profileData?.updatedData
                                                   ?.contact_No
                                             : 'N/A'}
@@ -251,7 +254,8 @@ const Profile = () => {
                                             color: '#051F50'
                                         }}
                                     >
-                                        {profileData?.updatedData?.location
+                                        {profileData &&
+                                        profileData?.updatedData?.location
                                             ? profileData?.updatedData?.location
                                             : 'N/A'}
                                     </p>
@@ -260,23 +264,26 @@ const Profile = () => {
                                             color: '#051F50'
                                         }}
                                     >
-                                        {profileData?.updatedData?.website_url
+                                        {profileData == !null &&
+                                        profileData?.updatedData?.website_url
                                             .length > 26
-                                            ? profileData?.updatedData?.website_url.substring(
+                                            ? profileData &&
+                                              profileData?.updatedData?.website_url.substring(
                                                   0,
                                                   26
                                               ) + '...'
                                             : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.company_size
+                                        {profileData &&
+                                        profileData?.updatedData?.company_size
                                             ? profileData?.updatedData
                                                   ?.company_size
                                             : 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData
-                                            ?.headQuater_add
+                                        {profileData &&
+                                        profileData?.updatedData?.headQuater_add
                                             ? profileData?.updatedData
                                                   ?.headQuater_add
                                             : 'N/A'}
@@ -302,8 +309,7 @@ const Profile = () => {
                             <div className="cards">
                                 <div className="tables">
                                     <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.email ||
-                                            'N/A'}
+                                        {email || 'N/A'}
                                     </p>
                                     <p style={{ color: '#051F50' }}>
                                         {profileData?.updatedData?.mobile ||

@@ -6,6 +6,7 @@ import { useSupport } from '../../../../context/SupportContext';
 import axios from 'axios';
 import BaseUrl from '../../../../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify';
 const Addissue = () => {
     const { modalShow, setModalShow } = useSupport();
     const [loading, setLoading] = useState(false);
@@ -71,8 +72,8 @@ const Addissue = () => {
             );
 
             // Check if the response status is OK
-            if (response.status === 200) {
-                console.log('Issue successfully submitted:', response.data);
+            if (response.status == 200 || response.status == 201) {
+                toast.success('Issue Submited Successfully');
                 setModalShow(prev => !prev);
 
                 setFormData({
@@ -84,7 +85,8 @@ const Addissue = () => {
                 console.error('Unexpected response status:', response.status);
             }
         } catch (error) {
-            console.error('Error submitting the form:', error.message);
+            const customError = error?.response?.data?.error;
+            toast.error(customError);
         }
     };
 
@@ -131,7 +133,7 @@ const Addissue = () => {
                         Describe your Issue
                     </Form.Label>
                     <Form.Control
-                        type="text"
+                        as="textarea"
                         name="description"
                         required
                         value={formData.description}

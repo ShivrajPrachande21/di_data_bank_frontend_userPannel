@@ -31,7 +31,11 @@
         #1c7ac7 98.27%
     );
     width: 250px;
+    transition: transform 0.4s ease;
 }
+/* .sub1:hover {
+    transform: scale(1.1);
+} */
 .sub1 p {
     color: #f6e31d;
 }

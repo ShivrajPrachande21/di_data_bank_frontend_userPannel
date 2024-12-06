@@ -45,6 +45,9 @@
 .work-detials {
     margin-left: 40px;
 }
+.projects {
+    margin-left: 40px;
+}
 .data {
     color: #051f50;
     font-weight: 400;
@@ -222,6 +225,26 @@
 .add-new-edu img {
     height: 20px;
     cursor: pointer;
+}
+
+.peoject-radio input[type='radio'] {
+    accent-color: transparent; /* Reset default styling */
+    width: 18px;
+    height: 18px;
+    border: 1px solid #007bff; /* Custom border color */
+    border-radius: 50%; /* Make it circular */
+    outline: none;
+    cursor: pointer;
+}
+.peoject-radio .form-check-label {
+    font-size: 13px; /* Adjust the font size to your preference */
+}
+.project-details {
+    background-color: #007bff;
+    display: flex;
+}
+.p-left {
+    background: #d09898;
 }
 @media (max-width: 575.98px) {
     .work-detials {

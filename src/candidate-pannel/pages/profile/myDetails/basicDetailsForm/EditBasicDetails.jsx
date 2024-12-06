@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, Button, Alert, Col, Row } from 'react-bootstrap';
 import { jwtDecode } from 'jwt-decode';
 import BaseUrl from '../../../../../services/BaseUrl';
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { CandidateProfileContext } from '../../../../../context/candidateContext/CandidateProfileContext';
@@ -134,7 +135,7 @@ const EditBasicDetails = () => {
                     `${BaseUrl}candidate/profile/get_basic/${id}`
                 );
 
-                const { email, mobile, linkedIn, name ,contact_email} =
+                const { email, mobile, linkedIn, name, contact_email } =
                     response?.data?.basic_details;
                 setInputFields(response.data?.basic_details?.other_profile);
                 // Set the API data into formData
@@ -143,7 +144,7 @@ const EditBasicDetails = () => {
                     mobile: mobile || '',
                     linkedIn: linkedIn || '',
                     name: name || '',
-                    contact_email:contact_email||''
+                    contact_email: contact_email || ''
                 });
             } catch (error) {}
         }
@@ -158,6 +159,17 @@ const EditBasicDetails = () => {
     return (
         <>
             <div style={{ padding: '10px' }}>
+                <img
+                    src={oui_cross}
+                    alt=""
+                    style={{
+                        float: 'right',
+                        width: '24px',
+                        cursor: 'pointer',
+                        marginTop: '-10px'
+                    }}
+                    onClick={showModal}
+                />
                 <p
                     style={{
                         marginTop: '0',

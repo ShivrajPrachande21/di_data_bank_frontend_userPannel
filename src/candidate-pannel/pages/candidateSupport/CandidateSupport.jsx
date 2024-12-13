@@ -199,7 +199,7 @@ const CandidateSupport = () => {
                                                         'Pending'
                                                             ? 'green'
                                                             : index?.status ===
-                                                              'rejected'
+                                                              'Rejected'
                                                             ? 'red'
                                                             : ''
                                                 }}

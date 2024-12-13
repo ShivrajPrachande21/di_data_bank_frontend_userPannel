@@ -393,14 +393,24 @@ const EditCompanyProfile = ({ setLgShow }) => {
                             {formFields?.status !== 'approve' ? (
                                 Gstimage ? (
                                     <div className="UploadImagediv">
-                                        <img
-                                            src={Gstimage}
-                                            alt="Uploaded"
+                                        <div
                                             style={{
-                                                width: '80px',
-                                                objectFit: 'cover'
+                                                width: '140px',
+                                                overflow: 'hidden',
+                                                height: '100px',
+                                                marginTop: '50px'
                                             }}
-                                        />
+                                        >
+                                            {' '}
+                                            <img
+                                                src={Gstimage}
+                                                alt="Uploaded"
+                                                style={{
+                                                    width: '40%'
+                                                }}
+                                            />
+                                        </div>
+
                                         <img
                                             src={Cross}
                                             alt=""
@@ -452,18 +462,27 @@ const EditCompanyProfile = ({ setLgShow }) => {
                             {formFields?.status !== 'approve' ? (
                                 Panimage ? (
                                     <div className="UploadImagediv">
-                                        <img
-                                            src={Panimage}
-                                            alt="Uploaded"
+                                        <div
                                             style={{
-                                                width: '80px',
-                                                objectFit: 'cover'
+                                                width: '140px',
+                                                overflow: 'hidden',
+                                                height: '100px',
+                                                marginTop: '50px'
                                             }}
-                                        />
+                                        >
+                                            <img
+                                                src={Panimage}
+                                                alt="Uploaded"
+                                                style={{
+                                                    width: '40%'
+                                                }}
+                                            />
+                                        </div>
+
                                         <img
                                             src={Cross}
                                             alt=""
-                                            width="20px"
+                                            height="20px"
                                             className="cross"
                                             onClick={remove_pan}
                                         />

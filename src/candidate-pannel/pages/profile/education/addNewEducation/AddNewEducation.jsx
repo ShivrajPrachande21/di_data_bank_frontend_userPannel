@@ -67,7 +67,7 @@ function AddNewEducation() {
             toast.error(`${error.response?.data?.error}`);
         }
     };
-    console.log('CandidateProfile', CandidateProfile);
+
     return (
         <div>
             <div className="add-eduction-details">
@@ -85,7 +85,8 @@ function AddNewEducation() {
                 <Form onSubmit={e => handle_submit(e)}>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label className="edit-lable-edu">
-                            School Name<span style={{ color: 'red' }}> *</span>
+                            College/School
+                            <span style={{ color: 'red' }}> *</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -182,7 +183,7 @@ function AddNewEducation() {
                             name="grade"
                             value={addNewData?.grade}
                             onChange={handleInputChange}
-                            placeholder="Eenter Garde"
+                            placeholder="Enter Garde"
                             className="education-form"
                         />
                     </Form.Group>

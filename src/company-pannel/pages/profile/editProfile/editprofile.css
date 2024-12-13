@@ -76,11 +76,14 @@
 }
 .UploadImagediv {
     height: 50px;
-
+    display: flex;
     margin-top: 24px;
+    justify-content: center;
+    align-items: center;
 }
 .cross {
     margin-left: 20px;
+    margin-left: -60px;
 }
 .profile {
     position: absolute;

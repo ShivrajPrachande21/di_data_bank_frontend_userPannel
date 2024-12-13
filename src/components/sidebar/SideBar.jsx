@@ -377,7 +377,7 @@ const SideBar = () => {
                             <img
                                 src={bellgray}
                                 alt=""
-                                width="20px"
+                                width="23px"
                                 onClick={handleShow}
                             />
                             {notifications.length +
@@ -615,8 +615,8 @@ const SideBar = () => {
                                                   alt=""
                                                   width="18px"
                                                   style={{
-                                                      marginRight: '16px',
-                                                      marginLeft: '10px',
+                                                      marginRight: '12px',
+                                                      marginLeft: '4px',
                                                       marginTop: '-4px'
                                                   }}
                                               />
@@ -682,8 +682,8 @@ const SideBar = () => {
                                                   alt=""
                                                   width="18px"
                                                   style={{
-                                                      marginRight: '16px',
-                                                      marginLeft: '10px',
+                                                      marginRight: '12px',
+                                                      marginLeft: '4px',
                                                       marginTop: '-4px'
                                                   }}
                                               />

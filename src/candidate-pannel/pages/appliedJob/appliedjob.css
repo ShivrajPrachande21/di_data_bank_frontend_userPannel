@@ -1,3 +1,6 @@
+.ViewAppliedJobDetails {
+    padding: 10px;
+}
 .applied-job {
     padding: 10px;
 }
@@ -14,9 +17,9 @@
     /* box-shadow: 0px 0px 1px #bebebe;
     background: white; */
     width: 100%;
-    padding: 6px;
+
     border-radius: 8px;
-    margin-top: 6px;
+    margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 14px;

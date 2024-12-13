@@ -4,8 +4,10 @@ import './profilecomplete.css';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
+import { useNavigate } from 'react-router-dom';
 
-const ProfileCompletionModal = ({ onClose }) => {
+const ProfileCompletionModal = ({ onClose, setShowModal }) => {
+    const navigate = useNavigate();
     const [profileCompletion, SetProfileCompletion] = useState({
         basicDetails: 0,
         personalDetails: 0,
@@ -47,6 +49,11 @@ const ProfileCompletionModal = ({ onClose }) => {
                 SetProfileCompletion(response?.data);
             } catch (error) {}
         }
+    };
+
+    const handleClose = () => {
+        navigate('/profile-candidate/my - detials');
+        setShowModal(false);
     };
     useEffect(() => {
         getApplicationData();
@@ -130,7 +137,7 @@ const ProfileCompletionModal = ({ onClose }) => {
                     <Button
                         variant="success"
                         style={{ fontSize: '0.8rem' }}
-                        onClick={onClose}
+                        onClick={handleClose}
                     >
                         Complete Your Profile
                     </Button>

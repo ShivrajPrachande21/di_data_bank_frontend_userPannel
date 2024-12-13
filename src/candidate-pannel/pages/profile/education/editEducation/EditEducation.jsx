@@ -291,6 +291,7 @@ const EditEducation = () => {
                                 )}
                                 <input
                                     type="file"
+                                    accept="image/*"
                                     ref={cert.fileInputRef}
                                     style={{ display: 'none' }}
                                     onChange={event =>

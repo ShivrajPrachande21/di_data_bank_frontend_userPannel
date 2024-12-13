@@ -5,14 +5,14 @@ import altprofile from '../../../../assets/images/altprofile.jpg';
 import { Button, Col, Row } from 'react-bootstrap';
 
 import Modal from 'react-bootstrap/Modal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { HireCandidateContext } from '../../../../context/HireCandidateContex';
 import BaseUrl from '../../../../services/BaseUrl';
 const ViewCandidateDetails = () => {
     const { get_Candidate_detials, candidate_detials } =
         useContext(HireCandidateContext);
 
-    console.log('view', candidate_detials);
+    const { id } = useParams();
 
     const [modalShow, setModalShow] = useState(false);
     const [certificateImage, setCertificateImage] = useState('');
@@ -80,7 +80,7 @@ const ViewCandidateDetails = () => {
             if (!token) {
                 navigate('/login');
             } else {
-                navigate('/main/view-candidate-details');
+                navigate(`/main/view-candidate-details/${id}`);
             }
         } else {
             navigate('/login');
@@ -89,6 +89,7 @@ const ViewCandidateDetails = () => {
 
     useEffect(() => {
         rendering();
+        get_Candidate_detials(id);
     }, []);
     return (
         <>

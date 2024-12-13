@@ -5,7 +5,7 @@ import Rupees1 from '../../../../assets/images/Rupees1.png';
 import rupeeblue from '../../../../assets/images/rupeeblue.png';
 import CardCheck from '../../../../assets/images/CardCheck.png';
 import bluetick from '../../../../assets/images/bluetick.png';
-import { Button, Spinner ,Modal} from 'react-bootstrap';
+import { Button, Spinner, Modal } from 'react-bootstrap';
 
 import axios from 'axios';
 import { differenceInDays, isAfter } from 'date-fns';
@@ -17,15 +17,17 @@ import useProfileData from '../../../../hooks/company_dashboard/useProfiledata';
 import { toast } from 'react-toastify';
 
 const Subscriptions = () => {
-    const { profileData,fetchProfileData} = useProfileData();
+    const { profileData, fetchProfileData } = useProfileData();
     const {
         subscriptionData,
         loading,
         fetch_all_subscription,
         initiatePayment,
         paymentLoading,
-        modalShow,SetmodalShow,
-        SubId,SetSubId
+        modalShow,
+        SetmodalShow,
+        SubId,
+        SetSubId
     } = useSubscription();
     const navigate = useNavigate();
     const data1 = subscriptionData?.CurrentSubscription[0]?.plane_name;
@@ -33,8 +35,12 @@ const Subscriptions = () => {
     const [progress, setProgress] = useState(0);
 
     const currentDate = new Date();
-const expiresAt = subscriptionData?.CurrentSubscription[0]?.expiresAt ? new Date(subscriptionData?.CurrentSubscription[0].expiresAt) : null;
-const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : null;
+    const expiresAt = subscriptionData?.CurrentSubscription[0]?.expiresAt
+        ? new Date(subscriptionData?.CurrentSubscription[0].expiresAt)
+        : null;
+    const daysUntilExpire = expiresAt
+        ? differenceInDays(expiresAt, currentDate)
+        : null;
 
     const formatDate = dateString => {
         const date = new Date(dateString);
@@ -92,11 +98,13 @@ const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : n
         }
     }, [profileData]);
 
-    function BuynowSubscription(id){
-        if(progress==100){
-        initiatePayment(id)
-        }else{
-            toast.error("Please complete your profile to purchase a subscription plan.");
+    function BuynowSubscription(id) {
+        if (progress == 100) {
+            initiatePayment(id);
+        } else {
+            toast.error(
+                'Please complete your profile to purchase a subscription plan.'
+            );
         }
     }
 
@@ -169,20 +177,25 @@ const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : n
                                                 Up to {item?.search_limit}{' '}
                                                 Search results
                                             </li>
-                                            <li>
-                                                {' '}
-                                                <img
-                                                    src={
-                                                        data1 ===
-                                                        item?.plane_name
-                                                            ? bluetick
-                                                            : CardCheck
-                                                    }
-                                                    alt=""
-                                                    width="14px"
-                                                />
-                                                All available candidates
-                                            </li>
+                                            {item?.candidate_match ? (
+                                                <li>
+                                                    {' '}
+                                                    <img
+                                                        src={
+                                                            data1 ===
+                                                            item?.plane_name
+                                                                ? bluetick
+                                                                : CardCheck
+                                                        }
+                                                        alt=""
+                                                        width="14px"
+                                                    />
+                                                    Candidate Matching
+                                                </li>
+                                            ) : (
+                                                ''
+                                            )}
+
                                             <li>
                                                 {' '}
                                                 <img
@@ -233,24 +246,6 @@ const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : n
                                             ) : (
                                                 ``
                                             )}
-                                            {item?.download_email_limit ? (
-                                                <li>
-                                                    <img
-                                                        src={
-                                                            data1 ===
-                                                            item?.plane_name
-                                                                ? bluetick
-                                                                : CardCheck
-                                                        }
-                                                        alt=""
-                                                        width="14px"
-                                                    />
-                                                    Download multiple emails
-                                                    together.
-                                                </li>
-                                            ) : (
-                                                ``
-                                            )}
 
                                             {item?.job_posting &&
                                             item?.job_posting !== 0 ? (
@@ -271,21 +266,78 @@ const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : n
                                             ) : (
                                                 ''
                                             )}
+                                            {item?.ai_job_description ? (
+                                                <li>
+                                                    <img
+                                                        src={
+                                                            data1 ===
+                                                            item?.plane_name
+                                                                ? bluetick
+                                                                : CardCheck
+                                                        }
+                                                        alt=""
+                                                        width="14px"
+                                                    />
+                                                    {item?.ai_job_description}{' '}
+                                                    Ai Job Description
+                                                </li>
+                                            ) : (
+                                                ''
+                                            )}
+                                            {item?.ai_question ? (
+                                                <li>
+                                                    <img
+                                                        src={
+                                                            data1 ===
+                                                            item?.plane_name
+                                                                ? bluetick
+                                                                : CardCheck
+                                                        }
+                                                        alt=""
+                                                        width="14px"
+                                                    />
+                                                    {item?.ai_question} AI
+                                                    generated questions
+                                                </li>
+                                            ) : (
+                                                ''
+                                            )}
+                                            {item?.support ? (
+                                                <li>
+                                                    <img
+                                                        src={
+                                                            data1 ===
+                                                            item?.plane_name
+                                                                ? bluetick
+                                                                : CardCheck
+                                                        }
+                                                        alt=""
+                                                        width="14px"
+                                                    />
+                                                    Support
+                                                </li>
+                                            ) : (
+                                                ''
+                                            )}
 
-                                            <li>
-                                                {' '}
-                                                <img
-                                                    src={
-                                                        data1 ===
-                                                        item?.plane_name
-                                                            ? bluetick
-                                                            : CardCheck
-                                                    }
-                                                    alt=""
-                                                    width="14px"
-                                                />
-                                                5 AI Searches
-                                            </li>
+                                            {item?.download_email_limit ? (
+                                                <li>
+                                                    <img
+                                                        src={
+                                                            data1 ===
+                                                            item?.plane_name
+                                                                ? bluetick
+                                                                : CardCheck
+                                                        }
+                                                        alt=""
+                                                        width="14px"
+                                                    />
+                                                    Download multiple emails
+                                                    together.
+                                                </li>
+                                            ) : (
+                                                ``
+                                            )}
                                         </ul>
 
                                         {data1 == item?.plane_name ? (
@@ -307,7 +359,9 @@ const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : n
                                                 className="buybtn"
                                                 disabled={data1}
                                                 onClick={() => {
-                                                    BuynowSubscription(item?._id);
+                                                    BuynowSubscription(
+                                                        item?._id
+                                                    );
                                                 }}
                                             >
                                                 {data1 === item?.plane_name
@@ -336,29 +390,31 @@ const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : n
                 </div>
 
                 <div className="early-renew">
-                {expiresAt && isAfter(expiresAt, currentDate) && daysUntilExpire <= 2 ? (
-    <Button
-        size="sm"
-        style={{ background: 'white', color: '#3B96E1' }}
-        onClick={() =>
-            navigate('/main/subscription-plan/renew')
-        }
-    >
-        Renew
-    </Button>
-) :(
-    <Button
-        size="sm"
-        onClick={() =>
-            navigate('/main/subscription-plan/early-buy')
-        }
-    >
-        Early Buy
-    </Button>
-)}
+                    {expiresAt &&
+                    isAfter(expiresAt, currentDate) &&
+                    daysUntilExpire <= 2 ? (
+                        <Button
+                            size="sm"
+                            style={{ background: 'white', color: '#3B96E1' }}
+                            onClick={() =>
+                                navigate('/main/subscription-plan/renew')
+                            }
+                        >
+                            Renew
+                        </Button>
+                    ) : (
+                        <Button
+                            size="sm"
+                            onClick={() =>
+                                navigate('/main/subscription-plan/early-buy')
+                            }
+                        >
+                            Early Buy
+                        </Button>
+                    )}
                 </div>
             </div>
-            <div className="plan">
+            {/* <div className="plan">
                 <p> Plans for Background Verfications</p>
                 <hr />
                 <div className="sub-cards">
@@ -445,7 +501,7 @@ const daysUntilExpire = expiresAt ? differenceInDays(expiresAt, currentDate) : n
               </Modal.Footer>
           </Modal>
             )}
-            </div>
+            </div> */}
         </>
     );
 };

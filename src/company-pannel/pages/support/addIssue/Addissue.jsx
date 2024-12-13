@@ -2,9 +2,11 @@ import React, { useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import ep_back from '../../../../assets/images/ep_back.png';
 import uploadImg from '../../../../assets/images/uploadImg.png';
+import blackCross from '../../../../assets/images/blackCross.png';
 import { useSupport } from '../../../../context/SupportContext';
 import axios from 'axios';
 import BaseUrl from '../../../../services/BaseUrl';
+
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 const Addissue = () => {
@@ -103,6 +105,7 @@ const Addissue = () => {
                 onClick={() => setModalShow(prev => !prev)}
                 style={{ cursor: 'pointer' }}
             />
+
             <p
                 style={{
                     textAlign: 'center',
@@ -112,6 +115,7 @@ const Addissue = () => {
             >
                 Add Issue
             </p>
+
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formFirstName">
                     <Form.Label style={{ fontSize: '0.8rem' }}>

@@ -201,6 +201,7 @@ export const HireCandidateProvider = ({ children }) => {
             }
         } catch (error) {
             toast.error(error?.response?.data?.error);
+            setSearchLoading(false);
         }
     };
 

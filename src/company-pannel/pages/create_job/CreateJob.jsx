@@ -274,14 +274,14 @@ const CreateJob = () => {
                                 {job_status?.dataWithJobCounts[0]?.jobCount ||
                                     0}
                             </p>
-                            <p className="total-activ">Total Job Created</p>
+                            <p className="total-activ"> Job Created</p>
                         </div>
                         <div className="job-created-data">
                             <p style={{ color: '#3B96E1' }}>
                                 {job_status?.dataWithJobCounts[0]
                                     ?.activeJobCount || 0}
                             </p>
-                            <p className="total-activ">Total Active Job</p>
+                            <p className="total-activ"> Active Job</p>
                         </div>
                         <div
                             className="job-created-data "
@@ -291,9 +291,7 @@ const CreateJob = () => {
                                 {job_status?.dataWithJobCounts[0]
                                     ?.application_recieved || 0}
                             </p>
-                            <p className="total-activ">
-                                Total Applications Received
-                            </p>
+                            <p className="total-activ">Applications Received</p>
                         </div>
                         <div
                             className="job-created-data"
@@ -304,7 +302,7 @@ const CreateJob = () => {
                                     ?.candidate_pipeline || 0}
                             </p>
                             <p className="total-activ">
-                                Total Candidates in Pipeline
+                                Candidates in Pipeline
                             </p>
                         </div>
                         <div
@@ -315,9 +313,7 @@ const CreateJob = () => {
                                 {job_status?.dataWithJobCounts[0]
                                     ?.candidate_hired || 0}
                             </p>
-                            <p className="total-activ">
-                                Total Candidates Hired
-                            </p>
+                            <p className="total-activ">Candidates Hired</p>
                         </div>
                     </Col>
                 </Row>

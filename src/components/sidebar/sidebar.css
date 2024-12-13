@@ -71,8 +71,8 @@
 .sidebar-btns ul li {
     text-decoration: none;
     list-style-type: none;
-    font-size: 0.72rem;
-
+    font-size: 0.82rem;
+    font-weight: 500;
     /* background: rgba(242, 242, 242, 1); */
 
     padding: 8px 5px;
@@ -111,7 +111,4 @@
     padding: 4px;
     margin-top: 4px;
     margin-left: 2px;
-}
-.right {
-    width: 19vw;
 }

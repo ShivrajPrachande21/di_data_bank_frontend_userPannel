@@ -223,7 +223,10 @@ const Profile = () => {
                         <p>Public Information</p>
                         <div className="cardsFlex">
                             <div className="cards">
-                                <div className="tables">
+                                <div
+                                    className="tables"
+                                    style={{ width: '250px' }}
+                                >
                                     <p>Contact Email:</p>
                                     <p>Contact No.:</p>
                                     <p>Location:</p>
@@ -319,33 +322,40 @@ const Profile = () => {
                                     <p style={{ color: '#051F50' }}>
                                         {profileData?.updatedData?.GST || 'N/A'}
                                     </p>
-                                    <img
-                                        src={
-                                            profileData?.updatedData
-                                                ?.GSTImageUrl
-                                        }
-                                        alt=""
-                                        style={{
-                                            marginTop: '-20px',
-                                            width: '30%'
-                                        }}
-                                    />
-                                    <p style={{ color: '#051F50' }}>
-                                        {profileData?.updatedData?.PAN || 'N/A'}
-                                    </p>
-                                    <br></br>
-                                    <br></br>
-                                    <img
-                                        src={
-                                            profileData?.updatedData
-                                                ?.PANImageUrl
-                                        }
-                                        alt=""
-                                        style={{
-                                            marginTop: '-20px',
-                                            width: '30%'
-                                        }}
-                                    />
+                                    <div style={{ width: '140px' }}>
+                                        <img
+                                            src={
+                                                profileData?.updatedData
+                                                    ?.GSTImageUrl
+                                            }
+                                            alt=""
+                                            style={{
+                                                marginTop: '-10px',
+                                                width: '30%'
+                                            }}
+                                        />
+                                    </div>
+                                    <div style={{ marginTop: '14px' }}>
+                                        <p style={{ color: '#051F50' }}>
+                                            {profileData?.updatedData?.PAN ||
+                                                'N/A'}
+                                        </p>
+                                        <br></br>
+                                        <br></br>
+                                        <div style={{ width: '140px' }}>
+                                            <img
+                                                src={
+                                                    profileData?.updatedData
+                                                        ?.PANImageUrl
+                                                }
+                                                alt=""
+                                                style={{
+                                                    marginTop: '-80px',
+                                                    width: '30%'
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

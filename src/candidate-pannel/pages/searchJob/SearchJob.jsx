@@ -308,7 +308,7 @@ const SearchJob = () => {
                             </div>
                         ) : (
                             visibleItems?.map((item, index) => (
-                                <div className="card-job search">
+                                <div className="card-job search" key={index}>
                                     <div
                                         className="search-job-top"
                                         onClick={() =>
@@ -540,6 +540,7 @@ const SearchJob = () => {
             {showModal && (
                 <ProfileCompletionModal
                     onClose={() => setShowModal(false)} // Close modal handler
+                    setShowModal={setShowModal}
                 />
             )}
         </>

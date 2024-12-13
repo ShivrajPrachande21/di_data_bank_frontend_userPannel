@@ -47,8 +47,8 @@ const ViewJobDescription = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -72,7 +72,7 @@ const ViewJobDescription = () => {
     const [showModal, setShowModal] = useState(false);
     const handleApplyJob = async id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
-            setShowModal(true)
+            setShowModal(true);
             return;
         }
         await applyTo_job(id);
@@ -120,7 +120,7 @@ const ViewJobDescription = () => {
             if (!token) {
                 navigate('/');
             } else {
-                navigate('/candidate-dashboard/view-job-details/:id');
+                navigate(`/candidate-dashboard/view-job-details/${id}`);
             }
         } else {
             navigate('/');
@@ -311,7 +311,7 @@ const ViewJobDescription = () => {
                                 <td>
                                     {' '}
                                     <span className="card-table-span">
-                                        {formatDate(JobData?.createdDate)} 
+                                        {formatDate(JobData?.createdDate)}
                                     </span>
                                 </td>
                             </tr>
@@ -422,10 +422,10 @@ const ViewJobDescription = () => {
                 </Modal.Footer>
             </Modal> */}
             {showModal && (
-        <ProfileCompletionModal
-          onClose={() => setShowModal(false)} // Close modal handler
-        />
-      )}
+                <ProfileCompletionModal
+                    onClose={() => setShowModal(false)} // Close modal handler
+                />
+            )}
         </>
     );
 };

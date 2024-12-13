@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './resume.css';
 import html2pdf from 'html2pdf.js';
 import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import AiSearch from '../../../../assets/images/AiSearch.png';
+import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 const Resume = () => {
+    const { CandidateProfile } = useContext(CandidateProfileContext);
     const [resume, setResume] = useState(null);
     const [loading, setLoading] = useState(false);
 
     // Generate Resume from Backend
     const GenerateResume = async () => {
+        const custom_id = CandidateProfile?.data?.custom_id;
         try {
             setLoading(true);
             const response = await axios.post(
                 'http://65.20.91.47:5000/pythonapi/generate_resume',
                 {
-                    custom_id: 1
+                    custom_id: 828
                 }
             );
             setResume(response.data);
@@ -88,7 +91,7 @@ const Resume = () => {
                     <div dangerouslySetInnerHTML={{ __html: resume }} />
                 )}
             </div>
-            <Row>
+            {/* <Row>
                 <Col md={2}></Col>
                 <Col md={8}>
                     <InputGroup style={{ width: '100%' }}>
@@ -119,7 +122,7 @@ const Resume = () => {
                     </InputGroup>
                 </Col>
                 <Col md={2}></Col>
-            </Row>
+            </Row> */}
             <div className="download-candidate-resume mt-2">
                 <Button size="sm" onClick={GenerateResume}>
                     {loading ? (

@@ -1,16 +1,17 @@
 .plan {
     /* background: red; */
-    width: 80%;
+    width: 90%;
     margin: 0px auto;
     padding: 10px;
 }
 .plan p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     line-height: 39px;
     letter-spacing: 0.05em;
     text-align: left;
     color: #3b96e1;
+    padding-bottom: 4px;
 }
 .plan hr {
     margin-top: -18px; /* Adjust this value as needed */
@@ -19,18 +20,17 @@
     border: none; /* Remove the default border */
 }
 .sub1 {
-    position: relative;
     padding: 14px;
     border-radius: 20px;
-    height: 68vh;
-
+    height: 74vh;
+    max-height: 80vh;
     background: linear-gradient(
         126.92deg,
         #1c7ac7 2.12%,
         #4d90c7 50.39%,
         #1c7ac7 98.27%
     );
-    width: 250px;
+    width: 280px;
     transition: transform 0.4s ease;
 }
 /* .sub1:hover {
@@ -73,8 +73,6 @@
 }
 .sub-date {
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .sub-date p {
     font-size: 0.8rem;
@@ -105,11 +103,11 @@
     position: relative;
     padding: 14px;
     border-radius: 20px;
-    height: 68vh;
-
+    height: 74vh;
+    max-height: 80vh;
     background: white;
     border: 2px solid #3b96e1;
-    width: 250px;
+    width: 282px;
     color: #3b96e1;
 }
 .sub2 ul li {

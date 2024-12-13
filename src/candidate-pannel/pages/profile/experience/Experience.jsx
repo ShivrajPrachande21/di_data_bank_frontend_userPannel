@@ -456,9 +456,15 @@ const Experience = () => {
                                                         PDF
                                                     </div>
                                                     <p>
-                                                        {result1
+                                                        {/* {result1
                                                             ? 'Resume.pdf'
-                                                            : result1}
+                                                            : result1} */}
+                                                        {
+                                                            CandidateProfile
+                                                                ?.data
+                                                                ?.work_details
+                                                                ?.resume
+                                                        }
                                                     </p>
                                                 </div>
                                             </td>

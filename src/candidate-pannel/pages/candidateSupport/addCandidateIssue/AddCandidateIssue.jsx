@@ -172,6 +172,7 @@ function AddCandidateIssue() {
 
                     <input
                         style={{ display: 'none' }}
+                        accept="image/*"
                         type="file"
                         ref={fileRef}
                         onChange={handleFileChange}

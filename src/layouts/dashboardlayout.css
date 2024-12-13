@@ -8,6 +8,9 @@
     width: 100%;
 }
 .right {
+    width: 20vw;
+}
+.right {
     margin-left: -10px;
     height: 100vh;
 }
@@ -25,7 +28,7 @@
 }
 
 .custom-scroll {
-    width: 81vw;
+    width: 80vw;
     scrollbar-width: none; /* For Firefox */
     scroll-behavior: smooth;
     -ms-overflow-style: none; /* For Internet Explorer and Edge */

@@ -7,6 +7,8 @@ import avatar from '../../../../assets/images/avatar.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
+import BaseUrl from './../../../../services/BaseUrl';
+import axios from 'axios';
 const socket = io('http://65.20.91.47:4000');
 
 function CandidateChat() {
@@ -16,10 +18,28 @@ function CandidateChat() {
     const [message, setMessage] = useState('');
     const [chat, setChat] = useState([]);
     const [timeStamp, settimeStamp] = useState('');
+    const [profile, SetProfile] = useState(null);
 
     // const token = localStorage.getItem('Candidate_token');
     // const decodedToken = jwtDecode(token);
     // const companyId = decodedToken?._id;
+
+    const CandidateProfiles = async () => {
+        const token = localStorage.getItem('Candidate_token');
+
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            const id = decodedToken?._id;
+            try {
+                const response = await axios.get(
+                    `${BaseUrl}candidate.profile/details/${id}`
+                );
+                if (response.status === 200) {
+                    SetProfile(response?.data?.profile);
+                }
+            } catch (error) {}
+        }
+    };
 
     const token = localStorage.getItem('Candidate_token');
     let companyId = null;
@@ -115,7 +135,21 @@ function CandidateChat() {
         }
     }
 
+    const bindUrlOrPath = url => {
+        let cleanBaseUrl = BaseUrl?.replace(/\/api\b/, '');
+        let temp = `${cleanBaseUrl?.replace(/\/$/, '')}/${url?.replace(
+            /\\/g,
+            '/'
+        )}`;
+
+        return temp.replace(/([^:]\/)\/+/g, '$1');
+    };
+
     useEffect(() => {
+        const fun = async () => {
+            await CandidateProfiles();
+        };
+        fun();
         rendering();
     }, []);
     return (
@@ -154,6 +188,7 @@ function CandidateChat() {
                                     <>
                                         {item?.refference_id === companyId ? (
                                             <div
+                                                key={index}
                                                 style={{
                                                     display: 'flex',
                                                     justifyContent:
@@ -168,7 +203,13 @@ function CandidateChat() {
                                                         <p>You</p>
                                                         <div className="show_profile">
                                                             <img
-                                                                src={chatuser}
+                                                                src={
+                                                                    profile
+                                                                        ? bindUrlOrPath(
+                                                                              profile
+                                                                          )
+                                                                        : 'img'
+                                                                }
                                                                 alt=""
                                                             />
                                                         </div>

@@ -165,10 +165,15 @@ const DashboardCandidate = () => {
                                 <div className="candidate-dashboard-subscription-card">
                                     <div className="my-plan-dashboard">
                                         <h2>My Plan :</h2>
-                                        <span>
-                                            {DashboardData?.existedPlane
-                                                ?.plane_name || 0}
-                                        </span>
+                                        {DashboardData?.existedPlane
+                                            ?.plane_name == '' ? (
+                                            <span>
+                                                {DashboardData?.existedPlane
+                                                    ?.plane_name || ''}
+                                            </span>
+                                        ) : (
+                                            'N/A'
+                                        )}
                                     </div>
                                     <div className="ai-sub-cards-details">
                                         <p>Get Featured in Top {}Candidate </p>
@@ -238,7 +243,7 @@ const DashboardCandidate = () => {
                                     </div>
                                 </div>
                                 <div className="ai-cards-div">
-                                    <p>Offere Accpected Count</p>{' '}
+                                    <p>Offer Accpected Count</p>{' '}
                                     <h4 style={{ color: '#008000' }}>
                                         {' '}
                                         {apiResponse?.offer_accepted_count || 0}
@@ -252,7 +257,7 @@ const DashboardCandidate = () => {
                                     </h4>
                                 </div>
                                 <div className="ai-cards-div">
-                                    <p>Offere Rejected Count</p>
+                                    <p>Offer Rejected Count</p>
                                     <h4 style={{ color: '#FF0000' }}>
                                         {' '}
                                         {apiResponse?.offer_rejected_count || 0}
@@ -267,7 +272,7 @@ const DashboardCandidate = () => {
                                     </h4>
                                 </div>
                                 <div className="ai-cards-div">
-                                    <p>Offere Processing Count</p>
+                                    <p>Offer Processing Count</p>
                                     <h4 style={{ color: '#FF8C00' }}>
                                         {' '}
                                         {apiResponse?.offer_processing_count ||

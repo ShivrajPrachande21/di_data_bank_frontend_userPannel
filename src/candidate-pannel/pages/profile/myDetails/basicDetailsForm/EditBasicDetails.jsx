@@ -3,6 +3,7 @@ import { Form, Button, Alert, Col, Row } from 'react-bootstrap';
 import { jwtDecode } from 'jwt-decode';
 import BaseUrl from '../../../../../services/BaseUrl';
 import oui_cross from '../../../../../assets/images/oui_cross.png';
+import blackCross from '../../../../../assets/images/blackCross.png';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { CandidateProfileContext } from '../../../../../context/candidateContext/CandidateProfileContext';
@@ -45,6 +46,11 @@ const EditBasicDetails = () => {
     const handleProfileChange = (index, field, value) => {
         const updatedFields = [...other_profile];
         updatedFields[index][field] = value;
+        setInputFields(updatedFields);
+    };
+    // Remove the Other profile one bye one
+    const handleDelete = index => {
+        const updatedFields = other_profile.filter((_, i) => i !== index); // Remove the item at the given index
         setInputFields(updatedFields);
     };
 
@@ -332,7 +338,7 @@ const EditBasicDetails = () => {
                                         }
                                     />
                                 </Col>
-                                <Col xs={8}>
+                                <Col md={7}>
                                     <Form.Control
                                         type="text"
                                         placeholder="Paste or Enter Link"
@@ -349,6 +355,9 @@ const EditBasicDetails = () => {
                                             )
                                         }
                                     />
+                                </Col>
+                                <Col md={1} onClick={e => handleDelete(index)}>
+                                    <img src={blackCross} width="24px" alt="" />
                                 </Col>
                             </Row>
                         ))}

@@ -90,23 +90,7 @@ function EditPersonalForm() {
                 Setaadharverify(Aadhar_verified_status);
                 SetPanVerify(Pan_verified_status);
 
-                setPersonalData({
-                    PAN: PAN || '',
-
-                    aadhar_number: aadhar_number || '',
-                    age: age || '',
-                    country: country || '',
-
-                    family_member: family_member || '',
-                    father_name: father_name || '',
-                    gender: gender || '',
-                    location: location || '',
-                    marriag_status: marriag_status || '',
-                    son_name: son_name || '',
-                    spouse_profession: spouse_profession || '',
-                    disability: disability || null,
-                    disbility_name: disbility_name || ''
-                });
+                setPersonalData(response?.data?.personal_details);
             } catch (error) {}
         }
     };
@@ -653,17 +637,18 @@ function EditPersonalForm() {
                                 name="disability"
                                 label="Yes"
                                 value="true"
+                                // checked={personalData?.disability}
                                 onChange={handleInputChange}
-                                className="custom-radio "
+                                className="custom-radio"
                             />
 
-                            {/* Second radio option */}
                             <Form.Check
                                 type="radio"
                                 id="email2"
                                 name="disability"
                                 label="No"
                                 value="false"
+                                //checked={!personalData?.disability}
                                 onChange={handleInputChange}
                                 className="custom-radio mx-3"
                             />

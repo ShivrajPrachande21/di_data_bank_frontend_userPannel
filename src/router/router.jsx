@@ -122,7 +122,7 @@ const router = createBrowserRouter([
                 element: <CompanyAiSearch />
             },
             {
-                path: 'view-candidate-details',
+                path: 'view-candidate-details/:id',
                 element: <ViewCandidateDetails />
             },
             {

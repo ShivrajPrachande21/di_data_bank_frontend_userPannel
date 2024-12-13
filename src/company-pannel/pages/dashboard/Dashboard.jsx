@@ -10,9 +10,12 @@ import building from '../../../assets/images/building.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
+import moment from 'moment';
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
         useDashboardData();
+    const yearStartISO = moment().startOf('year').toISOString();
+    const yearEndISO = moment().endOf('year').toISOString();
     const navigate = useNavigate();
     const loacate = useLocation();
     const [PAN, setPAN] = useState(null);
@@ -20,6 +23,8 @@ const Dashboard = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [SelectedData, setSelectedData] = useState('All');
     const [dasboardData, setDashboardData] = useState(null);
+    const [startDate, setStartDate] = useState(yearStartISO);
+    const [EndDate, setEndDate] = useState(yearEndISO);
 
     const handleVerifyJob = e => {
         e.preventDefault();
@@ -79,6 +84,38 @@ const Dashboard = () => {
         }
     };
 
+    // const getSelectedData = async () => {
+    //     const token = localStorage.getItem('Candidate_token');
+    //     if (!token) {
+    //         return;
+    //     } else {
+    //         setloading(true);
+    //         const decodedToken = jwtDecode(token);
+    //         const userId = decodedToken?._id;
+    //         try {
+    //             const response = await axios.get(
+    //                 `${BaseUrl}candidate/dashboard/job/status/${userId}/${startDate}/${EndDate}`
+    //             );
+    //             setApiResponse(response?.data);
+    //             if (response.status == 200 || response.status == 201) {
+    //                 setloading(false);
+    //             }
+    //         } catch (error) {}
+    //     }
+    // };
+
+    const handleStartChange = e => {
+        const date = new Date(e.target.value);
+        const isoDate = date.toISOString();
+        setStartDate(isoDate);
+        console.log('startDate', startDate);
+    };
+    const handleEndChange = e => {
+        const date = new Date(e.target.value);
+        const isoDate = date.toISOString();
+        setEndDate(isoDate);
+        //  getSelectedData();
+    };
     useEffect(() => {
         setTimeout(() => {
             sethide(null);
@@ -112,7 +149,7 @@ const Dashboard = () => {
         <div style={{ padding: '10px' }}>
             <>
                 {/*First Row Card */}
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                     <div className="c-dsahboard-top-cards">
                         <img src={building} alt="" />
                         <div className="c-card-content">
@@ -120,19 +157,28 @@ const Dashboard = () => {
                             <p>{dasboardData?.data?.totalJobs || 0}</p>
                         </div>
                         <div className="custom-select-company">
-                            <Form.Select
-                                aria-label="Default select example"
-                                size="sm"
-                                className="selecte"
-                                onChange={e => handlSelectChange(e)}
-                            >
-                                <option>select</option>
-                                <option value="All">All</option>
-                                <option value="Today">Today</option>
-                                <option value="Thisweek">This Week</option>
-                                <option value="Thismonth">This Month</option>
-                                <option value="Thisyear">This Year</option>
-                            </Form.Select>
+                            <div className="custom-select-sub-date">
+                                <p> Date</p>
+
+                                <input
+                                    type="date"
+                                    onChange={handleStartChange}
+                                />
+                            </div>
+
+                            {/* <Form.Select
+                                    aria-label="Default select example"
+                                    size="sm"
+                                    className="selecte"
+                                    onChange={e => handlSelectChange(e)}
+                                >
+                                    <option>select</option>
+                                    <option value="All">All</option>
+                                    <option value="Today">Today</option>
+                                    <option value="Thisweek">This Week</option>
+                                    <option value="Thismonth">This Month</option>
+                                    <option value="Thisyear">This Year</option>
+                                </Form.Select> */}
                         </div>
                     </div>
 

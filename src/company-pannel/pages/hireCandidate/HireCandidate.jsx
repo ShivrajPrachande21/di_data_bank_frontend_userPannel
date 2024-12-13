@@ -36,6 +36,7 @@ const HireCandidate = () => {
     } = useContext(HireCandidateContext);
     const navigate = useNavigate();
     const locate = useLocation();
+
     const [fiedEmpty, setfiedEmpty] = useState('');
 
     const [seachBarData, setseachBarData] = useState({
@@ -50,16 +51,17 @@ const HireCandidate = () => {
         setfiedEmpty('');
     };
     const handle_search = () => {
-        Search_bye_keyWord(seachBarData);
-        // if (seachBarData.search === '' && seachBarData.search.trim() === '') {
-        //     setfiedEmpty('Please enter keywords to search relevant jobs');
-        // } else {
-
-        //     setfiedEmpty('');
-        // }
+        if (
+            seachBarData.search.trim() == '' &&
+            seachBarData.search.trim() === ''
+        ) {
+            toast.error('Please enter keywords to search relevant jobs');
+        } else {
+            Search_bye_keyWord(seachBarData);
+        }
 
         if (seachBarData) {
-            setseachBarData({ search: '', experience: '', location: '' });
+            // setseachBarData({ search: '', experience: '', location: '' });
         }
     };
 
@@ -158,7 +160,8 @@ const HireCandidate = () => {
                     Subscription_Data[0]?.cv_view_limit == 'Unlimited')
             ) {
                 await get_Candidate_detials(id);
-                navigate('/main/view-candidate-details');
+
+                navigate(`/main/view-candidate-details/${id}`);
             } else {
                 if (
                     typeof Subscription_Data[0]?.cv_view_limit == 'number' &&
@@ -287,7 +290,11 @@ const HireCandidate = () => {
                                     isEmail_Disabled ? handleMouseOut : ''
                                 }
                             >
-                                <img src={Crown} alt="" width="20px" />
+                                {Subscription_Data ? (
+                                    ''
+                                ) : (
+                                    <img src={Crown} alt="" width="20px" />
+                                )}{' '}
                                 {buttonText}
                             </Button>
                             <Button
@@ -307,12 +314,16 @@ const HireCandidate = () => {
                                     resume_Disabled ? handleMouseOut_resume : ''
                                 }
                             >
-                                <img src={Crown} alt="" width="20px" />
+                                {Subscription_Data ? (
+                                    ''
+                                ) : (
+                                    <img src={Crown} alt="" width="20px" />
+                                )}{' '}
                                 <span>
                                     {' '}
                                     {resume_loading
-                                        ? 'downloading resume'
-                                        : 'download resume'}
+                                        ? 'Downloading Resume'
+                                        : 'Download Resume'}
                                 </span>
                             </Button>
                             <div className="select-all">

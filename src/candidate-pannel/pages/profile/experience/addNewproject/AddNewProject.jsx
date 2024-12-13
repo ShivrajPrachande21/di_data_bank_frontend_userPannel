@@ -120,7 +120,7 @@ const AddNewProject = () => {
         <>
             <div>
                 <img
-                    // src={oui_cross}
+                    src={oui_cross}
                     alt=""
                     style={{
                         float: 'right',
@@ -128,7 +128,7 @@ const AddNewProject = () => {
                         cursor: 'pointer',
                         marginTop: '-10px'
                     }}
-                    // onClick={() => setShowEditProject(prev => !prev)}
+                    onClick={handleShowProject}
                 />
                 <p
                     style={{

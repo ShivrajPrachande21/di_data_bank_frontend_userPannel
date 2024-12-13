@@ -370,10 +370,13 @@ function MyDetails() {
                         </td>
                         <td style={{ color: '#051F50', fontSize: '12px' }}>
                             {CandidateProfile?.data?.personal_details
-                                ?.disbility_name
+                                ?.disability
                                 ? CandidateProfile?.data?.personal_details
                                       ?.disbility_name
-                                : 'N/A'}
+                                    ? CandidateProfile?.data?.personal_details
+                                          ?.disbility_name
+                                    : 'N/A'
+                                : 'No disability'}
                         </td>
                     </tr>
                 </table>
@@ -403,7 +406,7 @@ function MyDetails() {
             {/* EDit Personal Module */}
             <Modal
                 show={personalModal}
-                onHide={showPersonalModal}
+                // onHide={showPersonalModal}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"

@@ -51,14 +51,14 @@ const HireCandidate = () => {
         setfiedEmpty('');
     };
     const handle_search = () => {
-        if (
-            seachBarData.search.trim() == '' &&
-            seachBarData.search.trim() === ''
-        ) {
-            toast.error('Please enter keywords to search relevant jobs');
-        } else {
+        // if (
+        //     seachBarData.search.trim() == '' &&
+        //     seachBarData.search.trim() === ''
+        // ) {
+        //     toast.error('Please enter keywords to search relevant Candidate');
+        // } else {
             Search_bye_keyWord(seachBarData);
-        }
+       // }
 
         if (seachBarData) {
             // setseachBarData({ search: '', experience: '', location: '' });
@@ -181,14 +181,8 @@ const HireCandidate = () => {
         fetchCandidates();
         get_subscription_details();
     }, [locate]);
-    const searchLimit =
-        Subscription_Data[1]?.search_limit === 'Unlimited'
-            ? Subscription_Data[1]?.search_limit
-            : Subscription_Data[0]?.search_limit === 'Unlimited'
-            ? Subscription_Data[0]?.search_limit
-            : Subscription_Data[0]?.search_limit !== 0
-            ? Subscription_Data[0]?.search_limit
-            : Subscription_Data[1]?.search_limit || '';
+    const searchLimit =(Subscription_Data[0]?.search_limit||0)+ (Subscription_Data[1]?.search_limit||0)
+
 
     function rendering() {
         const render = localStorage.getItem('render');

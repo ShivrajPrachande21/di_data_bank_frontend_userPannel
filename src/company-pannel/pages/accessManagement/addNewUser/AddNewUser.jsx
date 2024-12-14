@@ -20,6 +20,7 @@ const AddNewUser = () => {
         DeleteUser,
         getSingleDatatoEdit
     } = useContext(AccessManagementContext);
+
     const locate = useLocation();
     const [userInput, setUserInput] = useState('');
     const handleInput = e => {
@@ -30,10 +31,9 @@ const AddNewUser = () => {
         setEditModule(prev => !prev);
     };
 
-    const filterData = accessData?.HRs?.filter(item => {
+    const filterData = accessData&&accessData?.filter(item => {
         return item?.email.toLowerCase().includes(userInput.toLowerCase());
     });
-    console.log('Filter Data', filterData);
     useEffect(() => {
         getAllSubAdmin();
     }, [locate]);

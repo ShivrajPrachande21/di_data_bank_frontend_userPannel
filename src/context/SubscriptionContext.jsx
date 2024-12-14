@@ -71,7 +71,7 @@ export const SubscriptionProvider = ({ children }) => {
     let timeoutId;
 
     const initiatePayment = async sub_id => {
-        SetpaymentLoading(true);
+       
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
@@ -83,17 +83,18 @@ export const SubscriptionProvider = ({ children }) => {
             });
 
             if (response.status == 200 || response?.status == 201) {
+                SetpaymentLoading(true);
                 datapayment = response?.data;
                 SetpaymentData(response?.data);
-
+                RunVerify();
                 const paymentLink = response?.data?.paymentLink;
                 if (paymentLink) {
                     window.open(paymentLink, '_blank');
                 }
             }
-            RunVerify();
+          
         } catch (error) {
-            console.error('Error during payment initiation:', error);
+          throw error
         }
     };
 
@@ -169,7 +170,7 @@ export const SubscriptionProvider = ({ children }) => {
             }
             RuntopUp_verify();
         } catch (error) {
-            console.error('Error during payment initiation:', error);
+           throw error
         }
     };
 

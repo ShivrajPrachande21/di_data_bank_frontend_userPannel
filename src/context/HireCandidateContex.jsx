@@ -179,6 +179,7 @@ export const HireCandidateProvider = ({ children }) => {
     };
 
     const Search_bye_keyWord = async seachBarData => {
+        console.log("appus hired candidate ",seachBarData)
         setSearchLoading(true);
 
         const token = localStorage.getItem('companyToken');

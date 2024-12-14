@@ -211,6 +211,13 @@ const Dashboard = () => {
                             <p className="myplan-btn">
                                 {data?.subscriptionData[0].plane_name || 'N/A'}
                             </p>
+                            {data?.subscriptionData[1]?.plane_name?
+                            (
+                                <p className="myplan-btn">
+                                {data?.subscriptionData[1]?.plane_name}
+                            </p>
+                            ):null
+                            }
                         </div>
 
                         <div className="col-12">
@@ -218,27 +225,34 @@ const Dashboard = () => {
                             <h3 className="Candidates-s">
                                 {' '}
                                 {data?.subscriptionData[0]?.AdminSubscription[0]
-                                    ?.search_limit || 0}
+                                    ?.search_limit +(data?.subscriptionData[1]&& data?.subscriptionData[1]?.AdminSubscription[0]
+                                        ?.search_limit||0)}
+                                     {data?.subscriptionData[0].search_limit ==
+                                'Unlimited'
+                                    ? null
+                                    : `/${
+                                          data?.subscriptionData[0]
+                                              .search_limit+(data?.subscriptionData[1]&& data?.subscriptionData[1]
+                                                ?.search_limit||0)
+                                      }`}
+                               
                             </h3>
                         </div>
                         <div className="col-12">
                             <p className="Candidates">CV Views</p>
                             <h3 className="Candidates-s">
                                 {data?.subscriptionData[0].AdminSubscription[0]
-                                    ?.cv_view_limit || 0}{' '}
+                                    ?.cv_view_limit+(data?.subscriptionData[1]&&data?.subscriptionData[1].AdminSubscription[0]
+                                        ?.cv_view_limit||0)}{' '}
                                 {data?.subscriptionData[0].cv_view_limit ==
                                 'Unlimited'
                                     ? null
                                     : `/${
                                           data?.subscriptionData[0]
-                                              .cv_view_limit || ''
+                                              .cv_view_limit+(data?.subscriptionData[1]&&data?.subscriptionData[1]
+                                                ?.cv_view_limit||0)
                                       }`}
-                                {data?.subscriptionData[0].cv_view_limit ==
-                                'Unlimited' ? null : (
-                                    <span style={{ marginLeft: '4px' }}>
-                                        Remaining
-                                    </span>
-                                )}
+                               
                             </h3>
                         </div>
                         <div className="col-12">
@@ -252,7 +266,7 @@ const Dashboard = () => {
                             <h3 className="Candidates-s">
                                 {data?.subscriptionData[0]?.download_cv_limit
                                     ? 'Unlimited'
-                                    : ' ----'}
+                                    :'N/A'}
                             </h3>
                         </div>
                         <div className="col-12">
@@ -264,7 +278,7 @@ const Dashboard = () => {
                                 {' '}
                                 {data?.subscriptionData[0]?.download_email_limit
                                     ? 'Unlimited'
-                                    : ' ----'}
+                                    :'N/A'}
                             </h3>
                         </div>
                         <div className="col-12">
@@ -272,9 +286,10 @@ const Dashboard = () => {
                             <h3 className="Candidates-s">
                                 {
                                     data?.subscriptionData[0]
-                                        ?.AdminSubscription[0]?.job_posting
+                                        ?.AdminSubscription[0]?.job_posting+(data?.subscriptionData[1]&& data?.subscriptionData[1]
+                                            ?.AdminSubscription[0]?.job_posting||0)
                                 }{' '}
-                                / {data?.subscriptionData[0]?.job_posting}
+                                / {data?.subscriptionData[0]?.job_posting+(data?.subscriptionData[1]&&data?.subscriptionData[1]?.job_posting||0)}
                             </h3>
                         </div>
                         <div className="col-12 ">

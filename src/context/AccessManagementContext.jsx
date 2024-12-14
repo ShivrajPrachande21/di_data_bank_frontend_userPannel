@@ -44,9 +44,10 @@ export const AccessProvider = ({ children }) => {
         } else {
             const decodedToken = jwtDecode(token);
             const cmpId = decodedToken?._id;
+            const Email=decodedToken?.email;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}company/get/subadmin/${cmpId}`
+                    `${BaseUrl}company/get/subadmin/${cmpId}/${Email}`
                 );
                 setAccessData(response?.data);
                 if (response?.status == 200 || response?.status == 201) {

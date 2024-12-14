@@ -13,6 +13,7 @@ import BaseUrl from '../../../../services/BaseUrl';
 import { useSubscription } from '../../../../context/SubscriptionContext';
 import Loader from '../../loader/Loader';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const EarlyBuy = () => {
     const { EarlyBuy} = useSubscription();
     const [EarlyBuyPaymentData, setEarlyBuyPaymentData] = useState();
@@ -25,7 +26,7 @@ const EarlyBuy = () => {
     const data1 = EarlyBuy?.CurrentSubscription?.plane_name;
 
     const Early_initiatePayment = async sub_id => {
-        SetEarlyLoading(true);
+       
         setEarlyBuyID(sub_id);
 
         try {
@@ -41,16 +42,17 @@ const EarlyBuy = () => {
                 }
             );
             if (response.status === 200) {
+                SetEarlyLoading(true);
                 setEarlyBuyPaymentData(response?.data);
-
+                RunEarlyBuy_verify(response?.data);
                 const paymentLink = response?.data?.paymentLink;
                 if (paymentLink) {
                     window.open(paymentLink, '_blank');
                 }
             }
-            RunEarlyBuy_verify(response?.data);
+           
         } catch (error) {
-            console.error('Error during payment initiation:', error);
+            toast.error(error.response.data.error);
         }
     };
     let toUpIntervelId;

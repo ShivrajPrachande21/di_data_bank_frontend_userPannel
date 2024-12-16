@@ -1,23 +1,21 @@
 .search {
-    animation: fadeInMoveUp 0.3s ease-in-out forwards; /* Apply the animation */
-    opacity: 0; /* Initial opacity for the fade-in effect */
+    animation: fadeInMoveUp 0.3s ease-in-out forwards;
+    opacity: 0;
 }
 
 @keyframes fadeInMoveUp {
     20% {
         opacity: 0;
-        transform: translateY(
-            20px
-        ); /* Start with the element 20px below its original position */
+        transform: translateY(20px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0); /* End at its original position */
+        transform: translateY(0);
     }
 }
 
 .searchJob input {
-    width: 90%;
+    width: 9%;
     padding: 6px;
     background: white;
     color: black;
@@ -26,17 +24,17 @@
     outline: none;
 }
 .searchJob input:focus {
-    border: 1px solid #3b96e1; /* Adds a blue outline on focus */
+    border: 1px solid #3b96e1;
 }
 .search-inductiers {
-    width: 26%;
-
     background: #f9f9f9;
     border-radius: 8px;
     margin-top: 2px;
     outline: none;
+    margin-right: 10px;
 }
 .search-inductiers input {
+    width: 100%;
     font-size: 12px;
     margin-top: 4px;
     padding: 6px;
@@ -52,8 +50,8 @@
 }
 
 .searchJob input::placeholder {
-    color: rgb(169, 168, 168); /* Customize the color of the placeholder */
-    opacity: 1; /* Ensure the opacity is 100% for visibility */
+    color: rgb(169, 168, 168);
+    opacity: 1;
 }
 .search-select {
     height: 30px;
@@ -69,36 +67,37 @@
     height: 98%;
     padding: 4px;
     border: none;
-    /* Blue border */
-    border-radius: 8px; /* Rounded corners */
-    background-color: white; /* White background */
-    color: black; /* Text color */
-    outline: none; /* Remove default outline */
+
+    border-radius: 8px;
+    background-color: white;
+    color: black;
+    outline: none;
     color: #3b96e1;
 }
 
 /* .search-select select:focus {
-    border-color: darkblue; /* Darker blue border on focus */
+    border-color: darkblue; */
 
 .search-select select.expanded {
-    max-height: 150px; /* Max height on open */
+    max-height: 150px;
 }
 
 .search-select select.collapsed {
-    max-height: 50px; /* Reduced height after click */
+    max-height: 50px;
 }
 
 .search-select select option {
-    height: 20px; /* Adjust line height to control option height */
-    padding: 5px; /* Adjust padding to reduce the height */
+    height: 20px;
+    padding: 5px;
 }
 .search-job-card-div {
-    padding: 6px;
+    padding: 10px;
     display: flex;
     flex-wrap: wrap;
     margin-top: -14px;
-    gap: 14px;
-    margin-left: 10px;
+    gap: 12px;
+
+    width: 100%;
 }
 .search {
     width: 240px;
@@ -168,12 +167,20 @@
     margin-left: 2px;
 }
 .Search-input-div {
-    width: 98%;
+    width: 80%;
+    position: fixed;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+
     margin-top: 10px;
     border-radius: 12px;
+}
+.Search-input-div input {
+    width: 100%;
+}
+.d-flex {
+    position: fixed;
+    margin-top: 50px;
 }
 @media (max-width: 575.98px) {
     .search {

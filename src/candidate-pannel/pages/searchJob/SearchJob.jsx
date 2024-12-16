@@ -297,7 +297,7 @@ const SearchJob = () => {
                     </Row>
                 </Form>
 
-                <Row style={{ marginTop: '88px' }}>
+                <Row style={{ marginTop: '92px' }}>
                     <p className="searchresult">Search Result:{data?.length}</p>
                     <div className="search-job-card-div">
                         {loading ? (

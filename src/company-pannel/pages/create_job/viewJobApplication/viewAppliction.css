@@ -1,12 +1,12 @@
 .view-application {
     width: 100%;
-    padding: 12px;
 }
 .header-view {
     background: white;
     margin-left: 12px;
     border-radius: 12px;
     padding: 8px;
+    width: 97.8%;
 }
 .cmp-img {
     height: 50px;
@@ -44,17 +44,16 @@
 }
 .view-list {
     display: flex;
-    margin-left: 32px;
+    padding-left: 70px;
+    gap: 10px;
 }
-.view-list ul li {
+/* .view-list ul li {
     display: inline;
-}
-.view-list li {
+} */
+.view-list p {
     font-size: 0.85rem;
-
-    margin-right: 20px;
     background: #f8f8f8;
-    padding: 10px;
+    padding: 6px;
     border-radius: 12px;
 }
 .view-tables {

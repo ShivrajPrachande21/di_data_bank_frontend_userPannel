@@ -46,7 +46,7 @@
 
 .searchJob {
     margin-top: -8px;
-    padding: 10px;
+    padding: 2px;
 }
 
 .searchJob input::placeholder {
@@ -91,7 +91,6 @@
     padding: 5px;
 }
 .search-job-card-div {
-    padding: 10px;
     display: flex;
     flex-wrap: wrap;
     margin-top: -14px;
@@ -178,10 +177,10 @@
 .Search-input-div input {
     width: 100%;
 }
-.d-flex {
+/* .d-flex {
     position: fixed;
     margin-top: 50px;
-}
+} */
 @media (max-width: 575.98px) {
     .search {
         width: 100%;

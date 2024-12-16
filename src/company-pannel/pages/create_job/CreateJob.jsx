@@ -249,6 +249,7 @@ const CreateJob = () => {
                         <Button
                             className="create-job-btn"
                             onClick={handleClose}
+                            size="sm"
                         >
                             <img src={whitepluse} alt="" width="20px" />
                             Create a Job{' '}
@@ -319,21 +320,28 @@ const CreateJob = () => {
                 </Row>
                 {/* card Sections */}
                 <Row className="mt-4">
-                    {job_status?.PostedJobList &&
-                    job_status?.PostedJobList.length > 0 ? (
-                        job_status?.PostedJobList.map((item, index) => (
-                            <>
-                                <Col
-                                    xs={12}
-                                    sm={6}
-                                    md={4}
-                                    lg={3}
-                                    key={index}
-                                    className="mb-2"
-                                >
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '10px'
+                        }}
+                    >
+                        {job_status?.PostedJobList &&
+                        job_status?.PostedJobList.length > 0 ? (
+                            job_status?.PostedJobList.map((item, index) => (
+                                <>
                                     <div className="card-job">
                                         <div className="job-head">
-                                            <h6>{item?.job_title}</h6>
+                                            <h6>
+                                                {item?.job_title &&
+                                                item?.job_title.length > 18
+                                                    ? `${item.job_title.substring(
+                                                          0,
+                                                          18
+                                                      )}...`
+                                                    : item?.job_title}
+                                            </h6>
                                             {item?.Green_Batch ? (
                                                 <img
                                                     src={Verified}
@@ -453,7 +461,14 @@ const CreateJob = () => {
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {item?.location}
+                                                            {item?.location
+                                                                .length > 12
+                                                                ? `${item.location.substring(
+                                                                      0,
+                                                                      12
+                                                                  )}
+                                                            ...`
+                                                                : item?.location}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -564,14 +579,14 @@ const CreateJob = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </Col>
-                            </>
-                        ))
-                    ) : (
-                        <div className="no-jobs-container">
-                            <span>You haven't created any jobs yet.</span>
-                        </div>
-                    )}
+                                </>
+                            ))
+                        ) : (
+                            <div className="no-jobs-container">
+                                <span>You haven't created any jobs yet.</span>
+                            </div>
+                        )}
+                    </div>
                 </Row>
 
                 {modalShows && (

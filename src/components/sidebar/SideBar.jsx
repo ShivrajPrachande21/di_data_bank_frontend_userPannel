@@ -163,7 +163,7 @@ const SideBar = () => {
         },
         {
             id: 8,
-            label: 'support',
+            label: 'Support',
             icon: SupportIcon,
             backendName: 'support',
             inactiveIcon: SupportIconWhite,

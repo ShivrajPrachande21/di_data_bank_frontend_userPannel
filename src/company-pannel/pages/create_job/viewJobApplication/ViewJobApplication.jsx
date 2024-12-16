@@ -20,8 +20,8 @@ const ViewJobApplication = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -71,37 +71,25 @@ const ViewJobApplication = () => {
                     {' '}
                     <div className="header-view">
                         <Row>
-                            <div>
-                                <div className="top-head">
-                                    <p
-                                        onClick={() =>
-                                            navigate('/main/create-job')
+                            <div className="top-head">
+                                <p onClick={() => navigate('/main/create-job')}>
+                                    <img src={arrow_back} alt="" width="20px" />
+                                </p>
+                                <div className="cmp-img">
+                                    <img
+                                        src={
+                                            viewJobDesciptionData?.profileUrl ||
+                                            alternet
                                         }
-                                    >
-                                        <img
-                                            src={arrow_back}
-                                            alt=""
-                                            width="20px"
-                                        />
-                                    </p>
-                                    <div className="cmp-img">
-                                        <img
-                                            src={
-                                                viewJobDesciptionData?.profileUrl ||
-                                                alternet
-                                            }
-                                            alt=""
-                                            style={{
-                                                width: '100%',
-                                                height: '100%'
-                                            }}
-                                        />{' '}
-                                    </div>
-                                    <div className="view-top-content">
-                                        <h3>
-                                            {viewJobDesciptionData?.job_title}
-                                        </h3>
-                                    </div>
+                                        alt=""
+                                        style={{
+                                            width: '100%',
+                                            height: '100%'
+                                        }}
+                                    />{' '}
+                                </div>
+                                <div className="view-top-content">
+                                    <h3>{viewJobDesciptionData?.job_title}</h3>
                                 </div>
                             </div>
                         </Row>
@@ -109,9 +97,7 @@ const ViewJobApplication = () => {
                             <div className="view-list mt-2">
                                 {viewJobDesciptionData?.skills?.map(
                                     (item, index) => (
-                                        <ul key={index}>
-                                            <li>{item}</li>
-                                        </ul>
+                                        <p key={index}>{item}</p>
                                     )
                                 )}
                             </div>
@@ -195,9 +181,9 @@ const ViewJobApplication = () => {
                                         <td>
                                             {' '}
                                             <span className="card-table-span">
-                                                { formatDate( viewJobDesciptionData?.createdDate)
-                                                   
-                                                }{' '}
+                                                {formatDate(
+                                                    viewJobDesciptionData?.createdDate
+                                                )}{' '}
                                             </span>
                                         </td>
                                     </tr>
@@ -269,7 +255,7 @@ const ViewJobApplication = () => {
                                 style={getButtonStyle('shortlisted')}
                                 onClick={() => handleNavigate('shortlisted')}
                             >
-                                shortlisted
+                                Shortlisted
                             </Button>
                         </li>
                         <li>

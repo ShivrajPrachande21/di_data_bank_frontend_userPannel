@@ -9,7 +9,7 @@
 }
 
 .right {
-    width: 20%;
+    width: 22%;
 
     height: 100vh;
 }
@@ -26,6 +26,7 @@
 }
 
 .custom-scroll {
+    padding: 10px;
     width: 100%;
     scrollbar-width: none;
     scroll-behavior: smooth;

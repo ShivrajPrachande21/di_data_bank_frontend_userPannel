@@ -198,7 +198,10 @@ const SearchJob = () => {
                             </Button>
                         </div>
                         <Row>
-                            <Col className="d-flex">
+                            <Col
+                                className="d-flex"
+                                style={{ marginTop: '50px' }}
+                            >
                                 <div class="search-select">
                                     <select
                                         name="experience"
@@ -330,7 +333,13 @@ const SearchJob = () => {
                                             height="40" // Set the desired height
                                         />
                                         <h6>
-                                            {item?.job_title}{' '}
+                                            {item?.job_title.length > 20
+                                                ? `${item.job_title.substring(
+                                                      0,
+                                                      20
+                                                  )}...`
+                                                : item?.job_title}
+
                                             <p
                                                 style={{
                                                     color: '#3B96E1',
@@ -338,10 +347,14 @@ const SearchJob = () => {
                                                     fontSize: '0.76rem'
                                                 }}
                                             >
-                                                {
-                                                    item?.company_details
-                                                        ?.company_name
-                                                }
+                                                {item?.company_details
+                                                    ?.company_name.length > 50
+                                                    ? `${item?.company_details?.company_name.substring(
+                                                          0,
+                                                          50
+                                                      )}...`
+                                                    : item?.company_details
+                                                          ?.company_name}
                                             </p>
                                         </h6>
                                         <div className="green-thik">
@@ -379,7 +392,7 @@ const SearchJob = () => {
                                                 <td>
                                                     {' '}
                                                     <span className="card-table-span">
-                                                        {item?.experience} Years
+                                                        {item?.experience}
                                                     </span>
                                                 </td>
                                             </tr>
@@ -396,7 +409,14 @@ const SearchJob = () => {
                                                 <td>
                                                     {' '}
                                                     <span className="card-table-span">
-                                                        {item?.location}
+                                                        {item?.location &&
+                                                        item?.location.length >
+                                                            10
+                                                            ? `${item.location.substring(
+                                                                  0,
+                                                                  12
+                                                              )}...`
+                                                            : item?.location}
                                                     </span>
                                                 </td>
                                             </tr>
@@ -430,7 +450,14 @@ const SearchJob = () => {
                                                 <td>
                                                     {' '}
                                                     <span className="card-table-span">
-                                                        {item?.education}
+                                                        {item?.education &&
+                                                        item?.education.length >
+                                                            10
+                                                            ? `${item.education.substring(
+                                                                  0,
+                                                                  12
+                                                              )}...`
+                                                            : item?.education}
                                                     </span>
                                                 </td>
                                             </tr>

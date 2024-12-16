@@ -195,7 +195,7 @@ const CredibilityEstablishment = () => {
                 className="cerdibility-search-count"
                 style={{ color: 'grey', fontSize: '0.75rem' }}
             >
-                Search Limite {0}
+                Search Limit {0}
             </p>
             <p className="text-danger pan-error-in-cerdibility">
                 {errorMessage}

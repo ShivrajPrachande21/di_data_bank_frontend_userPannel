@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal, Table, Form } from 'react-bootstrap';
 import './Longlist';
 import View from '../../../../../assets/images/View.png';
+import oui_cross from '../../../../../assets/images/oui_cross.png';
 import { CreateJobContext } from '../../../../../context/CreateJobContext';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -270,7 +271,8 @@ const Longlist = () => {
                                                             color: 'white',
                                                             border: 'none',
                                                             padding: '6px 28px',
-                                                            width: '40%'
+                                                            width: '40%',
+                                                            marginRight: '10px'
                                                         }}
                                                         onClick={() =>
                                                             handle_Interview_RoundAction(
@@ -348,6 +350,13 @@ const Longlist = () => {
                     centered
                     className="custommodule"
                 >
+                    <img
+                        src={oui_cross}
+                        alt=""
+                        width={24}
+                        onClick={handleClose}
+                        style={{ cursor: 'pointer' }}
+                    />
                     <div
                         style={{
                             height: '60vh',

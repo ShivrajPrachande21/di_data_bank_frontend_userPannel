@@ -44,7 +44,7 @@ const Transaction = () => {
 
     return (
         <>
-            <div className="p-2 transaction">
+            <div className=" transaction">
                 <Row
                     style={{
                         borderRadius: '12px',

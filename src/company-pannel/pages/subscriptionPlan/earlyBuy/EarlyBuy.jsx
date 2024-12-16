@@ -5,6 +5,7 @@ import Rupees1 from '../../../../assets/images/Rupees1.png';
 import rupeeblue from '../../../../assets/images/rupeeblue.png';
 import CardCheck from '../../../../assets/images/CardCheck.png';
 import bluetick from '../../../../assets/images/bluetick.png';
+import arrow_back from '../../../../assets/images/arrow_back.png';
 import { Button, Modal, Spinner } from 'react-bootstrap';
 
 import axios from 'axios';
@@ -15,18 +16,17 @@ import Loader from '../../loader/Loader';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const EarlyBuy = () => {
-    const { EarlyBuy} = useSubscription();
+    const { EarlyBuy } = useSubscription();
     const [EarlyBuyPaymentData, setEarlyBuyPaymentData] = useState();
     const [EarlyBuyID, setEarlyBuyID] = useState('');
     const [EarlyLoading, SetEarlyLoading] = useState(null);
     const [modalShowhide, setModalShow] = React.useState(false);
-    const [orderID,SetOrderID]=useState('')
-    const [SuccessModal,SetSuccessModal]=useState(false)
+    const [orderID, SetOrderID] = useState('');
+    const [SuccessModal, SetSuccessModal] = useState(false);
 
     const data1 = EarlyBuy?.CurrentSubscription?.plane_name;
 
     const Early_initiatePayment = async sub_id => {
-       
         setEarlyBuyID(sub_id);
 
         try {
@@ -50,14 +50,13 @@ const EarlyBuy = () => {
                     window.open(paymentLink, '_blank');
                 }
             }
-           
         } catch (error) {
             toast.error(error.response.data.error);
         }
     };
     let toUpIntervelId;
-    let ToptimeoutId 
-    const fetch_EarlyBuy_success_status = async (data) => {
+    let ToptimeoutId;
+    const fetch_EarlyBuy_success_status = async data => {
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
@@ -69,15 +68,15 @@ const EarlyBuy = () => {
                     orderId: data?.order_id,
                     sub_id: data?.sub_id,
                     company_id: companyId,
-                    paymentMethod:data?.payment_methods
+                    paymentMethod: data?.payment_methods
                 }
             );
             if (response?.status === 200 || response?.status === 201) {
                 SetEarlyLoading(false);
-                clearInterval(toUpIntervelId); 
+                clearInterval(toUpIntervelId);
                 clearTimeout(ToptimeoutId);
                 SetOrderID(response?.data?.orderId);
-                SetSuccessModal(true)
+                SetSuccessModal(true);
             }
         } catch (error) {
             console.error('Error during verification:', error);
@@ -89,7 +88,7 @@ const EarlyBuy = () => {
             fetch_EarlyBuy_success_status(data);
         }, 1000); // Call every 1 second
 
-         ToptimeoutId = setTimeout(() => {
+        ToptimeoutId = setTimeout(() => {
             clearInterval(toUpIntervelId);
         }, 1000 * 60 * 5);
     }
@@ -139,6 +138,7 @@ const EarlyBuy = () => {
             ) : (
                 ''
             )}
+            <img src={arrow_back} alt="" width={24} />
             <div className="plan">
                 <p> Plans for Early Buy Plans</p>
                 <hr />

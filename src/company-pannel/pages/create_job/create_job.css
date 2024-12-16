@@ -1,6 +1,9 @@
+.create-job {
+    padding-right: 10px;
+}
 .create-job-btn {
     font-size: 0.8rem;
-    padding: 12px 8px;
+    padding: 10px 8px;
     background: #3b96e1;
 }
 .create-job-btn span {
@@ -35,11 +38,10 @@
     font-size: 0.8rem;
     font-weight: 500;
 }
-.create-job {
-    padding: 10px;
-}
+
 .card-job {
-    width: 106%;
+    width: 245px;
+    max-height: 270px;
     padding: 10px;
     background: #fff;
     border-radius: 8px;

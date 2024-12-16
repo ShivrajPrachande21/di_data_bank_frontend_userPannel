@@ -4,7 +4,7 @@
     overflow-y: scroll; /* Enable scrolling */
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
-    padding: 20px;
+    padding: 12px;
 }
 .User-pannel {
     margin-top: 10px;
@@ -71,7 +71,7 @@
 .sidebar-btns ul li {
     text-decoration: none;
     list-style-type: none;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 500;
     /* background: rgba(242, 242, 242, 1); */
 

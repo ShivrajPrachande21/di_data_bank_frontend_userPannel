@@ -57,8 +57,8 @@ const HireCandidate = () => {
         // ) {
         //     toast.error('Please enter keywords to search relevant Candidate');
         // } else {
-            Search_bye_keyWord(seachBarData);
-       // }
+        Search_bye_keyWord(seachBarData);
+        // }
 
         if (seachBarData) {
             // setseachBarData({ search: '', experience: '', location: '' });
@@ -181,8 +181,9 @@ const HireCandidate = () => {
         fetchCandidates();
         get_subscription_details();
     }, [locate]);
-    const searchLimit =(Subscription_Data[0]?.search_limit||0)+ (Subscription_Data[1]?.search_limit||0)
-
+    const searchLimit =
+        (Subscription_Data[0]?.search_limit || 0) +
+        (Subscription_Data[1]?.search_limit || 0);
 
     function rendering() {
         const render = localStorage.getItem('render');
@@ -216,7 +217,7 @@ const HireCandidate = () => {
                     <div className="Search">
                         <input
                             type="text"
-                            placeholder="(Search by Job-title,skills,Qualification) "
+                            placeholder="( Search by Job-title , skills , Qualification ) "
                             name="search"
                             value={seachBarData.search}
                             onChange={handle_sideBar_change}

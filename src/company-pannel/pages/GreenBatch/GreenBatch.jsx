@@ -5,6 +5,7 @@ import { useSubscription } from '../../../context/SubscriptionContext';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import Loader from '../loader/Loader';
+import oui_cross from '../../../assets/images/oui_cross.png';
 import { jwtDecode } from 'jwt-decode';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import { Button, Spinner, Modal } from 'react-bootstrap';
@@ -108,7 +109,7 @@ const GreenBatch = () => {
         }, 1000 * 60 * 5);
     };
 
-    function CloseFun(){
+    function CloseFun() {
         SetGreenBatch(false);
     }
 
@@ -125,6 +126,15 @@ const GreenBatch = () => {
                 aria-labelledby="example-modal-sizes-title-lg"
                 className="custom-modal-promote"
             >
+                <h1>
+                    <img
+                        src={oui_cross}
+                        alt=""
+                        width={20}
+                        style={{ textAlign: 'end', paddingRight: '10px' }}
+                        onClick={CloseFun}
+                    />
+                </h1>
                 <div className="promote-job">
                     <p>
                         Get Verified badge now{' '}
@@ -139,7 +149,7 @@ const GreenBatch = () => {
                         </Button>
                         <br />
                         <span
-                            className="custom-color fw-bold custom-font-size valid-for-text"
+                            className="custom-color fw-bold custom-font-size valid-for-text mt-2"
                             style={{ fontWeight: 'lighter' }}
                         >
                             Valid for {Data?.month} months

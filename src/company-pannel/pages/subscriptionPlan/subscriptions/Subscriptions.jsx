@@ -100,14 +100,11 @@ const Subscriptions = () => {
 
     async function BuynowSubscription(id) {
         if (progress == 100) {
-           try{
-            let res=await initiatePayment(id);
-            
-           }catch(error){
-            toast.error(
-                error?.response?.data?.error
-            );
-           }
+            try {
+                let res = await initiatePayment(id);
+            } catch (error) {
+                toast.error(error?.response?.data?.error);
+            }
         } else {
             toast.error(
                 'Please complete your profile to purchase a subscription plan.'
@@ -135,16 +132,27 @@ const Subscriptions = () => {
                                 <div className="showdate">
                                     <div
                                         className={
-                                           
-                                            subscriptionData?.CurrentSubscription[0]?.plane_name== item?.plane_name || subscriptionData?.CurrentSubscription[1]?.plane_name=== item?.plane_name
+                                            subscriptionData
+                                                ?.CurrentSubscription[0]
+                                                ?.plane_name ==
+                                                item?.plane_name ||
+                                            subscriptionData
+                                                ?.CurrentSubscription[1]
+                                                ?.plane_name ===
+                                                item?.plane_name
                                                 ? 'sub2'
                                                 : 'sub1'
                                         }
                                         style={{
                                             background:
-                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                            item?.plane_name 
+                                                subscriptionData
+                                                    ?.CurrentSubscription[0]
+                                                    ?.plane_name ==
+                                                    item?.plane_name ||
+                                                subscriptionData
+                                                    ?.CurrentSubscription[1]
+                                                    ?.plane_name ==
+                                                    item?.plane_name
                                                     ? ''
                                                     : ''
                                         }}
@@ -152,18 +160,28 @@ const Subscriptions = () => {
                                         <p>{item?.plane_name}</p>
                                         <h4
                                             className={
-                                                subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                item?.plane_name 
+                                                subscriptionData
+                                                    ?.CurrentSubscription[0]
+                                                    ?.plane_name ==
+                                                    item?.plane_name ||
+                                                subscriptionData
+                                                    ?.CurrentSubscription[1]
+                                                    ?.plane_name ==
+                                                    item?.plane_name
                                                     ? 'ruppee2'
                                                     : 'ruppee'
                                             }
                                         >
                                             <img
                                                 src={
-                                                    subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                    item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                    item?.plane_name 
+                                                    subscriptionData
+                                                        ?.CurrentSubscription[0]
+                                                        ?.plane_name ==
+                                                        item?.plane_name ||
+                                                    subscriptionData
+                                                        ?.CurrentSubscription[1]
+                                                        ?.plane_name ==
+                                                        item?.plane_name
                                                         ? rupeeblue
                                                         : Rupees1
                                                 }
@@ -180,9 +198,14 @@ const Subscriptions = () => {
                                             <li>
                                                 <img
                                                     src={
-                                                        subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                        item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                        item?.plane_name 
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[0]
+                                                            ?.plane_name ==
+                                                            item?.plane_name ||
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[1]
+                                                            ?.plane_name ==
+                                                            item?.plane_name
                                                             ? bluetick
                                                             : CardCheck
                                                     }
@@ -197,9 +220,14 @@ const Subscriptions = () => {
                                                     {' '}
                                                     <img
                                                         src={
-                                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                            item?.plane_name 
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[0]
+                                                                ?.plane_name ==
+                                                                item?.plane_name ||
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[1]
+                                                                ?.plane_name ==
+                                                                item?.plane_name
                                                                 ? bluetick
                                                                 : CardCheck
                                                         }
@@ -216,9 +244,14 @@ const Subscriptions = () => {
                                                 {' '}
                                                 <img
                                                     src={
-                                                        subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                        item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                        item?.plane_name 
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[0]
+                                                            ?.plane_name ==
+                                                            item?.plane_name ||
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[1]
+                                                            ?.plane_name ==
+                                                            item?.plane_name
                                                             ? bluetick
                                                             : CardCheck
                                                     }
@@ -234,9 +267,14 @@ const Subscriptions = () => {
                                                 {' '}
                                                 <img
                                                     src={
-                                                        subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                        item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                        item?.plane_name 
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[0]
+                                                            ?.plane_name ==
+                                                            item?.plane_name ||
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[1]
+                                                            ?.plane_name ==
+                                                            item?.plane_name
                                                             ? bluetick
                                                             : CardCheck
                                                     }
@@ -251,9 +289,14 @@ const Subscriptions = () => {
                                                 <li>
                                                     <img
                                                         src={
-                                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                            item?.plane_name 
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[0]
+                                                                ?.plane_name ==
+                                                                item?.plane_name ||
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[1]
+                                                                ?.plane_name ==
+                                                                item?.plane_name
                                                                 ? bluetick
                                                                 : CardCheck
                                                         }
@@ -272,9 +315,14 @@ const Subscriptions = () => {
                                                     {' '}
                                                     <img
                                                         src={
-                                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                            item?.plane_name 
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[0]
+                                                                ?.plane_name ==
+                                                                item?.plane_name ||
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[1]
+                                                                ?.plane_name ==
+                                                                item?.plane_name
                                                                 ? bluetick
                                                                 : CardCheck
                                                         }
@@ -290,9 +338,14 @@ const Subscriptions = () => {
                                                 <li>
                                                     <img
                                                         src={
-                                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                            item?.plane_name 
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[0]
+                                                                ?.plane_name ==
+                                                                item?.plane_name ||
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[1]
+                                                                ?.plane_name ==
+                                                                item?.plane_name
                                                                 ? bluetick
                                                                 : CardCheck
                                                         }
@@ -309,9 +362,14 @@ const Subscriptions = () => {
                                                 <li>
                                                     <img
                                                         src={
-                                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                            item?.plane_name 
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[0]
+                                                                ?.plane_name ==
+                                                                item?.plane_name ||
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[1]
+                                                                ?.plane_name ==
+                                                                item?.plane_name
                                                                 ? bluetick
                                                                 : CardCheck
                                                         }
@@ -328,9 +386,14 @@ const Subscriptions = () => {
                                                 <li>
                                                     <img
                                                         src={
-                                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                            item?.plane_name 
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[0]
+                                                                ?.plane_name ==
+                                                                item?.plane_name ||
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[1]
+                                                                ?.plane_name ==
+                                                                item?.plane_name
                                                                 ? bluetick
                                                                 : CardCheck
                                                         }
@@ -347,9 +410,14 @@ const Subscriptions = () => {
                                                 <li>
                                                     <img
                                                         src={
-                                                            subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                            item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                            item?.plane_name 
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[0]
+                                                                ?.plane_name ==
+                                                                item?.plane_name ||
+                                                            subscriptionData
+                                                                ?.CurrentSubscription[1]
+                                                                ?.plane_name ==
+                                                                item?.plane_name
                                                                 ? bluetick
                                                                 : CardCheck
                                                         }
@@ -364,16 +432,23 @@ const Subscriptions = () => {
                                             )}
                                         </ul>
 
-                                        { subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                    item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                    item?.plane_name  ? (
+                                        {subscriptionData
+                                            ?.CurrentSubscription[0]
+                                            ?.plane_name == item?.plane_name ||
+                                        subscriptionData?.CurrentSubscription[1]
+                                            ?.plane_name == item?.plane_name ? (
                                             <Button
                                                 className="buybtn"
                                                 style={{
                                                     background:
-                                                    subscriptionData?.CurrentSubscription[0]?.plane_name==
-                                                    item?.plane_name  ||  subscriptionData?.CurrentSubscription[1]?.plane_name==
-                                                    item?.plane_name 
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[0]
+                                                            ?.plane_name ==
+                                                            item?.plane_name ||
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[1]
+                                                            ?.plane_name ==
+                                                            item?.plane_name
                                                             ? '#3B96E1'
                                                             : ''
                                                 }}
@@ -382,35 +457,45 @@ const Subscriptions = () => {
                                             </Button>
                                         ) : (
                                             <Button
-                                            size="sm"
-                                            className="buybtn"
-                                            disabled={subscriptionData?.CurrentSubscription[0]?.plane_name
-                                            }
-                                            onClick={() => {
-                                              BuynowSubscription(item?._id);
-                                            }}
-                                          >
-                                            {subscriptionData?.CurrentSubscription?.some(
-                                              (sub) => sub?.plane_name === item?.plane_name
-                                            )
-                                              ? 'Already Using'
-                                              : 'Buy Now'}
-                                          </Button>
-                                          
+                                                size="sm"
+                                                className="buybtn"
+                                                disabled={
+                                                    subscriptionData
+                                                        ?.CurrentSubscription[0]
+                                                        ?.plane_name
+                                                }
+                                                onClick={() => {
+                                                    BuynowSubscription(
+                                                        item?._id
+                                                    );
+                                                }}
+                                            >
+                                                {subscriptionData?.CurrentSubscription?.some(
+                                                    sub =>
+                                                        sub?.plane_name ===
+                                                        item?.plane_name
+                                                )
+                                                    ? 'Already Using'
+                                                    : 'Buy Now'}
+                                            </Button>
                                         )}
                                     </div>
                                     <div className="sub-date">
-                                    <p className="">
-  {subscriptionData?.CurrentSubscription?.some(
-    (sub) => sub?.plane_name === item?.plane_name
-  )
-    ? `Plan Ends on: ${formatDate(
-        subscriptionData?.CurrentSubscription.find(
-          (sub) => sub?.plane_name === item?.plane_name
-        )?.expiresAt
-      )}`
-    : ''}
-</p>
+                                        <p className="">
+                                            {subscriptionData?.CurrentSubscription?.some(
+                                                sub =>
+                                                    sub?.plane_name ===
+                                                    item?.plane_name
+                                            )
+                                                ? `Plan Ends on: ${formatDate(
+                                                      subscriptionData?.CurrentSubscription.find(
+                                                          sub =>
+                                                              sub?.plane_name ===
+                                                              item?.plane_name
+                                                      )?.expiresAt
+                                                  )}`
+                                                : ''}
+                                        </p>
                                         <hr />
                                     </div>
                                 </div>
@@ -432,20 +517,17 @@ const Subscriptions = () => {
                         >
                             Renew
                         </Button>
-                    ) : (subscriptionData?.CurrentSubscription.length!=2&&subscriptionData?.CurrentSubscription.length==1?
-                      (
+                    ) : subscriptionData?.CurrentSubscription.length != 2 &&
+                      subscriptionData?.CurrentSubscription.length == 1 ? (
                         <Button
-                        size="sm"
-                        onClick={() =>
-                            navigate('/main/subscription-plan/early-buy')
-                        }
-                    >
-                        Early Buy
-                    </Button>
-                      ):null
-                    
-                       
-                    )}
+                            size="sm"
+                            onClick={() =>
+                                navigate('/main/subscription-plan/early-buy')
+                            }
+                        >
+                            Early Buy
+                        </Button>
+                    ) : null}
                 </div>
             </div>
             {/* <div className="plan">
@@ -507,6 +589,8 @@ const Subscriptions = () => {
                     </Button>
                     <Button size="sm">Early Buy </Button>
                 </div>
+
+                
                 {modalShow && (
               <Modal
               show={modalShow}

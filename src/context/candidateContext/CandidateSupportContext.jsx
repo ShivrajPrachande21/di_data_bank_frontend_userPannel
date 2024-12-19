@@ -20,7 +20,7 @@ export const CandidateSupportProvider = ({ children }) => {
                 const response = await axios.get(
                     `${BaseUrl}candidate/get_issue/${userId}`
                 );
-                setSupportData(response?.data);
+                setSupportData(response?.data?.data);
             } catch (error) {}
         }
     };

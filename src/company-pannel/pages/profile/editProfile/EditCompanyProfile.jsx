@@ -111,6 +111,8 @@ const EditCompanyProfile = ({ setLgShow }) => {
     return (
         <>
             <div className="editProfilepage">
+            <h3 style={{textAlign:"center",marginTop:'-1px',paddingRight:'15px',fontSize:'1.5rem',color:'#3B96E1'}}> Profile Details</h3>
+          <h1 style={{textAlign:'end',marginTop:'-15px',paddingRight:'15px'}} onClick={()=>setLgShow(false)}><img src={Cross} alt=""  width={27}/></h1>
                 <Form onSubmit={handleSubmit}>
                     <Row>
                         <Col xs={12} className="custom-img">

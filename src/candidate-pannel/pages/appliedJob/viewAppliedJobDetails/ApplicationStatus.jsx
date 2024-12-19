@@ -437,50 +437,61 @@ const ApplicationStatus = () => {
                                 width: '200px'
                             }}
                         >
-                            {applicationState?.jobs?.applied_candidates[0]
-                                ?.interviewRound.length > 0 &&
-                                (() => {
-                                    const rounds =
-                                        applicationState?.jobs
-                                            ?.applied_candidates[0]
-                                            ?.interviewRound;
-                                    let roundToShow = null;
+                            {applicationState?.jobs?.applied_candidates[0]?.interviewRound?.length > 0 && 
+    (() => {
+        const rounds = applicationState?.jobs?.applied_candidates[0]?.interviewRound;
+        let rejectRound = null;
+        let roundToShow = null;
 
-                                    for (
-                                        let i = rounds.length - 1;
-                                        i >= 0;
-                                        i--
-                                    ) {
-                                        if (
-                                            rounds[i].roundAction === 'Selected'
-                                        ) {
-                                            roundToShow = (
-                                                <span
-                                                    key={rounds[i]._id}
-                                                    style={{ color: 'green' }}
-                                                >
-                                                    {rounds[i].roundName}{' '}
-                                                    (Selected)
-                                                </span>
-                                            );
-                                            break;
-                                        } else if (
-                                            rounds[i].roundAction === 'Rejected'
-                                        ) {
-                                            roundToShow = (
-                                                <span
-                                                    key={rounds[i]._id}
-                                                    style={{ color: 'red' }}
-                                                >
-                                                    {rounds[i].roundName}{' '}
-                                                    (Rejected)
-                                                </span>
-                                            );
-                                            break;
-                                        }
-                                    }
-                                    return roundToShow;
-                                })()}
+        // Find the last rejected round, if any
+        for (let j = rounds.length - 1; j >= 0; j--) {
+            if (rounds[j].roundAction === 'Rejected') {
+                rejectRound = rounds[j];
+                break;
+            }
+        }
+
+        // Determine the round to display
+        for (let i = rounds.length - 1; i >= 0; i--) {
+            if (!rejectRound) {
+                if (rounds[i].roundAction === 'Selected') {
+                    roundToShow = (
+                        <span
+                            key={rounds[i]._id}
+                            style={{ color: 'green' }}
+                        >
+                            {rounds[i].roundName} (Selected)
+                        </span>
+                    );
+                    break;
+                } else if (rounds[i].roundAction === 'Rejected') {
+                    roundToShow = (
+                        <span
+                            key={rounds[i]._id}
+                            style={{ color: 'red' }}
+                        >
+                            {rounds[i].roundName} (Rejected)
+                        </span>
+                    );
+                    break;
+                }
+            } else {
+                roundToShow = (
+                    <span
+                        key={rejectRound._id}
+                        style={{ color: 'red' }}
+                    >
+                        {rejectRound.roundName} (Rejected)
+                    </span>
+                );
+                break;
+            }
+        }
+
+        return roundToShow;
+    })()
+}
+
                         </div>
                     ) : null}
                 </Row>

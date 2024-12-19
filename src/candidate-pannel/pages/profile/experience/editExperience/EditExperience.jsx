@@ -29,7 +29,7 @@ const EditExperience = () => {
         }
     };
     const [expData, setExpData] = useState({
-        End_posistion: false,
+        End_posistion:false,
         companyName: '',
         current_workingStatus: false,
         designation: '',
@@ -68,8 +68,6 @@ const EditExperience = () => {
         const dateValue = new Date(expData?.start_date || new Date());
         const isoDate = dateValue.toISOString();
         const formData = { ...expData, start_date: isoDate };
-
-        console.log('from datd', formData);
         if (
             expData?.companyName.trim() == '' ||
             expData?.designation.trim() == '' ||
@@ -191,7 +189,6 @@ const EditExperience = () => {
                                         fontSize: '0.8rem'
                                     }}
                                 >
-                                    <option>Ex: Junior UI UX Designer</option>
                                     <option value="Full-Time">Full-Time</option>
                                     <option value="Part-Time">Part-Time</option>
                                     <option value="Contract">Contract</option>

@@ -25,7 +25,7 @@
     border: 1px solid gray; /* Gray border */
 }
 .custom-input-group-label {
-    font-size: 10px; /* Change label font size */
+    font-size: 12px; /* Change label font size */
     color: #000000; /* Change label color */
     font-weight: 500;
     margin-bottom: 5px; /* Space between label and input */

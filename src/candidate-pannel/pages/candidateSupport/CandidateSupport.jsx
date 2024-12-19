@@ -16,7 +16,6 @@ const CandidateSupport = () => {
         fetch_Candidate_issue();
     }, [location]);
 
-    console.log('supportData', supportData);
     const navigate = useNavigate();
     function navigateChate(id) {
         navigate(`/candidate-dashboard/candidate-chat/${id}`);
@@ -54,6 +53,26 @@ const CandidateSupport = () => {
     useEffect(() => {
         rendering();
     }, []);
+
+
+        function RemovePath(imageUrl) {
+            if(imageUrl){
+                return imageUrl.split("\\").pop();
+            }
+            return "N/A"
+        }
+
+        function toCamelCase_Name(input) {
+            if(typeof input=='string'){
+            return input?input
+              .toLowerCase()
+              .split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' '):null
+            }else{
+              return input;
+            }
+          }
 
     return (
         <>
@@ -189,7 +208,7 @@ const CandidateSupport = () => {
                                                 }
                                             />
                                         </td>
-                                        <td>{item?.file}</td>
+                                        <td>{RemovePath(item?.file)}</td>
                                         <td>{formatDate(item?.createdDate)}</td>
                                         <td>
                                             <p
@@ -203,8 +222,7 @@ const CandidateSupport = () => {
                                                             ? 'red'
                                                             : ''
                                                 }}
-                                            >
-                                                {item?.status}
+                                            >{toCamelCase_Name(item?.status)}
                                             </p>
                                         </td>
                                     </tr>

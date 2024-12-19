@@ -37,10 +37,8 @@ const EditprofileData = url => {
             // Make the POST request with Axios
             const token = localStorage.getItem('companyToken');
 
-            // Decode the token to get the payload
             const decodedToken = jwtDecode(token);
-            const companyId = decodedToken?._id; // Assuming the token contains an 'id' for the company
-            console.log('token', decodedToken);
+            const companyId = decodedToken?._id;
             if (!companyId) {
                 throw new Error('Invalid token');
             }
@@ -54,20 +52,16 @@ const EditprofileData = url => {
                 }
             );
 
-            if (response.status === 200) {
+            if (response.status ==200) {
                 toast.success('Profile updated successfully');
-                setLgShow(prev => !prev);
+                setLgShow(false);
                 setSuccess(response.data);
                 return response.status;
             }
-
-            // Handle success
-
-            console.log('Form submitted successfully:', response.data);
+          
         } catch (error) {
-            toast.error(error?.response?.data?.error);
+              throw new error(error);
             setError(error);
-            console.error('Error submitting the form:', error);
         } finally {
             setLoading(false);
         }

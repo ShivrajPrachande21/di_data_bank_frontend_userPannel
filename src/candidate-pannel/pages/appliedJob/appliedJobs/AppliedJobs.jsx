@@ -203,7 +203,7 @@ const AppliedJobs = () => {
                                     </Button>
                                 </div>
                                 <div className="status-div ">
-                                    <p>status:</p>
+                                    <p>Status:</p>
                                     <p
                                         className="application-p"
                                         style={{

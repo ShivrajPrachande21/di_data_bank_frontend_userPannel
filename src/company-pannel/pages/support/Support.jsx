@@ -50,6 +50,25 @@ const Support = () => {
     useEffect(() => {
         rendering();
     }, []);
+
+    function RemovePath(imageUrl) {
+        if(imageUrl){
+            return imageUrl.split("\\").pop();
+        }
+        return "N/A"
+    }
+
+    function toCamelCase_Name(input) {
+        if(typeof input=='string'){
+        return input?input
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' '):null
+        }else{
+          return input;
+        }
+      }
     return (
         <>
             <Modal
@@ -176,7 +195,7 @@ const Support = () => {
                                                 }
                                             />
                                         </td>
-                                        <td>{item?.file}</td>
+                                        <td>{RemovePath(item?.file)}</td>
                                         <td>{formatDate(item?.createdDate)}</td>
                                         <td>
                                             <p
@@ -191,7 +210,7 @@ const Support = () => {
                                                             : ''
                                                 }}
                                             >
-                                                {item?.status}
+                                                {toCamelCase_Name(item?.status)}
                                             </p>
                                         </td>
                                     </tr>

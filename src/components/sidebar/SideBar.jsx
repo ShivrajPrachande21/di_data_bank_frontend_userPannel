@@ -428,7 +428,7 @@ const SideBar = () => {
 
                             <span>
                                 {Identity?.length > 10
-                                    ? Identity.substring(0, 12) + '...'
+                                    ? Identity.substring(0, 17) + '...'
                                     : Identity}
                             </span>
 
@@ -474,7 +474,7 @@ const SideBar = () => {
                                                 {Identity?.length > 10
                                                     ? Identity.substring(
                                                           0,
-                                                          12
+                                                          20
                                                       ) + '...'
                                                     : Identity}
                                             </p>

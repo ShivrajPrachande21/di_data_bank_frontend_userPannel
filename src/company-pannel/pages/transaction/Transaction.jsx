@@ -42,9 +42,22 @@ const Transaction = () => {
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
 
+    function toCamelCase_Name(input) {
+        if (typeof input == 'string') {
+            return input
+                ? input
+                      .toLowerCase()
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
+                : null;
+        } else {
+            return input;
+        }
+    }
     return (
         <>
-            <div className=" transaction">
+            <div className="transaction">
                 <Row
                     style={{
                         borderRadius: '12px',
@@ -56,7 +69,7 @@ const Transaction = () => {
                     <Col xs={12} style={{ marginTop: '6px' }}>
                         <Table bordered className="custom-table" responsive>
                             <thead>
-                                <tr style={{ borderTop: 'none' }}>
+                                <tr style={{ border: 'none' }}>
                                     <th
                                         style={{
                                             fontSize: '0.8rem',
@@ -127,7 +140,9 @@ const Transaction = () => {
                                                 1}
                                         </td>
                                         <td>{item?.type}</td>
-                                        <td>{item?.Plane_name}</td>
+                                        <td>
+                                            {toCamelCase_Name(item?.Plane_name)}
+                                        </td>
                                         <td>
                                             {formatDate(item?.purchesed_data)} -
                                             {formatDate(item?.Expire_date)}

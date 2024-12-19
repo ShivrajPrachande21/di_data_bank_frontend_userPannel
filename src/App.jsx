@@ -24,7 +24,11 @@ import { CandidateProfileProvider } from './context/candidateContext/CandidatePr
 import { AccessProvider } from './context/AccessManagementContext';
 function App() {
     const [count, setCount] = useState(0);
-
+    function useTabTitle(title) {
+        useEffect(() => {
+            document.title = title;
+        }, [title]);
+    }
     return (
         <>
             <LoginProvider>

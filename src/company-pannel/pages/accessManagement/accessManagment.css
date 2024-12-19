@@ -17,10 +17,10 @@
 .add-new-user-search input {
     background: #ffffff;
     color: black;
-    border: none;
+    border: 1px solid rgb(195, 194, 194);
     border-radius: 10px;
     width: 86%;
-    padding: 4px;
+    padding-left: 10px;
 }
 .add-new-user-search input:focus {
     outline: 1px solid rgb(19, 182, 247); /* Removes the default focus outline */

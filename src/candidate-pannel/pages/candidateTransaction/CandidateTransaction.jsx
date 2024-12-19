@@ -78,7 +78,7 @@ const CandidateTransaction = () => {
                     <Col xs={12} style={{ marginTop: '6px' }}>
                         <Table bordered responsive className="custom-table">
                             <thead>
-                                <tr style={{ borderTop: 'none' }}>
+                                <tr style={{ border: '1.4px solid lightgrey' }}>
                                     <th
                                         style={{
                                             fontSize: '0.8rem',

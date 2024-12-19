@@ -274,7 +274,7 @@ const CreateNewJob = () => {
                                 <Form.Control
                                     aria-label="Small"
                                     aria-describedby="inputGroup-sizing-sm"
-                                    placeholder="Ex: World Development Corporation"
+                                    placeholder="Ex: React.js"
                                     required
                                     name="job_title"
                                     value={createJobData?.job_title}
@@ -425,7 +425,7 @@ const CreateNewJob = () => {
                                 <span className="text-danger">*</span>
                             </Form.Label>
                             <Form.Control
-                                placeholder="Ex:Degree"
+                                placeholder="Ex: Degree"
                                 name="education"
                                 value={createJobData?.education}
                                 onChange={handleFormChange}

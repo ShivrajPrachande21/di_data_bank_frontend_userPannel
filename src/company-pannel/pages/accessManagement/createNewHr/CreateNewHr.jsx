@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import blackCross from '../../../../assets/images/blackCross.png';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useContext } from 'react';
 import { AccessManagementContext } from '../../../../context/AccessManagementContext';
 import { toast } from 'react-toastify';
@@ -48,7 +49,7 @@ const CreateNewHr = () => {
             !formData.support &&
             !formData.access_management
         ) {
-            toast.error('Please Select atlest One Checkboxs');
+            toast.error('Please Select atleast one checkbox');
         } else {
             await AddNewHR(formData);
         }
@@ -122,7 +123,7 @@ const CreateNewHr = () => {
                                     zIndex: 1
                                 }}
                             >
-                                {passwordVisible ? 'Hide' : 'Show'}
+                                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                             </Button>
                         </div>
                     </Col>

@@ -411,33 +411,35 @@ const SideBar = () => {
                         }}
                     >
                         <div className="Select">
-                            <img
-                                src={
-                                    profile
-                                        ? bindUrlOrPath(profile)
-                                        : altprofile
-                                }
-                                class="rounded-circle"
-                                style={{
-                                    width: '20px',
-                                    height: '20px',
-                                    marginLeft: '10px'
-                                }}
-                                alt="Avatar"
-                            />
+                            <div>
+                                <img
+                                    src={
+                                        profile
+                                            ? bindUrlOrPath(profile)
+                                            : altprofile
+                                    }
+                                    class="rounded-circle"
+                                    style={{
+                                        width: '20px',
+                                        height: '20px',
+                                        marginLeft: '10px'
+                                    }}
+                                    alt="N/A"
+                                />
 
-                            <span>
-                                {Identity?.length > 10
-                                    ? Identity.substring(0, 17) + '...'
-                                    : Identity}
-                            </span>
+                                <span>
+                                    {Identity?.length > 10
+                                        ? Identity.substring(0, 17) + '...'
+                                        : Identity}
+                                </span>
+                            </div>
 
                             <img
                                 src={iconamoon_arrowd}
                                 alt=""
                                 width="20px"
                                 style={{
-                                    marginLeft: '50px',
+                                    marginRight: '6px',
                                     cursor: 'pointer'
                                 }}
                                 onClick={toggleLogoout}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import { jwtDecode } from 'jwt-decode';
 import './dashboard.css';
@@ -7,10 +7,13 @@ import useDashboardData from '../../../hooks/company_dashboard/useDashboardData'
 import CandidateHiredIcon from '../../../assets/images/CandidateHiredIcon.png';
 import CandidateOnboardedIcon from '../../../assets/images/CandidateOnboardedIcon.png';
 import building from '../../../assets/images/building.png';
+import Calendar from '../../../assets/images/Calendar.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import moment from 'moment';
+import { Helmet } from 'react-helmet';
+
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
         useDashboardData();
@@ -18,6 +21,7 @@ const Dashboard = () => {
     const yearEndISO = moment().endOf('year').toISOString();
     const navigate = useNavigate();
     const loacate = useLocation();
+    const startRef = useRef();
     const [PAN, setPAN] = useState(null);
     const [isValid, setIsValid] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
@@ -104,16 +108,16 @@ const Dashboard = () => {
     //     }
     // };
 
-    const handleStartChange = e => {
+    const handleStartChange = async e => {
         const date = new Date(e.target.value);
         const isoDate = date.toISOString();
         setStartDate(isoDate);
-        console.log('startDate', startDate);
     };
-    const handleEndChange = e => {
+    const handleEndChange = async e => {
         const date = new Date(e.target.value);
         const isoDate = date.toISOString();
         setEndDate(isoDate);
+
         //  getSelectedData();
     };
     useEffect(() => {
@@ -136,7 +140,9 @@ const Dashboard = () => {
             navigate('/login');
         }
     }
-
+    const handleStartDatePick = () => {
+        startRef.current.ShowPicker(); // This will bring up the date picker
+    };
     useEffect(() => {
         const fun = async () => {
             await getSelectedData();
@@ -147,6 +153,11 @@ const Dashboard = () => {
 
     return (
         <div>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Dashboard</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
             <>
                 {/*First Row Card */}
                 <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
@@ -157,15 +168,50 @@ const Dashboard = () => {
                             <p>{dasboardData?.data?.totalJobs || 0}</p>
                         </div>
                         <div className="custom-select-company">
-                            <div className="custom-select-sub-date">
-                                <p> Date</p>
-
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginBottom: '6px',
+                                    border: '1.5px solid gray',
+                                    padding: '2px',
+                                    borderRadius: '4px'
+                                }}
+                            >
+                                start
                                 <input
                                     type="date"
-                                    onChange={handleStartChange}
+                                    style={{
+                                        width: '18px',
+
+                                        background: '#3B96E1',
+                                        border: 'none'
+                                    }}
+                                    onChange={e => handleStartChange(e)}
                                 />
                             </div>
-
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    border: '1.5px solid gray',
+                                    padding: '2px',
+                                    borderRadius: '4px'
+                                }}
+                            >
+                                End
+                                <input
+                                    type="date"
+                                    style={{
+                                        width: '18px',
+                                        border: 'none',
+                                        background: '#3B96E1'
+                                    }}
+                                    onChange={e => handleEndChange(e)}
+                                />
+                            </div>
                             {/* <Form.Select
                                     aria-label="Default select example"
                                     size="sm"

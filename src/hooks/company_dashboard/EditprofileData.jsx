@@ -52,18 +52,18 @@ const EditprofileData = url => {
                 }
             );
 
-            if (response.status ==200) {
+            if (response.status == 200) {
                 toast.success('Profile updated successfully');
                 setLgShow(false);
                 setSuccess(response.data);
                 return response.status;
             }
-          
         } catch (error) {
-              throw new error(error);
+            const customError = error?.response?.data?.error;
+            toast.error(customError);
+
+            throw new error(error);
             setError(error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -89,6 +89,7 @@ const EditprofileData = url => {
             }
         } catch (error) {
             toast.error(error?.response?.data?.error);
+
             setError(error);
         }
     };

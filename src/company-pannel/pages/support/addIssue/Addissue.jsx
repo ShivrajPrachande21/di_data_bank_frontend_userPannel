@@ -118,7 +118,7 @@ const Addissue = () => {
 
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formFirstName">
-                    <Form.Label style={{ fontSize: '0.8rem' }}>
+                    <Form.Label style={{ fontSize: '0.9rem' }}>
                         Enter your Issue{' '}
                     </Form.Label>
                     <Form.Control
@@ -133,7 +133,7 @@ const Addissue = () => {
                 </Form.Group>
 
                 <Form.Group controlId="formLastName" className="mt-3">
-                    <Form.Label style={{ fontSize: '0.8rem' }}>
+                    <Form.Label style={{ fontSize: '0.9rem' }}>
                         Describe your Issue
                     </Form.Label>
                     <Form.Control

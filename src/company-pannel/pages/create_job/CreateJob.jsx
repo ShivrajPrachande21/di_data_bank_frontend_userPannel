@@ -374,7 +374,7 @@ const CreateJob = () => {
                                                     >
                                                         {!item?.status
                                                             ? 'restart'
-                                                            : 'stop Applications'}
+                                                            : 'Stop Applications'}
                                                     </p>
 
                                                     <p
@@ -455,7 +455,7 @@ const CreateJob = () => {
                                                         }}
                                                     >
                                                         <span className="card-table-span">
-                                                            Loction:
+                                                            Location:
                                                         </span>{' '}
                                                     </td>
                                                     <td>

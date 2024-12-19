@@ -219,7 +219,7 @@ const Longlist = () => {
                                                     ?.applied_date
                                             )}
                                         </td>
-                                        <td style={{ width: '15%' }}>
+                                        <td style={{ width: '25%' }}>
                                             <Form.Group
                                                 controlId="email"
                                                 className="mt-2"

@@ -217,7 +217,7 @@ const HireCandidate = () => {
                     <div className="Search">
                         <input
                             type="text"
-                            placeholder="( Search by Job-title , skills , Qualification ) "
+                            placeholder="( Search by Job-title , skills , Qualification , Name ) "
                             name="search"
                             value={seachBarData.search}
                             onChange={handle_sideBar_change}
@@ -241,7 +241,7 @@ const HireCandidate = () => {
                         <div className="search-by-location">
                             <input
                                 type="text"
-                                placeholder="Search bye location"
+                                placeholder="Search by location"
                                 name="location"
                                 value={seachBarData.location}
                                 onChange={handle_sideBar_change}

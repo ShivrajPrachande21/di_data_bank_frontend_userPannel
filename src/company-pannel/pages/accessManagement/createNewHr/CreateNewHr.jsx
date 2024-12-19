@@ -58,7 +58,7 @@ const CreateNewHr = () => {
         <>
             <Row>
                 <Col md={11} xs={10}>
-                    Add New Role
+                    Add New HR
                 </Col>
                 <Col md={1} xs={2}>
                     <img

@@ -249,9 +249,10 @@ const Forgotpassword = () => {
 
                             <Row>
                                 <Col>
-                                    <Form.Label style={{ fontSize: '1.25rem' }}>
-                                        Email
-                                    </Form.Label>
+                                   
+                                      <Form.Label className="custom-lable">
+                                      Email
+                                                                    </Form.Label>
                                     <Form.Control
                                         className="custom-placeholder"
                                         placeholder="E.g. john@example.com"
@@ -455,9 +456,10 @@ const Forgotpassword = () => {
 
                             <Row>
                                 <Col>
-                                    <Form.Label style={{ fontSize: '1.25rem' }}>
-                                        Set Password
-                                    </Form.Label>
+                                   
+                                    <Form.Label className="custom-lable">
+                                    Set Password
+                                                                    </Form.Label>
                                     <InputGroup>
                                         <Form.Control
                                             name="password"
@@ -493,9 +495,10 @@ const Forgotpassword = () => {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Form.Label style={{ fontSize: '1.25rem' }}>
-                                        Confirm Password
-                                    </Form.Label>
+                                  
+                                    <Form.Label className="custom-lable">
+                                     Confirm Password
+                                                                    </Form.Label>
                                     <InputGroup>
                                         <Form.Control
                                             name="confirmpassword"

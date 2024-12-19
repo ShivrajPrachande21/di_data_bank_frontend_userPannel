@@ -126,16 +126,17 @@ const GreenBatch = () => {
                 aria-labelledby="example-modal-sizes-title-lg"
                 className="custom-modal-promote"
             >
-                <h1>
+               
+                <div className="promote-job">
+                <h1   style={{ textAlign: 'end',marginTop:'-20px' }}>
                     <img
                         src={oui_cross}
                         alt=""
                         width={20}
-                        style={{ textAlign: 'end', paddingRight: '10px' }}
+                      
                         onClick={CloseFun}
                     />
                 </h1>
-                <div className="promote-job">
                     <p>
                         Get Verified badge now{' '}
                         <img src={Verified} alt="Verified" width="19" />
@@ -147,13 +148,16 @@ const GreenBatch = () => {
                         >
                             PAY {'₹' + Data?.price}
                         </Button>
-                        <br />
+                       
                         <span
                             className="custom-color fw-bold custom-font-size valid-for-text mt-2"
                             style={{ fontWeight: 'lighter' }}
                         >
-                            Valid for {Data?.month} months
+                            Valid for {Data?.month}  months
                         </span>
+                        <br/>
+                        <br/>
+                       
                     </div>
                 </div>
             </Modal>

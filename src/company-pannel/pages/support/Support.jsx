@@ -201,13 +201,13 @@ const Support = () => {
                                             <p
                                                 style={{
                                                     color:
-                                                        index?.status ===
-                                                        'Pending'
+                                                    item?.status ==
+                                                        'solved'
                                                             ? 'green'
-                                                            : index?.status ===
-                                                              'rejected'
+                                                            : item?.status ===
+                                                              'reject'
                                                             ? 'red'
-                                                            : ''
+                                                            : '#051F50'
                                                 }}
                                             >
                                                 {toCamelCase_Name(item?.status)}

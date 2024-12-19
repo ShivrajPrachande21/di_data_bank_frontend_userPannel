@@ -1,4 +1,5 @@
 .job-offered-file {
+    display: flex;
     background: white;
 }
 .upload-job-offer {
@@ -19,8 +20,9 @@
     border: 1.32px dashed grey;
     border-radius: 2px;
 
-    padding: 2px 100px;
+    padding: 8px 100px;
     background: #3b96e1;
+    cursor: pointer;
 }
 .offered-send span {
     color: #ffffff;
@@ -30,5 +32,6 @@
     width: 98%;
     border-radius: 6px;
     padding: 4px;
+   
     border: 1.5px solid #aeaeae;
 }

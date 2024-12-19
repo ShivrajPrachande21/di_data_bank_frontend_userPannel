@@ -49,7 +49,7 @@ const AddNewUser = () => {
                         onClick={() => setShowModule(prev => !prev)}
                         style={{ borderRadius: '14px' }}
                     >
-                        Add New User
+                        Add New HR
                     </Button>
                     <input
                         type="text"

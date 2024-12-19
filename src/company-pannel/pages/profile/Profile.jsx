@@ -67,6 +67,22 @@ const Profile = () => {
     useEffect(() => {
         rendering();
     }, []);
+
+    
+
+
+
+ function toCamelCase_Name(input) {
+    if(typeof input=='string'){
+    return input?input
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' '):null
+    }else{
+      return input;
+    }
+  }
     return (
         <>
             <div className="ReportedJob">
@@ -75,7 +91,7 @@ const Profile = () => {
                     <div className="rejection">
                         <p className="status">
                             Verification Status :{' '}
-                            {profileData?.updatedData?.status}
+                            {toCamelCase_Name(profileData?.updatedData?.status)}
                         </p>
                         <p
                             style={{

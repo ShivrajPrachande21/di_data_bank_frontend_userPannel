@@ -123,7 +123,7 @@ let ToptimeoutId;
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
-                            onClick={() => setModalShow(prev => !prev)}
+                            onClick={() => setModalShow(false)}
                             style={{ width: '100%', background: '#3B96E1' }}
                         >
                             OK

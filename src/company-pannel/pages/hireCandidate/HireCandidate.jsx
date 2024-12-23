@@ -8,6 +8,7 @@ import {
     OverlayTrigger,
     Tooltip
 } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import { Link, useNavigate, Outlet, useLocation } from 'react-router-dom';
 import Ai from '../../../assets/images/Ai.png';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
@@ -206,6 +207,11 @@ const HireCandidate = () => {
 
     return (
         <div className="hire-candidate">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Hire-Candidate</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
             <Row>
                 <Col xs={12} md={3}>
                     <Button className="ai-btn">

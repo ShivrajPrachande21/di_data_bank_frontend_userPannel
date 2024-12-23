@@ -11,6 +11,7 @@ import BaseUrl from './../../../services/BaseUrl';
 import { set } from 'date-fns';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 const CredibilityEstablishment = () => {
     const [CredibilityData, setCredibilityData] = useState(null);
     const [PAN, setPAN] = useState('');
@@ -142,6 +143,10 @@ const CredibilityEstablishment = () => {
     }, []);
     return (
         <div className="CredibilityEstablishment">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>CredibilityEstablishment</title>
+            </Helmet>
             <div className="cerdibility-search">
                 <div className="c-search">
                     <p>Track Offer letters</p>

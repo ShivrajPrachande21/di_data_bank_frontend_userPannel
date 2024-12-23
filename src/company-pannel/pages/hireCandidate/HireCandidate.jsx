@@ -19,18 +19,25 @@ import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import profileimg from '../../../assets/images/profileimg.png';
 import { toast } from 'react-toastify';
 import BaseUrl from '../../../services/BaseUrl';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 const HireCandidate = () => {
     const {
         appliedcandidate,
+        setappliedcandidate,
         resume_loading,
         SearchLoading,
+        setLoading,
+        loading,
+        setError,
+        currentPage,setCurrentPage,
         error,
         Subscription_Data,
         downloadSelectedEmails,
         handleDownload_Resume,
         get_Candidate_detials,
-        fetchCandidates,
         Search_bye_keyWord,
         get_subscription_details
     } = useContext(HireCandidateContext);
@@ -38,6 +45,7 @@ const HireCandidate = () => {
     const locate = useLocation();
 
     const [fiedEmpty, setfiedEmpty] = useState('');
+    const [hasMore,setHasmore]=useState(true);
 
     const [seachBarData, setseachBarData] = useState({
         search: '',
@@ -51,18 +59,7 @@ const HireCandidate = () => {
         setfiedEmpty('');
     };
     const handle_search = () => {
-        // if (
-        //     seachBarData.search.trim() == '' &&
-        //     seachBarData.search.trim() === ''
-        // ) {
-        //     toast.error('Please enter keywords to search relevant Candidate');
-        // } else {
-        Search_bye_keyWord(seachBarData);
-        // }
-
-        if (seachBarData) {
-            // setseachBarData({ search: '', experience: '', location: '' });
-        }
+    Search_bye_keyWord(seachBarData);
     };
 
     const [selectAllChecked, setSelectAllChecked] = useState(false);
@@ -177,10 +174,6 @@ const HireCandidate = () => {
 
     const appliedcandidate_Count = appliedcandidate.length;
 
-    useEffect(() => {
-        fetchCandidates();
-        get_subscription_details();
-    }, [locate]);
     const searchLimit =
         (Subscription_Data[0]?.search_limit || 0) +
         (Subscription_Data[1]?.search_limit || 0);
@@ -200,9 +193,59 @@ const HireCandidate = () => {
         }
     }
 
+    
+
+    const fetchCandidates = async () => {
+        setLoading(true);
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const companyId = decodedToken?._id;
+
+        if (!companyId) {
+            setLoading(false);
+            toast.error('Invalid token');
+            return;
+        }
+
+        try {
+            const response = await axios.get(
+                `${BaseUrl}company/get_appliedcandidate/${companyId}/${currentPage}/${50}`
+            );
+
+            const newCandidates = response.data;
+            setappliedcandidate(prevCandidates => [
+                ...prevCandidates,
+                ...newCandidates,
+            ]);
+
+            if (newCandidates.length < 50) {
+                setHasmore(false);
+            } else {
+                setCurrentPage(prevPage => prevPage + 1);
+            }
+        } catch (err) {
+            setError(err.message);
+            setHasmore(false);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
     useEffect(() => {
+        if(appliedcandidate.length==0){
         rendering();
+        get_subscription_details();
+        fetchCandidates()
+        }
     }, []);
+   
+    
+ useEffect(()=>{
+        return () => {
+            setappliedcandidate([]);
+            setCurrentPage(1)
+        };
+    },[])
 
     return (
         <div className="hire-candidate">
@@ -337,6 +380,14 @@ const HireCandidate = () => {
                 </Col>
             </Row>
             <Row className="mt-2">
+            <InfiniteScroll
+    dataLength={appliedcandidate.length}
+    next={fetchCandidates}
+    hasMore={hasMore} 
+    loader={<p>Loading...</p>} 
+    endMessage={<p>No more candidates to display.</p>}
+    height={450}
+>
                 {appliedcandidate.map((candidate, index) => (
                     <Col xs={12} className="mb-2" key={index}>
                         <div className="result-array">
@@ -425,8 +476,8 @@ const HireCandidate = () => {
                         </div>
                     </Col>
                 ))}
+            </InfiniteScroll>
             </Row>
-
             <Outlet />
         </div>
     );

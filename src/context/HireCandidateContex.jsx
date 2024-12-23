@@ -16,6 +16,7 @@ export const HireCandidateProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [SearchLoading, setSearchLoading] = useState(null);
+     const [currentPage,setCurrentPage]=useState(1)
 
     const [email_loading, setEmail_loading] = useState(null);
     const [resume_loading, setResume_loading] = useState(null);
@@ -44,27 +45,6 @@ export const HireCandidateProvider = ({ children }) => {
 
     // subsciption data
     const [Subscription_Data, setSubscription_Data] = useState({});
-    // Function to fetch data
-    const fetchCandidates = async () => {
-        setLoading(true);
-        const token = localStorage.getItem('companyToken');
-        const decodedToken = jwtDecode(token);
-        const companyId = decodedToken?._id; // Assuming the token contains an 'id' for the company
-
-        if (!companyId) {
-            throw new Error('Invalid token');
-        }
-        try {
-            const response = await axios.get(
-                `${BaseUrl}company/get_appliedcandidate/${companyId}`
-            ); // Your API endpoint here
-            setappliedcandidate(response?.data);
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-            setLoading(false);
-        }
-    };
 
     const get_subscription_details = async () => {
         const token = localStorage.getItem('companyToken');
@@ -179,7 +159,6 @@ export const HireCandidateProvider = ({ children }) => {
     };
 
     const Search_bye_keyWord = async seachBarData => {
-        console.log("appus hired candidate ",seachBarData)
         setSearchLoading(true);
 
         const token = localStorage.getItem('companyToken');
@@ -220,7 +199,6 @@ export const HireCandidateProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        fetchCandidates();
         get_subscription_details();
     }, []);
 
@@ -229,10 +207,13 @@ export const HireCandidateProvider = ({ children }) => {
             value={{
                 resume_loading,
                 appliedcandidate,
+                setappliedcandidate,
                 loading,
+                setLoading,
                 candidate_detials,
+                currentPage,setCurrentPage,
                 error,
-                fetchCandidates,
+                setError,
                 Subscription_Data,
                 downloadSelectedEmails,
                 handleDownload_Resume,

@@ -9,6 +9,7 @@ const SupportContext = createContext();
 export const SupportProvider = ({ children }) => {
     const [data, setData] = useState(null);
     const [modalShow, setModalShow] = React.useState(false);
+    const [mailModelShow,setMailModelShow]=React.useState(false);
 
     const fetch_all_issue = async () => {
         const token = localStorage.getItem('companyToken');
@@ -36,7 +37,8 @@ export const SupportProvider = ({ children }) => {
                 data,
                 fetch_all_issue,
                 modalShow,
-                setModalShow
+                setModalShow,
+                mailModelShow,setMailModelShow
             }}
         >
             {children}

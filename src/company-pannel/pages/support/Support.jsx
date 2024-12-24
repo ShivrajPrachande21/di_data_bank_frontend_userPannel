@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './support.css';
-import { Button, Modal, Row, Table } from 'react-bootstrap';
+import { Button, Modal, Row, Table,OverlayTrigger, Tooltip } from 'react-bootstrap';
 import SearchIconS from '../../../assets/images/SearchIconS.png';
 import chatIcon from '../../../assets/images/chatIcon.png';
 import { useNavigate } from 'react-router-dom';
 import { useSupport } from '../../../context/SupportContext';
 import Addissue from './addIssue/Addissue';
+import SendMail from './Sendmail/SendMail';
+
 const Support = () => {
-    const { fetch_all_issue, data, modalShow, setModalShow } = useSupport();
+    const { fetch_all_issue, data, modalShow, setModalShow,mailModelShow,setMailModelShow } = useSupport();
     const [SeacrhInput, SetSeacrhInput] = useState('');
     console.log('dataatatt', data);
 
@@ -69,6 +71,25 @@ const Support = () => {
           return input;
         }
       }
+
+      const SendMails = (props) => (
+        <Tooltip 
+          id="save-tooltip" 
+          {...props}
+        >
+         Click this button to send an email directly to the support team.
+        </Tooltip>
+      );
+      
+      const AddIssue = (props) => (
+        <Tooltip 
+          id="save-tooltip" 
+          {...props}
+        >
+       Click this button to report your issue directly to the support team.
+        </Tooltip>
+      );
+      
     return (
         <>
             <Modal
@@ -81,9 +102,20 @@ const Support = () => {
             >
                 <Addissue />
             </Modal>
+            <Modal
+                show={mailModelShow}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                onHide={() => setMailModelShow(false)}
+                dialogClassName="add-modal-width"
+            >
+                <SendMail/>
+            </Modal>
             <div className="support">
                 <Row>
                     <div className="Search-support">
+                        <OverlayTrigger placement='bottom' overlay={AddIssue}>
                         <Button
                             size="sm"
                             className="add-issue-btn"
@@ -91,6 +123,18 @@ const Support = () => {
                         >
                             Add Issue +
                         </Button>
+                        </OverlayTrigger>
+
+                        <OverlayTrigger placement="bottom" overlay={SendMails}>
+                        <Button
+                        style={{marginLeft:'12px'}}
+                            size="sm"
+                            className="add-issue-btn"
+                            onClick={()=>setMailModelShow(true)}
+                        >
+                            Send Mail
+                        </Button>
+                        </OverlayTrigger>
                         <div className="search-bar-suport">
                             <img src={SearchIconS} alt="" width="20px" />
                             <input
@@ -101,6 +145,8 @@ const Support = () => {
                         </div>
                     </div>
                 </Row>
+
+                
                 <Row className="mt-2">
                     <Table bordered responsive className="custom-table">
                         <thead>

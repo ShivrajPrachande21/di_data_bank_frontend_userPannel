@@ -192,7 +192,7 @@ const ViewCandidateDetails = () => {
                                     <h4
                                         style={{
                                             fontSize: '0.7rem',
-                                            color: '#AEAEAE'
+                                            color: 'black'
                                         }}
                                     >
                                         {candidate_detials?.workDetails
@@ -216,7 +216,7 @@ const ViewCandidateDetails = () => {
                     </Row>
                     <Row className="mt-2">
                         <Col className="Overview">
-                            <p>{candidate_detials?.summary}</p>
+                            <p style={{ color: 'black'}}>{candidate_detials?.summary}</p>
                         </Col>
                     </Row>
                     <Row>
@@ -275,7 +275,7 @@ const ViewCandidateDetails = () => {
                                         </div>
                                     </div>
 
-                                    <div className="cards">
+                                    <div className="cards" >
                                         <div className="tables">
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails
@@ -310,7 +310,7 @@ const ViewCandidateDetails = () => {
                                                 {candidate_detials?.workDetails
                                                     ?.recognation || 'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
+                                            <p style={{ color: '#051F50',width:'250px'}}>
                                                 {candidate_detials?.workDetails?.skill?.map(
                                                     (item, index) => (
                                                         <span key={index}>

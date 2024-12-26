@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import { Button, Col, Image } from 'react-bootstrap';
+import { Button, Col, Image, Spinner } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Verified from '../../../../assets/images/Verified.png';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
 import altprofile from '../../../../assets/images/altprofile.jpg';
-
+import InfiniteScroll from 'react-infinite-scroll-component'
 const AppliedJobs = () => {
     const { id } = useParams();
-    const locate = useLocation();
-    const { fetch_applied_job, appliedJobData } = useContext(AppliedJobContext);
+    const { fetch_applied_job, appliedJobData ,setAppliedJobData,setCurrentPage,
+        hasMore} = useContext(AppliedJobContext);
     const navigate = useNavigate();
     const handleNavigate = id => {
         localStorage.setItem('job_id', id);
@@ -28,11 +28,29 @@ const AppliedJobs = () => {
         return `${diffDays} days ago`;
     };
     useEffect(() => {
-        fetch_applied_job();
-    }, [locate]);
+        if(appliedJobData&&appliedJobData.length==0){
+            fetch_applied_job();
+        }
+    }, []);
+
+    useEffect(()=>{
+     return (()=>{
+        setAppliedJobData([]);
+        setCurrentPage(1)
+     })
+    },[])
 
     return (
         <>
+          <InfiniteScroll
+                                       dataLength={appliedJobData&&appliedJobData.length}
+                                        next={fetch_applied_job}
+                                        hasMore={hasMore} 
+                                        loader={<div style={{textAlign:'center'}}>{appliedJobData&&appliedJobData.length>1?<Spinner size='sm' variant='primary' />:null}</div> } 
+                                        endMessage={appliedJobData&&appliedJobData.length>1?<p>No more data to Load...</p>:null}
+                                        height={450}
+                                    >
+
             <div className="appliedJobs-card-div">
                 {appliedJobData && appliedJobData.length > 0 ? (
                     appliedJobData.map((item, index) => (
@@ -284,6 +302,7 @@ const AppliedJobs = () => {
                     </div>
                 )}
             </div>
+            </InfiniteScroll>
         </>
     );
 };

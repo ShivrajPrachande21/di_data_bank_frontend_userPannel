@@ -214,15 +214,16 @@ const CandidateSupport = () => {
                                             <p
                                                 style={{
                                                     color:
-                                                        index?.status ===
-                                                        'Pending'
+                                                    item?.status ==
+                                                        'solved'
                                                             ? 'green'
-                                                            : index?.status ===
-                                                              'Rejected'
+                                                            : item?.status ===
+                                                              'reject'
                                                             ? 'red'
-                                                            : ''
+                                                            : '#051F50'
                                                 }}
-                                            >{toCamelCase_Name(item?.status)}
+                                            >
+                                                {toCamelCase_Name(item?.status)}
                                             </p>
                                         </td>
                                     </tr>

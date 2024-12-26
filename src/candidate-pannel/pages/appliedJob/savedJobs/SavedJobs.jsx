@@ -2,16 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
 import Verified from '../../../../assets/images/Verified.png';
 import altprofile from '../../../../assets/images/altprofile.jpg';
-import { Button, Image } from 'react-bootstrap';
+import { Button, Image,Spinner } from 'react-bootstrap';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppliedJobs from './../appliedJobs/AppliedJobs';
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import ProfileCompletionModal from '../../ProfileAlert/ProfileCompletion';
+import InfiniteScroll from 'react-infinite-scroll-component'
 const SavedJobs = () => {
     const { applyTo_job } = useContext(SearchJobContext);
-    const { fetchSavedJob, savedJobData } = useContext(AppliedJobContext);
+    const { fetchSavedJob, savedJobData,setsavedJobData,setCurrentPage,
+        hasMore } = useContext(AppliedJobContext);
     const [showModal, setShowModal] = useState(false);
     const locate = useLocation();
     const navigate = useNavigate();
@@ -41,9 +43,11 @@ const SavedJobs = () => {
         await fetchSavedJob();
     };
     useEffect(() => {
-        fetchSavedJob();
+        if(savedJobData&&savedJobData.length==0){
+            fetchSavedJob();
+        }
         fetchCandidateProfile();
-    }, [locate]);
+    }, []);
 
     const handleNavigate = async id => {
         navigate(`/candidate-dashboard/view-job-details/${id}`);
@@ -67,8 +71,24 @@ const SavedJobs = () => {
     useEffect(() => {
         rendering();
     }, []);
+
+    useEffect(()=>{
+        return(()=>{
+    setsavedJobData([])
+    setCurrentPage(1)
+      })
+    },[])
+
     return (
         <>
+         <InfiniteScroll
+                                       dataLength={savedJobData&&savedJobData.length}
+                                        next={fetchSavedJob}
+                                        hasMore={hasMore} 
+                                        loader={<div style={{textAlign:'center'}}>{savedJobData&&savedJobData.length>1?<Spinner size='sm' variant='primary' />:null}</div> } 
+                                        endMessage={savedJobData&&savedJobData.length>1?<p>No more data to Load...</p>:null}
+                                        height={450}
+                                    >
             <div className="saved-jobs-card">
                 {savedJobData && savedJobData.length > 0 ? (
                     savedJobData.map((item, index) => (
@@ -258,6 +278,8 @@ const SavedJobs = () => {
                     </div>
                 )}
             </div>
+            </InfiniteScroll>
+
             {showModal && (
                 <ProfileCompletionModal
                     onClose={() => setShowModal(false)} // Close modal handler

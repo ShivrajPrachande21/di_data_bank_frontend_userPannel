@@ -190,19 +190,7 @@ const EarlyBuy = () => {
                                             Up to {item?.search_limit} Search
                                             results
                                         </li>
-                                        <li>
-                                            {' '}
-                                            <img
-                                                src={
-                                                    data1 === item?.plane_name
-                                                        ? bluetick
-                                                        : CardCheck
-                                                }
-                                                alt=""
-                                                width="14px"
-                                            />
-                                            All available candidates
-                                        </li>
+                                       
                                         <li>
                                             {' '}
                                             <img
@@ -303,6 +291,65 @@ const EarlyBuy = () => {
                                             />
                                             5 AI Searches
                                         </li>
+
+                                        {item?.Credibility_Search &&
+                                        item?.Credibility_Search !== 0 ? (
+                                            <li>
+                                                {' '}
+                                                <img
+                                                    src={
+                                                        data1 ===
+                                                        item?.plane_name
+                                                            ? bluetick
+                                                            : CardCheck
+                                                    }
+                                                    alt=""
+                                                    width="14px"
+                                                />
+                                                {`${item?.Credibility_Search} Creadibility search`}
+                                            </li>
+                                        ) : (
+                                            ''
+                                        )}
+                                         {
+                                        item?.support? (
+                                            <li>
+                                                {' '}
+                                                <img
+                                                    src={
+                                                        data1 ===
+                                                        item?.plane_name
+                                                            ? bluetick
+                                                            : CardCheck
+                                                    }
+                                                    alt=""
+                                                    width="14px"
+                                                />
+                                                {`Email support and chat support`}
+                                            </li>
+                                        ) : (
+                                            ''
+                                        )}
+                                        {item?.ai_question &&
+                                        item?.ai_question !== 0? (
+                                            <li>
+                                                {' '}
+                                                <img
+                                                    src={
+                                                        data1 ===
+                                                        item?.plane_name
+                                                            ? bluetick
+                                                            : CardCheck
+                                                    }
+                                                    alt=""
+                                                    width="14px"
+                                                />
+                                             {`Up to ${item?.ai_question} AI questions per job post`}
+
+                                            </li>
+                                        ) : (
+                                            ''
+                                        )}
                                     </ul>
 
                                     {data1 == item?.plane_name ? (

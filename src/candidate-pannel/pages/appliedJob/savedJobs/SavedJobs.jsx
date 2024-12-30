@@ -87,7 +87,7 @@ const SavedJobs = () => {
                                         hasMore={hasMore} 
                                         loader={<div style={{textAlign:'center'}}>{savedJobData&&savedJobData.length>1?<Spinner size='sm' variant='primary' />:null}</div> } 
                                         endMessage={savedJobData&&savedJobData.length>1?<p>No more data to Load...</p>:null}
-                                        height={450}
+                                        height={540}
                                     >
             <div className="saved-jobs-card">
                 {savedJobData && savedJobData.length > 0 ? (

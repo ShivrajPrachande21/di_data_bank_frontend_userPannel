@@ -48,7 +48,7 @@ const AppliedJobs = () => {
                                         hasMore={hasMore} 
                                         loader={<div style={{textAlign:'center'}}>{appliedJobData&&appliedJobData.length>1?<Spinner size='sm' variant='primary' />:null}</div> } 
                                         endMessage={appliedJobData&&appliedJobData.length>1?<p>No more data to Load...</p>:null}
-                                        height={450}
+                                        height={540}
                                     >
 
             <div className="appliedJobs-card-div">

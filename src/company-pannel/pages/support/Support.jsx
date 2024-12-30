@@ -7,11 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSupport } from '../../../context/SupportContext';
 import Addissue from './addIssue/Addissue';
 import SendMail from './Sendmail/SendMail';
+import {jwtDecode} from 'jwt-decode';
+import io from 'socket.io-client';
+//const socket=io('http://localhost:4000');
+const socket = io('http://65.20.91.47:4000');
 
 const Support = () => {
     const { fetch_all_issue, data, modalShow, setModalShow,mailModelShow,setMailModelShow } = useSupport();
     const [SeacrhInput, SetSeacrhInput] = useState('');
-    console.log('dataatatt', data);
 
     const navigate = useNavigate();
     function navigateChate(id) {
@@ -24,7 +27,6 @@ const Support = () => {
     };
 
     const fiteredData = data?.filter(item => {
-        console.log('item?.Issue_type', item?.Issue_type);
         return item?.Issue_type.toLowerCase().includes(
             SeacrhInput.toLowerCase()
         );
@@ -89,7 +91,22 @@ const Support = () => {
        Click this button to report your issue directly to the support team.
         </Tooltip>
       );
-      
+       useEffect(()=>{
+              const token = localStorage.getItem('companyToken');
+                 const decodedToken = jwtDecode(token);
+                          const company_id = decodedToken?._id;
+                          socket.connect();
+                          socket.emit('ViewNewMessage',company_id);
+                          socket.emit('messageNotification',company_id);
+                          socket.on('disconnect', () => {
+                              console.log('User disconnected');
+                          });
+              
+                          return () => {
+                              socket.off('notification');
+                              socket.disconnect();
+                          };
+          },[])
     return (
         <>
             <Modal

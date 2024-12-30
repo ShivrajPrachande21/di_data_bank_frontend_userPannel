@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 const socket = io('http://65.20.91.47:4000');
+//const socket=io('http://localhost:4000');
 import './sidebar.css';
 import WdcLogo from '../../assets/images/Withoutbg.png';
 import bellgray from '../../assets/images/bellgray.png';
@@ -64,6 +65,7 @@ const SideBar = () => {
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
     const [candidateToken, setCandidateToken] = useState('');
+    const [supportNot,SetSupportNot]=useState(0);
 
     const handleClose = () => setShow(prev => !prev);
     const handleShow = () => setShow(prev => !prev);
@@ -266,6 +268,11 @@ const SideBar = () => {
                 ///setNotifications(newNotification);
             });
 
+            socket.emit('messageNotification',company_id);
+            socket.on('messageNot',MessageNot=>{
+                SetSupportNot(MessageNot)
+            })
+
             socket.on('disconnect', () => {
                 console.log('User disconnected');
             });
@@ -310,6 +317,11 @@ const SideBar = () => {
                     SetProfileView(data);
                 });
 
+                socket.emit('messageNotification',candidate_id);
+                socket.on('messageNot',MessageNot=>{
+                    SetSupportNot(MessageNot)
+                })
+
                 socket.on('disconnect', () => {
                     console.log('User disconnected');
                 });
@@ -349,7 +361,7 @@ const SideBar = () => {
 
     useEffect(() => {
         getSingleData();
-    }, [locate]);
+    }, []);
     return (
         <>
             <div className="MainSidebar">
@@ -380,10 +392,10 @@ const SideBar = () => {
                                 width="23px"
                                 onClick={handleShow}
                             />
-                            {notifications.length +
-                                notiCount.length +
-                                profileview.lengthv +
-                                shortlist.length ==
+                            {parseInt(notifications.length) +
+                                parseInt(notiCount.length) +
+                                parseInt(profileview.length) +
+                                parseInt(shortlist.length) ==
                             0 ? (
                                 ''
                             ) : (
@@ -622,6 +634,29 @@ const SideBar = () => {
                                               />
 
                                               {button.label}
+                                              {button.label=='Support'&& supportNot!=0?
+                                              <span
+                                              style={{
+                                                  marginLeft:'60%',
+                                                  marginTop:'-19px',
+                                                  backgroundColor:activeButton == button.id
+                                                          ? 'white':'#3b96e1',
+                                                  color:activeButton == button.id
+                                                  ?'#3b96e1':'white',
+                                                  borderRadius: '50%', 
+                                                  width: '15px',
+                                                  height: '15px',
+                                                  display: 'flex',
+                                                  justifyContent: 'center',
+                                                  alignItems: 'center',
+                                                  fontSize: '12px',
+                                                  fontWeight: 'simple',
+                                              }}
+                                          >
+                                             {supportNot}
+                                          </span>
+                                              :null}
+                                              
                                           </li>
                                       </Link>
                                   ))
@@ -657,10 +692,10 @@ const SideBar = () => {
                                               style={{
                                                   background:
                                                       activeButton === button.id
-                                                          ? '#3b96e1' // Active button background
+                                                          ? '#3b96e1' 
                                                           : hoveredButton ===
                                                             button.id
-                                                          ? '#f0f0f0' // Hover background
+                                                          ? '#f0f0f0'
                                                           : 'white', // Default background
                                                   color:
                                                       activeButton === button.id
@@ -689,6 +724,28 @@ const SideBar = () => {
                                               />
 
                                               {button.label}
+                                              {button.label=='Support'&& supportNot!=0?
+                                              <span
+                                              style={{
+                                                  marginLeft:'60%',
+                                                  marginTop:'-19px',
+                                                  backgroundColor:activeButton == button.id
+                                                  ? 'white':'#3b96e1',
+                                          color:activeButton == button.id
+                                          ?'#3b96e1':'white',
+                                                  borderRadius: '50%', 
+                                                  width: '15px',
+                                                  height: '15px',
+                                                  display: 'flex',
+                                                  justifyContent: 'center',
+                                                  alignItems: 'center',
+                                                  fontSize: '12px',
+                                                  fontWeight: 'simple',
+                                              }}
+                                          >
+                                             {supportNot}
+                                          </span>
+                                              :null}
                                           </li>
                                       </Link>
                                   ))}
@@ -696,6 +753,7 @@ const SideBar = () => {
                     </div>
                 </div>
             </div>
+            
             <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Notifications</Offcanvas.Title>

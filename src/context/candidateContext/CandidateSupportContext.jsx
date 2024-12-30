@@ -7,6 +7,7 @@ export const CandidateSupportContext = createContext();
 export const CandidateSupportProvider = ({ children }) => {
     const [supportData, setSupportData] = useState(null);
     const [modalShow, setModalShow] = useState(null);
+    const [mailModelShow,setMailModelShow]=React.useState(false);
     const [Data, setdata] = useState('shajivr');
     const fetch_Candidate_issue = async () => {
         const token = localStorage.getItem('Candidate_token');
@@ -32,7 +33,8 @@ export const CandidateSupportProvider = ({ children }) => {
                 fetch_Candidate_issue,
                 Data,
                 modalShow,
-                setModalShow
+                setModalShow,
+                mailModelShow,setMailModelShow
             }}
         >
             {children}

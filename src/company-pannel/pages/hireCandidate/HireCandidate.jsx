@@ -46,6 +46,7 @@ const HireCandidate = () => {
 
     const [fiedEmpty, setfiedEmpty] = useState('');
     const [hasMore,setHasmore]=useState(true);
+    const [totalUser,setTotalUser]=useState(0);
 
     const [seachBarData, setseachBarData] = useState({
         search: '',
@@ -212,11 +213,12 @@ const HireCandidate = () => {
                 `${BaseUrl}company/get_appliedcandidate/${companyId}/${currentPage}/${50}`
             );
 
-            const newCandidates = response.data;
+            const newCandidates = response.data?.data;
             setappliedcandidate(prevCandidates => [
                 ...prevCandidates,
                 ...newCandidates,
             ]);
+            setTotalUser(response.data?.TotalCandidate)
 
             if (newCandidates.length < 50) {
                 setHasmore(false);
@@ -312,7 +314,7 @@ const HireCandidate = () => {
                 <Col xs={12}>
                     <div className="serach-result">
                         <div className="para">
-                            <p>Search Results :{appliedcandidate_Count}</p>
+                            <p>Results: {appliedcandidate_Count}<span style={{ fontSize: '0.8rem', margin: '0 5px' }}>/</span>{totalUser}</p>
                         </div>
 
                         <div className="download-email">

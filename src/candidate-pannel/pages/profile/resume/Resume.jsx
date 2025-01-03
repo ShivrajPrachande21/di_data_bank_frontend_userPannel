@@ -18,7 +18,7 @@ const Resume = () => {
             const response = await axios.post(
                 'http://65.20.91.47:5000/pythonapi/generate_resume',
                 {
-                    custom_id: 828
+                    custom_id:custom_id
                 }
             );
             setResume(response.data);

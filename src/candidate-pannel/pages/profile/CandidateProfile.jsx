@@ -356,7 +356,7 @@ const CandidateProfile = () => {
 
             <Modal
                 show={modalShowEdit}
-                onHide={showEditModle}
+                //onHide={showEditModle}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
             >

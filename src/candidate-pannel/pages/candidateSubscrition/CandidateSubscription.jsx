@@ -255,7 +255,12 @@ const CandidateSubscription = () => {
                                                 {item?.job_recommandation ? (
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                             src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />
@@ -286,7 +291,12 @@ const CandidateSubscription = () => {
                                                 {item?.resume_write ? (
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                            src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />
@@ -301,7 +311,12 @@ const CandidateSubscription = () => {
                                                 <ul>
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                            src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />
@@ -315,7 +330,12 @@ const CandidateSubscription = () => {
                                                 {item?.interview_question ? (
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                            src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />

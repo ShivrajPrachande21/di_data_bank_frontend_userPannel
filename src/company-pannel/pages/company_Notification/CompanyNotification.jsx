@@ -180,8 +180,8 @@ const CompanyNotification = ({ handleClose }) => {
     };
 
     const handleCloseShortlistAndView=async(jobId)=>{
-        socket.emit('userviewshortlist', candidateToken, jobId);
-        socket.on('candidateview', data => {});
+        // socket.emit('userviewshortlist', candidateToken, jobId);
+        // socket.on('candidateview', data => {});
         setShow(false);
         localStorage.setItem('job_id',jobId);
     }
@@ -324,7 +324,7 @@ const CompanyNotification = ({ handleClose }) => {
                     }}
                     onClick={handleClearALL}
                 >
-                    CLear ALL
+                    CLear All
                 </button>
             ) : (
                 <button
@@ -339,8 +339,7 @@ const CompanyNotification = ({ handleClose }) => {
                     }}
                     onClick={handleClearALLCandidate}
                 >
-                    Clear ALL Notification{' '}
-                    <img src={Cross} alt="" width="20px" />
+                    Clear All{' '}
                 </button>
             )}
         </>

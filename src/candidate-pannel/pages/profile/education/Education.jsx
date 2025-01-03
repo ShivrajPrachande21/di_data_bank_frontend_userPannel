@@ -263,7 +263,7 @@ function Education() {
             {/* Highest Education  Model */}
             <Modal
                 show={showEducation}
-                onHide={handleShowEducation}
+               // onHide={handleShowEducation}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -287,7 +287,7 @@ function Education() {
             {/* Add New Education  Model */}
             <Modal
                 show={showAddeducation}
-                onHide={showAdd_new_Education}
+               // onHide={showAdd_new_Education}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"

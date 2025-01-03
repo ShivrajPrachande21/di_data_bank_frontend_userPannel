@@ -27,10 +27,11 @@ const Support = () => {
     };
 
     const fiteredData = data?.filter(item => {
-        return item?.Issue_type.toLowerCase().includes(
-            SeacrhInput.toLowerCase()
-        );
+        const issueType = item?.Issue_type;
+        return typeof issueType =="string" && 
+               issueType.toLowerCase().includes(SeacrhInput.toLowerCase());
     });
+    
 
     useEffect(() => {
         fetch_all_issue();
@@ -63,6 +64,7 @@ const Support = () => {
     }
 
     function toCamelCase_Name(input) {
+    
         if(typeof input=='string'){
         return input?input
           .toLowerCase()

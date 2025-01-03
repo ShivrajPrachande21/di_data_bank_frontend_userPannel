@@ -228,8 +228,8 @@
 
 .peoject-radio input[type='radio'] {
     accent-color: transparent; /* Reset default styling */
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
     border: 1px solid #007bff; /* Custom border color */
     border-radius: 50%; /* Make it circular */
     outline: none;

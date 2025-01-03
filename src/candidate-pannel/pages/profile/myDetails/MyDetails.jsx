@@ -383,7 +383,7 @@ function MyDetails() {
             </div>
             <Modal
                 show={modalShow}
-                onHide={showModal}
+               // onHide={showModal}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
             >

@@ -196,7 +196,7 @@ function AddNewEducation() {
                             name="description"
                             value={addNewData?.description}
                             onChange={handleInputChange}
-                            placeholder="Eenter Description"
+                            placeholder="Enter Description"
                             className="education-form"
                         />
                     </Form.Group>

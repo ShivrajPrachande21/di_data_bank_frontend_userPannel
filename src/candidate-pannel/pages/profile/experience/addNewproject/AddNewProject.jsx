@@ -271,6 +271,7 @@ const AddNewProject = () => {
                                     type="radio"
                                     id="radio1"
                                     name="Project_status"
+                                   
                                     label="Inprogress"
                                     value="InProgress"
                                     checked={

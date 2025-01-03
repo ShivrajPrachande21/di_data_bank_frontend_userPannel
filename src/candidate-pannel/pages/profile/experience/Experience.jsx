@@ -758,7 +758,7 @@ const Experience = () => {
             {/* Work Details  Model */}
             <Modal
                 show={showWork}
-                onHide={handleShowWork}
+              //  onHide={handleShowWork}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -782,7 +782,7 @@ const Experience = () => {
             {/* EDit Personal Module */}
             <Modal
                 show={editExp}
-                onHide={showEditExp}
+               // onHide={showEditExp}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -805,7 +805,7 @@ const Experience = () => {
             </Modal>
             <Modal
                 show={ExpModle}
-                onHide={showExperiencelModal}
+               // onHide={showExperiencelModal}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -828,7 +828,7 @@ const Experience = () => {
             </Modal>
             <Modal
                 show={showProjectModel}
-                onHide={handleShowProject}
+              //  onHide={handleShowProject}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -851,7 +851,7 @@ const Experience = () => {
             </Modal>
             <Modal
                 show={showEDitProject}
-                onHide={handleShowEditProject}
+               // onHide={handleShowEditProject}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"

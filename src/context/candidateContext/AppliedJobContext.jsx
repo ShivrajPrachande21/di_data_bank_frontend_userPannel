@@ -23,7 +23,7 @@ export const AppliedJobProvider = ({ children }) => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/appliedjob/${userId}/${currentPage}/${10}`
+                    `${BaseUrl}candidate/appliedjob/${userId}/${currentPage}/${10}/Hired`
                 );
                 let data=response?.data.data
                 let page=response?.data.page

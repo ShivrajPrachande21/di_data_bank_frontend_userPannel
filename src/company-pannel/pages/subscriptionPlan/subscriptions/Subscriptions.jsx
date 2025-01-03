@@ -245,31 +245,7 @@ const Subscriptions = () => {
                                                 Up to {item?.search_limit}{' '}
                                                 Search results
                                             </li>
-                                            {item?.candidate_match ? (
-                                                <li>
-                                                    {' '}
-                                                    <img
-                                                        src={
-                                                            subscriptionData
-                                                                ?.CurrentSubscription[0]
-                                                                ?.plane_name ==
-                                                                item?.plane_name ||
-                                                            subscriptionData
-                                                                ?.CurrentSubscription[1]
-                                                                ?.plane_name ==
-                                                                item?.plane_name
-                                                                ? bluetick
-                                                                : CardCheck
-                                                        }
-                                                        alt=""
-                                                        width="14px"
-                                                    />
-                                                    Candidate Matching
-                                                </li>
-                                            ) : (
-                                                ''
-                                            )}
-
+                                            
                                             <li>
                                                 {' '}
                                                 <img
@@ -430,7 +406,7 @@ const Subscriptions = () => {
                                                         alt=""
                                                         width="14px"
                                                     />
-                                                    Support
+                                                     Email support and chat support
                                                 </li>
                                             ) : (
                                                 ''
@@ -460,6 +436,32 @@ const Subscriptions = () => {
                                             ) : (
                                                 ``
                                             )}
+                                            {item?.Credibility_Search &&
+                                        item?.Credibility_Search !== 0 ? (
+                                            <li>
+                                                {' '}
+                                                <img
+                                                     src={
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[0]
+                                                            ?.plane_name ==
+                                                            item?.plane_name ||
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[1]
+                                                            ?.plane_name ==
+                                                            item?.plane_name
+                                                            ? bluetick
+                                                            : CardCheck
+                                                    }
+                                                    alt=""
+                                                    width="14px"
+                                                />
+                                                {`${item?.Credibility_Search} Creadibility search`}
+                                            </li>
+                                        ) : (
+                                            ''
+                                        )}
+
                                         </ul>
 
                                         {subscriptionData

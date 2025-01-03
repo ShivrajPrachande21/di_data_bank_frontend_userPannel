@@ -91,6 +91,15 @@ const ViewCandidateDetails = () => {
         rendering();
         get_Candidate_detials(id);
     }, []);
+    
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate); 
+        const day = date.getDate().toString().padStart(2, '0'); 
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+      
+        return `${day}/${month}/${year}`; 
+      };
     return (
         <>
             <div className="viewCandidate-main">
@@ -183,7 +192,7 @@ const ViewCandidateDetails = () => {
                                     <h4
                                         style={{
                                             fontSize: '0.7rem',
-                                            color: '#AEAEAE'
+                                            color: 'black'
                                         }}
                                     >
                                         {candidate_detials?.workDetails
@@ -207,7 +216,7 @@ const ViewCandidateDetails = () => {
                     </Row>
                     <Row className="mt-2">
                         <Col className="Overview">
-                            <p>{candidate_detials?.summary}</p>
+                            <p style={{ color: 'black'}}>{candidate_detials?.summary}</p>
                         </Col>
                     </Row>
                     <Row>
@@ -217,10 +226,10 @@ const ViewCandidateDetails = () => {
                                 <div className="cardsFlex">
                                     <div className="cards">
                                         <div className="tables">
-                                            <p>Email:</p>
-                                            <p>Contact Email:</p>
-                                            <p>Mobile No.:</p>
-                                            <p>LinkedIn:</p>
+                                            <p style={{ color: '#051F50' }}>Email:</p>
+                                            <p style={{ color: '#051F50' }}>Contact Email:</p>
+                                            <p style={{ color: '#051F50' }}>Mobile No.:</p>
+                                            <p style={{ color: '#051F50' }}>LinkedIn:</p>
                                         </div>
                                     </div>
 
@@ -234,38 +243,39 @@ const ViewCandidateDetails = () => {
                                                 {candidate_detials?.basicDetails
                                                     ?.contact_email || 'N/A'}
                                             </p>
-                                            <p>
+                                            <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials?.basicDetails
                                                     ?.mobile || 'N/A'}
                                             </p>
-                                            <p>
+                                            <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials?.basicDetails
                                                     ?.linkedIn || 'N/A'}
                                             </p>
                                         </div>
                                     </div>
+                                   
                                 </div>
-
+                                <hr style={{width:"90%"}}/>
                                 <p className="basic-details">Work Detials</p>
                                 <div className="cardsFlex">
                                     <div className="cards">
                                         <div className="tables">
-                                            <p>Designation:</p>
+                                            <p style={{ color: '#051F50' }}>Designation:</p>
                                             {/* <p>Company name:</p> */}
-                                            <p> Aspiring Position/Role:</p>
-                                            <p>Expected CTC:</p>
+                                            <p style={{ color: '#051F50' }}> Aspiring Position/Role:</p>
+                                            <p style={{ color: '#051F50' }}>Expected CTC:</p>
 
-                                            <p>Total Experience:</p>
+                                            <p style={{ color: '#051F50' }}>Total Experience:</p>
 
-                                            <p>Career highlights details:</p>
-                                            <p>Recongasation</p>
-                                            <p>Skills:</p>
+                                            <p style={{ color: '#051F50' }}>Career highlights details:</p>
+                                            <p style={{ color: '#051F50' }}>Recognition</p>
+                                            <p style={{ color: '#051F50' }}>Skills:</p>
                                         </div>
                                     </div>
 
-                                    <div className="cards">
+                                    <div className="cards" >
                                         <div className="tables">
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.workDetails
@@ -281,7 +291,7 @@ const ViewCandidateDetails = () => {
                                                 {
                                                     candidate_detials
                                                         ?.workDetails
-                                                        ?.current_ctc
+                                                        ?.current_ctc ||'N/A'
                                                 }
                                             </p>
 
@@ -289,7 +299,7 @@ const ViewCandidateDetails = () => {
                                                 {
                                                     candidate_detials
                                                         ?.workDetails
-                                                        ?.work_experience
+                                                        ?.work_experience||'N/A'
                                                 }
                                             </p>
                                             <p style={{ color: '#051F50' }}>
@@ -300,7 +310,7 @@ const ViewCandidateDetails = () => {
                                                 {candidate_detials?.workDetails
                                                     ?.recognation || 'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
+                                            <p style={{ color: '#051F50',width:'250px'}}>
                                                 {candidate_detials?.workDetails?.skill?.map(
                                                     (item, index) => (
                                                         <span key={index}>
@@ -318,6 +328,7 @@ const ViewCandidateDetails = () => {
                                         </div>
                                     </div>
                                 </div>
+                                <hr style={{width:"90%"}}/>
                                 {/* Experience */}
                                 <p className="basic-details">Experience</p>
                                 {candidate_detials?.workDetails?.Experience.map(
@@ -329,16 +340,16 @@ const ViewCandidateDetails = () => {
                                             >
                                                 <div className="cards">
                                                     <div className="tables">
-                                                        <p>Designation:</p>
+                                                        <p style={{ color: '#051F50' }}>Designation:</p>
                                                         {/* <p>Company name:</p> */}
-                                                        <p>Company name:</p>
-                                                        <p>Salary:</p>
+                                                        <p style={{ color: '#051F50' }}>Company name:</p>
+                                                        <p style={{ color: '#051F50' }}>Salary:</p>
 
-                                                        <p>Location:</p>
+                                                        <p style={{ color: '#051F50' }}>Location:</p>
 
-                                                        <p>Start_date:</p>
-                                                        <p>End-date</p>
-                                                        <p>
+                                                        <p style={{ color: '#051F50' }}>Start_date:</p>
+                                                        <p style={{ color: '#051F50' }}>End-date</p>
+                                                        <p style={{ color: '#051F50' }}>
                                                             Reporting_structure:
                                                         </p>
                                                     </div>
@@ -382,7 +393,7 @@ const ViewCandidateDetails = () => {
                                                                 color: '#051F50'
                                                             }}
                                                         >
-                                                            {item?.start_date ||
+                                                            {formatDate(item?.start_date) ||
                                                                 'N/A'}
                                                         </p>
                                                         <p
@@ -392,7 +403,7 @@ const ViewCandidateDetails = () => {
                                                         >
                                                             {item?.current_workingStatus
                                                                 ? 'Currently Working'
-                                                                : item?.end_date ||
+                                                                :formatDate(item?.end_date) ||
                                                                   'N/A'}
                                                         </p>
                                                         <p
@@ -406,7 +417,7 @@ const ViewCandidateDetails = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr />
+                                            <hr style={{width:'90%'}} />
                                         </>
                                     )
                                 )}
@@ -419,13 +430,12 @@ const ViewCandidateDetails = () => {
                                 <div className="cardsFlex">
                                     <div className="cards">
                                         <div className="tables">
-                                            <p>Gender:</p>
-                                            <p>Age:</p>
-                                            <p>Marriage Status:</p>
-                                            <p>Members in family:</p>
-                                            <p>Father/Mother Name:</p>
-                                            <p>Son/Daughter:</p>
-                                            <p>Spouse Profession:</p>
+                                            <p style={{ color: '#051F50' }}>Gender:</p>
+                                            <p style={{ color: '#051F50' }}>Age:</p>
+                                            <p style={{ color: '#051F50' }}>Marriage Status:</p>
+                                            <p style={{ color: '#051F50' }}>Members in family:</p>
+                                            <p style={{ color: '#051F50' }}>Father/Mother Name:</p>
+                                            <p style={{ color: '#051F50' }}>Son/Daughter:</p>
                                         </div>
                                     </div>
 
@@ -436,60 +446,61 @@ const ViewCandidateDetails = () => {
                                                     ?.personalDetails?.gender ||
                                                     'N/A'}
                                             </p>
-                                            <p>
+                                            <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails?.age ||
                                                     'N/A'}
                                             </p>
-                                            <p>
+                                            <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
                                                     ?.marriag_status || 'N/A'}
                                             </p>
-                                            <p>
+                                            <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
                                                     ?.family_member || 'N/A'}
                                             </p>
-                                            <p>
+                                            <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
                                                     ?.father_name || 'N/A'}
                                             </p>
-                                            <p>
+                                            <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials
                                                     ?.personalDetails
                                                     ?.son_name || 'N/A'}
                                             </p>
-                                            <p>
-                                                {' '}
-                                                {candidate_detials
-                                                    ?.personalDetails
-                                                    ?.spouse_profession ||
-                                                    'N/A'}
-                                            </p>
+                                           
                                         </div>
                                     </div>
                                 </div>
+                                <hr style={{width:"90%"}}/>
                                 <p className="basic-details">
                                     Education Details
                                 </p>
                                 <div className="cardsFlex">
                                     <div className="cards">
                                         <div className="tables">
-                                            <p>Highest level of education:</p>
-                                            <p>Boards represented names:</p>
-                                            <p>Book Published/Article:</p>
-                                            <p>Resume:</p>
-
-                                            <p style={{ marginTop: '50px' }}>
-                                                Certificates:
+                                            <p style={{ color: '#051F50'  }}>Highest level of education:</p>
+                                            <p style={{ color: '#051F50', marginTop:'31px' }}>Boards represented name:</p>
+                                            <p style={{ color: '#051F50',marginTop:'31px' }}>Book Published/Article:</p>
+                                            <p style={{ color: '#051F50',marginTop:'31px' }}>Resume:</p>
+                                            {candidate_detials?.educationDetails?.certificates?.map(
+                                                    (item, index) => (
+                                                        <>
+                                                          <p style={{ marginTop: '50px',color:'#051F50' }}>
+                                                {item?.Certificate}:
                                             </p>
+                                                        </>
+                                                    )
+                                                )}
+                                            
                                         </div>
                                     </div>
 
@@ -499,27 +510,25 @@ const ViewCandidateDetails = () => {
                                                 {
                                                     candidate_detials
                                                         ?.educationDetails
-                                                        ?.highest_education
+                                                        ?.highest_education ||'N/A'
                                                 }
                                             </p>
                                             <p style={{ color: '#051F50' }}>
                                                 {
                                                     candidate_detials
                                                         ?.educationDetails
-                                                        ?.board_represent
+                                                        ?.board_represent ||'N/A'
                                                 }
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
+                                            <p style={{ color: '#051F50'}}>
                                                 {
                                                     candidate_detials
                                                         ?.educationDetails
-                                                        ?.articles
+                                                        ?.articles ||'N/A'
                                                 }
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
-                                                jgasjhgasjd
-                                            </p>
-                                            <p style={{ marginTop: '40px' }}>
+                                            
+                                            <p style={{ marginTop: '80px' }}>
                                                 <div className="pdf-view">
                                                     <div
                                                         className="pdf"
@@ -530,7 +539,10 @@ const ViewCandidateDetails = () => {
                                                         PDF
                                                     </div>
                                                     <div className="pdf-text">
-                                                        Rahul Joshi Resume.pdf
+                                                   {candidate_detials
+                                                        ?.workDetails
+                                                        ?.current_ctc?candidate_detials?.basicDetails
+                                                    ?.name :'N/A'}
                                                     </div>
                                                 </div>
                                             </p>
@@ -554,7 +566,7 @@ const ViewCandidateDetails = () => {
                                                                     {
                                                                         item?.Certificate
                                                                     }
-                                                                    Resume.pdf
+                                                                
                                                                 </div>
                                                             </div>
                                                         </>
@@ -564,6 +576,99 @@ const ViewCandidateDetails = () => {
                                         </div>
                                     </div>
                                 </div>
+                                <hr style={{width:"90%"}}/>
+                                <p className="basic-details">
+                                Education
+                                </p>
+                                {candidate_detials?.educationDetails?.Education.map(
+                                    (item, iddex) => (
+                                        <>
+                                            <div
+                                                className="cardsFlex"
+                                                key={iddex}
+                                            >
+                                                <div className="cards">
+                                                    <div className="tables">
+                                                        <p style={{ color: '#051F50' }}>College/School :</p>
+                                                        {/* <p>Company name:</p> */}
+                                                        <p style={{ color: '#051F50' }}>Degree:</p>
+                                                        <p style={{ color: '#051F50' }}>Field of study:</p>
+
+                                                        <p style={{ color: '#051F50' }}>Start date:</p>
+
+                                                        <p style={{ color: '#051F50' }}>End date:</p>
+                                                        <p style={{ color: '#051F50' }}>Grade </p>
+                                                        <p style={{ color: '#051F50' }}>
+                                                        Description:
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="cards" style={{width:'450px'}}>
+                                                    <div className="tables">
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {item?.school ||
+                                                                'N/A'}
+                                                        </p>
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {item?.degree||
+                                                                'N/A'}
+                                                        </p>
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {item?.Field_study || 'N/A'}
+                                                        </p>
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {formatDate(item?. start_date) ||
+                                                                'N/A'}
+                                                        </p>
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {formatDate(item?.end_date) ||
+                                                                'N/A'}
+                                                        </p>
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {item?.grade
+                                                                ||'N/A'
+                                                               }
+                                                        </p>
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {item?.description ||
+                                                                'N/A'}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </>
+                                    )
+                                )}
                             </div>
                         </div>
                     </Row>

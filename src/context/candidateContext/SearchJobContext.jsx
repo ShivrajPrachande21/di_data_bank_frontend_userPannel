@@ -5,11 +5,11 @@ import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import BaseUrl from '../../services/BaseUrl';
 export const SearchJobContext = createContext();
-let id = '';
+
 export const SearchJobProvider = ({ children }) => {
-    const [data, setData] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const [visibleItems, setVisibleItems] = useState([]);
+    const [ currentPage,setCurrentPage]=useState(1)
 
     const fetch_search_job = async () => {
         const token = localStorage.getItem('Candidate_token');
@@ -19,42 +19,26 @@ export const SearchJobProvider = ({ children }) => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/getunappliedjob/${userId}`
+                    `${BaseUrl}candidate/getunappliedjob/${userId}/${currentPage}/${10}`
                 );
-
-                setData(response?.data || []); // Assuming the response has a jobs array
-                setVisibleItems(response?.data || []);
-                setHasMore(response.data?.length > 0);
-            } catch (error) {}
-        }
-    };
-
-    // Load more jobs function
-    const loadMoreJobs = async () => {
-        if (hasMore) {
-            // Fetch additional jobs (this assumes your API supports pagination)
-            const token = localStorage.getItem('Candidate_token');
-            if (!token) {
-                return;
+                let data=response?.data?.data;
+                let page=response?.data?.page
+                    const newItems = data.filter(
+                        (item) => !visibleItems.some((existingItem) => existingItem._id == item._id)
+                    );
+            
+                    setVisibleItems((prevCandidates) => [...prevCandidates, ...newItems]);
+                if (data.length ==10) {
+                        setHasMore(true);
+                        setCurrentPage(parseInt(page)+ 1); 
+                  
+                } else {
+                    setHasMore(false); 
+                }
             }
-
-            const decodedToken = jwtDecode(token);
-            const userId = decodedToken?._id;
-            try {
-                const response = await axios.get(
-                    `${BaseUrl}candidate/getunappliedjob/${userId}?offset=${data.length}`
-                );
-
-                const newJobs = response?.data || [];
-                setData(prevData => [...prevData, ...newJobs]); // Append new jobs to the existing data
-                if (newJobs.length === 0) {
-                    setHasMore(false);
-                } // Update hasMore based on the new jobs fetched
-
-                console.log('Loading more jobs...');
-            } catch (error) {
-                console.error('Error loading more jobs:', error);
-            }
+            catch (err) {
+                setHasMore(false);
+            } 
         }
     };
 
@@ -76,6 +60,7 @@ export const SearchJobProvider = ({ children }) => {
             } catch (error) {}
         }
     };
+
     const save_job = async jobId => {
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
@@ -98,15 +83,13 @@ export const SearchJobProvider = ({ children }) => {
     return (
         <SearchJobContext.Provider
             value={{
-                data,
                 fetch_search_job,
                 applyTo_job,
                 save_job,
                 hasMore,
-                loadMoreJobs,
-                setData,
                 visibleItems,
-                setVisibleItems
+                setVisibleItems,
+                currentPage,setCurrentPage
             }}
         >
             {children}

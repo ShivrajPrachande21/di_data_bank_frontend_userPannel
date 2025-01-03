@@ -42,6 +42,9 @@
 .cardsFlex {
     display: flex;
 }
+.cards{
+    width: 173px;
+}
 
 .tables-right {
     color: black;

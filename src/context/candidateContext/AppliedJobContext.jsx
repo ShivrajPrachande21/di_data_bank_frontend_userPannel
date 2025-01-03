@@ -9,9 +9,11 @@ import { useParams } from 'react-router-dom';
 export const AppliedJobContext = createContext();
 
 export const AppliedJobProvider = ({ children }) => {
-    const [appliedJobData, setAppliedJobData] = useState(null);
-    const [savedJobData, setsavedJobData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [appliedJobData, setAppliedJobData] = useState([]);
+    const [savedJobData, setsavedJobData] = useState([]);
+     const [hasMore, setHasMore] = useState(true);
+    const [currentPage,setCurrentPage]=useState(1)
+    
     const fetch_applied_job = async () => {
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
@@ -21,13 +23,28 @@ export const AppliedJobProvider = ({ children }) => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/appliedjob/${userId}`
+                    `${BaseUrl}candidate/appliedjob/${userId}/${currentPage}/${10}`
                 );
-
-                setAppliedJobData(response?.data);
-            } catch (error) {}
+                let data=response?.data.data
+                let page=response?.data.page
+                let newItem=data.filter(
+                    (item) => !appliedJobData.some((existingItem) => existingItem._id == item._id)
+                );
+                setAppliedJobData((prevCandidates) => [...prevCandidates, ...newItem]);
+                if (data.length ==10) {
+                    setHasMore(true);
+                    setCurrentPage(parseInt(page)+ 1); 
+              
+            } else {
+                setHasMore(false); 
+            }
+            } catch (error) {
+                setHasMore(false)
+            }
         }
     };
+   
+
 
     const fetchSavedJob = async () => {
         const token = localStorage.getItem('Candidate_token');
@@ -40,9 +57,25 @@ export const AppliedJobProvider = ({ children }) => {
                 const response = await axios.get(
                     `${BaseUrl}/candidate/savedjob/${userId}`
                 );
+                let data=response?.data?.data;
+                let page=response?.data?.page;
                 setsavedJobData(response?.data);
-                console.log('Saved  Jobs', response?.data);
-            } catch (error) {}
+
+                let newItem=data.filter(
+                    (item) => !savedJobData.some((existingItem) => existingItem._id == item._id)
+                );
+                setsavedJobData((prevCandidates) => [...prevCandidates, ...newItem]);
+                if (data.length ==10) {
+                    setHasMore(true);
+                    setCurrentPage(parseInt(page)+ 1); 
+              
+            } else {
+                setHasMore(false); 
+            }
+                
+            } catch (error) {
+                setHasMore(false)
+            }
         }
     };
 
@@ -94,9 +127,14 @@ export const AppliedJobProvider = ({ children }) => {
         <AppliedJobContext.Provider
             value={{
                 appliedJobData,
+                setAppliedJobData,
                 fetch_applied_job,
+                setCurrentPage,
+                currentPage,
+                hasMore, setHasMore,
                 fetchSavedJob,
                 savedJobData,
+                setsavedJobData,
                 reject_Offered_letter,
                 Accept_offer_lettter
             }}

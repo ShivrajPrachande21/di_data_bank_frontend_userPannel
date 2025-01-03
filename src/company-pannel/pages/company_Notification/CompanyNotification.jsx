@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import blackCross from '../../../assets/images/blackCross.png';
 import Cross from '../../../assets/images/Cross.png';
 const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://localhost:4000');
 const CompanyNotification = ({ handleClose }) => {
     const { handleCloseHire, showHire, SetShowHire, show, setShow } =
         useContext(HireCandidateContext);
@@ -16,7 +17,7 @@ const CompanyNotification = ({ handleClose }) => {
     const [ShortlistNot, SetShortlistNot] = useState([]);
     const [candidateToken, setCandidateToken] = useState('');
     const [changeButton, setChangeButton] = useState(null);
-
+    const navigate=useNavigate();
     useEffect(() => {
         const render = localStorage.getItem('render');
         if (render == 'company') {
@@ -178,6 +179,13 @@ const CompanyNotification = ({ handleClose }) => {
         }
     };
 
+    const handleCloseShortlistAndView=async(jobId)=>{
+        socket.emit('userviewshortlist', candidateToken, jobId);
+        socket.on('candidateview', data => {});
+        setShow(false);
+        localStorage.setItem('job_id',jobId);
+    }
+
     useEffect(() => {
         const render = localStorage.getItem('render');
 
@@ -259,9 +267,9 @@ const CompanyNotification = ({ handleClose }) => {
                             }}
                         >
                             Congratulations! Your profile has been shortlisted!
-                            {/* <Link
-                                to="/candidate-dashboard/applied-job/applied-jobs"
-                                onClick={() => handleCloseShortlist(item?._id)}
+                            <Link
+                             to={`/candidate-dashboard/viewAppliedJobDetails/${item?._id}`}
+                                onClick={() => handleCloseShortlistAndView(item?._id)}
                                 style={{
                                     color: '#3B96E1',
                                     fontSize: '0.8rem',
@@ -270,7 +278,7 @@ const CompanyNotification = ({ handleClose }) => {
                                 }}
                             >
                                 View
-                            </Link> */}
+                            </Link>
                         </p>
                     </>
                 ))}

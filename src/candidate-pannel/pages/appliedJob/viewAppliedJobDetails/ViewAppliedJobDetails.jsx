@@ -121,7 +121,7 @@ const ViewAppliedJobDetails = () => {
                         <div className="applied-skilss">
                             {appliedJob?.jobDescription?.skills.map(
                                 (item, index) => (
-                                    <p>{item}</p>
+                                    <p key={index}>{item}</p>
                                 )
                             )}
                         </div>

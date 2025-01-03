@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
 import { toast } from 'react-toastify';
+//const socket = io('http://localhost:4000');
 const socket = io('http://65.20.91.47:4000');
 const Chatpage = () => {
     const { id } = useParams();
@@ -78,9 +79,11 @@ const Chatpage = () => {
             const data = {
                 refference_id: companyId,
                 Issue_id: id,
-                message: message
+                message: message,
+                User_view:true
             };
             socket.emit('newMessage', data);
+            socket.emit('adminMessagNot');
             setMessage('');
             settimeStamp(timestamps);
         }

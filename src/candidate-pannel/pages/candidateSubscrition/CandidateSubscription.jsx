@@ -305,7 +305,7 @@ const CandidateSubscription = () => {
                                                             alt=""
                                                             width="14px"
                                                         />
-                                                        Customer Support
+                                                        Email support and chat support
                                                     </li>
                                                 </ul>
                                             ) : (

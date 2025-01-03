@@ -165,11 +165,10 @@
 }
 
 .custom-select-company {
-    width: 100px;
     font-size: 0.8rem;
     position: absolute;
     right: 6px;
-    top: 3px;
+    top: 10px;
 }
 .custom-select-company select:hover {
     border-color: rgb(0, 149, 255);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import { jwtDecode } from 'jwt-decode';
 import './dashboard.css';
@@ -21,7 +21,6 @@ const Dashboard = () => {
     const yearEndISO = moment().endOf('year').toISOString();
     const navigate = useNavigate();
     const loacate = useLocation();
-    const startRef = useRef();
     const [PAN, setPAN] = useState(null);
     const [isValid, setIsValid] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
@@ -30,30 +29,30 @@ const Dashboard = () => {
     const [startDate, setStartDate] = useState(yearStartISO);
     const [EndDate, setEndDate] = useState(yearEndISO);
 
-    const handleVerifyJob = e => {
-        e.preventDefault();
-        VerifyJob(PAN);
-    };
+    // const handleVerifyJob = e => {
+    //     e.preventDefault();
+    //     VerifyJob(PAN);
+    // };
 
-    const validatePAN = pan => {
-        const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-        return panRegex.test(pan);
-    };
+    // const validatePAN = pan => {
+    //     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    //     return panRegex.test(pan);
+    // };
 
     // onChange handler for the input field
-    const handleChange = e => {
-        const value = e.target.value.toUpperCase(); // Convert input to uppercase
-        setPAN(value);
+    // const handleChange = e => {
+    //     const value = e.target.value.toUpperCase(); // Convert input to uppercase
+    //     setPAN(value);
 
-        // Validate the PAN and update validation status and error message
-        if (value === '') {
-            setErrorMessage(''); // Clear error message if input is empty
-        } else if (validatePAN(value)) {
-            setErrorMessage(''); // PAN is valid, no error message
-        } else {
-            setErrorMessage('PAN number format is invalid.'); // Set error message
-        }
-    };
+    //     // Validate the PAN and update validation status and error message
+    //     if (value === '') {
+    //         setErrorMessage(''); // Clear error message if input is empty
+    //     } else if (validatePAN(value)) {
+    //         setErrorMessage(''); // PAN is valid, no error message
+    //     } else {
+    //         setErrorMessage('PAN number format is invalid.'); // Set error message
+    //     }
+    // };
 
     const getSelectedData = async () => {
         const token = localStorage.getItem('companyToken');
@@ -64,29 +63,29 @@ const Dashboard = () => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}company/subscription/count/${userId}/${SelectedData}`
+                    `${BaseUrl}company/subscription/count/${userId}/${startDate}/${EndDate}`
                 );
                 setDashboardData(response?.data);
             } catch (error) {}
         }
     };
-    const handlSelectChange = async e => {
-        const selectedText = e.target.value;
-        setSelectedData(selectedText);
-        const token = localStorage.getItem('companyToken');
-        if (!token) {
-            return;
-        } else {
-            const decodedToken = jwtDecode(token);
-            const userId = decodedToken?._id;
-            try {
-                const response = await axios.get(
-                    `${BaseUrl}company/subscription/count/${userId}/${selectedText}`
-                );
-                setDashboardData(response?.data);
-            } catch (error) {}
-        }
-    };
+    // const handlSelectChange = async e => {
+    //     const selectedText = e.target.value;
+    //     setSelectedData(selectedText);
+    //     const token = localStorage.getItem('companyToken');
+    //     if (!token) {
+    //         return;
+    //     } else {
+    //         const decodedToken = jwtDecode(token);
+    //         const userId = decodedToken?._id;
+    //         try {
+    //             const response = await axios.get(
+    //                 `${BaseUrl}company/subscription/count/${userId}/${selectedText}`
+    //             );
+    //             setDashboardData(response?.data);
+    //         } catch (error) {}
+    //     }
+    // };
 
     // const getSelectedData = async () => {
     //     const token = localStorage.getItem('Candidate_token');
@@ -108,16 +107,16 @@ const Dashboard = () => {
     //     }
     // };
 
-    const handleStartChange = async e => {
+    const handleStartChange = e => {
         const date = new Date(e.target.value);
         const isoDate = date.toISOString();
         setStartDate(isoDate);
+        console.log('startDate', startDate);
     };
-    const handleEndChange = async e => {
+    const handleEndChange = e => {
         const date = new Date(e.target.value);
         const isoDate = date.toISOString();
         setEndDate(isoDate);
-
         //  getSelectedData();
     };
     useEffect(() => {
@@ -140,9 +139,7 @@ const Dashboard = () => {
             navigate('/login');
         }
     }
-    const handleStartDatePick = () => {
-        startRef.current.ShowPicker(); // This will bring up the date picker
-    };
+
     useEffect(() => {
         const fun = async () => {
             await getSelectedData();
@@ -153,10 +150,6 @@ const Dashboard = () => {
 
     return (
         <div>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Dashboard</title>
-            </Helmet>
             <>
                 {/*First Row Card */}
                 <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
@@ -166,64 +159,48 @@ const Dashboard = () => {
                             <h3>Total Job Created</h3>
                             <p>{dasboardData?.data?.totalJobs || 0}</p>
                         </div>
-                        <div className="custom-select-company">
+                        <div
+                            className="custom-select-company"
+                            style={{ display: 'flex', gap: '5px' }}
+                        >
                             <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    marginBottom: '6px',
-                                    border: '1.5px solid gray',
-                                    padding: '2px',
-                                    borderRadius: '4px'
-                                }}
+                                className="custom-select-sub-date"
+                                style={{ display: 'flex', gap: '5px' }}
                             >
-                                start
+                                <p>From: </p>
                                 <input
                                     type="date"
                                     style={{
-                                        width: '18px',
+                                        width: '24px',
+                                        marginTop: '-3px',
+                                        height: '25px'
+                                    }}
+                                    onChange={handleStartChange}
+                                />
+                            </div>
+                            <div
+                                className="custom-select-sub-date"
+                                style={{ display: 'flex', gap: '5px' }}
+                            >
+                                <p>To: </p>
+                                <input
+                                    type="date"
+                                    style={{
+                                        width: '24px',
+                                        marginTop: '-3px',
+                                        height: '25px'
+                                    }}
+                                    onChange={handleEndChange}
+                                />
+                            </div>
+                        </div>
 
-                                        background: '#3B96E1',
-                                        border: 'none'
-                                    }}
-                                    onChange={e => handleStartChange(e)}
-                                />
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    border: '1.5px solid gray',
-                                    padding: '2px',
-                                    borderRadius: '4px'
-                                }}
-                            >
-                                End
-                                <input
-                                    type="date"
-                                    style={{
-                                        width: '18px',
-                                        border: 'none',
-                                        background: '#3B96E1'
-                                    }}
-                                    onChange={e => handleEndChange(e)}
-                                />
-                            </div>
-                            {/* <Form.Select
-                                    aria-label="Default select example"
-                                    size="sm"
-                                    className="selecte"
-                                    onChange={e => handlSelectChange(e)}
-                                >
-                                    <option>select</option>
-                                    <option value="All">All</option>
-                                    <option value="Today">Today</option>
-                                    <option value="Thisweek">This Week</option>
-                                    <option value="Thismonth">This Month</option>
-                                    <option value="Thisyear">This Year</option>
-                                </Form.Select> */}
+                        <div
+                            className="serach-icon"
+                            onClick={getSelectedData}
+                            style={{ marginTop: '20px', marginLeft: '50px' }}
+                        >
+                            <span>Filter</span>
                         </div>
                     </div>
 
@@ -356,7 +333,7 @@ const Dashboard = () => {
                         </div>
                         <div className="col-12 ">
                             <p className="only">
-                                {/* Only for Premium/Enterprise - UPGRADE */}
+                                {/* {/ Only for Premium/Enterprise - UPGRADE /} */}
                             </p>
                             <p className="ends-on">
                                 {data?.subscriptionData[0]?.expiresAt}

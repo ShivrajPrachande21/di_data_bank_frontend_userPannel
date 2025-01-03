@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { jwtDecode } from 'jwt-decode';
-import { Button, Col, Row, Image, Form } from 'react-bootstrap';
+import { Button, Col, Row, Image, Form,Spinner } from 'react-bootstrap';
 import './searchjob.css';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import whiteSeacrh from '../../../assets/images/whiteSeacrh.png';
@@ -16,18 +16,14 @@ import { CandidateProfileContext } from '../../../context/candidateContext/Candi
 import { toast } from 'react-toastify';
 import ProfileCompletionModal from '../ProfileAlert/ProfileCompletion';
 const SearchJob = () => {
-    const locate = useLocation();
-
     const {
-        data,
         fetch_search_job,
         applyTo_job,
         save_job,
-        hasMore,
-        loadMoreJobs,
-        setData,
         visibleItems,
-        setVisibleItems
+        setVisibleItems,
+        setCurrentPage,
+        hasMore
     } = useContext(SearchJobContext);
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
@@ -69,7 +65,6 @@ const SearchJob = () => {
                     SearchData
                 );
                 if (response?.status == 200 || response?.status == 201) {
-                    setData(response?.data);
                     setVisibleItems(response?.data);
                     Setloading(false);
                 }
@@ -110,7 +105,6 @@ const SearchJob = () => {
     const ApplyTOJob = id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
             setShowModal(true);
-            //toast.error('Please complete your profile before apply jobs.');
             return;
         }
         applyTo_job(id);
@@ -125,27 +119,17 @@ const SearchJob = () => {
         const render = localStorage.getItem('render');
 
         if (render == 'candidate') {
-            fetch_search_job();
+            if(visibleItems.length==0){
+                fetch_search_job();
+            }
+            rendering();
             fetchCandidateProfile();
             const token = localStorage.getItem('Candidate_token');
             const decodedToken = jwtDecode(token);
             const userId = decodedToken?._id;
             SetID(userId);
         }
-    }, [locate]);
-
-    // Animation code
-
-    // When the data changes, update the visibleItems state with delay
-    useEffect(() => {
-        if (data && data.length > 0) {
-            data.forEach((item, index) => {
-                setTimeout(() => {
-                    setVisibleItems(data); // Add item with delay
-                }, index * 300); // 300ms delay for sequential fade-in
-            });
-        }
-    }, [locate]);
+    }, []);
 
     function rendering() {
         const render = localStorage.getItem('render');
@@ -162,9 +146,14 @@ const SearchJob = () => {
         }
     }
 
-    useEffect(() => {
-        rendering();
-    }, []);
+
+    useEffect(()=>{
+        return () => {
+            setVisibleItems([]);
+            setCurrentPage(1)
+        };
+    },[])
+    
     return (
         <>
             <div className="searchJob">
@@ -301,8 +290,17 @@ const SearchJob = () => {
                 </Form>
 
                 <Row style={{ marginTop: '92px' }}>
-                    <p className="searchresult">Search Result:{data?.length}</p>
+                    <p className="searchresult">Search Result:{visibleItems.length}</p>
+                    <InfiniteScroll
+                                dataLength={visibleItems&&visibleItems.length}
+                                next={fetch_search_job}
+                                hasMore={hasMore} 
+                                loader={<div style={{textAlign:'center'}}><Spinner size='sm' variant='primary' /></div>} 
+                                endMessage={<div style={{textAlign:'center'}}><Spinner size='sm' variant='primary' /></div>}
+                                height={450}
+                            >
                     <div className="search-job-card-div">
+                   
                         {loading ? (
                             'loading...'
                         ) : visibleItems.length == 0 ? (
@@ -310,6 +308,7 @@ const SearchJob = () => {
                                 <span>No matching jobs found.</span>
                             </div>
                         ) : (
+                              
                             visibleItems?.map((item, index) => (
                                 <div className="card-job search" key={index}>
                                     <div
@@ -560,8 +559,11 @@ const SearchJob = () => {
                                     </div>
                                 </div>
                             ))
+                           
                         )}
+                      
                     </div>
+                    </InfiniteScroll>
                 </Row>
             </div>
             {showModal && (

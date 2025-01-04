@@ -10,13 +10,16 @@ import { CandidateSupportContext } from '../../../../context/candidateContext/Ca
 
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
+import { f } from 'html2pdf.js';
 const SendMails = () => {
-    const { mailModelShow,setMailModelShow } =
-            useContext(CandidateSupportContext);
+    const { mailModelShow, setMailModelShow } = useContext(
+        CandidateSupportContext
+    );
     const [loading, setLoading] = useState(false);
     const [FileData, setFileData] = useState(null);
+    const [SeacrhInput, SetSeacrhInput] = useState('');
     const [formData, setFormData] = useState({
-         Subject : '',
+        Subject: '',
         Message: '',
         file: null
     });
@@ -45,7 +48,12 @@ const SendMails = () => {
     // Handle form submission
     const handleSubmit = async e => {
         e.preventDefault();
-
+        setLoading(true);
+        if (!formData?.file) {
+            toast.error('please uplaod File');
+            setLoading(false);
+            return;
+        }
         try {
             // Prepare form data
             const formDataToSend = new FormData();
@@ -74,9 +82,9 @@ const SendMails = () => {
             if (response.status == 200 || response.status == 201) {
                 toast.success('Mail Send Successfully');
                 setMailModelShow(prev => !prev);
-
+                setLoading(false);
                 setFormData({
-                     Subject : '',
+                    Subject: '',
                     Message: '',
                     file: null
                 });
@@ -86,6 +94,7 @@ const SendMails = () => {
         } catch (error) {
             const customError = error?.response?.data?.error;
             toast.error(customError);
+            setLoading(false);
         }
     };
 
@@ -122,7 +131,7 @@ const SendMails = () => {
                         type="text"
                         name="Subject"
                         required
-                        value={formData.Subject }
+                        value={formData.Subject}
                         onChange={handleChange}
                         placeholder="Enter subject"
                         style={{ background: '#F5F5F5' }}
@@ -169,14 +178,25 @@ const SendMails = () => {
                     onChange={handleFileChange}
                 />
 
-                <Button
-                    variant="primary"
-                    type="submit"
-                    className="mt-3"
-                    style={{ width: '100%', background: '#3B96E1' }}
-                >
-                    Submit
-                </Button>
+                {loading ? (
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="mt-3"
+                        style={{ width: '100%', background: '#3B96E1' }}
+                    >
+                        Loading
+                    </Button>
+                ) : (
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="mt-3"
+                        style={{ width: '100%', background: '#3B96E1' }}
+                    >
+                        Submit
+                    </Button>
+                )}
             </Form>
         </div>
     );

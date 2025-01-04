@@ -45,6 +45,12 @@ function AddCandidateIssue() {
     const handleSubmit = async e => {
         e.preventDefault();
 
+        // Check if the file is present
+        if (!formData?.file) {
+            toast.error('Please Upload File'); // Show toast message
+            return; // Stop execution if no file is provided
+        }
+
         try {
             // Prepare form data
             const formDataToSend = new FormData();
@@ -59,7 +65,7 @@ function AddCandidateIssue() {
             const decodedToken = jwtDecode(token);
             const userId = decodedToken?._id;
 
-            // Make sure ID exists
+            // Ensure ID exists
             if (!userId) throw new Error('Invalid token, no ID found');
 
             // Send the form data via POST request
@@ -74,13 +80,14 @@ function AddCandidateIssue() {
                 }
             );
 
-            // Check if the response status is OK
+            // Check response status
             if (response.status === 200) {
                 console.log('Issue successfully submitted:', response.data);
                 toast.success('Issue Added Successfully');
                 setModalShow(prev => !prev);
                 await fetch_Candidate_issue();
 
+                // Reset form fields
                 setFormData({
                     Issue_type: '',
                     description: '',
@@ -88,11 +95,12 @@ function AddCandidateIssue() {
                 });
             } else {
                 console.error('Unexpected response status:', response.status);
-                toast.error('Failed to ad issue');
+                toast.error('Failed to add issue');
             }
         } catch (error) {
             console.error('Error submitting the form:', error.message);
-            const customError = error?.response?.data?.error;
+            const customError =
+                error?.response?.data?.error || 'An error occurred';
             toast.error(customError);
         }
     };

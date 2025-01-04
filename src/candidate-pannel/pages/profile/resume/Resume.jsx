@@ -1,15 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './resume.css';
 import html2pdf from 'html2pdf.js';
-import { Button, Col, Form, InputGroup, Row, Spinner } from 'react-bootstrap';
+import {
+    Button,
+    Col,
+    Form,
+    InputGroup,
+    Modal,
+    Row,
+    Spinner
+} from 'react-bootstrap';
 import axios from 'axios';
 import AiSearch from '../../../../assets/images/AiSearch.png';
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
+import { useNavigate } from 'react-router-dom';
 const Resume = () => {
     const { CandidateProfile } = useContext(CandidateProfileContext);
     const [resume, setResume] = useState(null);
     const [loading, setLoading] = useState(false);
-
+    const [smShow, setSmShow] = useState(false);
+    const navigate = useNavigate();
     // Generate Resume from Backend
     const GenerateResume = async () => {
         const custom_id = CandidateProfile?.data?.custom_id;
@@ -18,7 +28,7 @@ const Resume = () => {
             const response = await axios.post(
                 'http://65.20.91.47:5000/pythonapi/generate_resume',
                 {
-                    custom_id:custom_id
+                    custom_id: custom_id
                 }
             );
             setResume(response.data);
@@ -52,6 +62,9 @@ const Resume = () => {
         html2pdf().set(options).from(resumeElement).save();
     };
 
+    const NavigateToSavedJobs = () => {
+        navigate('/candidate-dashboard/applied-job/saved-jobs');
+    };
     return (
         <div className="resume">
             <div className="resume-view-section">
@@ -91,7 +104,7 @@ const Resume = () => {
                     <div dangerouslySetInnerHTML={{ __html: resume }} />
                 )}
             </div>
-            {/* <Row>
+            <Row>
                 <Col md={2}></Col>
                 <Col md={8}>
                     <InputGroup style={{ width: '100%' }}>
@@ -122,7 +135,7 @@ const Resume = () => {
                     </InputGroup>
                 </Col>
                 <Col md={2}></Col>
-            </Row> */}
+            </Row>
             <div className="download-candidate-resume mt-2">
                 <Button size="sm" onClick={GenerateResume}>
                     {loading ? (
@@ -136,8 +149,43 @@ const Resume = () => {
                 <Button size="sm" onClick={downloadResume}>
                     Download
                 </Button>
-                <Button size="sm">Apply</Button>
+                <Button size="sm" onClick={() => setSmShow(true)}>
+                    Apply
+                </Button>
             </div>
+
+            <Modal
+                size="sm"
+                show={smShow}
+                onHide={() => setSmShow(false)}
+                aria-labelledby="example-modal-sizes-title-sm"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title
+                        id="example-modal-sizes-title-sm"
+                        style={{ fontSize: '1rem' }}
+                    >
+                        Would you like to apply for saved job
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ display: 'flex', gap: '10px' }}>
+                    <Button
+                        size="sm"
+                        onClick={() => setSmShow(false)}
+                        style={{ width: '50%' }}
+                    >
+                        No
+                    </Button>
+                    <Button
+                        size="sm"
+                        onClick={NavigateToSavedJobs}
+                        style={{ width: '50%' }}
+                    >
+                        Yes
+                    </Button>
+                </Modal.Body>
+            </Modal>
         </div>
     );
 };

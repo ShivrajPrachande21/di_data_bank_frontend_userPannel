@@ -59,6 +59,7 @@ import Resume from '../candidate-pannel/pages/profile/resume/Resume';
 import AccessManagement from '../company-pannel/pages/accessManagement/AccessManagement';
 import AddNewRole from '../company-pannel/pages/accessManagement/addNewRole/AddNewRole';
 import AddNewUser from '../company-pannel/pages/accessManagement/addNewUser/AddNewUser';
+import SupportCandidateNav from '../candidate-pannel/pages/candidateSupport/SupportCandidateNav';
 
 const router = createBrowserRouter([
     {
@@ -252,7 +253,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'support-candidate',
-                element: <CandidateSupport />
+                element: <SupportCandidateNav />
             },
             {
                 path: 'candidate-chat/:id',

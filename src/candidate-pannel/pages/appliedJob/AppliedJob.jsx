@@ -1,16 +1,29 @@
-import React, { useEffect } from 'react';
-import { Row, Button, Col } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import { Row, Button, Col, Form } from 'react-bootstrap';
 import './appliedjob.css';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { AppliedJobContext } from '../../../context/candidateContext/AppliedJobContext';
 const AppliedJob = () => {
+    const { fetch_applied_job } = useContext(AppliedJobContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const [seletedValue, setSelectedValue] = useState('All');
 
     const handleNavigate = data => {
         if (data === 'applied-jobs') {
             navigate('applied-jobs');
         } else if (data === 'saved-jobs') {
             navigate('saved-jobs');
+        }
+    };
+    const handleSelectchange = async e => {
+        navigate('/candidate-dashboard/applied-job/applied-jobs');
+        const { value } = e.target;
+
+        setSelectedValue(value);
+
+        if (value) {
+            await fetch_applied_job(value);
         }
     };
 
@@ -20,13 +33,18 @@ const AppliedJob = () => {
             return {
                 background: '#B4DDFF',
                 color: '#051F50',
-                border: 'none'
+                border: 'none',
+                width: '200px',
+
+                border: '0.5px solid #5baaff',
+                width: '200px'
             };
         } else {
             return {
                 background: 'white',
                 color: '#AEAEAE',
-                border: 'none'
+                border: 'none',
+                width: '200px'
             };
         }
     };
@@ -46,7 +64,7 @@ const AppliedJob = () => {
     }
 
     useEffect(() => {
-        rendering();
+        // rendering();
     }, []);
     return (
         <div className="applied-job">
@@ -55,13 +73,39 @@ const AppliedJob = () => {
                     <div className="applied-btns">
                         <Button
                             size="sm"
-                            style={getButtonStyle('applied-jobs')}
+                            style={{ background: 'none', border: 'none' }}
                             onClick={() => handleNavigate('applied-jobs')}
                         >
-                            Applied Jobs{' '}
+                            <Form.Select
+                                style={{
+                                    border: '0.5px solid #5baaff',
+                                    width: '200px',
+                                    fontSize: '0.8rem'
+                                }}
+                                aria-label="Default select example"
+                                onChange={e => handleSelectchange(e)}
+                            >
+                                <option value="All">All</option>
+
+                                <option value="ApplicationSend">
+                                    Application Send
+                                </option>
+                                <option value="ApplicationShortlist">
+                                    Application Shortlist
+                                </option>
+                                <option value="JobOfferReject">
+                                    JobOffer Reject
+                                </option>
+                                <option value="Hired">Hired</option>
+                                <option value="ApplicationProcessing">
+                                    Application Processing
+                                </option>
+                            </Form.Select>
                         </Button>
+
                         <Button
                             size="sm"
+                            // style={{ width: '200px', background: '#5baaff' }}
                             style={getButtonStyle('saved-jobs')}
                             onClick={() => handleNavigate('saved-jobs')}
                         >

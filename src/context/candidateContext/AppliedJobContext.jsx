@@ -11,10 +11,11 @@ export const AppliedJobContext = createContext();
 export const AppliedJobProvider = ({ children }) => {
     const [appliedJobData, setAppliedJobData] = useState([]);
     const [savedJobData, setsavedJobData] = useState([]);
-     const [hasMore, setHasMore] = useState(true);
-    const [currentPage,setCurrentPage]=useState(1)
-    
-    const fetch_applied_job = async () => {
+    const [hasMore, setHasMore] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const fetch_applied_job = async filter => {
+        console.log('slected ', filter);
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
             return;
@@ -23,28 +24,31 @@ export const AppliedJobProvider = ({ children }) => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/appliedjob/${userId}/${currentPage}/${10}/Hired`
+                    `${BaseUrl}candidate/appliedjob/${userId}/${currentPage}/${10}/${filter}`
                 );
-                let data=response?.data.data
-                let page=response?.data.page
-                let newItem=data.filter(
-                    (item) => !appliedJobData.some((existingItem) => existingItem._id == item._id)
+                let data = response?.data.data;
+                let page = response?.data.page;
+                let newItem = data.filter(
+                    item =>
+                        !appliedJobData.some(
+                            existingItem => existingItem._id == item._id
+                        )
                 );
-                setAppliedJobData((prevCandidates) => [...prevCandidates, ...newItem]);
-                if (data.length ==10) {
+                setAppliedJobData(prevCandidates => [
+                    ...prevCandidates,
+                    ...newItem
+                ]);
+                if (data.length == 10) {
                     setHasMore(true);
-                    setCurrentPage(parseInt(page)+ 1); 
-              
-            } else {
-                setHasMore(false); 
-            }
+                    setCurrentPage(parseInt(page) + 1);
+                } else {
+                    setHasMore(false);
+                }
             } catch (error) {
-                setHasMore(false)
+                setHasMore(false);
             }
         }
     };
-   
-
 
     const fetchSavedJob = async () => {
         const token = localStorage.getItem('Candidate_token');
@@ -57,24 +61,28 @@ export const AppliedJobProvider = ({ children }) => {
                 const response = await axios.get(
                     `${BaseUrl}/candidate/savedjob/${userId}`
                 );
-                let data=response?.data?.data;
-                let page=response?.data?.page;
+                let data = response?.data?.data;
+                let page = response?.data?.page;
                 setsavedJobData(response?.data);
 
-                let newItem=data.filter(
-                    (item) => !savedJobData.some((existingItem) => existingItem._id == item._id)
+                let newItem = data.filter(
+                    item =>
+                        !savedJobData.some(
+                            existingItem => existingItem._id == item._id
+                        )
                 );
-                setsavedJobData((prevCandidates) => [...prevCandidates, ...newItem]);
-                if (data.length ==10) {
+                setsavedJobData(prevCandidates => [
+                    ...prevCandidates,
+                    ...newItem
+                ]);
+                if (data.length == 10) {
                     setHasMore(true);
-                    setCurrentPage(parseInt(page)+ 1); 
-              
-            } else {
-                setHasMore(false); 
-            }
-                
+                    setCurrentPage(parseInt(page) + 1);
+                } else {
+                    setHasMore(false);
+                }
             } catch (error) {
-                setHasMore(false)
+                setHasMore(false);
             }
         }
     };
@@ -100,7 +108,7 @@ export const AppliedJobProvider = ({ children }) => {
         }
     };
 
-    const Accept_offer_lettter=async(jobId)=>{
+    const Accept_offer_lettter = async jobId => {
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
             return;
@@ -118,7 +126,7 @@ export const AppliedJobProvider = ({ children }) => {
                 toast.error('error');
             }
         }
-    }
+    };
 
     useEffect(() => {
         fetchSavedJob();
@@ -131,7 +139,8 @@ export const AppliedJobProvider = ({ children }) => {
                 fetch_applied_job,
                 setCurrentPage,
                 currentPage,
-                hasMore, setHasMore,
+                hasMore,
+                setHasMore,
                 fetchSavedJob,
                 savedJobData,
                 setsavedJobData,

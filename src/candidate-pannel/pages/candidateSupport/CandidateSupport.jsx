@@ -3,17 +3,31 @@ import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 const socket = io('http://65.20.91.47:4000');
 //const socket=io('http://localhost:4000');
-import { Button, Modal, Row, Table,OverlayTrigger, Tooltip  } from 'react-bootstrap';
+import {
+    Button,
+    Modal,
+    Row,
+    Table,
+    OverlayTrigger,
+    Tooltip,
+    Col
+} from 'react-bootstrap';
 import SearchIconS from '../../../assets/images/SearchIconS.png';
 import chatIcon from '../../../assets/images/chatIcon.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CandidateSupportContext } from '../../../context/candidateContext/CandidateSupportContext';
 import AddCandidateIssue from './addCandidateIssue/AddCandidateIssue';
-import Sendmails from './Sendmail/SendMail'
+import Sendmails from './Sendmail/SendMail';
 
 const CandidateSupport = () => {
-    const { supportData, fetch_Candidate_issue, modalShow, setModalShow,mailModelShow,setMailModelShow } =
-        useContext(CandidateSupportContext);
+    const {
+        supportData,
+        fetch_Candidate_issue,
+        modalShow,
+        setModalShow,
+        mailModelShow,
+        setMailModelShow
+    } = useContext(CandidateSupportContext);
     const location = useLocation();
     const [SeacrhInput, SetSeacrhInput] = useState('');
     useEffect(() => {
@@ -58,61 +72,75 @@ const CandidateSupport = () => {
         rendering();
     }, []);
 
-
-        function RemovePath(imageUrl) {
-            if(imageUrl){
-                return imageUrl.split("\\").pop();
-            }
-            return "N/A"
+    function RemovePath(imageUrl) {
+        if (imageUrl) {
+            return imageUrl.split('\\').pop();
         }
+        return 'N/A';
+    }
 
-        function toCamelCase_Name(input) {
-            if(typeof input=='string'){
-            return input?input
-              .toLowerCase()
-              .split(' ')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' '):null
-            }else{
-              return input;
-            }
-          }
+    function toCamelCase_Name(input) {
+        if (typeof input == 'string') {
+            return input
+                ? input
+                      .toLowerCase()
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
+                : null;
+        } else {
+            return input;
+        }
+    }
 
+    const SendMail = props => (
+        <Tooltip id="save-tooltip" {...props}>
+            Click this button to send an email directly to the support team.
+        </Tooltip>
+    );
 
-                const SendMail = (props) => (
-                  <Tooltip 
-                    id="save-tooltip" 
-                    {...props}
-                  >
-                   Click this button to send an email directly to the support team.
-                  </Tooltip>
-                );
-                
-                const AddIssue = (props) => (
-                  <Tooltip 
-                    id="save-tooltip" 
-                    {...props}
-                  >
-                 Click this button to report your issue directly to the support team.
-                  </Tooltip>
-                );
+    const AddIssue = props => (
+        <Tooltip id="save-tooltip" {...props}>
+            Click this button to report your issue directly to the support team.
+        </Tooltip>
+    );
 
-    useEffect(()=>{
+    const getButtonStyle = path => {
+        if (location.pathname.includes(path)) {
+            return {
+                background: '#B4DDFF',
+                color: '#051F50',
+                border: 'none',
+                width: '200px',
+
+                border: '0.5px solid #5baaff',
+                width: '200px'
+            };
+        } else {
+            return {
+                background: 'white',
+                color: '#AEAEAE',
+                border: 'none',
+                width: '200px'
+            };
+        }
+    };
+    useEffect(() => {
         const token = localStorage.getItem('Candidate_token');
-           const decodedToken = jwtDecode(token);
-                    const candidate_id = decodedToken?._id;
-                    socket.connect();
-                    socket.emit('ViewNewMessage',candidate_id);
-                    socket.emit('messageNotification',candidate_id);
-                    socket.on('disconnect', () => {
-                        console.log('User disconnected');
-                    });
-        
-                    return () => {
-                        socket.off('notification');
-                        socket.disconnect();
-                    };
-    },[])
+        const decodedToken = jwtDecode(token);
+        const candidate_id = decodedToken?._id;
+        socket.connect();
+        socket.emit('ViewNewMessage', candidate_id);
+        socket.emit('messageNotification', candidate_id);
+        socket.on('disconnect', () => {
+            console.log('User disconnected');
+        });
+
+        return () => {
+            socket.off('notification');
+            socket.disconnect();
+        };
+    }, []);
 
     return (
         <>
@@ -126,38 +154,20 @@ const CandidateSupport = () => {
             >
                 <AddCandidateIssue />
             </Modal>
-            <Modal
-                show={mailModelShow}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                onHide={() => setMailModelShow(false)}
-                dialogClassName="add-modal-width"
-            >
-                <Sendmails/>
-            </Modal>
-            <div className="support">
+
+            <div className="support mt-2">
                 <Row>
                     <div className="Search-support">
-                    <OverlayTrigger placement='bottom' overlay={AddIssue}>
-                        <Button
-                            size="sm"
-                            className="add-issue-btn"
-                            onClick={() => setModalShow(prev => !prev)}
-                        >
-                            Add Issue +
-                        </Button>
+                        <OverlayTrigger placement="bottom" overlay={AddIssue}>
+                            <Button
+                                size="sm"
+                                className="add-issue-btn"
+                                onClick={() => setModalShow(prev => !prev)}
+                            >
+                                Add Issue +
+                            </Button>
                         </OverlayTrigger>
-                        <OverlayTrigger placement="bottom" overlay={SendMail}>
-                        <Button
-                        style={{marginLeft:'12px'}}
-                            size="sm"
-                            className="add-issue-btn"
-                            onClick={()=>setMailModelShow(true)}
-                        >
-                            Send Mail
-                        </Button>
-                        </OverlayTrigger>
+
                         <div className="search-bar-suport">
                             <img src={SearchIconS} alt="" width="20px" />
                             <input
@@ -276,8 +286,7 @@ const CandidateSupport = () => {
                                             <p
                                                 style={{
                                                     color:
-                                                    item?.status ==
-                                                        'solved'
+                                                        item?.status == 'solved'
                                                             ? 'green'
                                                             : item?.status ===
                                                               'reject'

@@ -60,6 +60,7 @@ import AccessManagement from '../company-pannel/pages/accessManagement/AccessMan
 import AddNewRole from '../company-pannel/pages/accessManagement/addNewRole/AddNewRole';
 import AddNewUser from '../company-pannel/pages/accessManagement/addNewUser/AddNewUser';
 import SupportCandidateNav from '../candidate-pannel/pages/candidateSupport/SupportCandidateNav';
+import CompanySupportNav from '../company-pannel/pages/support/CompanySupportNav';
 
 const router = createBrowserRouter([
     {
@@ -195,7 +196,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'support',
-                element: <Support />
+                element: <CompanySupportNav />
             },
             {
                 path: 'credibility-establishment',

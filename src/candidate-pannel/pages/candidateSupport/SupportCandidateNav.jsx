@@ -5,6 +5,7 @@ import CandidateSupport from './CandidateSupport';
 
 import { CandidateSupportContext } from '../../../context/candidateContext/CandidateSupportContext';
 import MailTickets from './MailTickets/MailTickets';
+import { useSupport } from '../../../context/SupportContext';
 
 const SupportCandidateNav = () => {
     const { hide, setHide } = useContext(CandidateSupportContext);

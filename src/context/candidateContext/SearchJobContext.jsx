@@ -9,8 +9,8 @@ export const SearchJobContext = createContext();
 export const SearchJobProvider = ({ children }) => {
     const [hasMore, setHasMore] = useState(true);
     const [visibleItems, setVisibleItems] = useState([]);
-    const [ currentPage,setCurrentPage]=useState(1)
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [JobData, setJobdata] = useState();
     const fetch_search_job = async () => {
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
@@ -21,24 +21,28 @@ export const SearchJobProvider = ({ children }) => {
                 const response = await axios.get(
                     `${BaseUrl}candidate/getunappliedjob/${userId}/${currentPage}/${10}`
                 );
-                let data=response?.data?.data;
-                let page=response?.data?.page
-                    const newItems = data.filter(
-                        (item) => !visibleItems.some((existingItem) => existingItem._id == item._id)
-                    );
-            
-                    setVisibleItems((prevCandidates) => [...prevCandidates, ...newItems]);
-                if (data.length ==10) {
-                        setHasMore(true);
-                        setCurrentPage(parseInt(page)+ 1); 
-                  
+                let data = response?.data?.data;
+                let page = response?.data?.page;
+                const newItems = data.filter(
+                    item =>
+                        !visibleItems.some(
+                            existingItem => existingItem._id == item._id
+                        )
+                );
+
+                setVisibleItems(prevCandidates => [
+                    ...prevCandidates,
+                    ...newItems
+                ]);
+                if (data.length == 10) {
+                    setHasMore(true);
+                    setCurrentPage(parseInt(page) + 1);
                 } else {
-                    setHasMore(false); 
+                    setHasMore(false);
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 setHasMore(false);
-            } 
+            }
         }
     };
 
@@ -79,17 +83,29 @@ export const SearchJobProvider = ({ children }) => {
             } catch (error) {}
         }
     };
+    const getSingleJobDetails = async id => {
+        try {
+            const response = await axios.get(
+                `${BaseUrl}candidate/getjobdetails/${id}`
+            );
 
+            setJobdata(response?.data);
+        } catch (error) {}
+    };
     return (
         <SearchJobContext.Provider
             value={{
+                JobData,
+                setJobdata,
                 fetch_search_job,
                 applyTo_job,
                 save_job,
                 hasMore,
                 visibleItems,
                 setVisibleItems,
-                currentPage,setCurrentPage
+                currentPage,
+                setCurrentPage,
+                getSingleJobDetails
             }}
         >
             {children}

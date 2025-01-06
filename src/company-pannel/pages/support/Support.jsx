@@ -1,19 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import './support.css';
-import { Button, Modal, Row, Table,OverlayTrigger, Tooltip } from 'react-bootstrap';
+import {
+    Button,
+    Modal,
+    Row,
+    Table,
+    OverlayTrigger,
+    Tooltip
+} from 'react-bootstrap';
 import SearchIconS from '../../../assets/images/SearchIconS.png';
 import chatIcon from '../../../assets/images/chatIcon.png';
 import { useNavigate } from 'react-router-dom';
 import { useSupport } from '../../../context/SupportContext';
 import Addissue from './addIssue/Addissue';
 import SendMail from './Sendmail/SendMail';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 //const socket=io('http://localhost:4000');
 const socket = io('http://65.20.91.47:4000');
 
 const Support = () => {
-    const { fetch_all_issue, data, modalShow, setModalShow,mailModelShow,setMailModelShow } = useSupport();
+    const {
+        fetch_all_issue,
+        data,
+        modalShow,
+        setModalShow,
+        mailModelShow,
+        setMailModelShow,
+        setData
+    } = useSupport();
     const [SeacrhInput, SetSeacrhInput] = useState('');
 
     const navigate = useNavigate();
@@ -28,10 +43,11 @@ const Support = () => {
 
     const fiteredData = data?.filter(item => {
         const issueType = item?.Issue_type;
-        return typeof issueType =="string" && 
-               issueType.toLowerCase().includes(SeacrhInput.toLowerCase());
+        return (
+            typeof issueType == 'string' &&
+            issueType.toLowerCase().includes(SeacrhInput.toLowerCase())
+        );
     });
-    
 
     useEffect(() => {
         fetch_all_issue();
@@ -57,58 +73,59 @@ const Support = () => {
     }, []);
 
     function RemovePath(imageUrl) {
-        if(imageUrl){
-            return imageUrl.split("\\").pop();
+        if (imageUrl) {
+            return imageUrl.split('\\').pop();
         }
-        return "N/A"
+        return 'N/A';
     }
 
     function toCamelCase_Name(input) {
-    
-        if(typeof input=='string'){
-        return input?input
-          .toLowerCase()
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' '):null
-        }else{
-          return input;
+        if (typeof input == 'string') {
+            return input
+                ? input
+                      .toLowerCase()
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
+                : null;
+        } else {
+            return input;
         }
-      }
+    }
 
-      const SendMails = (props) => (
-        <Tooltip 
-          id="save-tooltip" 
-          {...props}
-        >
-         Click this button to send an email directly to the support team.
+    const SendMails = props => (
+        <Tooltip id="save-tooltip" {...props}>
+            Click this button to send an email directly to the support team.
         </Tooltip>
-      );
-      
-      const AddIssue = (props) => (
-        <Tooltip 
-          id="save-tooltip" 
-          {...props}
-        >
-       Click this button to report your issue directly to the support team.
+    );
+
+    const AddIssue = props => (
+        <Tooltip id="save-tooltip" {...props}>
+            Click this button to report your issue directly to the support team.
         </Tooltip>
-      );
-       useEffect(()=>{
-              const token = localStorage.getItem('companyToken');
-                 const decodedToken = jwtDecode(token);
-                          const company_id = decodedToken?._id;
-                          socket.connect();
-                          socket.emit('ViewNewMessage',company_id);
-                          socket.emit('messageNotification',company_id);
-                          socket.on('disconnect', () => {
-                              console.log('User disconnected');
-                          });
-              
-                          return () => {
-                              socket.off('notification');
-                              socket.disconnect();
-                          };
-          },[])
+    );
+    useEffect(() => {
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const company_id = decodedToken?._id;
+        socket.connect();
+        socket.emit('ViewNewMessage', company_id);
+        socket.emit('messageNotification', company_id);
+        socket.on('disconnect', () => {
+            console.log('User disconnected');
+        });
+
+        return () => {
+            socket.off('notification');
+            socket.disconnect();
+        };
+    }, []);
+    useEffect(() => {
+        fetch_all_issue();
+        return () => {
+            setData([]);
+        };
+    }, []);
     return (
         <>
             <Modal
@@ -129,31 +146,21 @@ const Support = () => {
                 onHide={() => setMailModelShow(false)}
                 dialogClassName="add-modal-width"
             >
-                <SendMail/>
+                <SendMail />
             </Modal>
             <div className="support">
                 <Row>
                     <div className="Search-support">
-                        <OverlayTrigger placement='bottom' overlay={AddIssue}>
-                        <Button
-                            size="sm"
-                            className="add-issue-btn"
-                            onClick={() => setModalShow(prev => !prev)}
-                        >
-                            Add Issue +
-                        </Button>
+                        <OverlayTrigger placement="bottom" overlay={AddIssue}>
+                            <Button
+                                size="sm"
+                                className="add-issue-btn"
+                                onClick={() => setModalShow(prev => !prev)}
+                            >
+                                Add Issue +
+                            </Button>
                         </OverlayTrigger>
 
-                        <OverlayTrigger placement="bottom" overlay={SendMails}>
-                        <Button
-                        style={{marginLeft:'12px'}}
-                            size="sm"
-                            className="add-issue-btn"
-                            onClick={()=>setMailModelShow(true)}
-                        >
-                            Send Mail
-                        </Button>
-                        </OverlayTrigger>
                         <div className="search-bar-suport">
                             <img src={SearchIconS} alt="" width="20px" />
                             <input
@@ -165,7 +172,6 @@ const Support = () => {
                     </div>
                 </Row>
 
-                
                 <Row className="mt-2">
                     <Table bordered responsive className="custom-table">
                         <thead>
@@ -266,8 +272,7 @@ const Support = () => {
                                             <p
                                                 style={{
                                                     color:
-                                                    item?.status ==
-                                                        'solved'
+                                                        item?.status == 'solved'
                                                             ? 'green'
                                                             : item?.status ===
                                                               'reject'

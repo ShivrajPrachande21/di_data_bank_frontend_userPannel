@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { jwtDecode } from 'jwt-decode';
-import { Button, Col, Row, Image, Form,Spinner } from 'react-bootstrap';
+import { Button, Col, Row, Image, Form, Spinner, Modal } from 'react-bootstrap';
 import './searchjob.css';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import whiteSeacrh from '../../../assets/images/whiteSeacrh.png';
@@ -23,12 +23,17 @@ const SearchJob = () => {
         visibleItems,
         setVisibleItems,
         setCurrentPage,
-        hasMore
+        hasMore,
+        getSingleJobDetails,
+        JobData,
+        setJobdata
     } = useContext(SearchJobContext);
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
     );
-
+    const [hoveredCardId, setHoveredCardId] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+    const activeCardRef = useRef(null);
     const [SearchData, SetSearchData] = useState({
         search: '',
         experience: '',
@@ -119,7 +124,7 @@ const SearchJob = () => {
         const render = localStorage.getItem('render');
 
         if (render == 'candidate') {
-            if(visibleItems.length==0){
+            if (visibleItems.length == 0) {
                 fetch_search_job();
             }
             rendering();
@@ -146,14 +151,25 @@ const SearchJob = () => {
         }
     }
 
+    const handleMouseEnter = async id => {
+        console.log('enter Data ', id);
 
-    useEffect(()=>{
+        setHoveredCardId(id);
+        await getSingleJobDetails(id);
+        setModalVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        setModalVisible(false);
+        setHoveredCardId(null);
+    };
+    useEffect(() => {
         return () => {
             setVisibleItems([]);
-            setCurrentPage(1)
+            setCurrentPage(1);
         };
-    },[])
-    
+    }, []);
+
     return (
         <>
             <div className="searchJob">
@@ -290,292 +306,311 @@ const SearchJob = () => {
                 </Form>
 
                 <Row style={{ marginTop: '92px' }}>
-                    <p className="searchresult">Search Result:{visibleItems.length}</p>
+                    <p className="searchresult">
+                        Search Result:{visibleItems.length}
+                    </p>
                     <InfiniteScroll
-                                dataLength={visibleItems&&visibleItems.length}
-                                next={fetch_search_job}
-                                hasMore={hasMore} 
-                                loader={<div style={{textAlign:'center'}}><Spinner size='sm' variant='primary' /></div>} 
-                                endMessage={<div style={{textAlign:'center'}}><Spinner size='sm' variant='primary' /></div>}
-                                height={450}
-                            >
-                    <div className="search-job-card-div">
-                   
-                        {loading ? (
-                            'loading...'
-                        ) : visibleItems.length == 0 ? (
-                            <div className="no-jobs-container">
-                                <span>No matching jobs found.</span>
+                        dataLength={visibleItems && visibleItems.length}
+                        next={fetch_search_job}
+                        hasMore={hasMore}
+                        loader={
+                            <div style={{ textAlign: 'center' }}>
+                                <Spinner size="sm" variant="primary" />
                             </div>
-                        ) : (
-                              
-                            visibleItems?.map((item, index) => (
-                                <div className="card-job search" key={index}>
+                        }
+                        endMessage={
+                            <div style={{ textAlign: 'center' }}>
+                                <Spinner size="sm" variant="primary" />
+                            </div>
+                        }
+                        height={450}
+                    >
+                        <div className="search-job-card-div">
+                            {loading ? (
+                                'loading...'
+                            ) : visibleItems.length == 0 ? (
+                                <div className="no-jobs-container">
+                                    <span>No matching jobs found.</span>
+                                </div>
+                            ) : (
+                                visibleItems?.map((item, index) => (
                                     <div
-                                        className="search-job-top"
-                                        onClick={() =>
-                                            handleNavigate(item?._id)
-                                        }
+                                        className="card-job search"
+                                        key={index}
                                     >
-                                        <Image
-                                            src={
-                                                item?.company_details?.profile
-                                                    ? bindUrlOrPath(
-                                                          item?.company_details
-                                                              ?.profile
-                                                      )
-                                                    : altprofile
-                                            }
-                                            roundedCircle
-                                            alt={altprofile}
-                                            width="40" // Set the desired width
-                                            height="40" // Set the desired height
-                                        />
-                                        <h6>
-                                            {item?.job_title.length > 20
-                                                ? `${item.job_title.substring(
-                                                      0,
-                                                      20
-                                                  )}...`
-                                                : item?.job_title}
-
-                                            <p
-                                                style={{
-                                                    color: '#3B96E1',
-
-                                                    fontSize: '0.76rem'
-                                                }}
-                                            >
-                                                {item?.company_details
-                                                    ?.company_name.length > 25
-                                                    ? `${item?.company_details?.company_name.substring(
-                                                          0,
-                                                          25
-                                                      )}...`
-                                                    : item?.company_details
-                                                          ?.company_name}
-                                            </p>
-                                        </h6>
-                                        <div className="green-thik">
-                                            {item?.Green_Batch ? (
-                                                <img
-                                                    src={Verified}
-                                                    alt=""
-                                                    height="20px"
-                                                />
-                                            ) : null}
-                                        </div>
-                                    </div>
-                                    {item?.promote_job ? 
-                                    (<p
-                                            style={{
-                                              
-                                                color: item?.promote_job
-                                                    ? '#3B96E1'
-                                                    : 'white',
-                                                fontSize: '0.8rem',
-                                                marginBottom:'-5px',
-                                                marginTop: '-18px'
-                                            }}
-                                        >
-                                                Promoted
-                                        </p>):null}
-                                    <div>
-                                        <table
-                                            style={{ cursor: 'pointer' }}
+                                        <div
+                                            className="search-job-top"
                                             onClick={() =>
                                                 handleNavigate(item?._id)
                                             }
                                         >
-                                            <tr>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                            <tr>
-                                                <td
+                                            <Image
+                                                src={
+                                                    item?.company_details
+                                                        ?.profile
+                                                        ? bindUrlOrPath(
+                                                              item
+                                                                  ?.company_details
+                                                                  ?.profile
+                                                          )
+                                                        : altprofile
+                                                }
+                                                roundedCircle
+                                                alt={altprofile}
+                                                width="40"
+                                                height="40"
+                                                onMouseEnter={() =>
+                                                    handleMouseEnter(item._id)
+                                                }
+                                            />
+                                            <h6>
+                                                {item?.job_title.length > 20
+                                                    ? `${item.job_title.substring(
+                                                          0,
+                                                          20
+                                                      )}...`
+                                                    : item?.job_title}
+
+                                                <p
                                                     style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Experience:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.experience}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Loction:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.location &&
-                                                        item?.location.length >
-                                                            10
-                                                            ? `${item.location.substring(
-                                                                  0,
-                                                                  12
-                                                              )}...`
-                                                            : item?.location}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Salary:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.salary} LPA
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Qualification:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {item?.education &&
-                                                        item?.education.length >
-                                                            10
-                                                            ? `${item.education.substring(
-                                                                  0,
-                                                                  12
-                                                              )}...`
-                                                            : item?.education}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Posted:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {formatDate(
-                                                            item?.createdDate
-                                                        )}{' '}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td
-                                                    style={{
-                                                        paddingRight: '30px'
-                                                    }}
-                                                >
-                                                    <span className="card-table-span">
-                                                        Applicants:
-                                                    </span>{' '}
-                                                </td>
-                                                <td>
-                                                    {' '}
-                                                    <span className="card-table-span">
-                                                        {
-                                                            item
-                                                                ?.applied_candidates
-                                                                ?.length
-                                                        }
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div
-                                            className="search-job-bnt mt-2"
-                                            // onClick={handleNavigate}
-                                        >
-                                            {item.applied_candidates.some(
-                                                candidate =>
-                                                    candidate.candidate_id.toString() ===
-                                                    id
-                                            ) ? (
-                                                <Button
-                                                    size="sm"
-                                                    style={{
-                                                        background: '#B4DDFF',
                                                         color: '#3B96E1',
-                                                        width: '100%',
-                                                        border: 'none'
+
+                                                        fontSize: '0.76rem'
                                                     }}
                                                 >
-                                                    Applied
-                                                </Button>
-                                            ) : (
-                                                <>
-                                                    <Button
-                                                        size="sm"
+                                                    {item?.company_details
+                                                        ?.company_name.length >
+                                                    25
+                                                        ? `${item?.company_details?.company_name.substring(
+                                                              0,
+                                                              25
+                                                          )}...`
+                                                        : item?.company_details
+                                                              ?.company_name}
+                                                </p>
+                                            </h6>
+                                            <div className="green-thik">
+                                                {item?.Green_Batch ? (
+                                                    <img
+                                                        src={Verified}
+                                                        alt=""
+                                                        height="20px"
+                                                    />
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                        {item?.promote_job ? (
+                                            <p
+                                                style={{
+                                                    color: item?.promote_job
+                                                        ? '#3B96E1'
+                                                        : 'white',
+                                                    fontSize: '0.8rem',
+                                                    marginBottom: '-5px',
+                                                    marginTop: '-18px'
+                                                }}
+                                            >
+                                                Promoted
+                                            </p>
+                                        ) : null}
+                                        <div>
+                                            <table
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={() =>
+                                                    handleNavigate(item?._id)
+                                                }
+                                            >
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr>
+                                                    <td
                                                         style={{
-                                                            background: 'white',
-                                                            color: '#3B96E1',
-                                                            border: '1px solid #3B96E1'
+                                                            paddingRight: '30px'
                                                         }}
-                                                        onClick={() =>
-                                                            SavedJobs(item?._id)
-                                                        }
                                                     >
-                                                        Save
-                                                    </Button>
+                                                        <span className="card-table-span">
+                                                            Experience:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.experience}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Loction:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.location &&
+                                                            item?.location
+                                                                .length > 10
+                                                                ? `${item.location.substring(
+                                                                      0,
+                                                                      12
+                                                                  )}...`
+                                                                : item?.location}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Salary:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.salary} LPA
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Qualification:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {item?.education &&
+                                                            item?.education
+                                                                .length > 10
+                                                                ? `${item.education.substring(
+                                                                      0,
+                                                                      12
+                                                                  )}...`
+                                                                : item?.education}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Posted:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {formatDate(
+                                                                item?.createdDate
+                                                            )}{' '}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingRight: '30px'
+                                                        }}
+                                                    >
+                                                        <span className="card-table-span">
+                                                            Applicants:
+                                                        </span>{' '}
+                                                    </td>
+                                                    <td>
+                                                        {' '}
+                                                        <span className="card-table-span">
+                                                            {
+                                                                item
+                                                                    ?.applied_candidates
+                                                                    ?.length
+                                                            }
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div
+                                                className="search-job-bnt mt-2"
+                                                // onClick={handleNavigate}
+                                            >
+                                                {item.applied_candidates.some(
+                                                    candidate =>
+                                                        candidate.candidate_id.toString() ===
+                                                        id
+                                                ) ? (
                                                     <Button
                                                         size="sm"
                                                         style={{
                                                             background:
                                                                 '#B4DDFF',
                                                             color: '#3B96E1',
-
+                                                            width: '100%',
                                                             border: 'none'
                                                         }}
-                                                        onClick={() =>
-                                                            ApplyTOJob(
-                                                                item?._id
-                                                            )
-                                                        }
                                                     >
-                                                        Apply
+                                                        Applied
                                                     </Button>
-                                                </>
-                                            )}
+                                                ) : (
+                                                    <>
+                                                        <Button
+                                                            size="sm"
+                                                            style={{
+                                                                background:
+                                                                    'white',
+                                                                color: '#3B96E1',
+                                                                border: '1px solid #3B96E1'
+                                                            }}
+                                                            onClick={() =>
+                                                                SavedJobs(
+                                                                    item?._id
+                                                                )
+                                                            }
+                                                        >
+                                                            Save
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            style={{
+                                                                background:
+                                                                    '#B4DDFF',
+                                                                color: '#3B96E1',
+
+                                                                border: 'none'
+                                                            }}
+                                                            onClick={() =>
+                                                                ApplyTOJob(
+                                                                    item?._id
+                                                                )
+                                                            }
+                                                        >
+                                                            Apply
+                                                        </Button>
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))
-                           
-                        )}
-                      
-                    </div>
+                                ))
+                            )}
+                        </div>
                     </InfiniteScroll>
                 </Row>
             </div>
@@ -585,6 +620,205 @@ const SearchJob = () => {
                     setShowModal={setShowModal}
                 />
             )}
+            <Modal
+                show={modalVisible}
+                onHide={() => setModalVisible(false)}
+                // onMouseLeave={handleMouseLeave}
+                centered
+            >
+                <div className="p-4">
+                    <Row>
+                        <Col>
+                            <div className="search-job-top">
+                                <Image
+                                    // src={
+                                    //     JobData?.company_details?.profile
+                                    //         ? bindUrlOrPath(
+                                    //               JobData?.company_details
+                                    //                   ?.profile
+                                    //           )
+                                    //         : altprofile
+                                    // }
+                                    src={bindUrlOrPath(
+                                        JobData?.company_id?.profile
+                                    )}
+                                    roundedCircle
+                                    alt="Profile"
+                                    width="40" // Set the desired width
+                                    height="40" // Set the desired height
+                                />
+
+                                <h6>
+                                    {JobData?.job_title}{' '}
+                                    <p
+                                        style={{
+                                            color: '#3B96E1',
+
+                                            fontSize: '0.8rem',
+                                            cursor: 'pointer'
+                                        }}
+                                        onClick={() =>
+                                            navigate(
+                                                `/view-company-desc/${JobData?.company_id?._id}/details`
+                                            )
+                                        }
+                                    >
+                                        {JobData?.company_id?.company_name}
+                                    </p>
+                                </h6>
+                                <div className="green-thik">
+                                    <img
+                                        // src={flag}
+                                        alt=""
+                                        height="20px"
+                                        // onClick={() => handleReport()}
+                                    />
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <div className="veiw-skills">
+                                {JobData?.skills?.map((items, index) => (
+                                    <>
+                                        <p>{items}</p>
+                                    </>
+                                ))}
+                            </div>
+                            <table style={{ cursor: 'pointer' }}>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style={{
+                                            paddingRight: '30px'
+                                        }}
+                                    >
+                                        <span className="card-table-span">
+                                            Experience:
+                                        </span>{' '}
+                                    </td>
+                                    <td>
+                                        {' '}
+                                        <span className="card-table-span">
+                                            {JobData?.experience} Years
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style={{
+                                            paddingRight: '30px'
+                                        }}
+                                    >
+                                        <span className="card-table-span">
+                                            Loction:
+                                        </span>{' '}
+                                    </td>
+                                    <td>
+                                        {' '}
+                                        <span className="card-table-span">
+                                            {JobData?.location}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style={{
+                                            paddingRight: '30px'
+                                        }}
+                                    >
+                                        <span className="card-table-span">
+                                            Salary:
+                                        </span>{' '}
+                                    </td>
+                                    <td>
+                                        {' '}
+                                        <span className="card-table-span">
+                                            {JobData?.salary}LPA
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td
+                                        style={{
+                                            paddingRight: '30px'
+                                        }}
+                                    >
+                                        <span className="card-table-span">
+                                            Qualification:
+                                        </span>{' '}
+                                    </td>
+                                    <td>
+                                        {' '}
+                                        <span className="card-table-span">
+                                            {JobData?.education}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style={{
+                                            paddingRight: '30px'
+                                        }}
+                                    >
+                                        <span className="card-table-span">
+                                            Openings:
+                                        </span>{' '}
+                                    </td>
+                                    <td>
+                                        {' '}
+                                        <span className="card-table-span">
+                                            {JobData?.No_openings}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style={{
+                                            paddingRight: '30px'
+                                        }}
+                                    >
+                                        <span className="card-table-span">
+                                            Applicants:
+                                        </span>{' '}
+                                    </td>
+                                    <td>
+                                        {' '}
+                                        <span className="card-table-span">
+                                            {
+                                                JobData?.applied_candidates
+                                                    ?.length
+                                            }{' '}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style={{
+                                            paddingRight: '30px'
+                                        }}
+                                    >
+                                        <span className="card-table-span">
+                                            Posted:
+                                        </span>{' '}
+                                    </td>
+                                    <td>
+                                        {' '}
+                                        <span className="card-table-span">
+                                            {formatDate(JobData?.createdDate)}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </Col>
+                    </Row>
+                </div>
+            </Modal>
         </>
     );
 };

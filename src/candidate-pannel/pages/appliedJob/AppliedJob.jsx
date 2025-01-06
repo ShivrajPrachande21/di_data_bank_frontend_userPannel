@@ -4,7 +4,12 @@ import './appliedjob.css';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { AppliedJobContext } from '../../../context/candidateContext/AppliedJobContext';
 const AppliedJob = () => {
-    const { fetch_applied_job,setCurrentPage,seletedValue, setSelectedValue} = useContext(AppliedJobContext);
+    const {
+        fetch_applied_job,
+        setCurrentPage,
+        seletedValue,
+        setSelectedValue
+    } = useContext(AppliedJobContext);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -23,9 +28,9 @@ const AppliedJob = () => {
         setCurrentPage(1);
     };
 
-    useEffect(()=>{
-         fetch_applied_job(seletedValue);
-    },[seletedValue])
+    useEffect(() => {
+        fetch_applied_job(seletedValue);
+    }, [seletedValue]);
 
     // Function to determine button style based on the path
     const getButtonStyle = path => {
@@ -64,7 +69,9 @@ const AppliedJob = () => {
     }
 
     useEffect(() => {
-        // rendering();
+        return () => {
+            setSelectedValue('All');
+        };
     }, []);
     return (
         <div className="applied-job">

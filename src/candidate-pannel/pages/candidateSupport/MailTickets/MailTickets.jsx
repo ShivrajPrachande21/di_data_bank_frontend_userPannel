@@ -22,9 +22,12 @@ const MailTickets = () => {
         setMailModelShow,
         RemovePath,
         formatDate,
-        toCamelCase_Name
+        toCamelCase_Name,
+        getAllMails,
+        mailData, setMailData,
+        loading, setLoading
     } = useContext(CandidateSupportContext);
-    const [mailData, setMailData] = useState(null);
+   const [SeacrhInput,SetSeacrhInput]=useState('')
 
     const SendMail = props => (
         <Tooltip id="save-tooltip" {...props}>
@@ -38,29 +41,11 @@ const MailTickets = () => {
         </Tooltip>
     );
 
-    const [loading, setLoading] = useState(true); // Add loading state
+    const fiteredData = mailData?.filter(item => {
+        return item?.Issue_type&&item?.Issue_type.toLowerCase().includes(SeacrhInput.toLowerCase())||
+           item?.Ticket&& item?.Ticket.toLowerCase().includes(SeacrhInput.toLowerCase());
+    });
 
-    const getAllMails = async () => {
-        const token = localStorage.getItem('Candidate_token');
-
-        if (!token) {
-            setLoading(false); // Stop loading if no token
-            return;
-        }
-
-        try {
-            const decodedToken = jwtDecode(token);
-            const userId = decodedToken?._id;
-            const response = await axios.get(
-                `${BaseUrl}candidate/get_mail_issue/${userId}`
-            );
-            setMailData(response?.data?.data);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false); // Set loading to false after data is fetched
-        }
-    };
 
     useEffect(() => {
         getAllMails();
@@ -191,8 +176,8 @@ const MailTickets = () => {
                                 </tr>
                             </thead>
                             <tbody style={{ fontSize: '0.8rem' }}>
-                                {mailData && mailData.length > 0 ? (
-                                    mailData.map((item, index) => (
+                                {fiteredData && fiteredData.length > 0 ? (
+                                    fiteredData.map((item, index) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{item?.Ticket}</td>

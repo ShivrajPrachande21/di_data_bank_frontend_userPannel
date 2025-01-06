@@ -10,6 +10,8 @@ export const CandidateSupportProvider = ({ children }) => {
     const [mailModelShow, setMailModelShow] = React.useState(false);
     const [Data, setdata] = useState('shajivr');
     const [hide, setHide] = useState(1);
+     const [mailData, setMailData] = useState(null);
+      const [loading, setLoading] = useState(true);
     const fetch_Candidate_issue = async () => {
         const token = localStorage.getItem('Candidate_token');
 
@@ -40,6 +42,29 @@ export const CandidateSupportProvider = ({ children }) => {
         };
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
+
+    const getAllMails = async () => {
+        const token = localStorage.getItem('Candidate_token');
+
+        if (!token) {
+            setLoading(false); // Stop loading if no token
+            return;
+        }
+
+        try {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
+            const response = await axios.get(
+                `${BaseUrl}candidate/get_mail_issue/${userId}`
+            );
+            setMailData(response?.data?.data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false); // Set loading to false after data is fetched
+        }
+    };
+
     function toCamelCase_Name(input) {
         if (typeof input == 'string') {
             return input
@@ -68,7 +93,10 @@ export const CandidateSupportProvider = ({ children }) => {
                 setMailModelShow,
                 RemovePath,
                 formatDate,
-                toCamelCase_Name
+                toCamelCase_Name,
+                mailData, setMailData,
+                getAllMails,
+                loading, setLoading
             }}
         >
             {children}

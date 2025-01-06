@@ -48,10 +48,8 @@ const CandidateSupport = () => {
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
     const fiteredData = supportData?.filter(item => {
-        console.log('item?.Issue_type', item?.Issue_type);
-        return item?.Issue_type.toLowerCase().includes(
-            SeacrhInput.toLowerCase()
-        );
+        return item?.Issue_type.toLowerCase().includes(SeacrhInput.toLowerCase())||
+           item?.Ticket&& item?.Ticket.toLowerCase().includes(SeacrhInput.toLowerCase());
     });
     function rendering() {
         const render = localStorage.getItem('render');
@@ -173,6 +171,7 @@ const CandidateSupport = () => {
                             <input
                                 type="text"
                                 placeholder="Search"
+                                value={SeacrhInput}
                                 onChange={e => SetSeacrhInput(e.target.value)}
                             />
                         </div>
@@ -200,6 +199,17 @@ const CandidateSupport = () => {
                                     scope="col"
                                 >
                                     Sr. No
+                                </th>
+                                <th
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        borderLeft: 'none',
+                                        color: '#051F50'
+                                    }}
+                                    className="p-3"
+                                    scope="col"
+                                >
+                                    Tickets
                                 </th>
                                 <th
                                     className="p-3"
@@ -268,6 +278,7 @@ const CandidateSupport = () => {
                                 <>
                                     <tr>
                                         <td>{index + 1}</td>
+                                        <td>{item?.Ticket}</td>
                                         <td>{item?.Issue_type}</td>
                                         <td>{item?.description}</td>
                                         <td>

@@ -7,15 +7,15 @@ import BaseUrl from '../../services/BaseUrl';
 import { useParams } from 'react-router-dom';
 
 export const AppliedJobContext = createContext();
-
+const DEFAULT_PAGE_SIZE = 10;
 export const AppliedJobProvider = ({ children }) => {
     const [appliedJobData, setAppliedJobData] = useState([]);
     const [savedJobData, setsavedJobData] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const [seletedValue, setSelectedValue] = useState('All');
 
     const fetch_applied_job = async filter => {
-        console.log('slected ', filter);
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
             return;
@@ -24,21 +24,27 @@ export const AppliedJobProvider = ({ children }) => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/appliedjob/${userId}/${currentPage}/${10}/${filter}`
+                    `${BaseUrl}candidate/appliedjob/${userId}/${currentPage}/${DEFAULT_PAGE_SIZE}/${seletedValue}`
                 );
-                let data = response?.data.data;
-                let page = response?.data.page;
-                let newItem = data.filter(
-                    item =>
-                        !appliedJobData.some(
-                            existingItem => existingItem._id == item._id
-                        )
+                const { data, page } = response?.data || {};
+    
+                if (!data || !Array.isArray(data)) {
+                    console.error('Invalid response format');
+                    setHasMore(false);
+                    return;
+                }
+    
+                // Filter out duplicates
+                const newItems = data.filter(
+                    item => !appliedJobData.some(existingItem => existingItem._id === item._id)
                 );
-                setAppliedJobData(prevCandidates => [
-                    ...prevCandidates,
-                    ...newItem
-                ]);
-                if (data.length == 10) {
+    
+                setAppliedJobData(prevData =>
+                    currentPage ==1 ? data : [...prevData, ...newItems]
+                );
+    
+                // Update pagination state
+                if (data.length == DEFAULT_PAGE_SIZE) {
                     setHasMore(true);
                     setCurrentPage(parseInt(page) + 1);
                 } else {
@@ -47,6 +53,8 @@ export const AppliedJobProvider = ({ children }) => {
             } catch (error) {
                 setHasMore(false);
             }
+
+
         }
     };
 
@@ -145,7 +153,8 @@ export const AppliedJobProvider = ({ children }) => {
                 savedJobData,
                 setsavedJobData,
                 reject_Offered_letter,
-                Accept_offer_lettter
+                Accept_offer_lettter,
+                seletedValue, setSelectedValue
             }}
         >
             {children}

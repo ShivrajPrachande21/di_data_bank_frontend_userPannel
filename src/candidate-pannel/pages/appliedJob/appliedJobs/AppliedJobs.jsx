@@ -57,6 +57,7 @@ const AppliedJobs = () => {
         return () => {
             setAppliedJobData([]);
             setCurrentPage(1);
+            setSelectedValue('All')
         };
     }, []);
 

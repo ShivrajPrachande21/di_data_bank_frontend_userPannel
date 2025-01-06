@@ -347,10 +347,10 @@ const SearchJob = () => {
                                                 }}
                                             >
                                                 {item?.company_details
-                                                    ?.company_name.length > 50
+                                                    ?.company_name.length > 25
                                                     ? `${item?.company_details?.company_name.substring(
                                                           0,
-                                                          50
+                                                          25
                                                       )}...`
                                                     : item?.company_details
                                                           ?.company_name}
@@ -366,7 +366,20 @@ const SearchJob = () => {
                                             ) : null}
                                         </div>
                                     </div>
-
+                                    {item?.promote_job ? 
+                                    (<p
+                                            style={{
+                                              
+                                                color: item?.promote_job
+                                                    ? '#3B96E1'
+                                                    : 'white',
+                                                fontSize: '0.8rem',
+                                                marginBottom:'-5px',
+                                                marginTop: '-18px'
+                                            }}
+                                        >
+                                                Promoted
+                                        </p>):null}
                                     <div>
                                         <table
                                             style={{ cursor: 'pointer' }}

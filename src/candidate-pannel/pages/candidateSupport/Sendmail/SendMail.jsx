@@ -12,7 +12,7 @@ import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import { f } from 'html2pdf.js';
 const SendMails = () => {
-    const { mailModelShow, setMailModelShow } = useContext(
+    const { mailModelShow, setMailModelShow ,  getAllMails} = useContext(
         CandidateSupportContext
     );
     const [loading, setLoading] = useState(false);
@@ -81,6 +81,7 @@ const SendMails = () => {
             // Check if the response status is OK
             if (response.status == 200 || response.status == 201) {
                 toast.success('Mail Send Successfully');
+                getAllMails()
                 setMailModelShow(prev => !prev);
                 setLoading(false);
                 setFormData({

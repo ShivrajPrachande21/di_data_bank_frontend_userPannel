@@ -57,9 +57,9 @@ export const SearchJobProvider = ({ children }) => {
                 const response = await axios.post(
                     `${BaseUrl}candidate/jobapply/${userId}/${jobId}`
                 );
-                if (response.status == 200 || 201) {
+                if (response.status == 200 || response?.status == 201) {
                     toast.success('Job Applied successfully ');
-                    fetch_search_job();
+                    // fetch_search_job();
                 }
             } catch (error) {}
         }

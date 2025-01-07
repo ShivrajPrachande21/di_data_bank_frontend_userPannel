@@ -235,7 +235,7 @@ const router = createBrowserRouter([
                         element: <AppliedJobs />
                     },
                     {
-                        path: 'saved-jobs',
+                        path: 'saved-jobs/:name',
                         element: <SavedJobs />
                     }
                 ]

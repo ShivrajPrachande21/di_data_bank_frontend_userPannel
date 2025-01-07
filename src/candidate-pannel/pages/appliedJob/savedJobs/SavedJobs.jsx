@@ -4,14 +4,20 @@ import Verified from '../../../../assets/images/Verified.png';
 import altprofile from '../../../../assets/images/altprofile.jpg';
 import { Button, Image, Spinner } from 'react-bootstrap';
 import { SearchJobContext } from '../../../../context/candidateContext/SearchJobContext';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AppliedJobs from './../appliedJobs/AppliedJobs';
 import { CandidateProfileContext } from '../../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import ProfileCompletionModal from '../../ProfileAlert/ProfileCompletion';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import BaseUrl from '../../../../services/BaseUrl';
+
 const SavedJobs = () => {
     const { applyTo_job } = useContext(SearchJobContext);
+    const { name } = useParams();
+
     const {
         fetchSavedJob,
         savedJobData,
@@ -39,13 +45,36 @@ const SavedJobs = () => {
         return `${diffDays} days ago`;
     };
 
+    const applyFromProfile = async jobId => {
+        const token = localStorage.getItem('Candidate_token');
+        if (!token) {
+            return;
+        } else {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken?._id;
+            try {
+                const response = await axios.post(
+                    `${BaseUrl}candidate/jobapply_resume/${userId}/${jobId}`
+                );
+                if (response.status == 200 || 201) {
+                    toast.success('Job Applied successfully ');
+                    fetchSavedJob();
+                }
+            } catch (error) {}
+        }
+    };
+
     const handleApply = async id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
             setShowModal(true);
             return;
         }
-        await applyTo_job(id);
-        await fetchSavedJob();
+        if (name == 'profile') {
+            await applyFromProfile(id);
+        } else {
+            await applyTo_job(id);
+            await fetchSavedJob();
+        }
     };
     useEffect(() => {
         if (savedJobData && savedJobData.length == 0) {
@@ -66,7 +95,7 @@ const SavedJobs = () => {
             if (!token) {
                 navigate('/login');
             } else {
-                navigate('/candidate-dashboard/applied-job/saved-jobs');
+                navigate(`/candidate-dashboard/applied-job/saved-jobs/${name}`);
             }
         } else {
             navigate('/login');
@@ -74,6 +103,7 @@ const SavedJobs = () => {
     }
 
     useEffect(() => {
+        fetchSavedJob();
         rendering();
     }, []);
 
@@ -109,7 +139,7 @@ const SavedJobs = () => {
                         savedJobData.map((item, index) => (
                             <div
                                 className="card-job search"
-                                onClick={() => handleNavigate(item?._id)}
+                                // onClick={() => handleNavigate(item?._id)}
                                 key={index}
                             >
                                 <div className="search-job-top">
@@ -156,6 +186,9 @@ const SavedJobs = () => {
                                             cursor: 'pointer',
                                             marginTop: '-4px'
                                         }}
+                                        onClick={() =>
+                                            handleNavigate(item?._id)
+                                        }
                                     >
                                         <tr>
                                             <th></th>
@@ -225,7 +258,13 @@ const SavedJobs = () => {
                                             <td>
                                                 {' '}
                                                 <span className="card-table-span">
-                                                    {item?.education}
+                                                    {item?.education?.length >
+                                                    15
+                                                        ? `${item.education.slice(
+                                                              0,
+                                                              15
+                                                          )}...`
+                                                        : item?.education}
                                                 </span>
                                             </td>
                                         </tr>

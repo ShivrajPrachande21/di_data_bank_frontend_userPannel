@@ -69,7 +69,7 @@ const Transaction = () => {
                     <Col xs={12} style={{ marginTop: '6px' }}>
                         <Table bordered className="custom-table" responsive>
                             <thead>
-                                <tr style={{ border: 'none' }}>
+                                <tr>
                                     <th
                                         style={{
                                             fontSize: '0.8rem',
@@ -78,7 +78,7 @@ const Transaction = () => {
                                         className="p-3"
                                         scope="col"
                                     >
-                                        Sr no
+                                        Sr.no
                                     </th>
                                     <th
                                         className="p-3"
@@ -143,9 +143,11 @@ const Transaction = () => {
                                         <td>
                                             {toCamelCase_Name(item?.Plane_name)}
                                         </td>
-                                        <td>
-                                            {formatDate(item?.purchesed_data)} -
-                                            {formatDate(item?.Expire_date)}
+                                        <td>{item?.purchesed_data?
+                                          `${formatDate(item?.purchesed_data)} -
+                                          ${formatDate(item?.Expire_date)}`
+                                        :'N/A'}
+                                          
                                         </td>
                                         <td>
                                             <span
@@ -162,7 +164,9 @@ const Transaction = () => {
                                         <td>{item?.payment_method}</td>
                                         <td>{item?.transaction_Id}</td>
                                         <td>
-                                            {formatDate(item?.purchesed_data)}
+                                            {item?.purchesed_data?
+                                            formatDate(item?.purchesed_data):'N/A'
+                                            }
                                         </td>
                                     </tr>
                                 ))}

@@ -30,6 +30,7 @@ const HireCandidate = () => {
         setappliedcandidate,
         resume_loading,
         SearchLoading,
+        seachBarData, setseachBarData,
         setLoading,
         loading,
         setError,
@@ -48,12 +49,6 @@ const HireCandidate = () => {
     const [fiedEmpty, setfiedEmpty] = useState('');
     const [hasMore,setHasmore]=useState(true);
     const [totalUser,setTotalUser]=useState(0);
-
-    const [seachBarData, setseachBarData] = useState({
-        search: '',
-        experience: '',
-        location: ''
-    });
 
     const handle_sideBar_change = e => {
         const { name, value } = e.target;
@@ -213,7 +208,6 @@ const HireCandidate = () => {
             const response = await axios.get(
                 `${BaseUrl}company/get_appliedcandidate/${companyId}/${currentPage}/${50}`
             );
-
             const newCandidates = response.data?.data;
             setappliedcandidate(prevCandidates => [
                 ...prevCandidates,

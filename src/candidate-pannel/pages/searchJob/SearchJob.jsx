@@ -8,6 +8,7 @@ import whiteSeacrh from '../../../assets/images/whiteSeacrh.png';
 import avatar from '../../../assets/images/avatar.png';
 import Verified from '../../../assets/images/Verified.png';
 import altprofile from '../../../assets/images/altprofile.jpg';
+import oui_cross from '../../../assets/images/oui_cross.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SearchJobContext } from '../../../context/candidateContext/SearchJobContext';
 import BaseUrl from '../../../services/BaseUrl';
@@ -15,6 +16,7 @@ import axios from 'axios';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import ProfileCompletionModal from '../ProfileAlert/ProfileCompletion';
+import { f } from 'html2pdf.js';
 const SearchJob = () => {
     const {
         fetch_search_job,
@@ -98,10 +100,9 @@ const SearchJob = () => {
     // Image Bind Method
     const bindUrlOrPath = url => {
         let cleanBaseUrl = BaseUrl.replace(/\/api\b/, '');
-        let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${url.replace(
-            /\\/g,
-            '/'
-        )}`;
+        let temp = `${cleanBaseUrl.replace(/\/$/, '')}/${
+            url && url.replace(/\\/g, '/')
+        }`;
 
         return temp.replace(/([^:]\/)\/+/g, '$1');
     };
@@ -626,7 +627,12 @@ const SearchJob = () => {
                 // onMouseLeave={handleMouseLeave}
                 centered
             >
-                <div className="p-4">
+                <div
+                    className="p-4"
+                    style={{
+                        overflow: 'hidden'
+                    }}
+                >
                     <Row>
                         <Col>
                             <div className="search-job-top">
@@ -668,18 +674,35 @@ const SearchJob = () => {
                                 </h6>
                                 <div className="green-thik">
                                     <img
-                                        // src={flag}
+                                        src={oui_cross}
                                         alt=""
                                         height="20px"
-                                        // onClick={() => handleReport()}
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => setModalVisible(false)}
                                     />
                                 </div>
                             </div>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
-                            <div className="veiw-skills">
+                        {JobData?.promote_job ? (
+                            <p
+                                style={{
+                                    color: JobData?.promote_job
+                                        ? '#3B96E1'
+                                        : 'white',
+                                    fontSize: '0.8rem',
+                                    marginBottom: '-5px',
+                                    marginTop: '-18px'
+                                }}
+                            >
+                                Promoted
+                            </p>
+                        ) : null}
+                    </Row>
+                    <Row>
+                        <Col md={8}>
+                            <div className="veiw-skills ">
                                 {JobData?.skills?.map((items, index) => (
                                     <>
                                         <p>{items}</p>

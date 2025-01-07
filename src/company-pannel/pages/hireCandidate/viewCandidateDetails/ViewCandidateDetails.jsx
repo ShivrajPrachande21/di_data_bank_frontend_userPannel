@@ -17,6 +17,7 @@ const ViewCandidateDetails = () => {
     const [modalShow, setModalShow] = useState(false);
     const [certificateImage, setCertificateImage] = useState('');
     const [certificateModalShow, setCertificateModalShow] = useState(false);
+    const [dataFetched, setDataFetched] = useState(false);
     const handleCertificateOpen = image => {
         setCertificateImage(image);
         setCertificateModalShow(true);
@@ -88,10 +89,13 @@ const ViewCandidateDetails = () => {
     }
 
     useEffect(() => {
+        if (!dataFetched) {
         rendering();
         get_Candidate_detials(id);
-    }, []);
-    
+        setDataFetched(true);
+        }
+    }, [dataFetched]);
+
     const formatDate = (isoDate) => {
         const date = new Date(isoDate); 
         const day = date.getDate().toString().padStart(2, '0'); 

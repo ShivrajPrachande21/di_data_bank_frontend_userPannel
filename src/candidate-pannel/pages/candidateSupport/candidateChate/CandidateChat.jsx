@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import arrow_back from '../../../../assets/images/arrow_back.png';
 import chatuser from '../../../../assets/images/chatuser.png';
@@ -11,9 +11,9 @@ const socket = io('http://65.20.91.47:4000');
 //const socket=io('http://localhost:4000')
 
 function CandidateChat() {
-    const location=useLocation()
+    const location = useLocation();
     const { id } = useParams();
-    console.log("getting params temps testing ",id)
+    console.log('getting params temps testing ', id);
 
     const navigateBack = useNavigate();
     const [message, setMessage] = useState('');
@@ -87,8 +87,7 @@ function CandidateChat() {
             setChat(receivedMessages);
         });
 
-        socket.on('message', newMessage => {
-        });
+        socket.on('message', newMessage => {});
 
         const messageListener = newMessage => {
             setChat(prevMessages => [...prevMessages, newMessage]);
@@ -104,7 +103,7 @@ function CandidateChat() {
             socket.off('message', messageListener);
             socket.disconnect();
         };
-    },[]);
+    }, []);
 
     const handleSendMessage = () => {
         const timestamps = new Date();
@@ -112,7 +111,7 @@ function CandidateChat() {
             refference_id: companyId,
             Issue_id: id,
             message: message,
-            User_view:true
+            User_view: true
         };
         socket.emit('newMessage', data);
         socket.emit('adminMessagNot');
@@ -128,9 +127,7 @@ function CandidateChat() {
             if (!token) {
                 navigateBack('/login');
             } else {
-                navigateBack(
-                    `/candidate-dashboard/candidate-chat/${id}`
-                );
+                navigateBack(`/candidate-dashboard/candidate-chat/${id}`);
             }
         } else {
             navigateBack('/login');
@@ -155,11 +152,13 @@ function CandidateChat() {
         rendering();
     }, []);
 
-    useEffect(()=>{
-        return(()=>{
-            setChat([])
-        })
-    },[])
+    useEffect(() => {
+        return () => {
+            setChat([]);
+        };
+    }, []);
+
+    // console.log('chat', chat);
     return (
         <>
             <div className="Chatpage">

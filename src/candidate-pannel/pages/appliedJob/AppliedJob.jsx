@@ -14,12 +14,20 @@ const AppliedJob = () => {
     const location = useLocation();
 
     const handleNavigate = data => {
+        console.log('${id}', data);
+        let id = 1;
         if (data === 'applied-jobs') {
             navigate('applied-jobs');
-        } else if (data === 'saved-jobs') {
-            navigate('saved-jobs');
         }
+        // } else if (data === `saved-jobs/${id}`) {
+        //     navigate(`saved-jobs/${id}`);
+        // }
     };
+    function navigateSave(id) {
+        let applied = 'applied';
+        navigate(`saved-jobs/${applied}`);
+    }
+
     const handleSelectchange = async e => {
         navigate('/candidate-dashboard/applied-job/applied-jobs');
         const { value } = e.target;
@@ -111,7 +119,7 @@ const AppliedJob = () => {
                             size="sm"
                             // style={{ width: '200px', background: '#5baaff' }}
                             style={getButtonStyle('saved-jobs')}
-                            onClick={() => handleNavigate('saved-jobs')}
+                            onClick={() => navigateSave(1)}
                         >
                             Saved Jobs{' '}
                         </Button>

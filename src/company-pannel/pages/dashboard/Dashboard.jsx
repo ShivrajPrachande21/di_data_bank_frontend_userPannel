@@ -198,7 +198,7 @@ const Dashboard = () => {
                         <div
                             className="serach-icon"
                             onClick={getSelectedData}
-                            style={{ marginTop: '20px', marginLeft: '50px' }}
+                            style={{ marginTop: '20px', marginLeft: '69px' }}
                         >
                             <span>Filter</span>
                         </div>

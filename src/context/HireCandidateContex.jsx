@@ -17,6 +17,11 @@ export const HireCandidateProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [SearchLoading, setSearchLoading] = useState(null);
      const [currentPage,setCurrentPage]=useState(1)
+     const [seachBarData, setseachBarData] = useState({
+             search: '',
+             experience: '',
+             location: ''
+         });
 
     const [email_loading, setEmail_loading] = useState(null);
     const [resume_loading, setResume_loading] = useState(null);
@@ -178,6 +183,11 @@ export const HireCandidateProvider = ({ children }) => {
                 get_subscription_details();
                 setSearchLoading(false);
                 // toast.success('jhgaj');
+                setseachBarData({
+                    search: '',
+                    experience: '',
+                    location: ''
+                });
             }
         } catch (error) {
             toast.error(error?.response?.data?.error);
@@ -219,6 +229,7 @@ export const HireCandidateProvider = ({ children }) => {
                 handleDownload_Resume,
                 get_Candidate_detials,
                 Search_bye_keyWord,
+                seachBarData, setseachBarData,
                 SearchLoading,
                 handleCloseHire,
                 showHire,

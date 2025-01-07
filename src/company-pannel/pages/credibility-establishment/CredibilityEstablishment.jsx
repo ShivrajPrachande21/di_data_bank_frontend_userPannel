@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './cerdibility.css';
-import { Col, Form, Pagination, Row, Spinner, Table } from 'react-bootstrap';
+import { Col, Form, Pagination, Row, Spinner, Table,Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import carbon_send from '../../../assets/images/carbon_send.png';
 import Speedometer from './speedometer';
@@ -12,6 +12,7 @@ import { set } from 'date-fns';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Loader from '../loader/Loader';
 const CredibilityEstablishment = () => {
     const [CredibilityData, setCredibilityData] = useState(null);
     const [PAN, setPAN] = useState('');
@@ -21,7 +22,9 @@ const CredibilityEstablishment = () => {
     const [errorMesg, setErrorMesg] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [selectValue, setselectValue] = useState(itemsPerPage);
+    const [modalShowhide, setModalShowhide] =useState(null);
+    const [PlanData,setPlanData]=useState();
+     const [PromoteLoading, SetPromoteLoading] = useState(null);
     const navigte = useNavigate();
 
     const handleSelect = e => {
@@ -71,31 +74,36 @@ const CredibilityEstablishment = () => {
             toast.error('Please enter PAN number to search');
             return;
         } else {
-            setLoading(true);
-            const token = localStorage.getItem('companyToken');
-            if (!token) {
-                return;
-            } else {
-                const decodedToken = jwtDecode(token);
-                const companyId = decodedToken?._id;
-                try {
-                    const response = await axios.get(
-                        `${BaseUrl}company/offer_verifier/${companyId}/${PAN}`
-                    );
-                    setCredibilityData(response?.data);
-                    if (response.status == 200 || response.status == 201) {
-                        setLoading(false);
-                    }
-                } catch (error) {
-                    toast.error(`${error?.response?.data?.error}`);
-                    setErrorMesg(true);
-
-                    setCredibilityData(null);
-                    setLoading(false);
-                }
-            }
+            await handle_Credibility();
+            //setLoading(true);
         }
     };
+
+    const fetchCandidateAllDetails=async()=>{
+        
+        const token = localStorage.getItem('companyToken');
+        if (!token) {
+            return;
+        } else {
+            const decodedToken = jwtDecode(token);
+            const companyId = decodedToken?._id;
+            try {
+                const response = await axios.get(
+                    `${BaseUrl}company/offer_verifier/${companyId}/${PAN}`
+                );
+                setCredibilityData(response?.data);
+                if (response.status == 200 || response.status == 201) {
+                    setLoading(false);
+                }
+            } catch (error) {
+                toast.error(`${error?.response?.data?.error}`);
+                setErrorMesg(true);
+
+                setCredibilityData(null);
+                setLoading(false);
+            }
+        }
+    }
 
     const isTransactionDataArray = Array.isArray(
         CredibilityData?.data[0]?.offers
@@ -123,6 +131,90 @@ const CredibilityEstablishment = () => {
         getSubscriptionStatus();
     }, []);
 
+
+    const Credibility_initiatePayment = async (Id) => {
+       SetPromoteLoading(true);
+        setModalShowhide(false)
+        let promoteJob = null;
+        try {
+            const token = localStorage.getItem('companyToken');
+            const decodedToken = jwtDecode(token);
+            const company_id = decodedToken?._id;
+    
+            const response = await axios.post(`${BaseUrl}company/pay_credibility`, {
+                SubId: Id,
+                company_id,
+            });
+    
+            promoteJob = response?.data;
+            const paymentLink = response?.data?.paymentLink;
+    
+            if (paymentLink) {
+                window.open(paymentLink, '_blank');
+            }
+    
+            Run_credibility_verify(promoteJob);
+        } catch (error) {
+           // SetPromoteLoading(false); // Ensure the loading state is reset
+        }
+    };
+    let toUpIntervelId;
+    let ToptimeoutId;
+    const fetch_topUp_success_status = async (data) => {
+        try {
+            const token = localStorage.getItem('companyToken');
+            const decodedToken = jwtDecode(token);
+            const companyId = decodedToken?._id;
+    
+            if (!data?.order_id || !companyId) {
+                console.error('Invalid data for payment verification');
+                return;
+            }
+    
+            const response = await axios.post(`${BaseUrl}company/pay_credibility/verify`, {
+                orderId: data?.order_id,
+                company_id: companyId,
+                sub_id:data?.sub_id,
+                paymentMethod: data?.payment_methods || 'UPI',
+            });
+    
+            if (response?.status === 200 || response?.status === 201) {
+                fetchCandidateAllDetails();
+                SetPromoteLoading(false);
+                clearInterval(toUpIntervelId);
+                clearTimeout(ToptimeoutId);
+                setLoading(false)
+            }
+        } catch (error) {
+            console.error('Payment verification error:', error.response?.data || error.message);
+        }
+    };
+    
+    function Run_credibility_verify(data) {
+        toUpIntervelId = setInterval(() => {
+            fetch_topUp_success_status(data);
+        }, 1000);
+    
+        ToptimeoutId = setTimeout(() => {
+            clearInterval(toUpIntervelId);
+        }, 1000 * 60 * 5);
+    }
+    
+
+    // useEffect(() => {
+    //     if (paymentLoading == false) {
+    //         //setModalShow(true);
+    //     }
+    // }, [paymentLoading]);
+
+    // Add event listener on component mount and clean up on unmount
+    // useEffect(() => {
+    //     window.addEventListener('resize', handleResize);
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, []);
+
     function rendering() {
         const render = localStorage.getItem('render');
 
@@ -138,11 +230,32 @@ const CredibilityEstablishment = () => {
         }
     }
 
+    const handle_Credibility= async() => {
+        try {
+            const response = await axios.get(
+                `${BaseUrl}company/get_credibility_establishment`
+            );
+            setModalShowhide(true)
+            setLoading(false);
+            setPlanData(response?.data);
+        } catch (error) {
+            setModalShowhide(false)
+        }
+    };
+
+
     useEffect(() => {
         rendering();
     }, []);
     return (
         <div className="CredibilityEstablishment">
+              {PromoteLoading ? (
+                <div className="loader-div">
+                    <Loader />
+                </div>
+            ) : (
+                ''
+            )}
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>CredibilityEstablishment</title>
@@ -162,7 +275,6 @@ const CredibilityEstablishment = () => {
                         {loading ? (
                             <Button
                                 size="sm"
-                                onClick={fetchCeridibilityDetails}
                             >
                                 <Spinner animation="border" size="sm" />
                             </Button>
@@ -189,23 +301,20 @@ const CredibilityEstablishment = () => {
                     </p>
                     <span></span>
                     <p className="text-warning">
-                        Pending :{' '}
-                        {CredibilityData?.data[0]?.acceptedCount -
-                            CredibilityData?.data[0]?.offersCount || 0}
-                    </p>
+    Pending :{' '}
+    {Math.max(
+        (CredibilityData?.data[0]?.offersCount || 0) - 
+        (CredibilityData?.data[0]?.acceptedCount || 0),
+        0
+    )}
+</p>
+
                 </div>
             </div>
-
-            <p
-                className="cerdibility-search-count"
-                style={{ color: 'grey', fontSize: '0.75rem' }}
-            >
-                Search Limit {0}
-            </p>
             <p className="text-danger pan-error-in-cerdibility">
                 {errorMessage}
             </p>
-            {/* <Speedometer data={CredibilityData} /> */}
+            <Speedometer data={CredibilityData} />
             <div className="table-credibilty">
                 <Table
                     striped
@@ -347,6 +456,34 @@ const CredibilityEstablishment = () => {
                     </Col>
                 </Row>
             )}
+           <Modal
+    show={modalShowhide}
+    onHide={() => setModalShowhide(false)}
+    aria-labelledby="example-modal-sizes-title-lg"
+    className="custom-modal-credibility"
+>
+
+
+
+    <div className="credibility-job">
+    <Modal.Header closeButton>
+    <span className="custom-color fw-bold custom-font-size">
+    Price: {'₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(PlanData?.[0]?.price || 0)}
+</span>
+
+    </Modal.Header>
+       
+        <p className="text-muted small">
+            Note: This payment is required to unlock access to advanced search using PAN details.
+        </p>
+        <div className="credibility-btn-div">
+            <Button size="sm" onClick={()=>Credibility_initiatePayment(PlanData?.[0]?._id)}>
+                Pay Now
+            </Button>
+        </div>
+    </div>
+</Modal>
+
         </div>
     );
 };

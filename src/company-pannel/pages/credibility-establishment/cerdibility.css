@@ -101,3 +101,38 @@
         height: auto;
     }
 }
+
+
+.credibility-job {
+    width: 292px;
+    height: 202px;
+    background: rgb(255, 255, 255);
+    border-radius: 12px;
+    padding: 3px;
+}
+.credibility-job p {
+    margin-top: 14px;
+    font-size: 0.96rem;
+    font-weight: 400;
+    text-align: center;
+}
+.credibility-btn-div{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.credibility-btn-div button {
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+    background: #3b96e1;
+    font-weight: 700;
+}
+.custom-modal-credibility .modal-dialog {
+    width: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Makes sure the modal takes up full viewport height */
+}

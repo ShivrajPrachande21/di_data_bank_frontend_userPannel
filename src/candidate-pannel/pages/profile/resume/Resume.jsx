@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import './resume.css';
-import html2pdf from 'html2pdf.js';
+import html2pdf, { f } from 'html2pdf.js';
 import {
     Button,
     Col,
@@ -25,6 +25,7 @@ const Resume = () => {
     const [hideInput, setHideInput] = useState(false);
     const [description, setDescription] = useState('');
     const [resumeCount, setResumeCoun] = useState(0);
+    const [applyLoading, setApplyLoading] = useState(false);
     const navigate = useNavigate();
     // Generate Resume from Backend
     const GenerateResume = async () => {
@@ -138,6 +139,7 @@ const Resume = () => {
     };
 
     const storeResume = async () => {
+        setApplyLoading(true);
         const token = localStorage.getItem('Candidate_token');
         const base64Content = btoa(resume);
         if (!token) {
@@ -154,9 +156,11 @@ const Resume = () => {
                 );
 
                 if (response?.status == 200 || response?.status == 201) {
+                    setApplyLoading(false);
                 }
             } catch (error) {
                 toast.error('Failed to apply Job');
+                setApplyLoading(false);
             }
         }
     };
@@ -251,19 +255,20 @@ const Resume = () => {
             )}
 
             <div className="download-candidate-resume mt-2">
-                <Button
-                    disabled={resumeCount == 0 || hideInput}
-                    size="sm"
-                    onClick={GenerateResume}
-                >
-                    {loading ? (
-                        <Button size="sm">
-                            <Spinner size="sm" />{' '}
-                        </Button>
-                    ) : (
-                        'Generate'
-                    )}
-                </Button>
+                {loading ? (
+                    <Button size="sm" style={{ width: '10%' }}>
+                        <Spinner size="sm" />{' '}
+                    </Button>
+                ) : (
+                    <Button
+                        disabled={resumeCount == 0 || hideInput}
+                        size="sm"
+                        onClick={GenerateResume}
+                    >
+                        Generate
+                    </Button>
+                )}
+
                 {/* <Button size="sm" onClick={downloadResume}>
                     Download
                 </Button> */}
@@ -300,13 +305,23 @@ const Resume = () => {
                     >
                         No
                     </Button>
-                    <Button
-                        size="sm"
-                        onClick={NavigateToSavedJobs}
-                        style={{ width: '50%' }}
-                    >
-                        Yes
-                    </Button>
+                    {applyLoading ? (
+                        <Button
+                            size="sm"
+                            onClick={NavigateToSavedJobs}
+                            style={{ width: '50%' }}
+                        >
+                            <Spinner size="sm" />{' '}
+                        </Button>
+                    ) : (
+                        <Button
+                            size="sm"
+                            onClick={NavigateToSavedJobs}
+                            style={{ width: '50%' }}
+                        >
+                            Yes
+                        </Button>
+                    )}
                 </Modal.Body>
             </Modal>
         </div>

@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import BaseUrl from '../../../../../services/BaseUrl';
+import { useSupport } from '../../../../../context/SupportContext';
+import DisplayImage from '../../../../../components/DisplayImage/DisplayImage';
 
 const Longlist = () => {
     const {
@@ -16,7 +18,16 @@ const Longlist = () => {
         shortlis_candidate,
         fetch_Job_Longlist
     } = useContext(CreateJobContext);
-    console.log('appud Longolis', longlistData);
+    const {
+        smShowGloble,
+        setSmShowGloble,
+        imagesGloble,
+        setImageGloble,
+        handleGlobleModal,
+        pdfGloble,
+        setPdfGloble,
+        getFileTypeFromHeaders
+    } = useSupport();
     const [modalShow, setModalShow] = useState(false);
     const [currentResume, setCurrentResume] = useState('');
     const [user_id, setUser_id] = useState('');
@@ -68,10 +79,6 @@ const Longlist = () => {
         setModalVisible(false); // Close the modal after confirming
     };
 
-    useEffect(() => {
-        fetch_Job_Longlist();
-    }, [location]);
-
     const handleRoundChange = (candidateIndex, event) => {
         const selectedIndex = event.target.value;
         setSelectedRounds(prevState => ({
@@ -96,6 +103,22 @@ const Longlist = () => {
             }
         } catch (error) {}
     };
+    async function getImage(image) {
+        const fileType = await getFileTypeFromHeaders(image);
+        if (fileType === 'image') {
+            setImageGloble(image);
+        } else if (fileType === 'pdf') {
+            setPdfGloble(image);
+        } else {
+            console.log('Unsupported file type.');
+        }
+
+        setSmShowGloble(true);
+    }
+    useEffect(() => {
+        fetch_Job_Longlist();
+    }, [location]);
+
     return (
         <>
             <Modal show={isModalVisible} onHide={showModal} centered>
@@ -209,7 +232,7 @@ const Longlist = () => {
                                                 alt=""
                                                 height="20px"
                                                 onClick={() =>
-                                                    handleShow(item?.resumeUrl)
+                                                    getImage(item?.resumeUrl)
                                                 } // Pass the correct resume link
                                             />
                                         </td>
@@ -343,6 +366,7 @@ const Longlist = () => {
                     </tbody>
                 </Table>
 
+                {smShowGloble && <DisplayImage />}
                 <Modal
                     show={modalShow}
                     onHide={handleClose}

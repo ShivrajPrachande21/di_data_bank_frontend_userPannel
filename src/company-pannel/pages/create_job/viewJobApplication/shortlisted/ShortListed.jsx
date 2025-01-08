@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import BaseUrl from '../../../../../services/BaseUrl';
 import axios from 'axios';
+import DisplayImage from './../../../../../components/DisplayImage/DisplayImage';
+import { useSupport } from '../../../../../context/SupportContext';
 const ShortListed = () => {
     const {
         shortListData,
@@ -15,6 +17,16 @@ const ShortListed = () => {
         fetch_shortlist,
         fetch_hire_candidate
     } = useContext(CreateJobContext);
+    const {
+        smShowGloble,
+        setSmShowGloble,
+        imagesGloble,
+        setImageGloble,
+        handleGlobleModal,
+        pdfGloble,
+        setPdfGloble,
+        getFileTypeFromHeaders
+    } = useSupport();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,7 +34,6 @@ const ShortListed = () => {
         fetch_shortlist();
     }, [location]);
 
-    console.log('shortListData', shortListData);
     const [modalShow, setModalShow] = useState(null);
     const [currentResume, setCurrentResume] = useState('');
     const [user_id, setuser_id] = useState('');
@@ -34,7 +45,6 @@ const ShortListed = () => {
         navigate('/main/view-job-application/job-offred');
     };
     const reject_finalise_candidate = async user_id => {
-        console.log('user_id finalise', user_id);
         const jobid = localStorage.getItem('job_id');
         try {
             const response = await axios.put(
@@ -87,6 +97,7 @@ const ShortListed = () => {
     const showModal = user_id => {
         setuser_id(user_id);
         setModalVisible(prev => !prev);
+        // handleGlobleModal();
     };
     const handle_finalise = async user_id => {
         setFinalise_userId(user_id);
@@ -105,7 +116,6 @@ const ShortListed = () => {
     };
 
     const naviagte_hired = user_id => {
-        console.log('user_id hka', user_id);
         localStorage.setItem('hired', user_id);
         fetch_hire_candidate(user_id);
         navigate('/main/view-job-application/hired');
@@ -123,6 +133,29 @@ const ShortListed = () => {
 
         showModal(false);
     };
+
+    async function getImage(image) {
+        const fileType = await getFileTypeFromHeaders(image);
+        if (fileType === 'image') {
+            setImageGloble(image);
+        } else if (fileType === 'pdf') {
+            setPdfGloble(image);
+        } else {
+            console.log('Unsupported file type.');
+        }
+
+        setSmShowGloble(true);
+    }
+
+    // useEffect(() => {
+    //     setPdfGloble(
+    //         currentResume
+    //             ? isGoogleDriveLink(currentResume)
+    //                 ? getEmbedLink(currentResume)
+    //                 : currentResume
+    //             : null
+    //     );
+    // });
 
     return (
         <>
@@ -230,7 +263,7 @@ const ShortListed = () => {
                     <tbody style={{ fontSize: '0.7rem' }}>
                         {shortListData?.map((item, index) => (
                             <>
-                                <tr>
+                                <tr key={index}>
                                     <td style={{ borderLeft: 'none' }}>
                                         {index + 1}
                                     </td>
@@ -249,7 +282,7 @@ const ShortListed = () => {
                                             alt=""
                                             height="20px"
                                             onClick={() =>
-                                                handleShow(item?.resumeUrl)
+                                                getImage(item?.resumeUrl)
                                             } // Pass the correct resume link
                                         />
                                     </td>
@@ -330,6 +363,7 @@ const ShortListed = () => {
                     </tbody>
                 </Table>
             </div>
+            {smShowGloble && <DisplayImage />}
             <Modal
                 show={modalShow}
                 onHide={handleClose}

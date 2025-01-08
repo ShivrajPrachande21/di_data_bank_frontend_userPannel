@@ -11,6 +11,9 @@ export const SupportProvider = ({ children }) => {
     const [modalShow, setModalShow] = React.useState(false);
     const [mailModelShow, setMailModelShow] = React.useState(false);
     const [mailData, setMailData] = useState(null);
+    const [smShowGloble, setSmShowGloble] = useState(false);
+    const [imagesGloble, setImageGloble] = useState(null);
+    const [pdfGloble, setPdfGloble] = useState(null);
     const fetch_all_issue = async () => {
         const token = localStorage.getItem('companyToken');
 
@@ -72,6 +75,27 @@ export const SupportProvider = ({ children }) => {
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
 
+    async function getFileTypeFromHeaders(fileUrl) {
+        try {
+            const response = await fetch(fileUrl, { method: 'HEAD' });
+            const contentType = response.headers.get('content-type');
+
+            if (contentType.startsWith('image')) {
+                return 'image';
+            } else if (contentType === 'application/pdf') {
+                return 'pdf';
+            }
+        } catch (error) {
+            console.error('Error checking file type:', error);
+        }
+
+        return 'unknown';
+    }
+    const handleGlobleModal = () => {
+        setSmShowGloble(prev => !prev);
+        setImageGloble(null);
+    };
+
     useEffect(() => {
         fetch_all_issue();
         // fetchCompanyMails();
@@ -79,6 +103,9 @@ export const SupportProvider = ({ children }) => {
     return (
         <SupportContext.Provider
             value={{
+                pdfGloble,
+                imagesGloble,
+                smShowGloble,
                 mailData,
                 data,
                 fetch_all_issue,
@@ -92,7 +119,13 @@ export const SupportProvider = ({ children }) => {
                 RemovePath,
                 setMailData,
                 fetchCompanyMails,
-                setData
+                setData,
+                setSmShowGloble,
+                setImageGloble,
+
+                setPdfGloble,
+                getFileTypeFromHeaders,
+                handleGlobleModal
             }}
         >
             {children}

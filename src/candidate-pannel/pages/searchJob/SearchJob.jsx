@@ -108,12 +108,12 @@ const SearchJob = () => {
     };
 
     // function for Apply job
-    const ApplyTOJob = id => {
+    const ApplyTOJob = async id => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
             setShowModal(true);
             return;
         }
-        applyTo_job(id);
+        await applyTo_job(id);
     };
 
     // function to Save Jobs
@@ -321,7 +321,7 @@ const SearchJob = () => {
                         }
                         endMessage={
                             <div style={{ textAlign: 'center' }}>
-                                <Spinner size="sm" variant="primary" />
+                                No more data to load...
                             </div>
                         }
                         height={450}
@@ -624,8 +624,9 @@ const SearchJob = () => {
             <Modal
                 show={modalVisible}
                 onHide={() => setModalVisible(false)}
-                // onMouseLeave={handleMouseLeave}
                 centered
+                onMouseLeave={handleMouseLeave}
+                style={{ maxHeight: '90vh', height: '90vh' }}
             >
                 <div
                     className="p-4"
@@ -673,13 +674,12 @@ const SearchJob = () => {
                                     </p>
                                 </h6>
                                 <div className="green-thik">
-                                    <img
+                                    {/* <img
                                         src={oui_cross}
                                         alt=""
                                         height="20px"
                                         style={{ cursor: 'pointer' }}
-                                        onClick={() => setModalVisible(false)}
-                                    />
+                                        onClick={() => setModalVisible(false)} */}
                                 </div>
                             </div>
                         </Col>

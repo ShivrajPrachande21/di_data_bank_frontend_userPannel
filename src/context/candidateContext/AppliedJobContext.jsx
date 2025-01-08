@@ -84,7 +84,7 @@ export const AppliedJobProvider = ({ children }) => {
                 //     ...prevCandidates,
                 //     ...newItem
                 // ]);
-                setsavedJobData(newItem);
+                setsavedJobData(response?.data?.data);
                 if (data.length == 10) {
                     setHasMore(true);
                     setCurrentPage(parseInt(page) + 1);
@@ -96,6 +96,25 @@ export const AppliedJobProvider = ({ children }) => {
             }
         }
     };
+
+     const applyFromProfile = async jobId => {
+            const token = localStorage.getItem('Candidate_token');
+            if (!token) {
+                return;
+            } else {
+                const decodedToken = jwtDecode(token);
+                const userId = decodedToken?._id;
+                try {
+                    const response = await axios.post(
+                        `${BaseUrl}candidate/jobapply_resume/${userId}/${jobId}`
+                    );
+                    if (response.status == 200 || 201) {
+                        toast.success('Job Applied successfully ');
+                        fetchSavedJob();
+                    }
+                } catch (error) {}
+            }
+        };
 
     // reject offerd letter
     const reject_Offered_letter = async jobId => {
@@ -138,9 +157,9 @@ export const AppliedJobProvider = ({ children }) => {
         }
     };
 
-    // useEffect(() => {
-    //     fetchSavedJob();
-    // }, []);
+    useEffect(() => {
+        fetchSavedJob();
+    }, []);
     return (
         <AppliedJobContext.Provider
             value={{
@@ -152,6 +171,7 @@ export const AppliedJobProvider = ({ children }) => {
                 hasMore,
                 setHasMore,
                 fetchSavedJob,
+                applyFromProfile,
                 savedJobData,
                 setsavedJobData,
                 reject_Offered_letter,

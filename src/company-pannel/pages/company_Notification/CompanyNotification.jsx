@@ -177,6 +177,10 @@ const CompanyNotification = ({ handleClose }) => {
         for (const item of newCompanyNot || []) {
             handleCloseNewCompany(item?._id);
         }
+
+        for(const item of notifications){
+            handle_notification(item?._id);
+        }
     };
 
     const handleCloseShortlistAndView=async(jobId)=>{

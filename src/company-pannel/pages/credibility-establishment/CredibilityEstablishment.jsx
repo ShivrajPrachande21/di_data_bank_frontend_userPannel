@@ -69,12 +69,32 @@ const CredibilityEstablishment = () => {
         }
     };
 
+    const GetHistoryComapny=async(PAN)=>{
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const cmpId = decodedToken?._id;
+        try{
+            const response = await axios.get(
+                `${BaseUrl}company/credibility/status/${cmpId}/${PAN}`
+            );
+           return response?.data
+        }catch(error){
+
+        }
+    }
+
     const fetchCeridibilityDetails = async () => {
         if (PAN.trim() == '') {
             toast.error('Please enter PAN number to search');
             return;
         } else {
+            //here we are tesing the history
+          let result=  await GetHistoryComapny(PAN)
+          if(result.status==true){
+         await fetchCandidateAllDetails();
+          }else{
             await handle_Credibility();
+          }
             //setLoading(true);
         }
     };

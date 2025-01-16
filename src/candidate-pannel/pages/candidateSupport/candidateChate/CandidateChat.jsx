@@ -13,7 +13,6 @@ const socket = io('http://65.20.91.47:4000');
 function CandidateChat() {
     const location = useLocation();
     const { id } = useParams();
-    console.log('getting params temps testing ', id);
 
     const navigateBack = useNavigate();
     const [message, setMessage] = useState('');

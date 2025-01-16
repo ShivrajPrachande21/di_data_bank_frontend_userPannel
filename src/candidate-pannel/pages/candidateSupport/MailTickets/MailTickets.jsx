@@ -201,7 +201,11 @@ const MailTickets = () => {
                                                     }}
                                                 >
                                                     {toCamelCase_Name(
-                                                        item?.status
+                                                        item?.status === 'solved'
+                                                        ? 'Solved'
+                                                        : item?.status === 'reject'
+                                                        ? 'Rejected'
+                                                        : 'Pending'
                                                     )}
                                                 </p>
                                             </td>

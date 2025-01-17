@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import backgroundImage from '../../assets/images/AdminLoginPanelBackGround.png';
+import backgroundImage from  '../../assets/images/BoarSearchBgImg.jpg';
 import './company_r.css';
 import { useNavigate } from 'react-router-dom';
 import { useRegistration } from '../../context/RegistrationContex';
+import WdcLogo from '../../assets/images/Withoutbg.png';
 import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import { toast } from 'react-toastify';
@@ -138,6 +139,12 @@ const CompanyRegistration = () => {
                     <img src={backgroundImage} alt="" />
                 </div>
                 <div className="login-FormDiv">
+                     <div className="top">
+                                            
+                                                                    <div className="Head">
+                                                                        <img src={WdcLogo} alt="" style={{width:'40%',marginBottom:'10px'}} />
+                                                                    </div>
+                                                                </div>
                     <div className="loginHead">
                         <p>Registration</p>
                     </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Col, Form, Row, Button, InputGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import background from '../assets/images/AdminLoginPanelBackGround.png';
+import background from '../assets/images/BoarSearchBgImg.jpg';
 import blackCross from '../assets/images/blackCross.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForgotPassword } from '../context/ForgotpasswordContext';

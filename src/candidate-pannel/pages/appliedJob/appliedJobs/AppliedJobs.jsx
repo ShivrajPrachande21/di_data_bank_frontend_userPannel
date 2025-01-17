@@ -57,7 +57,7 @@ const AppliedJobs = () => {
         return () => {
             setAppliedJobData([]);
             setCurrentPage(1);
-            setSelectedValue('All')
+            setSelectedValue('All');
         };
     }, []);
 
@@ -167,20 +167,22 @@ const AppliedJobs = () => {
                                                 }}
                                             >
                                                 <span className="card-table-span">
-                                                    Loction:
+                                                    Location:
                                                 </span>{' '}
                                             </td>
                                             <td>
                                                 {' '}
-                                                
-
                                                 <span className="card-table-span">
-    {item?.location
-        ? item.location.length > 15
-            ? `${item.location.substring(0, 15)}...`
-            : item.location
-        : 'N/A'}
-</span>
+                                                    {item?.location
+                                                        ? item.location.length >
+                                                          15
+                                                            ? `${item.location.substring(
+                                                                  0,
+                                                                  15
+                                                              )}...`
+                                                            : item.location
+                                                        : 'N/A'}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -215,15 +217,17 @@ const AppliedJobs = () => {
                                             </td>
                                             <td>
                                                 {' '}
-                                                
                                                 <span className="card-table-span">
-    {item?.education
-        ? item.education.length > 15
-            ? `${item.education.substring(0, 15)}...`
-            : item.education
-        : 'N/A'}
-</span>
-
+                                                    {item?.education
+                                                        ? item.education
+                                                              .length > 15
+                                                            ? `${item.education.substring(
+                                                                  0,
+                                                                  15
+                                                              )}...`
+                                                            : item.education
+                                                        : 'N/A'}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>

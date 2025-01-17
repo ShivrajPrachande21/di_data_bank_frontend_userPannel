@@ -195,7 +195,7 @@ const DashboardCandidate = () => {
                                                 fontWeight: '600'
                                             }}
                                         >
-                                          {DashboardData?.existedPlane
+                                            {DashboardData?.existedPlane
                                                 ?.top_candidate || 0}
                                         </h4>
                                         <p>AI Resume Create </p>
@@ -222,23 +222,26 @@ const DashboardCandidate = () => {
                                                 ?.interview_question || 0}
                                         </h4>
                                         {DashboardData?.existedPlane
-                                                ?.job_recommandation?( <p>AI Job Recommendation </p>):null}
-                                       
+                                            ?.job_recommandation ? (
+                                            <p>AI Job Recommendation </p>
+                                        ) : null}
+
                                         {DashboardData?.existedPlane
-                                                ?.customer_support?(  <p>Customer support</p>
-                                                ):null }
-                                      
+                                            ?.customer_support ? (
+                                            <p>Customer support</p>
+                                        ) : null}
                                     </div>
                                     <div className="expiry-date-sub">
-                                    {DashboardData?.existedPlane
-                                    ?.expiresAt?
-                                        <p>
-                                            Ends on :
-                                            {formatDate(
-                                                DashboardData?.existedPlane
-                                                    ?.expiresAt || 0
-                                            )}
-                                        </p>:null}
+                                        {DashboardData?.existedPlane
+                                            ?.expiresAt ? (
+                                            <p>
+                                                Ends on :
+                                                {formatDate(
+                                                    DashboardData?.existedPlane
+                                                        ?.expiresAt || 0
+                                                )}
+                                            </p>
+                                        ) : null}
                                     </div>
                                 </div>
                             </Card>
@@ -266,7 +269,7 @@ const DashboardCandidate = () => {
                                     </div>
                                 </div>
                                 <div className="ai-cards-div">
-                                    <p>Offer Accpected Count</p>{' '}
+                                    <p>Offer Accepted Count</p>{' '}
                                     <h4 style={{ color: '#008000' }}>
                                         {' '}
                                         {apiResponse?.offer_accepted_count || 0}

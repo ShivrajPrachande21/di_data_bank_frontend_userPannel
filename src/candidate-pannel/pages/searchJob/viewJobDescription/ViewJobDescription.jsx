@@ -219,7 +219,7 @@ const ViewJobDescription = () => {
                                     }}
                                 >
                                     <span className="card-table-span">
-                                        Loction:
+                                        Location:
                                     </span>{' '}
                                 </td>
                                 <td>

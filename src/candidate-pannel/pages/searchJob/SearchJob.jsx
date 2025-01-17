@@ -1,7 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import DOMPurify from 'dompurify';
 import { jwtDecode } from 'jwt-decode';
-import { Button, Col, Row, Image, Form, Spinner, Modal } from 'react-bootstrap';
+import {
+    Button,
+    Col,
+    Row,
+    Image,
+    Form,
+    Spinner,
+    Modal,
+    Accordion
+} from 'react-bootstrap';
 import './searchjob.css';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import whiteSeacrh from '../../../assets/images/whiteSeacrh.png';
@@ -33,6 +43,7 @@ const SearchJob = () => {
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
     );
+    const [hideDesc, setHideDesc] = useState(false);
     const [hoveredCardId, setHoveredCardId] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const activeCardRef = useRef(null);
@@ -121,6 +132,7 @@ const SearchJob = () => {
         save_job(id);
     };
 
+    const sanitizedDescription = DOMPurify.sanitize(JobData?.description);
     useEffect(() => {
         const render = localStorage.getItem('render');
 
@@ -314,11 +326,11 @@ const SearchJob = () => {
                         dataLength={visibleItems && visibleItems.length}
                         next={fetch_search_job}
                         hasMore={hasMore}
-                        loader={
-                            <div style={{ textAlign: 'center' }}>
-                                <Spinner size="sm" variant="primary" />
-                            </div>
-                        }
+                        // loader={
+                        //     <div style={{ textAlign: 'center' }}>
+                        //         <Spinner size="sm" variant="primary" />
+                        //     </div>
+                        // }
                         endMessage={
                             <div style={{ textAlign: 'center' }}>
                                 No more data to load...
@@ -449,7 +461,7 @@ const SearchJob = () => {
                                                         }}
                                                     >
                                                         <span className="card-table-span">
-                                                            Loction:
+                                                            Location:
                                                         </span>{' '}
                                                     </td>
                                                     <td>
@@ -651,8 +663,8 @@ const SearchJob = () => {
                                     )}
                                     roundedCircle
                                     alt="Profile"
-                                    width="40" // Set the desired width
-                                    height="40" // Set the desired height
+                                    width="40"
+                                    height="40"
                                 />
 
                                 <h6>
@@ -738,7 +750,7 @@ const SearchJob = () => {
                                         }}
                                     >
                                         <span className="card-table-span">
-                                            Loction:
+                                            Location:
                                         </span>{' '}
                                     </td>
                                     <td>
@@ -840,6 +852,30 @@ const SearchJob = () => {
                             </table>
                         </Col>
                     </Row>
+                    <Accordion>
+                        <Accordion.Item eventKey="1">
+                            <Accordion.Header
+                                style={{
+                                    fontSize: '0.9rem'
+                                }}
+                                onClick={() => setHideDesc(prev => !prev)}
+                            >
+                                Job Description
+                            </Accordion.Header>
+                            {hideDesc ? (
+                                <div className="job-description-view">
+                                    <div
+                                        className="job-discription"
+                                        dangerouslySetInnerHTML={{
+                                            __html: sanitizedDescription
+                                        }}
+                                    />
+                                </div>
+                            ) : (
+                                ''
+                            )}
+                        </Accordion.Item>
+                    </Accordion>
                 </div>
             </Modal>
         </>

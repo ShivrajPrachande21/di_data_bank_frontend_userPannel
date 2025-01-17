@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './registration.css';
-import backgroundImage from '../assets/images/AdminLoginPanelBackGround.png';
+import backgroundImage from '../assets/images/BoarSearchBgImg.jpg';
 import { Form, Button, InputGroup, Row, Col, Alert } from 'react-bootstrap';
-
+import WdcLogo from '../assets/images/Withoutbg.png';
 import { Link, useNavigate } from 'react-router-dom';
 import useRegistration from './useRegistration';
 
@@ -61,8 +61,11 @@ const Registration = () => {
                 </div>
                 <div className="FormDiv">
                     <div className="top">
-                        <div className="head"></div>
-                    </div>
+                        
+                                                <div className="Head">
+                                                    <img src={WdcLogo} alt="" style={{width:'40%',marginBottom:'10px'}} />
+                                                </div>
+                                            </div>
                     <div className="loginHead">
                         <p>Registration</p>
                     </div>

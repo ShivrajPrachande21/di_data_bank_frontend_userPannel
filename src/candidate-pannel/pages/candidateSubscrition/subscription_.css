@@ -22,8 +22,8 @@
 .sub1 {
     padding: 14px;
     border-radius: 20px;
-    height: 74vh;
-    max-height: 80vh;
+    max-height: 74vh;
+    max-height: 70vh;
     background: linear-gradient(
         126.92deg,
         #1c7ac7 2.12%,
@@ -70,8 +70,9 @@
     ); /* Offset the button by half its width for proper centering */
     background: #19588c;
     font-weight: 700;
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 8px;
+    width: 90%;
 }
 
 .sub-date {
@@ -106,8 +107,8 @@
     position: relative;
     padding: 14px;
     border-radius: 20px;
-    height: 74vh;
-    max-height: 80vh;
+    max-height: 74vh;
+    max-height: 70vh;
     background: white;
     border: 2px solid #3b96e1;
     width: 282px;

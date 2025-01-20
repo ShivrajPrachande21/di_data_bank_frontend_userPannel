@@ -96,6 +96,7 @@ const EditCompanyProfile = ({ setLgShow }) => {
     const handleSubmit = async e => {
         e.preventDefault();
         await submitForm(formFields, GST, PAN, profileImage);
+        await FormDataFunction();
     };
 
     const fromData = async () => {

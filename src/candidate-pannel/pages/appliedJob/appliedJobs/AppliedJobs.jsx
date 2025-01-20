@@ -64,12 +64,15 @@ const AppliedJobs = () => {
     return (
         <>
             <InfiniteScroll
+                style={{ height: '100vh', marginTop: '10px' }}
                 dataLength={appliedJobData && appliedJobData.length}
                 next={fetch_applied_job}
                 hasMore={hasMore}
                 loader={
                     <div style={{ textAlign: 'center' }}>
-                        {appliedJobData && appliedJobData.length > 1 ? (
+                        {appliedJobData &&
+                        appliedJobData.length < 1 &&
+                        hasMore == true ? (
                             <Spinner size="sm" variant="primary" />
                         ) : null}
                     </div>

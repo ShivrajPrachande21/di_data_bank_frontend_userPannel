@@ -22,7 +22,7 @@ import { toast } from 'react-toastify';
 import BaseUrl from '../../../services/BaseUrl';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import InfiniteScroll from 'react-infinite-scroll-component'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const HireCandidate = () => {
     const {
@@ -30,11 +30,13 @@ const HireCandidate = () => {
         setappliedcandidate,
         resume_loading,
         SearchLoading,
-        seachBarData, setseachBarData,
+        seachBarData,
+        setseachBarData,
         setLoading,
         loading,
         setError,
-        currentPage,setCurrentPage,
+        currentPage,
+        setCurrentPage,
         error,
         Subscription_Data,
         downloadSelectedEmails,
@@ -47,8 +49,8 @@ const HireCandidate = () => {
     const locate = useLocation();
 
     const [fiedEmpty, setfiedEmpty] = useState('');
-    const [hasMore,setHasmore]=useState(true);
-    const [totalUser,setTotalUser]=useState(0);
+    const [hasMore, setHasmore] = useState(true);
+    const [totalUser, setTotalUser] = useState(0);
 
     const handle_sideBar_change = e => {
         const { name, value } = e.target;
@@ -56,7 +58,7 @@ const HireCandidate = () => {
         setfiedEmpty('');
     };
     const handle_search = () => {
-    Search_bye_keyWord(seachBarData);
+        Search_bye_keyWord(seachBarData);
     };
 
     const [selectAllChecked, setSelectAllChecked] = useState(false);
@@ -190,8 +192,6 @@ const HireCandidate = () => {
         }
     }
 
-    
-
     const fetchCandidates = async () => {
         setLoading(true);
         const token = localStorage.getItem('companyToken');
@@ -211,9 +211,9 @@ const HireCandidate = () => {
             const newCandidates = response.data?.data;
             setappliedcandidate(prevCandidates => [
                 ...prevCandidates,
-                ...newCandidates,
+                ...newCandidates
             ]);
-            setTotalUser(response.data?.TotalCandidate)
+            setTotalUser(response.data?.TotalCandidate);
 
             if (newCandidates.length < 50) {
                 setHasmore(false);
@@ -227,22 +227,21 @@ const HireCandidate = () => {
             setLoading(false);
         }
     };
-    
+
     useEffect(() => {
-        if(appliedcandidate.length==0){
-        rendering();
-        get_subscription_details();
-        fetchCandidates()
+        if (appliedcandidate.length == 0) {
+            rendering();
+            get_subscription_details();
+            fetchCandidates();
         }
     }, []);
-   
-    
- useEffect(()=>{
+
+    useEffect(() => {
         return () => {
             setappliedcandidate([]);
-            setCurrentPage(1)
+            setCurrentPage(1);
         };
-    },[])
+    }, []);
 
     return (
         <div className="hire-candidate">
@@ -314,7 +313,18 @@ const HireCandidate = () => {
                 <Col xs={12}>
                     <div className="serach-result">
                         <div className="para">
-                            <p>Results: {appliedcandidate_Count}<span style={{ fontSize: '0.8rem', margin: '0 5px' }}>/</span>{totalUser}</p>
+                            <p>
+                                Results: {appliedcandidate_Count}
+                                <span
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        margin: '0 5px'
+                                    }}
+                                >
+                                    /
+                                </span>
+                                {totalUser}
+                            </p>
                         </div>
 
                         <div className="download-email">
@@ -382,103 +392,107 @@ const HireCandidate = () => {
                 </Col>
             </Row>
             <Row className="mt-2">
-            <InfiniteScroll
-    dataLength={appliedcandidate.length}
-    next={fetchCandidates}
-    hasMore={hasMore} 
-    loader={<p>Loading...</p>} 
-    endMessage={<p>No more candidates to display.</p>}
-    height={450}
->
-                {appliedcandidate.map((candidate, index) => (
-                    <Col xs={12} className="mb-2" key={index}>
-                        <div className="result-array">
-                            {}
-                            <div
-                                className="result-left"
-                                onClick={() =>
-                                    naviagte_view_candidate(candidate?._id)
-                                }
-                            >
-                                <div className="result-img">
-                                    <img
-                                        src={
-                                            candidate?.candidateDetails?.profile
-                                                ? candidate?.candidateDetails
-                                                      ?.profile
-                                                : altprofile
-                                        }
-                                        style={{
-                                            width: '100%',
-                                            height: '100%'
-                                        }}
-                                    />
-                                </div>
-                                <div className="result-text">
-                                    <h4>
-                                        {candidate?.basicDetails[0]?.name}
+                <InfiniteScroll
+                    style={{ height: '100vh' }}
+                    dataLength={appliedcandidate.length}
+                    next={fetchCandidates}
+                    hasMore={hasMore}
+                    loader={<p>Loading...</p>}
+                    endMessage={<p>No more candidates to display.</p>}
+                    height={450}
+                >
+                    {appliedcandidate.map((candidate, index) => (
+                        <Col xs={12} className="mb-2" key={index}>
+                            <div className="result-array">
+                                {}
+                                <div
+                                    className="result-left"
+                                    onClick={() =>
+                                        naviagte_view_candidate(candidate?._id)
+                                    }
+                                >
+                                    <div className="result-img">
+                                        <img
+                                            src={
+                                                candidate?.candidateDetails
+                                                    ?.profile
+                                                    ? candidate
+                                                          ?.candidateDetails
+                                                          ?.profile
+                                                    : altprofile
+                                            }
+                                            style={{
+                                                width: '100%',
+                                                height: '100%'
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="result-text">
+                                        <h4>
+                                            {candidate?.basicDetails[0]?.name}
 
-                                        {/* Tool-tip componet */}
-                                        {candidate?.personalDetails[0]
-                                            ?.Aadhar_verified_status &&
-                                        candidate?.personalDetails[0]
-                                            ?.Pan_verified_status ? (
-                                            <OverlayTrigger
-                                                placement="top"
-                                                overlay={
-                                                    <div
-                                                        style={{
-                                                            position:
-                                                                'absolute',
-                                                            backgroundColor:
-                                                                'white',
-                                                            padding: '2px 10px',
-                                                            color: '#008000',
-                                                            borderRadius: 3,
-                                                            border: '1px solid #008000'
-                                                        }}
-                                                    >
-                                                        Verified
-                                                    </div>
-                                                }
-                                            >
-                                                <img
-                                                    src={Verified}
-                                                    alt="Verified"
-                                                    width="19"
-                                                />
-                                            </OverlayTrigger>
-                                        ) : null}
-                                    </h4>
-                                    <p>
-                                        {
-                                            candidate?.workDetails[0]
-                                                ?.aspiring_position
-                                        }
-                                    </p>
+                                            {/* Tool-tip componet */}
+                                            {candidate?.personalDetails[0]
+                                                ?.Aadhar_verified_status &&
+                                            candidate?.personalDetails[0]
+                                                ?.Pan_verified_status ? (
+                                                <OverlayTrigger
+                                                    placement="top"
+                                                    overlay={
+                                                        <div
+                                                            style={{
+                                                                position:
+                                                                    'absolute',
+                                                                backgroundColor:
+                                                                    'white',
+                                                                padding:
+                                                                    '2px 10px',
+                                                                color: '#008000',
+                                                                borderRadius: 3,
+                                                                border: '1px solid #008000'
+                                                            }}
+                                                        >
+                                                            Verified
+                                                        </div>
+                                                    }
+                                                >
+                                                    <img
+                                                        src={Verified}
+                                                        alt="Verified"
+                                                        width="19"
+                                                    />
+                                                </OverlayTrigger>
+                                            ) : null}
+                                        </h4>
+                                        <p>
+                                            {
+                                                candidate?.workDetails[0]
+                                                    ?.aspiring_position
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="right-">
+                                    <Form>
+                                        <Form.Check
+                                            type="checkbox"
+                                            id="custom-checkbox"
+                                            style={{
+                                                marginTop: '10px',
+                                                marginRight: '6px'
+                                            }}
+                                            checked={selectedCandidates[index]}
+                                            onChange={handleCheckboxChange(
+                                                index,
+                                                candidate?._id
+                                            )}
+                                        />
+                                    </Form>
                                 </div>
                             </div>
-                            <div className="right-">
-                                <Form>
-                                    <Form.Check
-                                        type="checkbox"
-                                        id="custom-checkbox"
-                                        style={{
-                                            marginTop: '10px',
-                                            marginRight: '6px'
-                                        }}
-                                        checked={selectedCandidates[index]}
-                                        onChange={handleCheckboxChange(
-                                            index,
-                                            candidate?._id
-                                        )}
-                                    />
-                                </Form>
-                            </div>
-                        </div>
-                    </Col>
-                ))}
-            </InfiniteScroll>
+                        </Col>
+                    ))}
+                </InfiniteScroll>
             </Row>
             <Outlet />
         </div>

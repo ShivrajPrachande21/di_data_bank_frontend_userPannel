@@ -11,6 +11,21 @@ export const SearchJobProvider = ({ children }) => {
     const [visibleItems, setVisibleItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [JobData, setJobdata] = useState();
+    const [totalPage, SetTotalPage] = useState(0);
+
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [selectValue, setselectValue] = useState(itemsPerPage);
+
+    const handleSelect = e => {
+        const value = parseInt(e.target.value, 10);
+        setselectValue(value);
+        setItemsPerPage(value);
+        setCurrentPage(1); // Reset to first page when items per page change
+    };
+
+    const handlePageChange = pageNumber => {
+        setCurrentPage(pageNumber);
+    };
     const fetch_search_job = async () => {
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
@@ -22,26 +37,11 @@ export const SearchJobProvider = ({ children }) => {
                     `${BaseUrl}candidate/getunappliedjob/${userId}/${currentPage}/${10}`
                 );
                 let data = response?.data?.data;
-                let page = response?.data?.page;
-                const newItems = data.filter(
-                    item =>
-                        !visibleItems.some(
-                            existingItem => existingItem._id == item._id
-                        )
-                );
-
-                setVisibleItems(prevCandidates => [
-                    ...prevCandidates,
-                    ...newItems
-                ]);
-                if (data.length == 10) {
-                    setHasMore(true);
-                    setCurrentPage(parseInt(page) + 1);
-                } else {
-                    setHasMore(false);
-                }
+                let page = response?.data?.totalPages;
+                SetTotalPage(page);
+                setVisibleItems(data);
             } catch (err) {
-                setHasMore(false);
+                // setHasMore(false);
             }
         }
     };
@@ -59,7 +59,7 @@ export const SearchJobProvider = ({ children }) => {
                 );
                 if (response.status == 200 || response?.status == 201) {
                     toast.success('Job Applied successfully ');
-                    // fetch_search_job();
+                    fetch_search_job();
                 }
             } catch (error) {}
         }
@@ -95,6 +95,7 @@ export const SearchJobProvider = ({ children }) => {
     return (
         <SearchJobContext.Provider
             value={{
+                selectValue,
                 JobData,
                 setJobdata,
                 fetch_search_job,
@@ -105,7 +106,11 @@ export const SearchJobProvider = ({ children }) => {
                 setVisibleItems,
                 currentPage,
                 setCurrentPage,
-                getSingleJobDetails
+                getSingleJobDetails,
+                handleSelect,
+                handlePageChange,
+                totalPage,
+                SetTotalPage
             }}
         >
             {children}

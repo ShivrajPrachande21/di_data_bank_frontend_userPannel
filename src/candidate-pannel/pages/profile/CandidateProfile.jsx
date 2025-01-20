@@ -207,7 +207,7 @@ const CandidateProfile = () => {
                                 className="div-img"
                                 style={{
                                     width: '64px',
-                                    background: '#AEAEAE',
+
                                     overflow: 'hidden',
                                     borderRadius: '50px',
                                     marginTop: '-6px',

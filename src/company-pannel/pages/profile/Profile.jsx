@@ -68,21 +68,19 @@ const Profile = () => {
         rendering();
     }, []);
 
-    
-
-
-
- function toCamelCase_Name(input) {
-    if(typeof input=='string'){
-    return input?input
-      .toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' '):null
-    }else{
-      return input;
+    function toCamelCase_Name(input) {
+        if (typeof input == 'string') {
+            return input
+                ? input
+                      .toLowerCase()
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
+                : null;
+        } else {
+            return input;
+        }
     }
-  }
     return (
         <>
             <div className="ReportedJob">

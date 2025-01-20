@@ -244,8 +244,8 @@ const CreateJob = () => {
                     </Modal>
                 )}
 
-                <Row>
-                    <Col xs={windowWidth < 768 ? 12 : 3}>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                    <div>
                         <Button
                             className="create-job-btn"
                             onClick={handleClose}
@@ -268,8 +268,8 @@ const CreateJob = () => {
                                 remaining)
                             </span>
                         </Button>
-                    </Col>
-                    <Col xs={windowWidth < 768 ? 12 : 8} className="job-data">
+                    </div>
+                    <Col className="job-data">
                         <div className="job-created-data">
                             <p>
                                 {job_status?.dataWithJobCounts[0]?.jobCount ||
@@ -317,7 +317,7 @@ const CreateJob = () => {
                             <p className="total-activ">Candidates Hired</p>
                         </div>
                     </Col>
-                </Row>
+                </div>
                 {/* card Sections */}
                 <Row className="mt-4">
                     <div

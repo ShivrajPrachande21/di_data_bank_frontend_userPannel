@@ -194,7 +194,6 @@ const CandidateProfile = () => {
                                     <img
                                         src={EditProfile}
                                         alt=""
-                                        height="20px"
                                         onClick={showEditModle}
                                     />
                                 </OverlayTrigger>
@@ -207,8 +206,8 @@ const CandidateProfile = () => {
                             <div
                                 className="div-img"
                                 style={{
-                                    width: '40%',
-                                    background: '#AEAEAE',
+                                    width: '64px',
+
                                     overflow: 'hidden',
                                     borderRadius: '50px',
                                     marginTop: '-6px',

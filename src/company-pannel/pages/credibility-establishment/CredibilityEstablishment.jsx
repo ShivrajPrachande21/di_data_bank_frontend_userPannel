@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './cerdibility.css';
-import { Col, Form, Pagination, Row, Spinner, Table,Modal } from 'react-bootstrap';
+import {
+    Col,
+    Form,
+    Pagination,
+    Row,
+    Spinner,
+    Table,
+    Modal
+} from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import carbon_send from '../../../assets/images/carbon_send.png';
 import Speedometer from './speedometer';
 import arrowdown from '../../../assets/images/arrowdown.png';
+import altprofile from '../../../assets/images/altprofile.jpg';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import BaseUrl from './../../../services/BaseUrl';
@@ -22,9 +31,10 @@ const CredibilityEstablishment = () => {
     const [errorMesg, setErrorMesg] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [modalShowhide, setModalShowhide] =useState(null);
-    const [PlanData,setPlanData]=useState();
-     const [PromoteLoading, SetPromoteLoading] = useState(null);
+    const [modalShowhide, setModalShowhide] = useState(null);
+    const [PlanData, setPlanData] = useState();
+    const [PromoteLoading, SetPromoteLoading] = useState(null);
+    const rating = CredibilityData?.Star_Rating;
     const navigte = useNavigate();
 
     const handleSelect = e => {
@@ -69,19 +79,17 @@ const CredibilityEstablishment = () => {
         }
     };
 
-    const GetHistoryComapny=async(PAN)=>{
+    const GetHistoryComapny = async PAN => {
         const token = localStorage.getItem('companyToken');
         const decodedToken = jwtDecode(token);
         const cmpId = decodedToken?._id;
-        try{
+        try {
             const response = await axios.get(
                 `${BaseUrl}company/credibility/status/${cmpId}/${PAN}`
             );
-           return response?.data
-        }catch(error){
-
-        }
-    }
+            return response?.data;
+        } catch (error) {}
+    };
 
     const fetchCeridibilityDetails = async () => {
         if (PAN.trim() == '') {
@@ -89,18 +97,17 @@ const CredibilityEstablishment = () => {
             return;
         } else {
             //here we are tesing the history
-          let result=  await GetHistoryComapny(PAN)
-          if(result.status==true){
-         await fetchCandidateAllDetails();
-          }else{
-            await handle_Credibility();
-          }
+            let result = await GetHistoryComapny(PAN);
+            if (result.status == true) {
+                await fetchCandidateAllDetails();
+            } else {
+                await handle_Credibility();
+            }
             //setLoading(true);
         }
     };
 
-    const fetchCandidateAllDetails=async()=>{
-        
+    const fetchCandidateAllDetails = async () => {
         const token = localStorage.getItem('companyToken');
         if (!token) {
             return;
@@ -123,7 +130,7 @@ const CredibilityEstablishment = () => {
                 setLoading(false);
             }
         }
-    }
+    };
 
     const isTransactionDataArray = Array.isArray(
         CredibilityData?.data[0]?.offers
@@ -151,75 +158,82 @@ const CredibilityEstablishment = () => {
         getSubscriptionStatus();
     }, []);
 
-
-    const Credibility_initiatePayment = async (Id) => {
-       SetPromoteLoading(true);
-        setModalShowhide(false)
+    const Credibility_initiatePayment = async Id => {
+        SetPromoteLoading(true);
+        setModalShowhide(false);
         let promoteJob = null;
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const company_id = decodedToken?._id;
-    
-            const response = await axios.post(`${BaseUrl}company/pay_credibility`, {
-                SubId: Id,
-                company_id,
-            });
-    
+
+            const response = await axios.post(
+                `${BaseUrl}company/pay_credibility`,
+                {
+                    SubId: Id,
+                    company_id
+                }
+            );
+
             promoteJob = response?.data;
             const paymentLink = response?.data?.paymentLink;
-    
+
             if (paymentLink) {
                 window.open(paymentLink, '_blank');
             }
-    
+
             Run_credibility_verify(promoteJob);
         } catch (error) {
-           // SetPromoteLoading(false); // Ensure the loading state is reset
+            // SetPromoteLoading(false); // Ensure the loading state is reset
         }
     };
     let toUpIntervelId;
     let ToptimeoutId;
-    const fetch_topUp_success_status = async (data) => {
+    const fetch_topUp_success_status = async data => {
         try {
             const token = localStorage.getItem('companyToken');
             const decodedToken = jwtDecode(token);
             const companyId = decodedToken?._id;
-    
+
             if (!data?.order_id || !companyId) {
                 console.error('Invalid data for payment verification');
                 return;
             }
-    
-            const response = await axios.post(`${BaseUrl}company/pay_credibility/verify`, {
-                orderId: data?.order_id,
-                company_id: companyId,
-                sub_id:data?.sub_id,
-                paymentMethod: data?.payment_methods || 'UPI',
-            });
-    
+
+            const response = await axios.post(
+                `${BaseUrl}company/pay_credibility/verify`,
+                {
+                    orderId: data?.order_id,
+                    company_id: companyId,
+                    sub_id: data?.sub_id,
+                    paymentMethod: data?.payment_methods || 'UPI'
+                }
+            );
+
             if (response?.status === 200 || response?.status === 201) {
                 fetchCandidateAllDetails();
                 SetPromoteLoading(false);
                 clearInterval(toUpIntervelId);
                 clearTimeout(ToptimeoutId);
-                setLoading(false)
+                setLoading(false);
             }
         } catch (error) {
-            console.error('Payment verification error:', error.response?.data || error.message);
+            console.error(
+                'Payment verification error:',
+                error.response?.data || error.message
+            );
         }
     };
-    
+
     function Run_credibility_verify(data) {
         toUpIntervelId = setInterval(() => {
             fetch_topUp_success_status(data);
         }, 1000);
-    
+
         ToptimeoutId = setTimeout(() => {
             clearInterval(toUpIntervelId);
         }, 1000 * 60 * 5);
     }
-    
 
     // useEffect(() => {
     //     if (paymentLoading == false) {
@@ -250,26 +264,25 @@ const CredibilityEstablishment = () => {
         }
     }
 
-    const handle_Credibility= async() => {
+    const handle_Credibility = async () => {
         try {
             const response = await axios.get(
                 `${BaseUrl}company/get_credibility_establishment`
             );
-            setModalShowhide(true)
+            setModalShowhide(true);
             setLoading(false);
             setPlanData(response?.data);
         } catch (error) {
-            setModalShowhide(false)
+            setModalShowhide(false);
         }
     };
-
 
     useEffect(() => {
         rendering();
     }, []);
     return (
         <div className="CredibilityEstablishment">
-              {PromoteLoading ? (
+            {PromoteLoading ? (
                 <div className="loader-div">
                     <Loader />
                 </div>
@@ -293,9 +306,7 @@ const CredibilityEstablishment = () => {
                         />
 
                         {loading ? (
-                            <Button
-                                size="sm"
-                            >
+                            <Button size="sm">
                                 <Spinner animation="border" size="sm" />
                             </Button>
                         ) : (
@@ -321,20 +332,109 @@ const CredibilityEstablishment = () => {
                     </p>
                     <span></span>
                     <p className="text-warning">
-    Pending :{' '}
-    {Math.max(
-        (CredibilityData?.data[0]?.offersCount || 0) - 
-        (CredibilityData?.data[0]?.acceptedCount || 0),
-        0
-    )}
-</p>
-
+                        Processing :{' '}
+                        {CredibilityData?.data[0]?.offersCount || 0}
+                    </p>
                 </div>
             </div>
             <p className="text-danger pan-error-in-cerdibility">
                 {errorMessage}
             </p>
-            <Speedometer data={CredibilityData} />
+            <div style={{ display: 'flex', gap: 12 }}>
+                {CredibilityData ? (
+                    <>
+                        {' '}
+                        <Speedometer data={CredibilityData} />
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                padding: 10,
+                                borderRadius: '8px',
+                                boxShadow: 'rgb(189 189 189) 0px 0px 4px 0.2px',
+                                marginTop: 10,
+                                gap: 14
+                            }}
+                        >
+                            <div
+                                style={{
+                                    background: '#AEAEAE',
+                                    overflow: 'hidden',
+                                    borderRadius: '100px',
+                                    height: '140px',
+                                    width: '140px'
+                                }}
+                            >
+                                <img
+                                    src={CredibilityData?.profile || altprofile}
+                                    alt=""
+                                    width="100%"
+                                    height="100%"
+                                />
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between'
+                                }}
+                            >
+                                <div className="profilediv p-4">
+                                    <h4
+                                        style={{
+                                            fontSize: '1rem',
+                                            color: '#3B96E1'
+                                        }}
+                                    >
+                                        {CredibilityData?.Name}
+                                    </h4>
+                                    <h4
+                                        style={{
+                                            fontSize: '0.7rem',
+                                            color: '#AEAEAE'
+                                        }}
+                                    >
+                                        {CredibilityData?.aspiringPosition}
+                                    </h4>
+                                    <h4
+                                        style={{
+                                            fontSize: '0.7rem',
+                                            color: '#AEAEAE'
+                                        }}
+                                    >
+                                        Exp: {CredibilityData?.exp} years
+                                    </h4>
+                                    <div
+                                        className="star-rating "
+                                        style={{ marginTop: '-10px' }}
+                                    >
+                                        {[1, 2, 3, 4, 5].map(star => (
+                                            <span
+                                                key={star}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    color:
+                                                        star <= rating
+                                                            ? '#ffc107'
+                                                            : '#e4e5e9',
+                                                    fontSize: '1.5rem'
+                                                }}
+                                                onClick={() =>
+                                                    handleRating(star)
+                                                }
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    ''
+                )}
+            </div>
+
             <div className="table-credibilty">
                 <Table
                     striped
@@ -345,7 +445,7 @@ const CredibilityEstablishment = () => {
                         <tr>
                             <th>Sr no.</th>
                             <th>Company name</th>
-                            <th>Candidate name</th>
+
                             <th>Offered date</th>
                             <th>Offer Validity</th>
                             <th>Status</th>
@@ -365,10 +465,7 @@ const CredibilityEstablishment = () => {
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{item?.company_name}</td>
-                                    <td>
-                                        {CredibilityData?.data?.[0]
-                                            ?.basicDetails?.name || 'N/A'}
-                                    </td>
+
                                     <td>{formatDate(item?.offer_date)}</td>
                                     <td>{formatDate(item?.offer_validity)}</td>
                                     <td
@@ -476,34 +573,39 @@ const CredibilityEstablishment = () => {
                     </Col>
                 </Row>
             )}
-           <Modal
-    show={modalShowhide}
-    onHide={() => setModalShowhide(false)}
-    aria-labelledby="example-modal-sizes-title-lg"
-    className="custom-modal-credibility"
->
+            <Modal
+                show={modalShowhide}
+                onHide={() => setModalShowhide(false)}
+                aria-labelledby="example-modal-sizes-title-lg"
+                className="custom-modal-credibility"
+            >
+                <div className="credibility-job">
+                    <Modal.Header closeButton>
+                        <span className="custom-color fw-bold custom-font-size">
+                            Price:{' '}
+                            {'₹' +
+                                new Intl.NumberFormat('en-IN', {
+                                    maximumFractionDigits: 0
+                                }).format(PlanData?.[0]?.price || 0)}
+                        </span>
+                    </Modal.Header>
 
-
-
-    <div className="credibility-job">
-    <Modal.Header closeButton>
-    <span className="custom-color fw-bold custom-font-size">
-    Price: {'₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(PlanData?.[0]?.price || 0)}
-</span>
-
-    </Modal.Header>
-       
-        <p className="text-muted small">
-            Note: This payment is required to unlock access to advanced search using PAN details.
-        </p>
-        <div className="credibility-btn-div">
-            <Button size="sm" onClick={()=>Credibility_initiatePayment(PlanData?.[0]?._id)}>
-                Pay Now
-            </Button>
-        </div>
-    </div>
-</Modal>
-
+                    <p className="text-muted small">
+                        Note: This payment is required to unlock access to
+                        advanced search using PAN details.
+                    </p>
+                    <div className="credibility-btn-div">
+                        <Button
+                            size="sm"
+                            onClick={() =>
+                                Credibility_initiatePayment(PlanData?.[0]?._id)
+                            }
+                        >
+                            Pay Now
+                        </Button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 };

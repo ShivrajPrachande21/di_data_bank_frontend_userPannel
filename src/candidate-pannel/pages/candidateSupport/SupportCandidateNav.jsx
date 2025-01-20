@@ -12,21 +12,18 @@ const SupportCandidateNav = () => {
     return (
         <div>
             <Col
-                md={3}
                 xs={12}
                 style={{
-                    padding: 3,
+                    paddingLeft: 9,
                     display: 'flex',
-                    gap: '10px',
-                    justifyContent: 'space-around',
-                    background: 'white'
+                    gap: '10px'
                 }}
             >
                 <Button
                     size="sm"
                     onClick={() => setHide(1)}
                     style={{
-                        background: hide === 1 ? '#3B96E1' : '#B4DDFF',
+                        background: hide === 1 ? '#3B96E1' : 'transparent',
                         color: hide == 1 ? 'white' : 'black'
                     }}
                 >
@@ -37,7 +34,7 @@ const SupportCandidateNav = () => {
                     size="sm"
                     onClick={() => setHide(2)}
                     style={{
-                        background: hide === 2 ? '#3B96E1' : '#B4DDFF',
+                        background: hide === 2 ? '#3B96E1' : 'transparent',
                         color: hide == 2 ? 'white' : 'black'
                     }}
                 >

@@ -35,8 +35,8 @@ const Job = () => {
         const date = new Date(dateString);
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000); // convert ms to minutes
-    
-        if (diffMins < 1) return "just now";
+
+        if (diffMins < 1) return 'just now';
         if (diffMins < 60) return `${diffMins} minutes ago`;
         const diffHours = Math.floor(diffMins / 60);
         if (diffHours < 24) return `${diffHours} hours ago`;
@@ -117,7 +117,7 @@ const Job = () => {
                                         }}
                                     >
                                         <span className="card-table-span">
-                                            Loction:
+                                            Location:
                                         </span>{' '}
                                     </td>
                                     <td>
@@ -228,11 +228,11 @@ const Job = () => {
                     </div>
                 </>
             ))}
-             {showModal && (
-        <ProfileCompletionModal
-          onClose={() => setShowModal(false)} // Close modal handler
-        />
-      )}
+            {showModal && (
+                <ProfileCompletionModal
+                    onClose={() => setShowModal(false)} // Close modal handler
+                />
+            )}
         </div>
     );
 };

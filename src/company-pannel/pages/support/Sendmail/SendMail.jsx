@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import ep_back from '../../../../assets/images/ep_back.png';
 import uploadImg from '../../../../assets/images/uploadImg.png';
 import blackCross from '../../../../assets/images/blackCross.png';
@@ -10,11 +10,11 @@ import BaseUrl from '../../../../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 const SendMail = () => {
-    const {  mailModelShow,setMailModelShow} = useSupport();
+    const { mailModelShow, setMailModelShow } = useSupport();
     const [loading, setLoading] = useState(false);
     const [FileData, setFileData] = useState(null);
     const [formData, setFormData] = useState({
-         Subject : '',
+        Subject: '',
         Message: '',
         file: null
     });
@@ -43,7 +43,7 @@ const SendMail = () => {
     // Handle form submission
     const handleSubmit = async e => {
         e.preventDefault();
-
+        setLoading(true);
         try {
             // Prepare form data
             const formDataToSend = new FormData();
@@ -77,9 +77,9 @@ const SendMail = () => {
             if (response.status == 200 || response.status == 201) {
                 toast.success('Mail Send Successfully');
                 setMailModelShow(prev => !prev);
-
+                setLoading(false);
                 setFormData({
-                     Subject : '',
+                    Subject: '',
                     Message: '',
                     file: null
                 });
@@ -87,6 +87,7 @@ const SendMail = () => {
                 console.error('Unexpected response status:', response.status);
             }
         } catch (error) {
+            setLoading(false);
             const customError = error?.response?.data?.error;
             toast.error(customError);
         }
@@ -125,7 +126,7 @@ const SendMail = () => {
                         type="text"
                         name="Subject"
                         required
-                        value={formData.Subject }
+                        value={formData.Subject}
                         onChange={handleChange}
                         placeholder="Enter subject"
                         style={{ background: '#F5F5F5' }}
@@ -172,14 +173,25 @@ const SendMail = () => {
                     onChange={handleFileChange}
                 />
 
-                <Button
-                    variant="primary"
-                    type="submit"
-                    className="mt-3"
-                    style={{ width: '100%', background: '#3B96E1' }}
-                >
-                    Submit
-                </Button>
+                {loading ? (
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="mt-3"
+                        style={{ width: '100%', background: '#3B96E1' }}
+                    >
+                        <Spinner animation="border" size="sm" />
+                    </Button>
+                ) : (
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="mt-3"
+                        style={{ width: '100%', background: '#3B96E1' }}
+                    >
+                        Submit
+                    </Button>
+                )}
             </Form>
         </div>
     );

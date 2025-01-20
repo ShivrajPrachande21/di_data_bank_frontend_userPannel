@@ -8,11 +8,15 @@
     box-shadow: 0px 0px 1px #bebebe;
 }
 .appliedJobs-card-div {
-    border-radius: 8px;
+    /* border-radius: 8px;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 8px; */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 10px;
+    background-color: #f9f9f9;
 }
 /* Saved Job Css */
 .saved-jobs-card {

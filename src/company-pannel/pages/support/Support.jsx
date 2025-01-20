@@ -17,7 +17,8 @@ import SendMail from './Sendmail/SendMail';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 //const socket=io('http://localhost:4000');
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
+const socket=io('https://boardsearch.ai')
 
 const Support = () => {
     const {

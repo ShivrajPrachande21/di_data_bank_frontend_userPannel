@@ -331,6 +331,7 @@ const SearchJob = () => {
                         //         <Spinner size="sm" variant="primary" />
                         //     </div>
                         // }
+                        style={{ height: '100vh' }}
                         endMessage={
                             <div style={{ textAlign: 'center' }}>
                                 No more data to load...

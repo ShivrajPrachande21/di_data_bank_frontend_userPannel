@@ -76,9 +76,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 20px;
+    width: 20px;
 }
 .pro img {
-    height: 20px;
     margin-top: 40px;
     cursor: pointer;
 }

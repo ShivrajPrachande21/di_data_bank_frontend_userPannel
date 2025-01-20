@@ -64,13 +64,16 @@
 .buybtn {
     position: absolute;
     bottom: 16px;
-    left: 16%;
+    left: 50%; /* Shift the button to the center of the container */
+    transform: translateX(
+        -50%
+    ); /* Offset the button by half its width for proper centering */
     background: #19588c;
-
     font-weight: 700;
     padding: 5px;
     border-radius: 8px;
 }
+
 .sub-date {
     display: flex;
 }

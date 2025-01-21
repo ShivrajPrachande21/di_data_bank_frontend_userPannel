@@ -16,6 +16,7 @@ import Addissue from './addIssue/Addissue';
 import SendMail from './Sendmail/SendMail';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
+import { Helmet } from 'react-helmet';
 //const socket=io('http://localhost:4000');
 //const socket = io('http://65.20.91.47:4000');
 const socket=io('https://boardsearch.ai')
@@ -129,6 +130,11 @@ const Support = () => {
     }, []);
     return (
         <>
+          <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Support</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
             <Modal
                 show={modalShow}
                 size="lg"

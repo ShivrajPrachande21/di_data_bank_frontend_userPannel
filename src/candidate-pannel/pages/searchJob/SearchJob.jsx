@@ -200,7 +200,7 @@ const SearchJob = () => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     useEffect(() => {
-        fetchCandidateProfile();
+        fetch_search_job();
     }, [currentPage, selectValue]);
 
     return (
@@ -718,11 +718,11 @@ const SearchJob = () => {
                                     onClick={() =>
                                         handlePageChange(currentPage + 1)
                                     }
-                                    disabled={currentPage === totalPages}
+                                    disabled={currentPage ==totalPages}
                                 />
                                 <Pagination.Last
                                     onClick={() => handlePageChange(totalPages)}
-                                    disabled={currentPage === totalPages}
+                                    disabled={currentPage == totalPages}
                                 />
                             </Pagination>
                         </Col>

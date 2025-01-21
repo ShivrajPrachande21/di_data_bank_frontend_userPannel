@@ -262,7 +262,8 @@ export const SubscriptionProvider = ({ children }) => {
                 SubId,
                 SetSubId,
                 ShowGreen,
-                SetGreenBatch
+                SetGreenBatch,
+                fetch_all_renew
             }}
         >
             {children}

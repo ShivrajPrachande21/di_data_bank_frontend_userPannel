@@ -11,6 +11,7 @@ import {
 import './accessManagment.css';
 import accessWhite from '../../../assets/images/accessWhite.png';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 const AccessManagement = () => {
     const [activeButton, setActiveButton] = useState('add-new-user');
     const naviggate = useNavigate();
@@ -26,6 +27,11 @@ const AccessManagement = () => {
     };
     return (
         <div className="access">
+              <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Access Management</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
             <Outlet />
         </div>
     );

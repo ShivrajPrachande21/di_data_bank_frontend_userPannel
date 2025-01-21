@@ -15,7 +15,7 @@ import Loader from '../../loader/Loader';
 import { useSubscription } from '../../../../context/SubscriptionContext';
 let renew_buy = {};
 const Renew = () => {
-    const { RenewData} = useSubscription();
+    const { RenewData,fetch_all_renew} = useSubscription();
     const [EarlyBuyID, setEarlyBuyID] = useState('');
     const [RenewLoading, SetRenewLoading] = useState(null);
     const [modalShowhide, setModalShow] = React.useState(false);
@@ -100,6 +100,9 @@ let ToptimeoutId;
             SetRenewLoading(true);
         }
     }, []);
+    useEffect(()=>{
+        fetch_all_renew()
+    },[])
     return (
         <>
             {modalShowhide && (

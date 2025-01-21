@@ -20,7 +20,7 @@ export const SearchJobProvider = ({ children }) => {
         const value = parseInt(e.target.value, 10);
         setselectValue(value);
         setItemsPerPage(value);
-        setCurrentPage(1); // Reset to first page when items per page change
+        setCurrentPage(1); 
     };
 
     const handlePageChange = pageNumber => {
@@ -34,7 +34,7 @@ export const SearchJobProvider = ({ children }) => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/getunappliedjob/${userId}/${currentPage}/${10}`
+                    `${BaseUrl}candidate/getunappliedjob/${userId}/${currentPage}/${itemsPerPage}`
                 );
                 let data = response?.data?.data;
                 let page = response?.data?.totalPages;

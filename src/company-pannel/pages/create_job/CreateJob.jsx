@@ -13,6 +13,7 @@ import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import Loader from '../loader/Loader';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 let promoteJob = {};
 const CreateJob = () => {
     const {
@@ -217,6 +218,11 @@ const CreateJob = () => {
 
     return (
         <>
+         <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>List Job</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
             {PromoteLoading ? (
                 <div className="loader-div">
                     <Loader />

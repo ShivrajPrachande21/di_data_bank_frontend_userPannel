@@ -6,7 +6,41 @@ import { toast } from 'react-toastify';
 import BaseUrl from '../../services/BaseUrl';
 export const SearchJobContext = createContext();
 
+let Years = [
+    { year: 1, text: '0-1 Yrs' },
+    { year: 2, text: '2 Yrs' },
+    { year: 3, text: '3 Yrs' },
+    { year: 4, text: '4 Yrs' },
+    { year: 5, text: '5 Yrs' },
+    { year: 6, text: '6 Yrs' },
+    { year: 7, text: '7 Yrs' },
+    { year: 8, text: '8 Yrs' },
+    { year: 9, text: '9 Yrs' },
+    { year: 10, text: '10 Yrs' },
+    { year: 11, text: '11 Yrs' },
+    { year: 12, text: '12 Yrs' },
+    { year: 13, text: '13 Yrs' },
+    { year: 14, text: '14 Yrs' },
+    { year: 15, text: '15 Yrs' },
+    { year: 16, text: '16 Yrs' },
+    { year: 17, text: '17 Yrs' },
+    { year: 18, text: '18 Yrs' },
+    { year: 19, text: '19 Yrs' },
+    { year: 20, text: '20 Yrs' },
+    { year: 21, text: '21 Yrs' },
+    { year: 22, text: '22 Yrs' },
+    { year: 23, text: '23 Yrs' },
+    { year: 24, text: '24 Yrs' },
+    { year: 25, text: '25 Yrs' },
+    { year: 26, text: '26 Yrs' },
+    { year: 27, text: '27 Yrs' },
+    { year: 28, text: '28 Yrs' },
+    { year: 29, text: '29 Yrs' },
+    { year: 30, text: '30 Yrs' }
+];
+
 export const SearchJobProvider = ({ children }) => {
+    const [years, setYears] = useState(Years);
     const [initialFetch, setInitailFrtch] = useState('initialFetch');
     const [hasMore, setHasMore] = useState(true);
     const [visibleItems, setVisibleItems] = useState([]);
@@ -103,6 +137,7 @@ export const SearchJobProvider = ({ children }) => {
     return (
         <SearchJobContext.Provider
             value={{
+                years,
                 selectValue,
                 JobData,
                 setJobdata,

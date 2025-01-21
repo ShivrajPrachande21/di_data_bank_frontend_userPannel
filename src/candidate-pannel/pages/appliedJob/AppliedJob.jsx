@@ -3,6 +3,7 @@ import { Row, Button, Col, Form } from 'react-bootstrap';
 import './appliedjob.css';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { AppliedJobContext } from '../../../context/candidateContext/AppliedJobContext';
+import { Helmet } from 'react-helmet';
 const AppliedJob = () => {
     const {
         fetch_applied_job,
@@ -83,6 +84,17 @@ const AppliedJob = () => {
     }, []);
     return (
         <div className="applied-job">
+            <Helmet>
+                <title>Applied Jobs</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             <Row>
                 <Col>
                     <div className="applied-btns">

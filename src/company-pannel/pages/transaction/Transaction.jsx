@@ -3,6 +3,7 @@ import { Col, Pagination, Row, Table } from 'react-bootstrap';
 import arrowdown from '../../../assets/images/arrowdown.png';
 import TrasactionsData from '../../../hooks/company_dashboard/TrasactionsData';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const Transaction = () => {
     const { transactionData } = TrasactionsData(); // Fetch the data
@@ -57,6 +58,11 @@ const Transaction = () => {
     }
     return (
         <>
+          <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Transaction</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
             <div className="transaction">
                 <Row
                     style={{

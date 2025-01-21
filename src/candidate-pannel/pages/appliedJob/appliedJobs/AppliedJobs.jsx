@@ -91,6 +91,7 @@ const AppliedJobs = () => {
                         appliedJobData.map((item, index) => (
                             <div
                                 className="card-job"
+                                style={{ cursor: 'pointer' }}
                                 onClick={() => handleNavigate(item?._id)}
                                 key={index}
                             >

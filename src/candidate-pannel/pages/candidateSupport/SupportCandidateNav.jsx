@@ -6,11 +6,23 @@ import CandidateSupport from './CandidateSupport';
 import { CandidateSupportContext } from '../../../context/candidateContext/CandidateSupportContext';
 import MailTickets from './MailTickets/MailTickets';
 import { useSupport } from '../../../context/SupportContext';
+import { Helmet } from 'react-helmet';
 
 const SupportCandidateNav = () => {
     const { hide, setHide } = useContext(CandidateSupportContext);
     return (
         <div>
+            <Helmet>
+                <title>Support</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             <Col
                 xs={12}
                 style={{

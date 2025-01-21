@@ -15,6 +15,7 @@ import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import { Helmet } from 'react-helmet';
 const DashboardCandidate = () => {
     const yearStartISO = moment().startOf('year').toISOString();
     const yearEndISO = moment().endOf('year').toISOString();
@@ -157,6 +158,17 @@ const DashboardCandidate = () => {
     }, []);
     return (
         <>
+            <Helmet>
+                <title>Dashboard</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             <div className="DashboardCandidate">
                 <div style={{ width: '100%' }}>
                     <Row>
@@ -235,7 +247,7 @@ const DashboardCandidate = () => {
                                         {DashboardData?.existedPlane
                                             ?.expiresAt ? (
                                             <p>
-                                                Ends on :
+                                                Subscription Ends on :
                                                 {formatDate(
                                                     DashboardData?.existedPlane
                                                         ?.expiresAt || 0

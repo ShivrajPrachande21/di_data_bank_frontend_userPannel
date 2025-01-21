@@ -17,6 +17,7 @@ import profileimg from '../../../assets/images/profileimg.png';
 import EditCompanyProfile from './editProfile/EditCompanyProfile';
 import EditprofileData from '../../../hooks/company_dashboard/EditprofileData';
 import ProfileComplete from '../../../components/dynamicProgress/ProfileComplete';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
     const { profileData, loading, error, fetchProfileData } = useProfileData();
@@ -83,6 +84,11 @@ const Profile = () => {
     }
     return (
         <>
+          <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Profile</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
             <div className="ReportedJob">
                 {profileData?.updatedData?.status !== 'approve' &&
                 profileData?.updatedData?.status ? (

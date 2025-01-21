@@ -27,7 +27,7 @@ function Testimonials() {
                             </div>
 
                             <div className="test-card-heading">
-                                <h6>Microdoft</h6>
+                                <h6>Microsoft</h6>
                                 <img src={Verified} alt="" />
                             </div>
                             <p>
@@ -51,7 +51,7 @@ function Testimonials() {
                             </div>
 
                             <div className="test-card-heading">
-                                <h6>Microdoft</h6>
+                                <h6>Microsoft</h6>
                                 <img src={Verified} alt="" />
                             </div>
                             <p>
@@ -75,7 +75,7 @@ function Testimonials() {
                             </div>
 
                             <div className="test-card-heading">
-                                <h6>Microdoft</h6>
+                                <h6>Microsoft</h6>
                                 <img src={Verified} alt="" />
                             </div>
                             <p>
@@ -99,7 +99,7 @@ function Testimonials() {
                             </div>
 
                             <div className="test-card-heading">
-                                <h6>Microdoft</h6>
+                                <h6>Microsoft</h6>
                                 <img src={Verified} alt="" />
                             </div>
                             <p>

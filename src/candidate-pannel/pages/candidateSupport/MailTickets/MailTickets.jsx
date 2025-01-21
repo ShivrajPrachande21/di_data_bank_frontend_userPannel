@@ -16,6 +16,7 @@ import SendMails from '../Sendmail/SendMail';
 import { CandidateSupportContext } from '../../../../context/candidateContext/CandidateSupportContext';
 import BaseUrl from '../../../../services/BaseUrl';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 const MailTickets = () => {
     const {
         mailModelShow,
@@ -24,10 +25,12 @@ const MailTickets = () => {
         formatDate,
         toCamelCase_Name,
         getAllMails,
-        mailData, setMailData,
-        loading, setLoading
+        mailData,
+        setMailData,
+        loading,
+        setLoading
     } = useContext(CandidateSupportContext);
-   const [SeacrhInput,SetSeacrhInput]=useState('')
+    const [SeacrhInput, SetSeacrhInput] = useState('');
 
     const SendMail = props => (
         <Tooltip id="save-tooltip" {...props}>
@@ -42,16 +45,32 @@ const MailTickets = () => {
     );
 
     const fiteredData = mailData?.filter(item => {
-        return item?.Issue_type&&item?.Issue_type.toLowerCase().includes(SeacrhInput.toLowerCase())||
-           item?.Ticket&& item?.Ticket.toLowerCase().includes(SeacrhInput.toLowerCase());
+        return (
+            (item?.Issue_type &&
+                item?.Issue_type.toLowerCase().includes(
+                    SeacrhInput.toLowerCase()
+                )) ||
+            (item?.Ticket &&
+                item?.Ticket.toLowerCase().includes(SeacrhInput.toLowerCase()))
+        );
     });
-
 
     useEffect(() => {
         getAllMails();
     }, []);
     return (
         <>
+            <Helmet>
+                <title>Mail Support</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             <Modal
                 show={mailModelShow}
                 size="lg"
@@ -201,11 +220,13 @@ const MailTickets = () => {
                                                     }}
                                                 >
                                                     {toCamelCase_Name(
-                                                        item?.status === 'solved'
-                                                        ? 'Solved'
-                                                        : item?.status === 'reject'
-                                                        ? 'Rejected'
-                                                        : 'Pending'
+                                                        item?.status ===
+                                                            'solved'
+                                                            ? 'Solved'
+                                                            : item?.status ===
+                                                              'reject'
+                                                            ? 'Rejected'
+                                                            : 'Pending'
                                                     )}
                                                 </p>
                                             </td>

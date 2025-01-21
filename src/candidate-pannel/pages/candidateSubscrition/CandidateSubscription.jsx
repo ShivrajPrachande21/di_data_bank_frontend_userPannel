@@ -14,6 +14,7 @@ import Loader from '../../../company-pannel/pages/loader/Loader';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import ProfileCompletionModal from '../ProfileAlert/ProfileCompletion';
+import { Helmet } from 'react-helmet';
 
 const CandidateSubscription = () => {
     const {
@@ -165,6 +166,17 @@ const CandidateSubscription = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Subscription</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             {SuccessModal && (
                 <Modal
                     show={SuccessModal}
@@ -255,7 +267,7 @@ const CandidateSubscription = () => {
                                                 {item?.job_recommandation ? (
                                                     <li>
                                                         <img
-                                                             src={
+                                                            src={
                                                                 currentSubscription?.plane_name ==
                                                                 item?.plane_name
                                                                     ? bluetick
@@ -320,7 +332,8 @@ const CandidateSubscription = () => {
                                                             alt=""
                                                             width="14px"
                                                         />
-                                                        Email support and chat support
+                                                        Email support and chat
+                                                        support
                                                     </li>
                                                 </ul>
                                             ) : (

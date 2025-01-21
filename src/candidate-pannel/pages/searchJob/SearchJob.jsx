@@ -50,7 +50,8 @@ const SearchJob = () => {
         totalPage,
         SetTotalPage,
         initialFetch,
-        setInitailFrtch
+        setInitailFrtch,
+        years
     } = useContext(SearchJobContext);
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
@@ -270,12 +271,15 @@ const SearchJob = () => {
                                         onChange={handleInputChange}
                                     >
                                         <option value="">Experience</option>
-                                        <option value="1">0-1 Yrs</option>
-                                        <option value="2"> 2 Yrs</option>
-                                        <option value="3"> 3 Yrs</option>
-                                        <option value="4"> 4 Yrs</option>
-                                        <option value="5"> 5 Yrs</option>
-                                        <option value="6"> 6 Yrs</option>
+
+                                        {years.map((item, index) => (
+                                            <option
+                                                key={index}
+                                                value={item.year}
+                                            >
+                                                {item.text}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
 
@@ -335,6 +339,7 @@ const SearchJob = () => {
                                         <option value="3">Last 3 days</option>
                                         <option value="7">Last 7 days</option>
                                         <option value="15">Last 15 days</option>
+
                                         <option value="30">Last 30 days</option>
                                     </select>
                                 </div>
@@ -362,9 +367,7 @@ const SearchJob = () => {
                 </Form>
 
                 <Row style={{ marginTop: '92px' }}>
-                    <p className="searchresult">
-                        Search Result:{visibleItems.length}
-                    </p>
+                    <p className="searchresult">Result:{visibleItems.length}</p>
 
                     <div className="search-job-card-div">
                         {loading ? (

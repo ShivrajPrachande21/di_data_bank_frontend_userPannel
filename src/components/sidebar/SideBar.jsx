@@ -3,8 +3,8 @@ import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 //const socket = io('http://65.20.91.47:4000');
 //const socket=io('http://localhost:4000');
-//const socket=io('https://boardsearch.ai')
-const socket = io('http://65.20.91.47:4000');
+const socket = io('https://boardsearch.ai');
+//const socket = io('http://65.20.91.47:4000');
 import './sidebar.css';
 import WdcLogo from '../../assets/images/Withoutbg.png';
 import bellgray from '../../assets/images/bellgray.png';
@@ -28,6 +28,9 @@ import accessWhite from '../../assets/images/accessWhite.png';
 import SubscritionIconWhite from '../../assets/images/SubscritionIconWhite.png';
 import AdminPanelmenu from '../../assets/images/AdminPanelmenu icons.png';
 import hireWhite from '../../assets/images/hireWhite.png';
+import searchJobWhite from '../../assets/images/searchJobWhite.png';
+import transactionwhite from '../../assets/images/transactionwhite.png';
+
 import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import CompanyNotification from '../../company-pannel/pages/company_Notification/CompanyNotification';
@@ -67,7 +70,7 @@ const SideBar = () => {
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
     const [candidateToken, setCandidateToken] = useState('');
-    const [supportNot,SetSupportNot]=useState(0);
+    const [supportNot, SetSupportNot] = useState(0);
 
     const handleClose = () => setShow(prev => !prev);
     const handleShow = () => setShow(prev => !prev);
@@ -154,7 +157,7 @@ const SideBar = () => {
             label: 'Transactions',
             backendName: 'transaction',
             icon: transactions,
-            // inactiveIcon: transactionsInactive,
+            inactiveIcon: transactionwhite,
             link: 'transaction'
         },
         {
@@ -184,18 +187,21 @@ const SideBar = () => {
             id: 1,
             label: 'Dashboard',
             icon: dashboard,
+            inactiveIcon: AdminPanelmenu,
             link: 'dashboard'
         },
         {
             id: 2,
             label: 'Search Jobs',
             icon: SearchJob,
+            inactiveIcon: searchJobWhite,
             link: 'search-job'
         },
         {
             id: 3,
             label: 'Applied Jobs',
             icon: SearchJob,
+            inactiveIcon: searchJobWhite,
             link: 'applied-job/applied-jobs'
         },
 
@@ -203,18 +209,22 @@ const SideBar = () => {
             id: 4,
             label: 'Subscription Plans',
             icon: SubscriptionIcon,
+            inactiveIcon: SubscritionIconWhite,
             link: 'subscription-candidate'
         },
         {
             id: 5,
             label: 'Transactions',
             icon: transactions,
+            inactiveIcon: transactionwhite,
             link: 'transaction-candidate'
         },
         {
             id: 6,
             label: 'Support',
             icon: SupportIcon,
+            inactiveIcon: SupportIconWhite,
+
             link: 'support-candidate'
         }
 
@@ -270,10 +280,10 @@ const SideBar = () => {
                 ///setNotifications(newNotification);
             });
 
-            socket.emit('messageNotification',company_id);
-            socket.on('messageNot',MessageNot=>{
-                SetSupportNot(MessageNot)
-            })
+            socket.emit('messageNotification', company_id);
+            socket.on('messageNot', MessageNot => {
+                SetSupportNot(MessageNot);
+            });
 
             socket.on('disconnect', () => {
                 console.log('User disconnected');
@@ -319,10 +329,10 @@ const SideBar = () => {
                     SetProfileView(data);
                 });
 
-                socket.emit('messageNotification',candidate_id);
-                socket.on('messageNot',MessageNot=>{
-                    SetSupportNot(MessageNot)
-                })
+                socket.emit('messageNotification', candidate_id);
+                socket.on('messageNot', MessageNot => {
+                    SetSupportNot(MessageNot);
+                });
 
                 socket.on('disconnect', () => {
                     console.log('User disconnected');
@@ -424,7 +434,7 @@ const SideBar = () => {
                             borderRadius: '12px'
                         }}
                     >
-                        <div className="Select">
+                        <div className="Select" onClick={toggleLogoout}>
                             <div>
                                 <img
                                     src={
@@ -456,7 +466,6 @@ const SideBar = () => {
                                     marginRight: '6px',
                                     cursor: 'pointer'
                                 }}
-                                onClick={toggleLogoout}
                             />
                         </div>
                         <Col xs={12}>
@@ -627,7 +636,11 @@ const SideBar = () => {
                                               }}
                                           >
                                               <img
-                                                  src={button.icon}
+                                                  src={
+                                                      activeButton == button.id
+                                                          ? button.inactiveIcon
+                                                          : button.icon
+                                                  }
                                                   alt=""
                                                   width="18px"
                                                   style={{
@@ -638,29 +651,36 @@ const SideBar = () => {
                                               />
 
                                               {button.label}
-                                              {button.label=='Support'&& supportNot!=0?
-                                              <span
-                                              style={{
-                                                  marginLeft:'60%',
-                                                  marginTop:'-19px',
-                                                  backgroundColor:activeButton == button.id
-                                                          ? 'white':'#3b96e1',
-                                                  color:activeButton == button.id
-                                                  ?'#3b96e1':'white',
-                                                  borderRadius: '50%', 
-                                                  width: '15px',
-                                                  height: '15px',
-                                                  display: 'flex',
-                                                  justifyContent: 'center',
-                                                  alignItems: 'center',
-                                                  fontSize: '12px',
-                                                  fontWeight: 'simple',
-                                              }}
-                                          >
-                                             {supportNot}
-                                          </span>
-                                              :null}
-                                              
+                                              {button.label == 'Support' &&
+                                              supportNot != 0 ? (
+                                                  <span
+                                                      style={{
+                                                          marginLeft: '60%',
+                                                          marginTop: '-19px',
+                                                          backgroundColor:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? 'white'
+                                                                  : '#3b96e1',
+                                                          color:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? '#3b96e1'
+                                                                  : 'white',
+                                                          borderRadius: '50%',
+                                                          width: '15px',
+                                                          height: '15px',
+                                                          display: 'flex',
+                                                          justifyContent:
+                                                              'center',
+                                                          alignItems: 'center',
+                                                          fontSize: '12px',
+                                                          fontWeight: 'simple'
+                                                      }}
+                                                  >
+                                                      {supportNot}
+                                                  </span>
+                                              ) : null}
                                           </li>
                                       </Link>
                                   ))
@@ -696,7 +716,7 @@ const SideBar = () => {
                                               style={{
                                                   background:
                                                       activeButton === button.id
-                                                          ? '#3b96e1' 
+                                                          ? '#3b96e1'
                                                           : hoveredButton ===
                                                             button.id
                                                           ? '#f0f0f0'
@@ -728,28 +748,36 @@ const SideBar = () => {
                                               />
 
                                               {button.label}
-                                              {button.label=='Support'&& supportNot!=0?
-                                              <span
-                                              style={{
-                                                  marginLeft:'60%',
-                                                  marginTop:'-19px',
-                                                  backgroundColor:activeButton == button.id
-                                                  ? 'white':'#3b96e1',
-                                          color:activeButton == button.id
-                                          ?'#3b96e1':'white',
-                                                  borderRadius: '50%', 
-                                                  width: '15px',
-                                                  height: '15px',
-                                                  display: 'flex',
-                                                  justifyContent: 'center',
-                                                  alignItems: 'center',
-                                                  fontSize: '12px',
-                                                  fontWeight: 'simple',
-                                              }}
-                                          >
-                                             {supportNot}
-                                          </span>
-                                              :null}
+                                              {button.label == 'Support' &&
+                                              supportNot != 0 ? (
+                                                  <span
+                                                      style={{
+                                                          marginLeft: '60%',
+                                                          marginTop: '-19px',
+                                                          backgroundColor:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? 'white'
+                                                                  : '#3b96e1',
+                                                          color:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? '#3b96e1'
+                                                                  : 'white',
+                                                          borderRadius: '50%',
+                                                          width: '15px',
+                                                          height: '15px',
+                                                          display: 'flex',
+                                                          justifyContent:
+                                                              'center',
+                                                          alignItems: 'center',
+                                                          fontSize: '12px',
+                                                          fontWeight: 'simple'
+                                                      }}
+                                                  >
+                                                      {supportNot}
+                                                  </span>
+                                              ) : null}
                                           </li>
                                       </Link>
                                   ))}
@@ -757,7 +785,7 @@ const SideBar = () => {
                     </div>
                 </div>
             </div>
-            
+
             <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Notifications</Offcanvas.Title>

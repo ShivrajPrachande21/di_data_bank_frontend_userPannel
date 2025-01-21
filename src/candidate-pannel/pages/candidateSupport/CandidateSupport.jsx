@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 //const socket = io('http://65.20.91.47:4000');
 //const socket=io('http://localhost:4000');
-const socket=io('https://boardsearch.ai')
+const socket = io('https://boardsearch.ai');
 import {
     Button,
     Modal,
@@ -19,6 +19,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CandidateSupportContext } from '../../../context/candidateContext/CandidateSupportContext';
 import AddCandidateIssue from './addCandidateIssue/AddCandidateIssue';
 import Sendmails from './Sendmail/SendMail';
+import { Helmet } from 'react-helmet';
 
 const CandidateSupport = () => {
     const {
@@ -49,8 +50,13 @@ const CandidateSupport = () => {
         return new Date(dateString).toLocaleDateString('en-GB', options); // 'en-GB' for DD/MM/YYYY format
     };
     const fiteredData = supportData?.filter(item => {
-        return item?.Issue_type.toLowerCase().includes(SeacrhInput.toLowerCase())||
-           item?.Ticket&& item?.Ticket.toLowerCase().includes(SeacrhInput.toLowerCase());
+        return (
+            item?.Issue_type.toLowerCase().includes(
+                SeacrhInput.toLowerCase()
+            ) ||
+            (item?.Ticket &&
+                item?.Ticket.toLowerCase().includes(SeacrhInput.toLowerCase()))
+        );
     });
     function rendering() {
         const render = localStorage.getItem('render');
@@ -306,11 +312,14 @@ const CandidateSupport = () => {
                                                             : '#051F50'
                                                 }}
                                             >
-                                                {toCamelCase_Name(item?.status === 'solved'
-        ? 'Solved'
-        : item?.status === 'reject'
-        ? 'Rejected'
-        : 'Pending')}
+                                                {toCamelCase_Name(
+                                                    item?.status === 'solved'
+                                                        ? 'Solved'
+                                                        : item?.status ===
+                                                          'reject'
+                                                        ? 'Rejected'
+                                                        : 'Pending'
+                                                )}
                                             </p>
                                         </td>
                                     </tr>

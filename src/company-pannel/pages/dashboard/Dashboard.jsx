@@ -151,6 +151,11 @@ const Dashboard = () => {
     return (
         <div>
             <>
+              <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Dashboard</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
                 {/*First Row Card */}
                 <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                     <div className="c-dsahboard-top-cards">

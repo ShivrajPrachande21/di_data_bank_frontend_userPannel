@@ -144,7 +144,7 @@ const ProfileCompletionModal = ({ onClose, setShowModal }) => {
                     </ul>
                     <Button
                         variant="success"
-                        style={{ fontSize: '0.8rem' }}
+                        style={{ fontSize: '0.8rem', paddingBottom: '20px' }}
                         onClick={handleClose}
                     >
                         Complete Your Profile

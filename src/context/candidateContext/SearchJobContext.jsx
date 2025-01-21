@@ -7,6 +7,7 @@ import BaseUrl from '../../services/BaseUrl';
 export const SearchJobContext = createContext();
 
 export const SearchJobProvider = ({ children }) => {
+    const [initialFetch, setInitailFrtch] = useState('initialFetch');
     const [hasMore, setHasMore] = useState(true);
     const [visibleItems, setVisibleItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,16 +17,6 @@ export const SearchJobProvider = ({ children }) => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectValue, setselectValue] = useState(itemsPerPage);
 
-    const handleSelect = e => {
-        const value = parseInt(e.target.value, 10);
-        setselectValue(value);
-        setItemsPerPage(value);
-        setCurrentPage(1); // Reset to first page when items per page change
-    };
-
-    const handlePageChange = pageNumber => {
-        setCurrentPage(pageNumber);
-    };
     const fetch_search_job = async () => {
         const token = localStorage.getItem('Candidate_token');
         if (!token) {
@@ -34,16 +25,32 @@ export const SearchJobProvider = ({ children }) => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}candidate/getunappliedjob/${userId}/${currentPage}/${10}`
+                    `${BaseUrl}candidate/getunappliedjob/${userId}/${currentPage}/${selectValue}`
                 );
                 let data = response?.data?.data;
                 let page = response?.data?.totalPages;
+                setInitailFrtch('initialFetch');
                 SetTotalPage(page);
+
                 setVisibleItems(data);
             } catch (err) {
                 // setHasMore(false);
             }
         }
+    };
+
+    const handleSelect = e => {
+        const value = parseInt(e.target.value, 10);
+
+        setselectValue(value);
+        setItemsPerPage(value);
+        setCurrentPage(1); // Reset to first page when items per page change
+    };
+
+    const handlePageChange = pageNumber => {
+        console.log('page change', pageNumber);
+        if (pageNumber >= 1 && pageNumber <= totalPage)
+            setCurrentPage(pageNumber);
     };
 
     const applyTo_job = async jobId => {
@@ -92,6 +99,7 @@ export const SearchJobProvider = ({ children }) => {
             setJobdata(response?.data);
         } catch (error) {}
     };
+
     return (
         <SearchJobContext.Provider
             value={{
@@ -110,7 +118,9 @@ export const SearchJobProvider = ({ children }) => {
                 handleSelect,
                 handlePageChange,
                 totalPage,
-                SetTotalPage
+                SetTotalPage,
+                initialFetch,
+                setInitailFrtch
             }}
         >
             {children}

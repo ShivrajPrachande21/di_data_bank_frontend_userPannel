@@ -280,11 +280,14 @@ const Support = () => {
                                                             : '#051F50'
                                                 }}
                                             >
-                                                {toCamelCase_Name(item?.status === 'solved'
-        ? 'Solved'
-        : item?.status === 'reject'
-        ? 'Rejected'
-        : 'Pending')}
+                                                {toCamelCase_Name(
+                                                    item?.status === 'solved'
+                                                        ? 'Solved'
+                                                        : item?.status ===
+                                                          'reject'
+                                                        ? 'Rejected'
+                                                        : 'Pending'
+                                                )}
                                             </p>
                                         </td>
                                     </tr>

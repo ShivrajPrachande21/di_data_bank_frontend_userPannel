@@ -3,9 +3,10 @@ import { Modal, Button, ProgressBar } from 'react-bootstrap';
 import './profilecomplete.css';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
-import oui_cross from '../../../assets/images/oui_cross.png'
+import oui_cross from '../../../assets/images/oui_cross.png';
 import BaseUrl from '../../../services/BaseUrl';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const ProfileCompletionModal = ({ onClose, setShowModal }) => {
     const navigate = useNavigate();
@@ -74,7 +75,12 @@ const ProfileCompletionModal = ({ onClose, setShowModal }) => {
         >
             <Modal.Body>
                 <div className="text-center">
-                    <h1 style={{textAlign:'end',marginTop:'-10px'}} onClick={()=>setShowModal(false)}><img src={oui_cross} alt=""  width={24}/></h1>
+                    <h1
+                        style={{ textAlign: 'end', marginTop: '-10px' }}
+                        onClick={() => setShowModal(false)}
+                    >
+                        <img src={oui_cross} alt="" width={24} />
+                    </h1>
                     <h4>Your Profile Completion</h4>
                     <div
                         style={{

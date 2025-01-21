@@ -143,11 +143,13 @@ const Transaction = () => {
                                         <td>
                                             {toCamelCase_Name(item?.Plane_name)}
                                         </td>
-                                        <td>{item?.purchesed_data?
-                                          `${formatDate(item?.purchesed_data)} -
+                                        <td>
+                                            {item?.purchesed_data
+                                                ? `${formatDate(
+                                                      item?.purchesed_data
+                                                  )} -
                                           ${formatDate(item?.Expire_date)}`
-                                        :'N/A'}
-                                          
+                                                : 'N/A'}
                                         </td>
                                         <td>
                                             <span
@@ -164,9 +166,11 @@ const Transaction = () => {
                                         <td>{item?.payment_method}</td>
                                         <td>{item?.transaction_Id}</td>
                                         <td>
-                                            {item?.purchesed_data?
-                                            formatDate(item?.purchesed_data):'N/A'
-                                            }
+                                            {item?.purchesed_data
+                                                ? formatDate(
+                                                      item?.purchesed_data
+                                                  )
+                                                : 'N/A'}
                                         </td>
                                     </tr>
                                 ))}

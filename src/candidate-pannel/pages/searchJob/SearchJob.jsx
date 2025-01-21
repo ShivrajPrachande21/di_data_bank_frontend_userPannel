@@ -21,14 +21,15 @@ import avatar from '../../../assets/images/avatar.png';
 import Verified from '../../../assets/images/Verified.png';
 import altprofile from '../../../assets/images/altprofile.jpg';
 import oui_cross from '../../../assets/images/oui_cross.png';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useFetcher, useLocation, useNavigate } from 'react-router-dom';
 import { SearchJobContext } from '../../../context/candidateContext/SearchJobContext';
 import BaseUrl from '../../../services/BaseUrl';
 import axios from 'axios';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import ProfileCompletionModal from '../ProfileAlert/ProfileCompletion';
-import { f } from 'html2pdf.js';
+import { Helmet } from 'react-helmet';
+
 const SearchJob = () => {
     const {
         fetch_search_job,
@@ -47,7 +48,9 @@ const SearchJob = () => {
         currentPage,
         itemsPerPage,
         totalPage,
-        SetTotalPage
+        SetTotalPage,
+        initialFetch,
+        setInitailFrtch
     } = useContext(SearchJobContext);
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
@@ -88,11 +91,15 @@ const SearchJob = () => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.post(
-                    `${BaseUrl}candidate/job_search/${userId}`,
+                    `${BaseUrl}candidate/job_search/${userId}/${currentPage}/${selectValue}`,
                     SearchData
                 );
                 if (response?.status == 200 || response?.status == 201) {
-                    setVisibleItems(response?.data);
+                    let data = response?.data?.unappliedJobs;
+                    let page = response?.data?.totalPages;
+                    setInitailFrtch('searchdata');
+                    SetTotalPage(page);
+                    setVisibleItems(data);
                     Setloading(false);
                 }
             } catch (error) {}
@@ -174,8 +181,6 @@ const SearchJob = () => {
     }
 
     const handleMouseEnter = async id => {
-        console.log('enter Data ', id);
-
         setHoveredCardId(id);
         await getSingleJobDetails(id);
         setModalVisible(true);
@@ -189,6 +194,7 @@ const SearchJob = () => {
         return () => {
             setVisibleItems([]);
             setCurrentPage(1);
+            SetTotalPage(0);
         };
     }, []);
 
@@ -196,15 +202,32 @@ const SearchJob = () => {
     const validTransactionData = isTransactionDataArray
         ? visibleItems
         : visibleItems;
-    const totalItems = validTransactionData.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     useEffect(() => {
         fetchCandidateProfile();
+    }, []);
+
+    useEffect(() => {
+        if (initialFetch == 'searchdata') {
+            handleSearch();
+        } else {
+            fetch_search_job();
+        }
     }, [currentPage, selectValue]);
 
     return (
         <>
+            <Helmet>
+                <title>Search Job</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             <div className="searchJob">
                 <Form onSubmit={handleSearch}>
                     <Row
@@ -667,9 +690,9 @@ const SearchJob = () => {
                                     padding: '10px 10px'
                                 }}
                             >
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
+                                <option value={10}>10</option>
+                                <option value={20}>20</option>
+                                <option value={30}>30</option>
                             </select>
                         </Col>
                         <Col
@@ -718,11 +741,11 @@ const SearchJob = () => {
                                     onClick={() =>
                                         handlePageChange(currentPage + 1)
                                     }
-                                    disabled={currentPage === totalPages}
+                                    disabled={currentPage == totalPage}
                                 />
                                 <Pagination.Last
-                                    onClick={() => handlePageChange(totalPages)}
-                                    disabled={currentPage === totalPages}
+                                    onClick={() => handlePageChange(totalPage)}
+                                    disabled={currentPage == totalPage}
                                 />
                             </Pagination>
                         </Col>

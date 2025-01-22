@@ -5,8 +5,10 @@ import { Link,useNavigate } from 'react-router-dom';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import blackCross from '../../../assets/images/blackCross.png';
 import Cross from '../../../assets/images/Cross.png';
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
 //const socket = io('http://localhost:4000');
+const socket = io('https://boardsearch.ai');
+
 const CompanyNotification = ({ handleClose }) => {
     const { handleCloseHire, showHire, SetShowHire, show, setShow } =
         useContext(HireCandidateContext);

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
-//const socket = io('http://65.20.91.47:4000');
+const socket = io('http://65.20.91.47:4000');
 //const socket=io('http://localhost:4000');
-const socket = io('https://boardsearch.ai');
+//const socket = io('https://boardsearch.ai');
 import {
     Button,
     Modal,

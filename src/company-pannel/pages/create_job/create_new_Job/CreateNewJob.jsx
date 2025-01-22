@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import ReactQuill from 'react-quill'; // Import React Quill
 import 'react-quill/dist/quill.snow.css'; // Import the Quill CSS
 import './newjob.css';
-import { Button, Col, Form, InputGroup, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Form, InputGroup, Modal, Row,Spinner } from 'react-bootstrap';
 import oui_cross from '../../../../assets/images/oui_cross.png';
 import Plus from '../../../../assets/images/Plus.png';
 
@@ -56,6 +56,8 @@ const CreateNewJob = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [hide, setHide] = useState(null);
     const [pramot, setPramote] = useState('');
+    const [JD_Status,SetJD_status]=useState();
+    const [applyLoading,SetApplyLoading]=useState(false)
 
     const handleCurrentSkillChange = e => {
         setCurrentSkill(e.target.value);
@@ -228,9 +230,6 @@ const CreateNewJob = () => {
         }
     }
 
-    useEffect(() => {
-        rendering();
-    }, []);
 
     const AI_decrease_Token = async () => {
         const token = localStorage.getItem('companyToken');
@@ -275,7 +274,7 @@ const CreateNewJob = () => {
             ...createJobData,
             skills: skills
         };
-
+        SetApplyLoading(true)
         try {
             const response = await axios.post(
                 `https://boardsearch.ai/pythonapi/create_description`,
@@ -283,16 +282,37 @@ const CreateNewJob = () => {
             );
             if (response.status == 200 || response.status == 201) {
                 await AI_decrease_Token();
-                setEditorHtml(response?.data);
+                const responseHtml = response?.data.replace(/^```html\s*/, '').replace(/```$/, '');
+                setEditorHtml(responseHtml);
+                SetApplyLoading(false)
+                
             }
         } catch (error) {
             const customError = error?.response?.data?.error;
             toast.error(customError);
         }
     };
-    useEffect(() => {
+
+    const AI_Button_Token = async () => {
+        const token = localStorage.getItem('companyToken');
+
+        const decodedToken = jwtDecode(token);
+        const companyId = decodedToken?._id;
         try {
-        } catch (error) {}
+            const response = await axios.get(
+                `${BaseUrl}/company/ai_jd/count/${companyId}`
+            );
+            if (response.status == 200 || response.status == 201) {
+                SetJD_status(response?.data?.ai_job_description)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+    useEffect(() => {
+        rendering();
+        AI_Button_Token()
     }, []);
 
     return (
@@ -676,9 +696,23 @@ const CreateNewJob = () => {
                             </Form.Label>
                         </Col>
                         <Col md={3}>
-                            <Button size="sm" onClick={Generat_AI_JD}>
+                        {/* {JD_Status!=0?(<Button size="sm" onClick={Generat_AI_JD}>
                                 Ai Job Description
-                            </Button>
+                            </Button>):null} */}
+
+                           {JD_Status !== 0 ? (
+    applyLoading ? (
+        <Button size="sm" style={{ width: '66%' }}>
+            <Spinner size="sm" />{' '}
+        </Button>
+    ) : (
+        <Button size="sm" onClick={Generat_AI_JD}>
+            AI Job Description
+        </Button>
+    )
+) : null}
+
+                            
                         </Col>
                     </Row>
                     <Row className="mt-2">

@@ -33,7 +33,7 @@ const Resume = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                'http://65.20.91.47:5000/pythonapi/generate_resume',
+                'https://boardsearch.ai/pythonapi/generate_resume',
                 {
                     custom_id: custom_id
                 }
@@ -75,7 +75,7 @@ const Resume = () => {
             try {
                 setLoading(true);
                 const response = await axios.post(
-                    'http://65.20.91.47:5000/pythonapi/generate_resume',
+                    'https://boardsearch.ai/pythonapi/generate_resume',
                     {
                         custom_id: custom_id,
                         discriptions_data: description

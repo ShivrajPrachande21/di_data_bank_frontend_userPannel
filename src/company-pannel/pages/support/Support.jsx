@@ -195,6 +195,17 @@ const Support = () => {
                                     Sr. No
                                 </th>
                                 <th
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        borderLeft: 'none',
+                                        color: '#051F50'
+                                    }}
+                                    className="p-3"
+                                    scope="col"
+                                >
+                                    Tickets
+                                </th>
+                                <th
                                     className="p-3"
                                     scope="col"
                                     style={{
@@ -261,6 +272,7 @@ const Support = () => {
                                 <>
                                     <tr>
                                         <td>{index + 1}</td>
+                                        <td>{item?.Ticket}</td>
                                         <td>{item?.Issue_type}</td>
                                         <td>{item?.description}</td>
                                         <td>

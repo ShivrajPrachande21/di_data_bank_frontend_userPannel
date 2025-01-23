@@ -18,8 +18,8 @@ import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
 import { Helmet } from 'react-helmet';
 //const socket=io('http://localhost:4000');
-const socket = io('http://65.20.91.47:4000');
-//const socket=io('https://boardsearch.ai')
+//const socket = io('http://65.20.91.47:4000');
+const socket=io('https://boardsearch.ai')
 
 const Support = () => {
     const {
@@ -195,6 +195,17 @@ const Support = () => {
                                     Sr. No
                                 </th>
                                 <th
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        borderLeft: 'none',
+                                        color: '#051F50'
+                                    }}
+                                    className="p-3"
+                                    scope="col"
+                                >
+                                    Tickets
+                                </th>
+                                <th
                                     className="p-3"
                                     scope="col"
                                     style={{
@@ -261,6 +272,7 @@ const Support = () => {
                                 <>
                                     <tr>
                                         <td>{index + 1}</td>
+                                        <td>{item?.Ticket}</td>
                                         <td>{item?.Issue_type}</td>
                                         <td>{item?.description}</td>
                                         <td>

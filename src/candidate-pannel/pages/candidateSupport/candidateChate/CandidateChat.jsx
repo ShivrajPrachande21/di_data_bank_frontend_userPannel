@@ -7,9 +7,10 @@ import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
 import BaseUrl from './../../../../services/BaseUrl';
 import axios from 'axios';
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
 //const socket=io('http://localhost:4000')
 //const socket = io('https://boardsearch.ai');
+const socket = io('https://boardsearch.ai');
 function CandidateChat() {
     const location = useLocation();
     const { id } = useParams();

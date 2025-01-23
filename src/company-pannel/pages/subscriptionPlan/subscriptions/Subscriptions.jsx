@@ -364,7 +364,7 @@ const Subscriptions = () => {
                                             ) : (
                                                 ''
                                             )}
-                                            {item?.ai_question ? (
+                                            {/* {item?.ai_question ? (
                                                 <li>
                                                     <img
                                                         src={
@@ -387,7 +387,7 @@ const Subscriptions = () => {
                                                 </li>
                                             ) : (
                                                 ''
-                                            )}
+                                            )} */}
                                             {item?.support ? (
                                                 <li>
                                                     <img

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Col, Image } from 'react-bootstrap';
+import { Button, Col, Image,Modal } from 'react-bootstrap';
 import './jobs.css';
 import BaseUrl from '../../../../../services/BaseUrl';
 import { useParams } from 'react-router-dom';
@@ -44,8 +44,12 @@ const Job = () => {
         return `${diffDays} days ago`;
     };
     const [showModal, setShowModal] = useState(false);
-    const handleApplyJob = async id => {
-        await applyTo_job(id);
+    const [showConfirmation,setShowConfirmation]=useState(false);
+    const [applyId,SetApplyId]=useState(null);
+   
+    const handleApplyJob = async() => {
+        await applyTo_job(applyId);
+        setShowConfirmation(false);
         await getJobs();
     };
     const handleSaveJob = async id => {
@@ -68,6 +72,56 @@ const Job = () => {
                 height: '50vh'
             }}
         >
+
+<Modal
+    show={showConfirmation}
+    onHide={() => setShowConfirmation(false)}
+    style={{
+        maxWidth: '400px', // Adjust the width to your preference
+        margin: 'auto', // Center the modal horizontally
+        display: 'flex', // Ensure the modal is treated as a flex container
+        justifyContent: 'center', // Horizontally center the modal
+        alignItems: 'center', // Vertically center the modal
+        position: 'absolute', // Position the modal in a specific place
+        top: '50%', // Center vertically
+        left: '50%', // Center horizontally
+        transform: 'translate(-50%, -50%)', // Adjust the final position
+    }}
+    centered
+>
+    <Modal.Header>
+        <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            style={{
+                cursor: 'pointer',
+                backgroundColor: 'transparent', // Ensure no background
+                border: 'none', // Ensure no border
+                color: 'skyblue',
+            }}
+            onMouseEnter={(e) => (e.target.style.color = 'deepskyblue')} // Hover effect
+            onMouseLeave={(e) => (e.target.style.color = 'skyblue')}
+            onClick={() => setShowConfirmation(false)}
+        ></button>
+    </Modal.Header>
+    <Modal.Body>Are you sure you want to apply this job?</Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowConfirmation(false)}>
+            Cancel
+        </Button>
+        <Button
+            style={{
+                background: '#B4DDFF',
+                color: '#3B96E1',
+            }}
+            onClick={handleApplyJob}
+        >
+         Apply
+        </Button>
+    </Modal.Footer>
+</Modal>
+
             {jobs?.map((item, index) => (
                 <>
                     <div
@@ -219,7 +273,7 @@ const Job = () => {
 
                                         border: 'none'
                                     }}
-                                    onClick={() => handleApplyJob(item?._id)}
+                                    onClick={()=>{setShowConfirmation(true),SetApplyId(item?._id)}}
                                 >
                                     Apply
                                 </Button>

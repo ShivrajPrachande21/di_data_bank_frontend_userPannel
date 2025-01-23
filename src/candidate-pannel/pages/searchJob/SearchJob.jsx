@@ -59,6 +59,8 @@ const SearchJob = () => {
     const [hideDesc, setHideDesc] = useState(false);
     const [hoveredCardId, setHoveredCardId] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [showConfirmation,setShowConfirmation]=useState(false)
+    const [applyId,SetApplyId]=useState(null)
     const activeCardRef = useRef(null);
     const [SearchData, SetSearchData] = useState({
         search: '',
@@ -136,12 +138,13 @@ const SearchJob = () => {
     };
 
     // function for Apply job
-    const ApplyTOJob = async id => {
+    const ApplyTOJob = async() => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
             setShowModal(true);
             return;
         }
-        await applyTo_job(id);
+        setShowConfirmation(false)
+        await applyTo_job(applyId);
     };
 
     // function to Save Jobs
@@ -229,6 +232,56 @@ const SearchJob = () => {
                     content="jobs, career, search jobs, employment"
                 />
             </Helmet>
+
+            <Modal
+    show={showConfirmation}
+    onHide={() => setShowConfirmation(false)}
+    style={{
+        maxWidth: '400px', // Adjust the width to your preference
+        margin: 'auto', // Center the modal horizontally
+        display: 'flex', // Ensure the modal is treated as a flex container
+        justifyContent: 'center', // Horizontally center the modal
+        alignItems: 'center', // Vertically center the modal
+        position: 'absolute', // Position the modal in a specific place
+        top: '50%', // Center vertically
+        left: '50%', // Center horizontally
+        transform: 'translate(-50%, -50%)', // Adjust the final position
+    }}
+    centered
+>
+    <Modal.Header>
+        <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            style={{
+                cursor: 'pointer',
+                backgroundColor: 'transparent', // Ensure no background
+                border: 'none', // Ensure no border
+                color: 'skyblue',
+            }}
+            onMouseEnter={(e) => (e.target.style.color = 'deepskyblue')} // Hover effect
+            onMouseLeave={(e) => (e.target.style.color = 'skyblue')}
+            onClick={() => setShowConfirmation(false)}
+        ></button>
+    </Modal.Header>
+    <Modal.Body>Are you sure you want to apply this job?</Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowConfirmation(false)}>
+            Cancel
+        </Button>
+        <Button
+            style={{
+                background: '#B4DDFF',
+                color: '#3B96E1',
+            }}
+            onClick={ApplyTOJob}
+        >
+         Apply
+        </Button>
+    </Modal.Footer>
+</Modal>
+
             <div className="searchJob">
                 <Form onSubmit={handleSearch}>
                     <Row
@@ -629,10 +682,9 @@ const SearchJob = () => {
 
                                                             border: 'none'
                                                         }}
-                                                        onClick={() =>
-                                                            ApplyTOJob(
-                                                                item?._id
-                                                            )
+                                                        onClick={() =>{
+                                                            SetApplyId(item?._id)
+                                                            setShowConfirmation(true)}
                                                         }
                                                     >
                                                         Apply

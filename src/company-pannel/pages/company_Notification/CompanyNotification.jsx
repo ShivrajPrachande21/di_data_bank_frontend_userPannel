@@ -5,8 +5,11 @@ import { Link,useNavigate } from 'react-router-dom';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import blackCross from '../../../assets/images/blackCross.png';
 import Cross from '../../../assets/images/Cross.png';
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
 //const socket = io('http://localhost:4000');
+const socket = io('https://boardsearch.ai');
+import NotificationList from './Notification';
+
 const CompanyNotification = ({ handleClose }) => {
     const { handleCloseHire, showHire, SetShowHire, show, setShow } =
         useContext(HireCandidateContext);
@@ -205,6 +208,14 @@ const CompanyNotification = ({ handleClose }) => {
         }
     }, []);
 
+       const [notificationss, setNotificationss] = useState([]);
+   
+       const handleMouseEnter = () => {
+           const newNotifications = Array(profileView.length).fill(
+           'Congratulations! Your profile has been shortlisted!'
+           );
+           setNotificationss(newNotifications);
+       };
     return (
         <>
             <div
@@ -214,50 +225,8 @@ const CompanyNotification = ({ handleClose }) => {
                     overflowY: 'auto'
                 }}
             >
-                {notifications?.map((item, index) => (
-                    <p
-                        key={index}
-                        style={{
-                            fontSize: '0.8rem',
-                            background: '#B4DDFF',
-                            padding: '6px',
-                            display: 'flex',
-                            justifyContent: 'space-around',
-                            borderRadius: '10px'
-                        }}
-                    >
-                        Your support request has been solved.
-                    </p>
-                ))}
-                {NewCandidate.map((item, index) => (
-                    <>
-                        <p
-                            key={index}
-                            style={{
-                                fontSize: '0.8rem',
-                                background: '#B4DDFF',
-                                padding: '6px',
-                                display: 'flex',
-                                justifyContent: 'space-around',
-                                borderRadius: '10px'
-                            }}
-                        >
-                            New Candidte Registered
-                            {/* <span
-                                onClick={() => handleCloseHire(item?._id)}
-                                style={{
-                                    color: '#3B96E1',
-                                    fontSize: '0.8rem',
-                                    marginLeft: '10px',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                View
-                            </span> */}
-                        </p>
-                    </>
-                ))}
-                {ShortlistNot.map((item, index) => (
+
+                {/* {ShortlistNot.map((item, index) => (
                     <>
                         <p
                             key={index}
@@ -285,69 +254,111 @@ const CompanyNotification = ({ handleClose }) => {
                             </Link>
                         </p>
                     </>
-                ))}
+                ))} */}
 
-                {profileView.map((item, index) => (
-                    <>
-                        <p
-                            key={index}
-                            style={{
-                                fontSize: '0.8rem',
-                                background: '#B4DDFF',
-                                padding: '6px',
-                                display: 'flex',
-                                justifyContent: 'space-around',
-                                borderRadius: '10px'
-                            }}
-                        >
-                            Good news! A company just viewed your CV.
-                            {/* <span
-                                onClick={() =>
-                                    handleCloseViewProfile(
-                                        item?.profile_view_company?.company_id
-                                    )
-                                }
-                                style={{
-                                    color: '#3B96E1',
-                                    fontSize: '0.8rem',
-                                    marginLeft: '10px',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                View
-                            </span> */}
-                        </p>
-                    </>
-                ))}
 
-                {newCompanyNot.map((item, index) => (
-                    <>
-                        <p
-                            key={index}
-                            style={{
-                                fontSize: '0.8rem',
-                                background: '#B4DDFF',
-                                padding: '6px',
-                                display: 'flex',
-                                justifyContent: 'space-around',
-                                borderRadius: '10px'
-                            }}
-                        >
-                            A new company has joined our platform!
-                            {/* <span
-                                onClick={() => handleCloseNewCompany(item?._id)}
-                                style={{
-                                    color: '#3B96E1',
-                                    fontSize: '0.8rem',
-                                    marginLeft: '10px',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                View
-                            </span> */}
-                        </p>
-                    </>
-                ))}
+{ShortlistNot.length > 0 &&notificationss.length==0&& (
+                <div
+                    style={{
+                        background: 'linear-gradient(90deg, #B4DDFF, #80C2FF)',
+                        padding: '12px 20px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        borderRadius: '12px',
+                        boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.15)',
+                        marginBottom: '15px',
+                        transition: 'all 0.3s ease-in-out',
+                        cursor: 'pointer',
+                    }}
+                    onMouseEnter={handleMouseEnter}
+                >
+                    <p
+                        style={{
+                            margin: 0,
+                            color: '#003366',
+                            fontSize: '0.8rem',
+                            fontWeight: 'normal',
+                        }}
+                    >
+                      Congratulations! Your profile has been shortlisted!
+                    </p>
+                  
+                         <span
+                         style={{
+                             background: '#0056D2',
+                             color: '#FFFFFF',
+                             padding: '1px 7px',
+                             borderRadius: '25px',
+                             fontSize: '0.85rem',
+                             fontWeight: 'bold',
+                             textAlign: 'center',
+                             boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.2)',
+                         }}
+                     >
+                         {ShortlistNot.length}
+                     </span>
+                
+                   
+                </div>
+            )}
+           {notificationss.map((notification, index) => (
+  <div
+    key={index}
+    style={{
+        background: 'linear-gradient(90deg, #B4DDFF, #80C2FF)',
+      padding: '12px 20px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderRadius: '12px',
+      boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.15)',
+      marginBottom: '10px',
+      animation: `slideIn 0.5s ease-in-out ${index * 0.2}s both`, // Add animation
+    }}
+  >
+    <p
+      style={{
+        margin: 0,
+         color: '#003366',
+        fontSize: '0.8rem',
+        fontWeight: 'normal',
+      }}
+    >
+      {notificationss[index]}
+       <Link
+                                   to={`/candidate-dashboard/viewAppliedJobDetails/${ShortlistNot[index]?._id}`}
+                                onClick={() => handleCloseShortlistAndView(ShortlistNot[index]?._id)}
+                                      style={{
+                                          color: '#3B96E1',
+                                          fontSize: '0.8rem',
+                                          marginLeft: '10px',
+                                          cursor: 'pointer'
+                                      }}
+                                  >
+                                      View
+                                  </Link>
+      
+    </p>
+  </div>
+))}
+
+
+
+{changeButton?(
+                     <NotificationList profileView={notifications} message={` Your support request has been solved.`} Path={'/main/support'} Btn={true}/>
+                ):(
+                    <NotificationList profileView={notifications} message={` Your support request has been solved.`} Path={'/candidate-dashboard/support-candidate'} Btn={true}/>
+                )}
+
+                
+<NotificationList profileView={NewCandidate} message={`  New Candidte Registered.`}/>
+
+<NotificationList profileView={profileView} message={` Good news! A company just viewed your CV.`}/>
+
+<NotificationList profileView={newCompanyNot} message={` A new company has joined our platform!`}/>
+
+
             </div>
             {changeButton ? (
                 <button

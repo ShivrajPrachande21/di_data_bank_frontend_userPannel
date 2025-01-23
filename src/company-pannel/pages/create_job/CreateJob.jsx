@@ -687,13 +687,9 @@ const CreateJob = () => {
                     </div>
                 </Modal>
             </div>
-            <Modal
-                show={showTable}
-                onHide={handleCloseTable}
-                centered
-                dialogClassName="custom-modal-width"
-            >
-                <DisplayHiredCandidate />
+
+            <Modal show={showTable} centered className="customtable-css">
+                <DisplayHiredCandidate onHide={handleCloseTable} />
             </Modal>
         </>
     );

@@ -84,11 +84,11 @@ const Profile = () => {
     }
     return (
         <>
-          <Helmet>
-                            <meta charSet="utf-8" />
-                            <title>Profile</title>
-                            <link rel="canonical" href="http://mysite.com/example" />
-                        </Helmet>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Profile</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
             <div className="ReportedJob">
                 {profileData?.updatedData?.status !== 'approve' &&
                 profileData?.updatedData?.status ? (
@@ -440,7 +440,7 @@ const Profile = () => {
                 show={lgShow}
                 onHide={() => setLgShow(prev => !prev)}
                 aria-labelledby="example-modal-sizes-title-lg"
-                className="custom-modal" // Apply the custom class here
+                className="custom-modal"
             >
                 <EditCompanyProfile setLgShow={setLgShow} />
             </Modal>

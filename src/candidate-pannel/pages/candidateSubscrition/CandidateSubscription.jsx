@@ -339,7 +339,7 @@ const CandidateSubscription = () => {
                                             ) : (
                                                 ''
                                             )}
-                                            <ul>
+                                            {/* <ul>
                                                 {item?.interview_question ? (
                                                     <li>
                                                         <img
@@ -361,7 +361,7 @@ const CandidateSubscription = () => {
                                                 ) : (
                                                     ''
                                                 )}
-                                            </ul>
+                                            </ul> */}
                                             {currentSubscription?.plane_name ==
                                             item?.plane_name ? (
                                                 <Button

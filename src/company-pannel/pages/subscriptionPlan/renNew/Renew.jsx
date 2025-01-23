@@ -346,7 +346,7 @@ let ToptimeoutId;
                                         ) : (
                                             ''
                                         )}
-                                        {item?.ai_question &&
+                                        {/* {item?.ai_question &&
                                         item?.ai_question !== 0? (
                                             <li>
                                                 {' '}
@@ -365,7 +365,7 @@ let ToptimeoutId;
                                             </li>
                                         ) : (
                                             ''
-                                        )}
+                                        )} */}
                                     </ul>
 
                                     {data1 == item?.plane_name ? (

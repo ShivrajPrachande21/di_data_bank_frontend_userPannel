@@ -330,7 +330,7 @@ const EarlyBuy = () => {
                                         ) : (
                                             ''
                                         )}
-                                        {item?.ai_question &&
+                                        {/* {item?.ai_question &&
                                         item?.ai_question !== 0? (
                                             <li>
                                                 {' '}
@@ -349,7 +349,7 @@ const EarlyBuy = () => {
                                             </li>
                                         ) : (
                                             ''
-                                        )}
+                                        )} */}
                                     </ul>
 
                                     {data1 == item?.plane_name ? (

@@ -36,6 +36,9 @@ const ViewJobDescription = () => {
 const [showConfirmation,setShowConfirmation]=useState(false)
 const [applyId,SetApplyId]=useState(null);
 
+ const [showConfirmations,setShowConfirmations]=useState(false)
+    const [saveId,SetSaveId]=useState(null)
+
     const handleReport = () => {};
 
     const getSingleJobDetails = async () => {
@@ -87,8 +90,9 @@ const [applyId,SetApplyId]=useState(null);
     };
 
     // Save Jobs
-    const handle_Save_jobs = async id => {
-        await save_job(id);
+    const handle_Save_jobs = async() => {
+        setShowConfirmations(false)
+        await save_job(saveId);
     };
     useEffect(() => {
         SetDescription(JobData?.description);
@@ -185,6 +189,57 @@ const [applyId,SetApplyId]=useState(null);
            onClick={handleApplyJob}
         >
          Apply
+        </Button>
+    </Modal.Footer>
+</Modal>
+
+
+
+<Modal
+    show={showConfirmations}
+    onHide={() => setShowConfirmations(false)}
+    style={{
+        maxWidth: '400px', 
+        margin: 'auto',
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        position: 'absolute', 
+        top: '50%', 
+        left: '50%', 
+        transform: 'translate(-50%, -50%)', 
+    }}
+    centered
+>
+    <Modal.Header>
+        <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            style={{
+                cursor: 'pointer',
+                backgroundColor: 'transparent', // Ensure no background
+                border: 'none', // Ensure no border
+                color: 'skyblue',
+            }}
+            onMouseEnter={(e) => (e.target.style.color = 'deepskyblue')} // Hover effect
+            onMouseLeave={(e) => (e.target.style.color = 'skyblue')}
+            onClick={() => setShowConfirmations(false)}
+        ></button>
+    </Modal.Header>
+    <Modal.Body>Are you sure you want to save this job?</Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowConfirmations(false)}>
+            Cancel
+        </Button>
+        <Button
+            style={{
+                background: '#B4DDFF',
+                color: '#3B96E1',
+            }}
+            onClick={handle_Save_jobs}
+        >
+         Save
         </Button>
     </Modal.Footer>
 </Modal>
@@ -405,7 +460,8 @@ const [applyId,SetApplyId]=useState(null);
                                                 color: '#3B96E1',
                                                 border: '1px solid #3B96E1'
                                             }}
-                                            onClick={() => handle_Save_jobs(id)}
+                                           
+                                            onClick={()=>{setShowConfirmations(true),SetSaveId(id)}}
                                         >
                                             Save
                                         </Button>

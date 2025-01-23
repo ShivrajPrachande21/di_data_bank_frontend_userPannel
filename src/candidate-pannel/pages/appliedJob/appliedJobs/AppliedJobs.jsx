@@ -108,7 +108,12 @@ const AppliedJobs = () => {
                                         height="40" // Set the desired height
                                     />
                                     <h6>
-                                        {item?.job_title}{' '}
+                                        {item?.job_title.length > 23
+                                                ? `${item.job_title.substring(
+                                                      0,
+                                                      23
+                                                  )}...`
+                                                : item?.job_title}
                                         <p
                                             style={{
                                                 color: '#3B96E1',
@@ -118,8 +123,15 @@ const AppliedJobs = () => {
                                                 wordWrap: 'break-word'
                                             }}
                                         >
-                                            {item?.company_details
-                                                ?.company_name || ''}
+                                           
+                                                {item?.company_details
+                                                ?.company_name.length > 22
+                                                ? `${item?.company_details
+                                                    ?.company_name.substring(
+                                                      0,
+                                                      22
+                                                  )}...`
+                                                : item?.job_title}
                                         </p>
                                     </h6>
                                     <div className="green-thik">

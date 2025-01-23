@@ -46,14 +46,19 @@ const Job = () => {
     const [showModal, setShowModal] = useState(false);
     const [showConfirmation,setShowConfirmation]=useState(false);
     const [applyId,SetApplyId]=useState(null);
+
+     const [showConfirmations,setShowConfirmations]=useState(false)
+        const [saveId,SetSaveId]=useState(null)
+    
    
     const handleApplyJob = async() => {
         await applyTo_job(applyId);
         setShowConfirmation(false);
         await getJobs();
     };
-    const handleSaveJob = async id => {
-        await save_job(id);
+    const handleSaveJob = async () => {
+        await save_job(saveId);
+        setShowConfirmations(false)
         await getJobs();
     };
 
@@ -122,6 +127,56 @@ const Job = () => {
     </Modal.Footer>
 </Modal>
 
+
+<Modal
+    show={showConfirmations}
+    onHide={() => setShowConfirmations(false)}
+    style={{
+        maxWidth: '400px', 
+        margin: 'auto',
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        position: 'absolute', 
+        top: '50%', 
+        left: '50%', 
+        transform: 'translate(-50%, -50%)', 
+    }}
+    centered
+>
+    <Modal.Header>
+        <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            style={{
+                cursor: 'pointer',
+                backgroundColor: 'transparent', // Ensure no background
+                border: 'none', // Ensure no border
+                color: 'skyblue',
+            }}
+            onMouseEnter={(e) => (e.target.style.color = 'deepskyblue')} // Hover effect
+            onMouseLeave={(e) => (e.target.style.color = 'skyblue')}
+            onClick={() => setShowConfirmations(false)}
+        ></button>
+    </Modal.Header>
+    <Modal.Body>Are you sure you want to save this job?</Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowConfirmations(false)}>
+            Cancel
+        </Button>
+        <Button
+            style={{
+                background: '#B4DDFF',
+                color: '#3B96E1',
+            }}
+            onClick={handleSaveJob}
+        >
+         Save
+        </Button>
+    </Modal.Footer>
+</Modal>
+
             {jobs?.map((item, index) => (
                 <>
                     <div
@@ -135,7 +190,15 @@ const Job = () => {
                         key={index}
                     >
                         <div className="search-job-top">
-                            <h6>{item?.job_title} </h6>
+                            <h6>
+                            {item?.job_title.length > 20
+                                                ? `${item.job_title.substring(
+                                                      0,
+                                                      20
+                                                  )}...`
+                                                : item?.job_title}
+
+                            </h6>
                             <div className="green-thik">
                                 {/* <img src={Verified} alt="" height="20px" /> */}
                             </div>
@@ -261,7 +324,7 @@ const Job = () => {
                                         color: '#3B96E1',
                                         border: '1px solid #3B96E1'
                                     }}
-                                    onClick={() => handleSaveJob(item?._id)}
+                                    onClick={()=>{setShowConfirmations(true),SetSaveId(item?._id)}}
                                 >
                                     Save
                                 </Button>

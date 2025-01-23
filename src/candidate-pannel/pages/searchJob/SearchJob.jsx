@@ -476,6 +476,7 @@ const SearchJob = () => {
                     </Row>
                 </Form>
 
+
                 <Row style={{ marginTop: '92px' }}>
                     <p className="searchresult">Result:{visibleItems.length}</p>
 
@@ -761,6 +762,7 @@ const SearchJob = () => {
                         paddingRight: '20px'
                     }}
                 >
+
                     <Col
                         xs={4}
                         md={8}

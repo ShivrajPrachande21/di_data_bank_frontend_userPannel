@@ -364,7 +364,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Total Experience:
@@ -382,7 +383,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Current CTC:
@@ -399,7 +401,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Aspiring Position/Role:
@@ -416,7 +419,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Skills:
@@ -445,7 +449,9 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Resume:
@@ -474,7 +480,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Career highlights details:
@@ -490,7 +497,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Awards & Recognition:

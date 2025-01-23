@@ -62,6 +62,10 @@ const SearchJob = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [applyId, SetApplyId] = useState(null);
+
+    const [showConfirmations, setShowConfirmations] = useState(false);
+    const [saveId, SetSaveId] = useState(null);
+
     const activeCardRef = useRef(null);
     const [SearchData, SetSearchData] = useState({
         search: '',
@@ -149,8 +153,9 @@ const SearchJob = () => {
     };
 
     // function to Save Jobs
-    const SavedJobs = id => {
-        save_job(id);
+    const SavedJobs = () => {
+        setShowConfirmations(false);
+        save_job(saveId);
     };
 
     const sanitizedDescription = DOMPurify.sanitize(JobData?.description);
@@ -290,6 +295,59 @@ const SearchJob = () => {
                 </Modal.Footer>
             </Modal>
 
+            <Modal
+                show={showConfirmations}
+                onHide={() => setShowConfirmations(false)}
+                style={{
+                    maxWidth: '400px',
+                    margin: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)'
+                }}
+                centered
+            >
+                <Modal.Header>
+                    <button
+                        type="button"
+                        className="btn-close"
+                        aria-label="Close"
+                        style={{
+                            cursor: 'pointer',
+                            backgroundColor: 'transparent', // Ensure no background
+                            border: 'none', // Ensure no border
+                            color: 'skyblue'
+                        }}
+                        onMouseEnter={e =>
+                            (e.target.style.color = 'deepskyblue')
+                        } // Hover effect
+                        onMouseLeave={e => (e.target.style.color = 'skyblue')}
+                        onClick={() => setShowConfirmations(false)}
+                    ></button>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to save this job?</Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setShowConfirmations(false)}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        style={{
+                            background: '#B4DDFF',
+                            color: '#3B96E1'
+                        }}
+                        onClick={SavedJobs}
+                    >
+                        Save
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className="searchJob">
                 <Form onSubmit={handleSearch}>
                     <Row
@@ -479,10 +537,10 @@ const SearchJob = () => {
                                                 }}
                                             >
                                                 {item?.company_details
-                                                    ?.company_name.length > 25
+                                                    ?.company_name.length > 23
                                                     ? `${item?.company_details?.company_name.substring(
                                                           0,
-                                                          25
+                                                          23
                                                       )}...`
                                                     : item?.company_details
                                                           ?.company_name}
@@ -675,9 +733,14 @@ const SearchJob = () => {
                                                             color: '#3B96E1',
                                                             border: '1px solid #3B96E1'
                                                         }}
-                                                        onClick={() =>
-                                                            SavedJobs(item?._id)
-                                                        }
+                                                        onClick={() => {
+                                                            setShowConfirmations(
+                                                                true
+                                                            ),
+                                                                SetSaveId(
+                                                                    item?._id
+                                                                );
+                                                        }}
                                                     >
                                                         Save
                                                     </Button>

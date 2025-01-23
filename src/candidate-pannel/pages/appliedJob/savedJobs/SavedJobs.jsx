@@ -241,7 +241,12 @@ const SavedJobs = () => {
                                     height="40"
                                 />
                                 <h6>
-                                    {item?.job_title}
+                                    {item?.job_title.length > 20
+                                                ? `${item.job_title.substring(
+                                                      0,
+                                                      20
+                                                  )}...`
+                                                : item?.job_title}
                                     <p
                                         style={{
                                             color: '#3B96E1',
@@ -249,8 +254,13 @@ const SavedJobs = () => {
                                             wordWrap: 'break-word'
                                         }}
                                     >
-                                        {item?.company_details?.company_name ||
-                                            ''}
+                                      
+                                            {item?.company_details?.company_name .length > 20
+                                                ? `${item?.company_details?.company_name .substring(
+                                                      0,
+                                                      20
+                                                  )}...`
+                                                : item?.job_title}
                                     </p>
                                 </h6>
                                 {item?.Green_Batch && (

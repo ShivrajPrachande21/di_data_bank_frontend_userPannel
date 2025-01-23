@@ -25,7 +25,8 @@ const NotificationList = ({ profileView, message, Path, Btn }) => {
                         transition: 'all 0.3s ease-in-out',
                         cursor: 'pointer'
                     }}
-                    onMouseEnter={handleMouseEnter}
+                    //onMouseEnter={handleMouseEnter}
+                    onClick={handleMouseEnter}
                 >
                     <p
                         style={{

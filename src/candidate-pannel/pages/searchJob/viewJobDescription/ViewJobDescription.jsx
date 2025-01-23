@@ -354,11 +354,45 @@ const [applyId,SetApplyId]=useState(null);
                                 <td>
                                     {' '}
                                     <span className="card-table-span">
-                                        {JobData?.salary}LPA
+                                        {JobData?.salary||'N/A'}
                                     </span>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td
+                                    style={{
+                                        paddingRight: '30px'
+                                    }}
+                                >
+                                    <span className="card-table-span">
+                                        Job type:
+                                    </span>{' '}
+                                </td>
+                                <td>
+                                    {' '}
+                                    <span className="card-table-span">
+                                        {JobData?.job_type||'N/A'}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td
+                                    style={{
+                                        paddingRight: '30px'
+                                    }}
+                                >
+                                    <span className="card-table-span">
+                                        Work type:
+                                    </span>{' '}
+                                </td>
+                                <td>
+                                    {' '}
+                                    <span className="card-table-span">
+                                        {JobData?.work_type||'N/A'
+                                        }
+                                    </span>
+                                </td>
+                            </tr>
                             <tr>
                                 <td
                                     style={{

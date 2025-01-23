@@ -498,7 +498,7 @@ const CreateJob = () => {
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {item?.salary} LPA
+                                                            {item?.salary} 
                                                         </span>
                                                     </td>
                                                 </tr>

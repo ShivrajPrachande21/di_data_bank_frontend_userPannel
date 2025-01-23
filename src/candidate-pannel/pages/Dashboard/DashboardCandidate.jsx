@@ -222,7 +222,7 @@ const DashboardCandidate = () => {
                                                 ?.resume_write || 0}
                                         </h4>
 
-                                        <p>Interview question </p>
+                                        {/* <p>Interview question </p>
                                         <h4
                                             style={{
                                                 color: '#3B96E1',
@@ -232,7 +232,7 @@ const DashboardCandidate = () => {
                                         >
                                             {DashboardData?.existedPlane
                                                 ?.interview_question || 0}
-                                        </h4>
+                                        </h4> */}
                                         {DashboardData?.existedPlane
                                             ?.job_recommandation ? (
                                             <p>AI Job Recommendation </p>
@@ -240,7 +240,7 @@ const DashboardCandidate = () => {
 
                                         {DashboardData?.existedPlane
                                             ?.customer_support ? (
-                                            <p>Customer support</p>
+                                            <p>Email support and chat support</p>
                                         ) : null}
                                     </div>
                                     <div className="expiry-date-sub">

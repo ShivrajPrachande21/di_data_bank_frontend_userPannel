@@ -164,6 +164,12 @@
     color: #3b96e1;
     margin-left: -48%;
 }
+
+.custom-modal-width .modal-dialog {
+    /* Adjust width as needed */
+    width: 100%; /* Optional: Ensure consistency */
+}
+
 @media (max-width: 575.98px) {
     .create-job {
         margin: 0px auto;

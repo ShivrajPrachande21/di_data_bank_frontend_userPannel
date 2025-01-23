@@ -14,6 +14,7 @@ import BaseUrl from '../../../services/BaseUrl';
 import Loader from '../loader/Loader';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
+import DisplayHiredCandidate from './DisplayHiredCandidate/DisplayHiredCandidate';
 let promoteJob = {};
 const CreateJob = () => {
     const {
@@ -40,6 +41,11 @@ const CreateJob = () => {
     const [orderId, SetOrderId] = useState('');
     const [jobId, setJob_id] = useState('');
     const [PromoteLoading, SetPromoteLoading] = useState(null);
+
+    const [showTable, setShowTable] = useState(false);
+
+    const handleCloseTable = () => setShowTable(false);
+    const handleShowTable = () => setShowTable(true);
 
     const handleClose = () => {
         const jobPosting0 = job_status?.SubscriptionStatus[0]?.job_posting || 0;
@@ -315,6 +321,7 @@ const CreateJob = () => {
                         <div
                             className="job-created-data"
                             style={{ border: 'none' }}
+                            onClick={handleShowTable}
                         >
                             <p style={{ color: '#06C306' }}>
                                 {job_status?.dataWithJobCounts[0]
@@ -680,6 +687,14 @@ const CreateJob = () => {
                     </div>
                 </Modal>
             </div>
+            <Modal
+                show={showTable}
+                onHide={handleCloseTable}
+                centered
+                dialogClassName="custom-modal-width"
+            >
+                <DisplayHiredCandidate />
+            </Modal>
         </>
     );
 };

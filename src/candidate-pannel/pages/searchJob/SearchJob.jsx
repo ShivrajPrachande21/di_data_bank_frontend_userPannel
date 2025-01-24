@@ -17,6 +17,7 @@ import {
 import './searchjob.css';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
 import whiteSeacrh from '../../../assets/images/whiteSeacrh.png';
+import iconamoon_arrowd from '../../../assets/images/iconamoon_arrowd.png';
 import avatar from '../../../assets/images/avatar.png';
 import Verified from '../../../assets/images/Verified.png';
 import altprofile from '../../../assets/images/altprofile.jpg';
@@ -59,11 +60,11 @@ const SearchJob = () => {
     const [hideDesc, setHideDesc] = useState(false);
     const [hoveredCardId, setHoveredCardId] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [showConfirmation,setShowConfirmation]=useState(false)
-    const [applyId,SetApplyId]=useState(null)
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [applyId, SetApplyId] = useState(null);
 
-    const [showConfirmations,setShowConfirmations]=useState(false)
-    const [saveId,SetSaveId]=useState(null)
+    const [showConfirmations, setShowConfirmations] = useState(false);
+    const [saveId, SetSaveId] = useState(null);
 
     const activeCardRef = useRef(null);
     const [SearchData, SetSearchData] = useState({
@@ -142,18 +143,18 @@ const SearchJob = () => {
     };
 
     // function for Apply job
-    const ApplyTOJob = async() => {
+    const ApplyTOJob = async () => {
         if (CandidateProfile?.profileCompletionPercentage != 100) {
             setShowModal(true);
             return;
         }
-        setShowConfirmation(false)
+        setShowConfirmation(false);
         await applyTo_job(applyId);
     };
 
     // function to Save Jobs
-    const SavedJobs =() => {
-        setShowConfirmations(false)
+    const SavedJobs = () => {
+        setShowConfirmations(false);
         save_job(saveId);
     };
 
@@ -239,105 +240,114 @@ const SearchJob = () => {
             </Helmet>
 
             <Modal
-    show={showConfirmation}
-    onHide={() => setShowConfirmation(false)}
-    style={{
-        maxWidth: '400px', // Adjust the width to your preference
-        margin: 'auto', // Center the modal horizontally
-        display: 'flex', // Ensure the modal is treated as a flex container
-        justifyContent: 'center', // Horizontally center the modal
-        alignItems: 'center', // Vertically center the modal
-        position: 'absolute', // Position the modal in a specific place
-        top: '50%', // Center vertically
-        left: '50%', // Center horizontally
-        transform: 'translate(-50%, -50%)', // Adjust the final position
-    }}
-    centered
->
-    <Modal.Header>
-        <button
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            style={{
-                cursor: 'pointer',
-                backgroundColor: 'transparent', // Ensure no background
-                border: 'none', // Ensure no border
-                color: 'skyblue',
-            }}
-            onMouseEnter={(e) => (e.target.style.color = 'deepskyblue')} // Hover effect
-            onMouseLeave={(e) => (e.target.style.color = 'skyblue')}
-            onClick={() => setShowConfirmation(false)}
-        ></button>
-    </Modal.Header>
-    <Modal.Body>Are you sure you want to apply this job?</Modal.Body>
-    <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowConfirmation(false)}>
-            Cancel
-        </Button>
-        <Button
-            style={{
-                background: '#B4DDFF',
-                color: '#3B96E1',
-            }}
-            onClick={ApplyTOJob}
-        >
-         Apply
-        </Button>
-    </Modal.Footer>
-</Modal>
+                show={showConfirmation}
+                onHide={() => setShowConfirmation(false)}
+                style={{
+                    maxWidth: '400px', // Adjust the width to your preference
+                    margin: 'auto', // Center the modal horizontally
+                    display: 'flex', // Ensure the modal is treated as a flex container
+                    justifyContent: 'center', // Horizontally center the modal
+                    alignItems: 'center', // Vertically center the modal
+                    position: 'absolute', // Position the modal in a specific place
+                    top: '50%', // Center vertically
+                    left: '50%', // Center horizontally
+                    transform: 'translate(-50%, -50%)' // Adjust the final position
+                }}
+                centered
+            >
+                <Modal.Header>
+                    <button
+                        type="button"
+                        className="btn-close"
+                        aria-label="Close"
+                        style={{
+                            cursor: 'pointer',
+                            backgroundColor: 'transparent', // Ensure no background
+                            border: 'none', // Ensure no border
+                            color: 'skyblue'
+                        }}
+                        onMouseEnter={e =>
+                            (e.target.style.color = 'deepskyblue')
+                        } // Hover effect
+                        onMouseLeave={e => (e.target.style.color = 'skyblue')}
+                        onClick={() => setShowConfirmation(false)}
+                    ></button>
+                </Modal.Header>
+                <Modal.Body>
+                    Are you sure you want to apply this job?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setShowConfirmation(false)}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        style={{
+                            background: '#B4DDFF',
+                            color: '#3B96E1'
+                        }}
+                        onClick={ApplyTOJob}
+                    >
+                        Apply
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
-
-
-
-<Modal
-    show={showConfirmations}
-    onHide={() => setShowConfirmations(false)}
-    style={{
-        maxWidth: '400px', 
-        margin: 'auto',
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        position: 'absolute', // Position the modal in a specific place
-        top: '50%', // Center vertically
-        left: '50%', // Center horizontally
-        transform: 'translate(-50%, -50%)', // Adjust the final position
-    }}
-    centered
->
-    <Modal.Header>
-        <button
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            style={{
-                cursor: 'pointer',
-                backgroundColor: 'transparent', // Ensure no background
-                border: 'none', // Ensure no border
-                color: 'skyblue',
-            }}
-            onMouseEnter={(e) => (e.target.style.color = 'deepskyblue')} // Hover effect
-            onMouseLeave={(e) => (e.target.style.color = 'skyblue')}
-            onClick={() => setShowConfirmations(false)}
-        ></button>
-    </Modal.Header>
-    <Modal.Body>Are you sure you want to save this job?</Modal.Body>
-    <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowConfirmations(false)}>
-            Cancel
-        </Button>
-        <Button
-            style={{
-                background: '#B4DDFF',
-                color: '#3B96E1',
-            }}
-            onClick={SavedJobs}
-        >
-         Save
-        </Button>
-    </Modal.Footer>
-</Modal>
+            <Modal
+                show={showConfirmations}
+                onHide={() => setShowConfirmations(false)}
+                style={{
+                    maxWidth: '400px',
+                    margin: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute', // Position the modal in a specific place
+                    top: '50%', // Center vertically
+                    left: '50%', // Center horizontally
+                    transform: 'translate(-50%, -50%)' // Adjust the final position
+                }}
+                centered
+            >
+                <Modal.Header>
+                    <button
+                        type="button"
+                        className="btn-close"
+                        aria-label="Close"
+                        style={{
+                            cursor: 'pointer',
+                            backgroundColor: 'transparent', // Ensure no background
+                            border: 'none', // Ensure no border
+                            color: 'skyblue'
+                        }}
+                        onMouseEnter={e =>
+                            (e.target.style.color = 'deepskyblue')
+                        } // Hover effect
+                        onMouseLeave={e => (e.target.style.color = 'skyblue')}
+                        onClick={() => setShowConfirmations(false)}
+                    ></button>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to save this job?</Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setShowConfirmations(false)}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        style={{
+                            background: '#B4DDFF',
+                            color: '#3B96E1'
+                        }}
+                        onClick={SavedJobs}
+                    >
+                        Save
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             <div className="searchJob">
                 <Form onSubmit={handleSearch}>
@@ -627,8 +637,7 @@ const SearchJob = () => {
                                                     {' '}
                                                     <span className="card-table-span">
                                                         {item?.salary &&
-                                                        item?.salary.length >
-                                                            10
+                                                        item?.salary.length > 10
                                                             ? `${item.salary.substring(
                                                                   0,
                                                                   12
@@ -703,81 +712,100 @@ const SearchJob = () => {
                                             </tr>
                                         </table>
                                         <div className="search-job-bnt mt-2">
-  {item.applied_candidates.some(
-    (candidate) => candidate.candidate_id.toString() === id
-  ) ? (
-    <Button
-      size="sm"
-      style={{
-        background: '#B4DDFF',
-        color: '#3B96E1',
-        width: '100%',
-        border: 'none',
-      }}
-    >
-      Applied
-    </Button>
-  ) : item.Save_id.some((candidate) => candidate.toString() === id) ? (
-    <>
-    <Button
-      size="sm"
-      style={{
-        background: 'white',
-        color: '#3B96E1',
-        border: '1px solid #3B96E1',
-      }}
-    >
-      Saved
-    </Button>
-    <Button
-        size="sm"
-        style={{
-          background: '#B4DDFF',
-          color: '#3B96E1',
-          border: 'none',
-        }}
-        onClick={() => {
-          SetApplyId(item?._id);
-          setShowConfirmation(true);
-        }}
-      >
-        Apply
-      </Button>
-    </>
-  ) : (
-    <>
-      <Button
-        size="sm"
-        style={{
-          background: 'white',
-          color: '#3B96E1',
-          border: '1px solid #3B96E1',
-        }}
-        onClick={() => {
-          setShowConfirmations(true);
-          SetSaveId(item?._id);
-        }}
-      >
-        Save
-      </Button>
-      <Button
-        size="sm"
-        style={{
-          background: '#B4DDFF',
-          color: '#3B96E1',
-          border: 'none',
-        }}
-        onClick={() => {
-          SetApplyId(item?._id);
-          setShowConfirmation(true);
-        }}
-      >
-        Apply
-      </Button>
-      </>
-  )}
-</div>
-
+                                            {item.applied_candidates.some(
+                                                candidate =>
+                                                    candidate.candidate_id.toString() ===
+                                                    id
+                                            ) ? (
+                                                <Button
+                                                    size="sm"
+                                                    style={{
+                                                        background: '#B4DDFF',
+                                                        color: '#3B96E1',
+                                                        width: '100%',
+                                                        border: 'none'
+                                                    }}
+                                                >
+                                                    Applied
+                                                </Button>
+                                            ) : item.Save_id.some(
+                                                  candidate =>
+                                                      candidate.toString() ===
+                                                      id
+                                              ) ? (
+                                                <>
+                                                    <Button
+                                                        size="sm"
+                                                        style={{
+                                                            background: 'white',
+                                                            color: '#3B96E1',
+                                                            border: '1px solid #3B96E1'
+                                                        }}
+                                                    >
+                                                        Saved
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        style={{
+                                                            background:
+                                                                '#B4DDFF',
+                                                            color: '#3B96E1',
+                                                            border: 'none'
+                                                        }}
+                                                        onClick={() => {
+                                                            SetApplyId(
+                                                                item?._id
+                                                            );
+                                                            setShowConfirmation(
+                                                                true
+                                                            );
+                                                        }}
+                                                    >
+                                                        Apply
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Button
+                                                        size="sm"
+                                                        style={{
+                                                            background: 'white',
+                                                            color: '#3B96E1',
+                                                            border: '1px solid #3B96E1'
+                                                        }}
+                                                        onClick={() => {
+                                                            setShowConfirmations(
+                                                                true
+                                                            );
+                                                            SetSaveId(
+                                                                item?._id
+                                                            );
+                                                        }}
+                                                    >
+                                                        Save
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        style={{
+                                                            background:
+                                                                '#B4DDFF',
+                                                            color: '#3B96E1',
+                                                            border: 'none'
+                                                        }}
+                                                        onClick={() => {
+                                                            SetApplyId(
+                                                                item?._id
+                                                            );
+                                                            setShowConfirmation(
+                                                                true
+                                                            );
+                                                        }}
+                                                    >
+                                                        Apply
+                                                    </Button>
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             ))
@@ -1118,30 +1146,37 @@ const SearchJob = () => {
                             </table>
                         </Col>
                     </Row>
-                    <Accordion>
-                        <Accordion.Item eventKey="1">
-                            <Accordion.Header
-                                style={{
-                                    fontSize: '0.9rem'
+                    <div
+                        className="Description"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            width: '180px',
+                            height: '40px',
+                            cursor: 'pointer',
+                            padding: '10px'
+                        }}
+                        onClick={() => setHideDesc(prev => !prev)}
+                    >
+                        <h3 className="mt-2">Job Description</h3>
+                        <span>
+                            <img src={iconamoon_arrowd} height={20} alt="" />
+                        </span>
+                    </div>
+
+                    {hideDesc ? (
+                        <div className="job-description-view mt-2">
+                            <div
+                                className="job-discription"
+                                dangerouslySetInnerHTML={{
+                                    __html: sanitizedDescription
                                 }}
-                                onClick={() => setHideDesc(prev => !prev)}
-                            >
-                                Job Description
-                            </Accordion.Header>
-                            {hideDesc ? (
-                                <div className="job-description-view">
-                                    <div
-                                        className="job-discription"
-                                        dangerouslySetInnerHTML={{
-                                            __html: sanitizedDescription
-                                        }}
-                                    />
-                                </div>
-                            ) : (
-                                ''
-                            )}
-                        </Accordion.Item>
-                    </Accordion>
+                            />
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </div>
             </Modal>
         </>

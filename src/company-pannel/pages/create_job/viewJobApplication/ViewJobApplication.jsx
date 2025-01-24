@@ -97,7 +97,12 @@ const ViewJobApplication = () => {
                             <div className="view-list mt-2">
                                 {viewJobDesciptionData?.skills?.map(
                                     (item, index) => (
-                                        <p key={index}>{item}</p>
+                                        <p
+                                            style={{ fontSize: '0.8rem' }}
+                                            key={index}
+                                        >
+                                            {item}
+                                        </p>
                                     )
                                 )}
                             </div>
@@ -136,6 +141,21 @@ const ViewJobApplication = () => {
                                             </span>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td style={{ paddingRight: '30px' }}>
+                                            <span className="card-table-span">
+                                                Work type:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {
+                                                    viewJobDesciptionData?.work_type
+                                                }
+                                            </span>
+                                        </td>
+                                    </tr>
                                 </table>
                                 <table>
                                     <tr>
@@ -147,11 +167,7 @@ const ViewJobApplication = () => {
                                         <td>
                                             {' '}
                                             <span className="card-table-span">
-                                                {
-                                                    viewJobDesciptionData?.experience
-                                                }
                                                 {viewJobDesciptionData?.salary}{' '}
-                                                LPA
                                             </span>
                                         </td>
                                     </tr>
@@ -166,6 +182,21 @@ const ViewJobApplication = () => {
                                             <span className="card-table-span">
                                                 {
                                                     viewJobDesciptionData?.education
+                                                }
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ paddingRight: '30px' }}>
+                                            <span className="card-table-span">
+                                                Job type:
+                                            </span>{' '}
+                                        </td>
+                                        <td>
+                                            {' '}
+                                            <span className="card-table-span">
+                                                {
+                                                    viewJobDesciptionData?.job_type
                                                 }
                                             </span>
                                         </td>

@@ -217,7 +217,6 @@ const AppliedJobs = () => {
                                                     {item?.salary
                                                         ? item?.salary
                                                         : 'N/A'}{' '}
-                                                    LPA
                                                 </span>
                                             </td>
                                         </tr>

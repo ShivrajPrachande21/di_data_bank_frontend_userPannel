@@ -4,7 +4,8 @@ import BaseUrl from '../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import io from 'socket.io-client';
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
+const socket = io('https://boardsearch.ai');
 
 // Create the context
 export const HireCandidateContext = createContext();
@@ -16,12 +17,12 @@ export const HireCandidateProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [SearchLoading, setSearchLoading] = useState(null);
-     const [currentPage,setCurrentPage]=useState(1)
-     const [seachBarData, setseachBarData] = useState({
-             search: '',
-             experience: '',
-             location: ''
-         });
+    const [currentPage, setCurrentPage] = useState(1);
+    const [seachBarData, setseachBarData] = useState({
+        search: '',
+        experience: '',
+        location: ''
+    });
 
     const [email_loading, setEmail_loading] = useState(null);
     const [resume_loading, setResume_loading] = useState(null);
@@ -221,7 +222,8 @@ export const HireCandidateProvider = ({ children }) => {
                 loading,
                 setLoading,
                 candidate_detials,
-                currentPage,setCurrentPage,
+                currentPage,
+                setCurrentPage,
                 error,
                 setError,
                 Subscription_Data,
@@ -229,7 +231,8 @@ export const HireCandidateProvider = ({ children }) => {
                 handleDownload_Resume,
                 get_Candidate_detials,
                 Search_bye_keyWord,
-                seachBarData, setseachBarData,
+                seachBarData,
+                setseachBarData,
                 SearchLoading,
                 handleCloseHire,
                 showHire,

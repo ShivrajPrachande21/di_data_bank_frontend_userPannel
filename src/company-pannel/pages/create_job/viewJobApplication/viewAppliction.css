@@ -44,8 +44,9 @@
 }
 .view-list {
     display: flex;
+    flex-wrap: wrap;
     padding-left: 70px;
-    gap: 10px;
+    gap: 6px;
 }
 /* .view-list ul li {
     display: inline;

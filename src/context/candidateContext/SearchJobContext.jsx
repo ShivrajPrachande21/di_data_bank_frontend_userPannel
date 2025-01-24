@@ -31,12 +31,7 @@ let Years = [
     { year: 22, text: '22 Yrs' },
     { year: 23, text: '23 Yrs' },
     { year: 24, text: '24 Yrs' },
-    { year: 25, text: '25 Yrs' },
-    { year: 26, text: '26 Yrs' },
-    { year: 27, text: '27 Yrs' },
-    { year: 28, text: '28 Yrs' },
-    { year: 29, text: '29 Yrs' },
-    { year: 30, text: '30 Yrs' }
+    { year: 25, text: '25 Yrs' }
 ];
 
 export const SearchJobProvider = ({ children }) => {

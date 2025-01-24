@@ -320,7 +320,7 @@ const CreateJob = () => {
                         </div>
                         <div
                             className="job-created-data"
-                            style={{ border: 'none' }}
+                            style={{ border: 'none', cursor: 'pointer' }}
                             onClick={handleShowTable}
                         >
                             <p style={{ color: '#06C306' }}>
@@ -498,7 +498,7 @@ const CreateJob = () => {
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {item?.salary} 
+                                                            {item?.salary}
                                                         </span>
                                                     </td>
                                                 </tr>

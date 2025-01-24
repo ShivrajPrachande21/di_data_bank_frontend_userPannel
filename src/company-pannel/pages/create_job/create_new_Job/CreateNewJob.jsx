@@ -3,7 +3,15 @@ import { jwtDecode } from 'jwt-decode';
 import ReactQuill from 'react-quill'; // Import React Quill
 import 'react-quill/dist/quill.snow.css'; // Import the Quill CSS
 import './newjob.css';
-import { Button, Col, Form, InputGroup, Modal, Row,Spinner } from 'react-bootstrap';
+import {
+    Button,
+    Col,
+    Form,
+    InputGroup,
+    Modal,
+    Row,
+    Spinner
+} from 'react-bootstrap';
 import oui_cross from '../../../../assets/images/oui_cross.png';
 import Plus from '../../../../assets/images/Plus.png';
 
@@ -35,6 +43,7 @@ const CreateNewJob = () => {
         work_type: '',
         education: '',
         country: '',
+        salaryType: '',
         Phone_Screening: false,
         HR_Round: false,
         Technical_Round: false,
@@ -56,8 +65,8 @@ const CreateNewJob = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [hide, setHide] = useState(null);
     const [pramot, setPramote] = useState('');
-    const [JD_Status,SetJD_status]=useState();
-    const [applyLoading,SetApplyLoading]=useState(false)
+    const [JD_Status, SetJD_status] = useState();
+    const [applyLoading, SetApplyLoading] = useState(false);
 
     const handleCurrentSkillChange = e => {
         setCurrentSkill(e.target.value);
@@ -67,12 +76,11 @@ const CreateNewJob = () => {
     // Add the current skill directly to the array
     const addSkill = () => {
         if (currentSkill.trim() !== '' && skills.length < 5) {
-            setSkills([...skills, currentSkill]); // Add the skill directly as a string
-            setCurrentSkill(''); // Clear the input after adding the skill
+            setSkills([...skills, currentSkill]);
+            setCurrentSkill('');
         }
     };
 
-    // Remove a skill from the list by its value (the skill string itself)
     const removeSkill = indexToRemove => {
         setSkills(skills.filter((_, index) => index !== indexToRemove)); // Remove skill by index
     };
@@ -90,9 +98,9 @@ const CreateNewJob = () => {
 
         // Update createJobData with the new form input and include skillsData
         setcreateJobData(prev => ({
-            ...prev, // Spread the existing state
-            [name]: value, // Dynamically update the property based on the input's name
-            skills: skills, // Ensure skillsData is always part of the updated state
+            ...prev,
+            [name]: value,
+            skills: skills,
             description: editorHtml
         }));
     };
@@ -114,23 +122,23 @@ const CreateNewJob = () => {
     };
 
     const handleChange = html => {
-        setEditorHtml(html); // Update the state with editor content
+        setEditorHtml(html);
         filterData(html);
     };
 
     const convertToPlainText = searchTerm => {
         // Create a temporary DOM element
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = searchTerm; // Set the HTML content
-        return tempDiv.innerText || tempDiv.textContent; // Return the plain text
+        tempDiv.innerHTML = searchTerm;
+        return tempDiv.innerText || tempDiv.textContent;
     };
 
     const filterData = debounce(searchTerm => {
         const plainText = convertToPlainText(searchTerm).trim();
 
         if (plainText === '') {
-            setFilteredData([]); // Clear any previous filtered data
-            setShowSuggestions(false); // Hide suggestions
+            setFilteredData([]);
+            setShowSuggestions(false);
             return;
         }
 
@@ -157,7 +165,12 @@ const CreateNewJob = () => {
 
         const decodedToken = jwtDecode(token);
         const companyId = decodedToken?._id;
+        if (createJobData.salaryType == '') {
+            toast.error('Please select Salary type');
+            return;
+        }
 
+        const Salary = `${createJobData.salary} ${createJobData.salaryType})`;
         const jobDataWithSkillsAndDescription = {
             ...createJobData,
             skills: skills,
@@ -230,7 +243,6 @@ const CreateNewJob = () => {
         }
     }
 
-
     const AI_decrease_Token = async () => {
         const token = localStorage.getItem('companyToken');
 
@@ -258,7 +270,8 @@ const CreateNewJob = () => {
             'job_type',
             'work_type',
             'education',
-            'country'
+            'country',
+            'salaryType'
         ];
 
         const missingFields = requiredFields.filter(
@@ -274,7 +287,7 @@ const CreateNewJob = () => {
             ...createJobData,
             skills: skills
         };
-        SetApplyLoading(true)
+        SetApplyLoading(true);
         try {
             const response = await axios.post(
                 `https://boardsearch.ai/pythonapi/create_description`,
@@ -282,10 +295,11 @@ const CreateNewJob = () => {
             );
             if (response.status == 200 || response.status == 201) {
                 await AI_decrease_Token();
-                const responseHtml = response?.data.replace(/^```html\s*/, '').replace(/```$/, '');
+                const responseHtml = response?.data
+                    .replace(/^```html\s*/, '')
+                    .replace(/```$/, '');
                 setEditorHtml(responseHtml);
-                SetApplyLoading(false)
-                
+                SetApplyLoading(false);
             }
         } catch (error) {
             const customError = error?.response?.data?.error;
@@ -303,18 +317,19 @@ const CreateNewJob = () => {
                 `${BaseUrl}/company/ai_jd/count/${companyId}`
             );
             if (response.status == 200 || response.status == 201) {
-                SetJD_status(response?.data?.ai_job_description)
+                SetJD_status(response?.data?.ai_job_description);
             }
         } catch (error) {
             console.log(error);
         }
     };
-    
+
     useEffect(() => {
         rendering();
-        AI_Button_Token()
+        AI_Button_Token();
     }, []);
 
+    console.log('createJobData', createJobData);
     return (
         <>
             {paymentLoading ? (
@@ -379,7 +394,7 @@ const CreateNewJob = () => {
                     </Row>
 
                     <Row>
-                        <Col xs={6} md={3}>
+                        <Col xs={6} md={6}>
                             <Form.Label className="custom-input-group-label">
                                 Salary
                                 <span className="text-danger">*</span>
@@ -389,15 +404,25 @@ const CreateNewJob = () => {
                                 className="mb-1 custom-input-group"
                             >
                                 <Form.Control
+                                    style={{ width: '100px' }}
                                     aria-label="Small"
                                     placeholder="Ex: 50000"
                                     name="salary"
                                     value={createJobData?.salary}
                                     onChange={handleFormChange}
-                                    required
                                 />
+                                <Form.Select
+                                    required
+                                    name="salaryType"
+                                    value={createJobData?.salaryType}
+                                    onChange={handleFormChange}
+                                >
+                                    <option value="a year">Year</option>
+                                    <option value="a month">Month</option>
+                                </Form.Select>
                             </InputGroup>
                         </Col>
+
                         <Col xs={6} md={3}>
                             <Form.Label className="custom-input-group-label">
                                 Experience Required
@@ -696,23 +721,21 @@ const CreateNewJob = () => {
                             </Form.Label>
                         </Col>
                         <Col md={3}>
-                        {/* {JD_Status!=0?(<Button size="sm" onClick={Generat_AI_JD}>
+                            {/* {JD_Status!=0?(<Button size="sm" onClick={Generat_AI_JD}>
                                 Ai Job Description
                             </Button>):null} */}
 
-                           {JD_Status !== 0 ? (
-    applyLoading ? (
-        <Button size="sm" style={{ width: '66%' }}>
-            <Spinner size="sm" />{' '}
-        </Button>
-    ) : (
-        <Button size="sm" onClick={Generat_AI_JD}>
-            AI Job Description
-        </Button>
-    )
-) : null}
-
-                            
+                            {JD_Status !== 0 ? (
+                                applyLoading ? (
+                                    <Button size="sm" style={{ width: '66%' }}>
+                                        <Spinner size="sm" />{' '}
+                                    </Button>
+                                ) : (
+                                    <Button size="sm" onClick={Generat_AI_JD}>
+                                        AI Job Description
+                                    </Button>
+                                )
+                            ) : null}
                         </Col>
                     </Row>
                     <Row className="mt-2">

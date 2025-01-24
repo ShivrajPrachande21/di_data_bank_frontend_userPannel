@@ -97,7 +97,12 @@ const ViewJobApplication = () => {
                             <div className="view-list mt-2">
                                 {viewJobDesciptionData?.skills?.map(
                                     (item, index) => (
-                                        <p key={index}>{item}</p>
+                                        <p
+                                            style={{ fontSize: '0.8rem' }}
+                                            key={index}
+                                        >
+                                            {item}
+                                        </p>
                                     )
                                 )}
                             </div>
@@ -162,7 +167,6 @@ const ViewJobApplication = () => {
                                         <td>
                                             {' '}
                                             <span className="card-table-span">
-                                                
                                                 {viewJobDesciptionData?.salary}{' '}
                                             </span>
                                         </td>

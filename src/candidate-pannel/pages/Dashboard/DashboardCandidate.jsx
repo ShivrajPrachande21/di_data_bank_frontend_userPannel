@@ -9,7 +9,12 @@ import {
     Button,
     Spinner
 } from 'react-bootstrap';
-import createjobblue from '../../../assets/images/createjobblue.png';
+import AcceptedIcon from '../../../assets/images/AcceptedIcon.png';
+import appiledcount from '../../../assets/images/appiledcount.png';
+import RejectedCount from '../../../assets/images/RejectedCount.png';
+import shortListCount from '../../../assets/images/shortListCount.png';
+import processingCount from '../../../assets/images/processingCount.png';
+import ViewCount from '../../../assets/images/ViewCount.png';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
@@ -173,7 +178,7 @@ const DashboardCandidate = () => {
                 <div style={{ width: '100%' }}>
                     <Row>
                         <Col md={4} style={{ marginRight: '-10px' }}>
-                            <Card>
+                            <Card style={{ marginTop: '10px', height: '94vh' }}>
                                 <div className="candidate-dashboard-subscription-card">
                                     <div className="my-plan-dashboard">
                                         <h2>My Plan :</h2>
@@ -188,39 +193,34 @@ const DashboardCandidate = () => {
                                         )}
                                     </div>
                                     <div className="ai-sub-cards-details">
-                                        <p>Get Featured in Top {}Candidate </p>
-                                        <h4
-                                            style={{
-                                                color: '#3B96E1',
-                                                marginTop: '-10px',
-                                                fontWeight: '600'
-                                            }}
-                                        >
+                                        <div className="get-featured">
+                                            <p>
+                                                Get Featured in Top {}Candidate{' '}
+                                            </p>
+                                            <h4>
+                                                {DashboardData?.existedPlane
+                                                    ?.top_candidate || 0}
+                                            </h4>
+                                        </div>
+
+                                        <div className="ai-resume-create">
+                                            <p>AI Resume Create </p>
+                                            <h4>
+                                                {DashboardData?.existedPlane
+                                                    ?.resume_write || 0}
+                                            </h4>
+                                        </div>
+
+                                        <div className="ai-search-css">
+                                            <h4>Support</h4>
                                             {DashboardData?.existedPlane
-                                                ?.top_candidate || 0}
-                                        </h4>
-                                        <p>AI Search </p>
-                                        <h4
-                                            style={{
-                                                color: '#3B96E1',
-                                                marginTop: '-10px',
-                                                fontWeight: '600'
-                                            }}
-                                        >
-                                            {DashboardData?.existedPlane
-                                                ?.top_candidate || 0}
-                                        </h4>
-                                        <p>AI Resume Create </p>
-                                        <h4
-                                            style={{
-                                                color: '#3B96E1',
-                                                marginTop: '-10px',
-                                                fontWeight: '600'
-                                            }}
-                                        >
-                                            {DashboardData?.existedPlane
-                                                ?.resume_write || 0}
-                                        </h4>
+                                                ?.customer_support ? (
+                                                <p>
+                                                    Email support and chat
+                                                    support
+                                                </p>
+                                            ) : null}
+                                        </div>
 
                                         {/* <p>Interview question </p>
                                         <h4
@@ -233,21 +233,20 @@ const DashboardCandidate = () => {
                                             {DashboardData?.existedPlane
                                                 ?.interview_question || 0}
                                         </h4> */}
-                                        {DashboardData?.existedPlane
-                                            ?.job_recommandation ? (
-                                            <p>AI Job Recommendation </p>
-                                        ) : null}
-
-                                        {DashboardData?.existedPlane
-                                            ?.customer_support ? (
-                                            <p>Email support and chat support</p>
-                                        ) : null}
+                                        <div className="ai-job-recommandation">
+                                            <h4>Recommendation</h4>
+                                            {DashboardData?.existedPlane
+                                                ?.job_recommandation ? (
+                                                <p>Job Recommendation </p>
+                                            ) : null}
+                                        </div>
                                     </div>
                                     <div className="expiry-date-sub">
+                                        <h4>Your Subscription</h4>
                                         {DashboardData?.existedPlane
                                             ?.expiresAt ? (
                                             <p>
-                                                Subscription Ends on :
+                                                Renew on :
                                                 {formatDate(
                                                     DashboardData?.existedPlane
                                                         ?.expiresAt || 0
@@ -259,72 +258,158 @@ const DashboardCandidate = () => {
                             </Card>
                         </Col>
                         <Col md={8}>
-                            <div className="left-card-ai">
-                                <div className="ai-cards-div">
-                                    <div className="drop-down-list">
-                                        <div className="custom-select-sub-date">
-                                            <p>Start Date</p>
+                            <Card
+                                style={{
+                                    marginTop: '10px',
+                                    height: '94vh',
+                                    padding: '14px'
+                                }}
+                            >
+                                <div className="left-card-ai">
+                                    <div className="ai-cards-div">
+                                        <div className="drop-down-list">
+                                            <div className="custom-select-sub-date">
+                                                <p>Start Date</p>
 
-                                            <input
-                                                type="date"
-                                                onChange={handleStartChange}
-                                            />
+                                                <input
+                                                    type="date"
+                                                    onChange={handleStartChange}
+                                                />
+                                            </div>
+                                            <div className="custom-select-sub-date">
+                                                <p>End Date</p>
+
+                                                <input
+                                                    type="date"
+                                                    onChange={handleEndChange}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="custom-select-sub-date">
-                                            <p>End Date</p>
-
-                                            <input
-                                                type="date"
-                                                onChange={handleEndChange}
-                                            />
+                                    </div>
+                                    <div
+                                        style={{
+                                            width: '100%',
+                                            display: 'grid',
+                                            gridTemplateColumns:
+                                                'repeat(auto-fill, minmax(300px, 1fr))', // Adjust 200px to set the minimum width of items
+                                            gap: '10px'
+                                        }}
+                                    >
+                                        <div className="ai-cards-div-no">
+                                            <div>
+                                                <img
+                                                    src={AcceptedIcon}
+                                                    width={50}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div>
+                                                <p>Offer Accepted Count</p>{' '}
+                                                <h4
+                                                    style={{ color: '#008000' }}
+                                                >
+                                                    {' '}
+                                                    {apiResponse?.offer_accepted_count ||
+                                                        0}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div className="ai-cards-div-no">
+                                            <div>
+                                                <img
+                                                    src={appiledcount}
+                                                    width={50}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div>
+                                                <p>Job Applied Count</p>
+                                                <h4
+                                                    style={{ color: '#3B96E1' }}
+                                                >
+                                                    {apiResponse?.applied_candidates_count ||
+                                                        0}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div className="ai-cards-div-no">
+                                            <div>
+                                                <img
+                                                    src={RejectedCount}
+                                                    width={40}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div>
+                                                <p>Offer Rejected Count</p>
+                                                <h4
+                                                    style={{ color: '#FF0000' }}
+                                                >
+                                                    {' '}
+                                                    {apiResponse?.offer_rejected_count ||
+                                                        0}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div className="ai-cards-div-no">
+                                            <div>
+                                                <img
+                                                    src={shortListCount}
+                                                    width={40}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div>
+                                                <p>Shortlisted Count</p>
+                                                <h4
+                                                    style={{ color: '#3B96E1' }}
+                                                >
+                                                    {' '}
+                                                    {apiResponse?.shortlisted_candidates_count ||
+                                                        0}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div className="ai-cards-div-no">
+                                            <div>
+                                                <img
+                                                    src={processingCount}
+                                                    width={45}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div>
+                                                <p>Offer Processing Count</p>
+                                                <h4
+                                                    style={{ color: '#FF8C00' }}
+                                                >
+                                                    {' '}
+                                                    {apiResponse?.offer_processing_count ||
+                                                        0}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div className="ai-cards-div-no">
+                                            <div>
+                                                <img
+                                                    src={ViewCount}
+                                                    width={40}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div>
+                                                <p>Profile View Count</p>
+                                                <h4
+                                                    style={{ color: '#3B96E1' }}
+                                                >
+                                                    {' '}
+                                                    {apiResponse?.count || 0}
+                                                </h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="ai-cards-div">
-                                    <p>Offer Accepted Count</p>{' '}
-                                    <h4 style={{ color: '#008000' }}>
-                                        {' '}
-                                        {apiResponse?.offer_accepted_count || 0}
-                                    </h4>
-                                </div>
-                                <div className="ai-cards-div">
-                                    <p>Job Applied Count</p>
-                                    <h4 style={{ color: '#3B96E1' }}>
-                                        {apiResponse?.applied_candidates_count ||
-                                            0}
-                                    </h4>
-                                </div>
-                                <div className="ai-cards-div">
-                                    <p>Offer Rejected Count</p>
-                                    <h4 style={{ color: '#FF0000' }}>
-                                        {' '}
-                                        {apiResponse?.offer_rejected_count || 0}
-                                    </h4>
-                                </div>
-                                <div className="ai-cards-div">
-                                    <p>Shortlisted Count</p>
-                                    <h4 style={{ color: '#3B96E1' }}>
-                                        {' '}
-                                        {apiResponse?.shortlisted_candidates_count ||
-                                            0}
-                                    </h4>
-                                </div>
-                                <div className="ai-cards-div">
-                                    <p>Offer Processing Count</p>
-                                    <h4 style={{ color: '#FF8C00' }}>
-                                        {' '}
-                                        {apiResponse?.offer_processing_count ||
-                                            0}
-                                    </h4>
-                                </div>
-                                <div className="ai-cards-div">
-                                    <p>Profile View Count</p>
-                                    <h4 style={{ color: '#3B96E1' }}>
-                                        {' '}
-                                        {apiResponse?.count || 0}
-                                    </h4>
-                                </div>
-                            </div>
+                            </Card>
                         </Col>
                     </Row>
 

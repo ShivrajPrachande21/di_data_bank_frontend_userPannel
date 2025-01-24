@@ -626,7 +626,14 @@ const SearchJob = () => {
                                                 <td>
                                                     {' '}
                                                     <span className="card-table-span">
-                                                        {item?.salary}
+                                                        {item?.salary &&
+                                                        item?.salary.length >
+                                                            10
+                                                            ? `${item.salary.substring(
+                                                                  0,
+                                                                  12
+                                                              )}...`
+                                                            : item?.salary}
                                                     </span>
                                                 </td>
                                             </tr>
@@ -695,59 +702,82 @@ const SearchJob = () => {
                                                 </td>
                                             </tr>
                                         </table>
-                                        <div
-                                            className="search-job-bnt mt-2"
-                                            // onClick={handleNavigate}
-                                        >
-                                            {item.applied_candidates.some(
-                                                candidate =>
-                                                    candidate.candidate_id.toString() ===
-                                                    id
-                                            ) ? (
-                                                <Button
-                                                    size="sm"
-                                                    style={{
-                                                        background: '#B4DDFF',
-                                                        color: '#3B96E1',
-                                                        width: '100%',
-                                                        border: 'none'
-                                                    }}
-                                                >
-                                                    Applied
-                                                </Button>
-                                            ) : (
-                                                <>
-                                                    <Button
-                                                        size="sm"
-                                                        style={{
-                                                            background: 'white',
-                                                            color: '#3B96E1',
-                                                            border: '1px solid #3B96E1'
-                                                        }}
-                                                        
-                                                        onClick={()=>{setShowConfirmations(true),SetSaveId(item?._id)}}
-                                                    >
-                                                        Save
-                                                    </Button>
-                                                    <Button
-                                                        size="sm"
-                                                        style={{
-                                                            background:
-                                                                '#B4DDFF',
-                                                            color: '#3B96E1',
+                                        <div className="search-job-bnt mt-2">
+  {item.applied_candidates.some(
+    (candidate) => candidate.candidate_id.toString() === id
+  ) ? (
+    <Button
+      size="sm"
+      style={{
+        background: '#B4DDFF',
+        color: '#3B96E1',
+        width: '100%',
+        border: 'none',
+      }}
+    >
+      Applied
+    </Button>
+  ) : item.Save_id.some((candidate) => candidate.toString() === id) ? (
+    <>
+    <Button
+      size="sm"
+      style={{
+        background: 'white',
+        color: '#3B96E1',
+        border: '1px solid #3B96E1',
+      }}
+    >
+      Saved
+    </Button>
+    <Button
+        size="sm"
+        style={{
+          background: '#B4DDFF',
+          color: '#3B96E1',
+          border: 'none',
+        }}
+        onClick={() => {
+          SetApplyId(item?._id);
+          setShowConfirmation(true);
+        }}
+      >
+        Apply
+      </Button>
+    </>
+  ) : (
+    <>
+      <Button
+        size="sm"
+        style={{
+          background: 'white',
+          color: '#3B96E1',
+          border: '1px solid #3B96E1',
+        }}
+        onClick={() => {
+          setShowConfirmations(true);
+          SetSaveId(item?._id);
+        }}
+      >
+        Save
+      </Button>
+      <Button
+        size="sm"
+        style={{
+          background: '#B4DDFF',
+          color: '#3B96E1',
+          border: 'none',
+        }}
+        onClick={() => {
+          SetApplyId(item?._id);
+          setShowConfirmation(true);
+        }}
+      >
+        Apply
+      </Button>
+      </>
+  )}
+</div>
 
-                                                            border: 'none'
-                                                        }}
-                                                        onClick={() =>{
-                                                            SetApplyId(item?._id)
-                                                            setShowConfirmation(true)}
-                                                        }
-                                                    >
-                                                        Apply
-                                                    </Button>
-                                                </>
-                                            )}
-                                        </div>
                                     </div>
                                 </div>
                             ))
@@ -1009,7 +1039,7 @@ const SearchJob = () => {
                                     <td>
                                         {' '}
                                         <span className="card-table-span">
-                                            {JobData?.salary}LPA
+                                            {JobData?.salary}
                                         </span>
                                     </td>
                                 </tr>

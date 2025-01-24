@@ -482,11 +482,11 @@ const [applyId,SetApplyId]=useState(null);
                                     Applied
                                 </Button>
                             ) : (
-                                <>
-                                    <OverlayTrigger
-                                        placement="top"
-                                        overlay={renderSaveTooltip}
-                                    >
+                                JobData?.Save_id.some(
+                                    candidate =>
+                                        candidate.toString() == userId )?(
+                                            <>
+                                   
                                         <Button
                                             size="sm"
                                             style={{
@@ -494,12 +494,10 @@ const [applyId,SetApplyId]=useState(null);
                                                 color: '#3B96E1',
                                                 border: '1px solid #3B96E1'
                                             }}
-                                           
-                                            onClick={()=>{setShowConfirmations(true),SetSaveId(id)}}
                                         >
-                                            Save
+                                            Saved
                                         </Button>
-                                    </OverlayTrigger>
+                                  
 
                                     <OverlayTrigger
                                         placement="top"
@@ -518,6 +516,45 @@ const [applyId,SetApplyId]=useState(null);
                                         </Button>
                                     </OverlayTrigger>
                                 </>
+                                        ):(
+                                            <>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={renderSaveTooltip}
+                                            >
+                                                <Button
+                                                    size="sm"
+                                                    style={{
+                                                        background: 'white',
+                                                        color: '#3B96E1',
+                                                        border: '1px solid #3B96E1'
+                                                    }}
+                                                   
+                                                    onClick={()=>{setShowConfirmations(true),SetSaveId(id)}}
+                                                >
+                                                    Save
+                                                </Button>
+                                            </OverlayTrigger>
+        
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={renderApplyTooltip}
+                                            >
+                                                <Button
+                                                    size="sm"
+                                                    style={{
+                                                        background: '#B4DDFF',
+                                                        color: '#3B96E1',
+                                                        border: 'none'
+                                                    }}
+                                                   onClick={()=>{setShowConfirmation(true),SetApplyId(id)}}
+                                                >
+                                                    Apply
+                                                </Button>
+                                            </OverlayTrigger>
+                                        </>
+                                        )
+                                
                             )}
                         </div>
                         <p

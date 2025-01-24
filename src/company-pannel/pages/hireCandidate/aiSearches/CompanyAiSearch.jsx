@@ -81,7 +81,7 @@ const CompanyAiSearch = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                'http://65.20.91.47:5000/pythonapi/company_process_input',
+                'https://boardsearch.ai/pythonapi/company_process_input',
                 formData
             );
 
@@ -110,13 +110,13 @@ const CompanyAiSearch = () => {
             let response;
             if (fileData && description) {
                 response = await axios.post(
-                    'http://65.20.91.47:5000/pythonapi/company_process_input',
+                    'https://boardsearch.ai/pythonapi/company_process_input',
 
                     { description: description }
                 );
             } else {
                 response = await axios.post(
-                    'http://65.20.91.47:5000/pythonapi/company_process_input/one',
+                    'https://boardsearch.ai/pythonapi/company_process_input/one',
 
                     { description: description }
                 );

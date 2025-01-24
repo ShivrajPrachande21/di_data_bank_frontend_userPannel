@@ -1,25 +1,53 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './aiSearch.css';
 import arrow_back from '../../../../assets/images/arrow_back.png';
 import aiIcon from '../../../../assets/images/aiIcon.png';
 import attachment from '../../../../assets/images/attachment.png';
 import upload from '../../../../assets/images/upload.png';
 import Verified from '../../../../assets/images/Verified.png';
+import altprofile from '../../../../assets/images/altprofile.jpg';
 import { useNavigate } from 'react-router-dom';
 import { Button, Col, Form, OverlayTrigger, Row } from 'react-bootstrap';
 import { Axis } from 'echarts';
 import axios from 'axios';
 import AiLoader from './aiLoadier/AiLoader';
 import { toast } from 'react-toastify';
+import BaseUrl from '../../../../services/BaseUrl';
+import { HireCandidateContext } from '../../../../context/HireCandidateContex';
 const CompanyAiSearch = () => {
+      const navigate = useNavigate();
+     const {
+            downloadSelectedEmails,
+            handleDownload_Resume,
+            get_Candidate_detials,
+            AiData, setAiData
+        } = useContext(HireCandidateContext);
     const [hideFile, setHideFile] = useState(false);
     const [fileData, setFileData] = useState(null);
     const [description, setSearchData] = useState('');
-    const [AiData, setAiData] = useState(null);
+
     const [aiPrompts, setAiprompts] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [AllCustomId,SetAllCustomId]=useState([]);
     const nvaigate = useNavigate();
     const fileRef = useRef();
+
+
+     const [selectAllChecked, setSelectAllChecked] = useState(false);
+        const [selectedCandidates, setSelectedCandidates] = useState(
+            AiData.map(() => false)
+        );
+        const [selectedCandidateIds, setSelectedCandidateIds] = useState([]);
+
+         const download_emails = async () => {
+                    await downloadSelectedEmails(selectedCandidateIds);
+            };
+
+             const download_resumes = async () => {
+                        await handleDownload_Resume(selectedCandidateIds);
+                };
+
+
     const handleHideFile = () => {
         setHideFile(prev => !prev);
         setFileData(null);
@@ -72,11 +100,12 @@ const CompanyAiSearch = () => {
                 error?.response?.data?.error || 'An unknown error occurred';
             toast.error(errorMessage);
         }
-        console.log('aidata and Aiprompts', aiPrompts);
     }
 
     const fetchAIData = async () => {
         try {
+            setAiData([])
+            SetAllCustomId([])
             setLoading(true);
             let response;
             if (fileData && description) {
@@ -92,9 +121,18 @@ const CompanyAiSearch = () => {
                     { description: description }
                 );
             }
-
-            setAiData(response?.data?.basic_results);
-
+            SetAllCustomId()
+            // setAiData(response?.data?.basic_results);
+            let BasicData = response?.data?.basic_results;
+            let EnterpriseData = response?.data?.enterprise_results;
+            let PremiumData = response?.data?.premium_results;
+            const allCustomIds = [
+                ...(BasicData?.map((item) => item?.custom_id) || []),
+                ...(EnterpriseData?.map((item) => item?.custom_id) || []),
+                ...(PremiumData?.map((item) => item?.custom_id) || [])
+            ];
+            SetAllCustomId(allCustomIds);
+            
             if (response?.status == 200 || response?.status == 201) {
                 setAiprompts(null);
                 setLoading(false);
@@ -111,6 +149,60 @@ const CompanyAiSearch = () => {
         }
     };
     let len = AiData ? AiData.length : 0;
+
+
+    useEffect(() => {
+        if (AllCustomId.length > 0) {
+            const fetchData = async () => {
+                const response = await axios.post(
+                    `${BaseUrl}company/get_ai/candidate`,
+                    {AllCustomId:AllCustomId}
+                );
+                setAiData(response?.data?.data);
+            };
+            fetchData();
+        }
+    }, [AllCustomId]);
+
+    const handleSelectAllChange = e => {
+        const isChecked = e.target.checked;
+        setSelectAllChecked(isChecked);
+        setSelectedCandidates(AiData.map(() => isChecked));
+
+        if (isChecked) {
+            setSelectedCandidateIds(
+                AiData.map(candidate => candidate._id)
+            );
+        } else {
+            setSelectedCandidateIds([]);
+        }
+    };
+
+    const handleCheckboxChange = (index, candidate_id) => e => {
+        const isChecked = e.target.checked;
+        const updatedSelections = [...selectedCandidates];
+        updatedSelections[index] = isChecked;
+        setSelectedCandidates(updatedSelections);
+
+        setSelectedCandidateIds(prevIds => {
+            if (isChecked) {
+                return [...prevIds, candidate_id];
+            } else {
+                return prevIds.filter(id => id !== candidate_id);
+            }
+        });
+
+        setSelectAllChecked(updatedSelections.every(Boolean));
+    };
+
+      const naviagte_view_candidate = async id => {
+            if (!id) {
+                return;
+            } 
+                    await get_Candidate_detials(id);
+    
+                    navigate(`/main/view-candidate-details/${id}`);
+        };
 
     return (
         <div
@@ -222,9 +314,7 @@ const CompanyAiSearch = () => {
                                     <Button
                                         size="sm"
                                         className="download-btn1"
-
-                                        // disabled={isEmail_Disabled}
-                                        // onClick={download_emails}
+                                        onClick={download_resumes}
                                     >
                                         <span>Download Resume</span>
                                     </Button>
@@ -232,24 +322,20 @@ const CompanyAiSearch = () => {
                                         className="download-btn1"
                                         size="sm"
 
-                                        // onClick={download_resumes}
-                                        // disabled={
-                                        //     Subscription_Data[0]?.download_cv_limit ===
-                                        //     false
-                                        // }
+                                        onClick={download_emails}
                                     >
                                         <span style={{ fontSize: '0.7rem' }}>
-                                            Download Resume
+                                            Download Email
                                         </span>
                                     </Button>
-                                    <div className="select-all">
+                                    <div className="select-all" style={{height:'33px',marginTop:'6px'}}>
                                         <label htmlFor="">Select all</label>
                                         <Form>
                                             <Form.Check
                                                 type="checkbox"
                                                 id="custom-checkbox"
-                                                // checked={selectAllChecked}
-                                                // onChange={handleSelectAllChange}
+                                                checked={selectAllChecked}
+                                                onChange={handleSelectAllChange}
                                             />
                                         </Form>
                                     </div>
@@ -268,85 +354,94 @@ const CompanyAiSearch = () => {
                         <AiLoader />
                     ) : (
                         AiData?.map((candidate, index) => (
-                            <Col xs={12} className="mb-2" key={index}>
-                                <div className="result-array">
-                                    {}
-                                    <div
-                                        className="result-left"
-                                        // onClick={() =>
-                                        // naviagte_view_candidate(candidate?._id)
-                                        // }
-                                    >
-                                        <div className="result-img">
-                                            <img
-                                                // src={
-                                                //     candidate?.candidateDetails?.profile
-                                                //         ? candidate?.candidateDetails
-                                                //               ?.profile
-                                                //         : altprofile
-                                                // }
-                                                style={{
-                                                    width: '100%',
-                                                    height: '100%'
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="result-text">
-                                            <h4>
-                                                {candidate?.city}
-
-                                                {/* Tool-tip componet */}
-                                                {/* {candidate?.state ? (
-                                                <OverlayTrigger
-                                                    placement="top"
-                                                    overlay={
-                                                        <div
-                                                            style={{
-                                                                position:
-                                                                    'absolute',
-                                                                backgroundColor:
-                                                                    'white',
-                                                                padding:
-                                                                    '2px 10px',
-                                                                color: '#008000',
-                                                                borderRadius: 3,
-                                                                border: '1px solid #008000'
-                                                            }}
-                                                        >
-                                                            Verified
-                                                        </div>
-                                                    }
-                                                >
-                                                    <img
-                                                        // src={Verified}
-                                                        alt="Verified"
-                                                        width="19"
-                                                    />
-                                                </OverlayTrigger>
-                                            ) : null} */}
-                                            </h4>
-                                            <p>{candidate?.state}</p>
-                                        </div>
-                                    </div>
-                                    <div className="right">
-                                        <Form>
-                                            <Form.Check
-                                                type="checkbox"
-                                                id="custom-checkbox"
-                                                style={{
-                                                    marginTop: '10px',
-                                                    marginRight: '6px'
-                                                }}
-                                                // checked={selectedCandidates[index]}
-                                                // onChange={handleCheckboxChange(
-                                                //     index,
-                                                //     candidate?._id
-                                                // )}
-                                            />
-                                        </Form>
-                                    </div>
-                                </div>
-                            </Col>
+                           <Col xs={12} className="mb-2" key={index}>
+                                                      <div className="result-array">
+                                                          {}
+                                                          <div
+                                                              className="result-left"
+                                                              onClick={() =>
+                                                                  naviagte_view_candidate(candidate?._id)
+                                                              }
+                                                          >
+                                                              <div className="result-img">
+                                                                  <img
+                                                                      src={
+                                                                          candidate
+                                                                              ?.profile
+                                                                              ? candidate
+                                                                                    ?.profile
+                                                                              : altprofile
+                                                                      }
+                                                                      style={{
+                                                                          width: '100%',
+                                                                          height: '100%'
+                                                                      }}
+                                                                  />
+                                                              </div>
+                                                              <div className="result-text">
+                                                                  <h4>
+                                                                      {candidate?.BasicDetails[0]?.name}
+                          
+                                                                      {/* Tool-tip componet */}
+                                                                      {/* {candidate?.personalDetails[0]
+                                                                          ?.Aadhar_verified_status &&
+                                                                      candidate?.personalDetails[0]
+                                                                          ?.Pan_verified_status ? (
+                                                                          <OverlayTrigger
+                                                                              placement="top"
+                                                                              overlay={
+                                                                                  <div
+                                                                                      style={{
+                                                                                          position:
+                                                                                              'absolute',
+                                                                                          backgroundColor:
+                                                                                              'white',
+                                                                                          padding:
+                                                                                              '2px 10px',
+                                                                                          color: '#008000',
+                                                                                          borderRadius: 3,
+                                                                                          border: '1px solid #008000'
+                                                                                      }}
+                                                                                  >
+                                                                                      Verified
+                                                                                  </div>
+                                                                              }
+                                                                          >
+                                                                              <img
+                                                                                  src={Verified}
+                                                                                  alt="Verified"
+                                                                                  width="19"
+                                                                              />
+                                                                          </OverlayTrigger>
+                                                                      ) : null} */}
+                                                                  </h4>
+                                                                  <p>
+                                                                      {
+                                                                          candidate?.WorkDetails
+                                                                              ?.aspiring_position
+                                                                      }
+                                                                  </p>
+                                                              </div>
+                                                          </div>
+                                                          <div className="right-">
+                                                              <Form>
+                                                                  <Form.Check
+                                                                      type="checkbox"
+                                                                      id="custom-checkbox"
+                                                                      style={{
+                                                                          marginTop: '10px',
+                                                                          marginRight: '6px'
+                                                                      }}
+                                                                      checked={selectedCandidates[index]}
+                                                                      onChange={handleCheckboxChange(
+                                                                          index,
+                                                                          candidate?._id
+                                                                      )}
+                                                                  />
+                                                              </Form>
+                                                          </div>
+                                                      </div>
+                                                  </Col>
                         ))
                     )}
                 </Row>

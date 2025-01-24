@@ -43,7 +43,8 @@ const HireCandidate = () => {
         handleDownload_Resume,
         get_Candidate_detials,
         Search_bye_keyWord,
-        get_subscription_details
+        get_subscription_details,
+        setAiData
     } = useContext(HireCandidateContext);
     const navigate = useNavigate();
     const locate = useLocation();
@@ -163,9 +164,9 @@ const HireCandidate = () => {
                     typeof Subscription_Data[0]?.cv_view_limit == 'number' &&
                     Subscription_Data[0]?.cv_view_limit == 0
                 ) {
-                    toast.error('Please Top up or Upgrade your plane');
+                    toast.error('Please Top up or Upgrade your plan');
                 } else {
-                    toast.error('Please buy subscription plane');
+                    toast.error('Please buy subscription plan');
                 }
             }
         }
@@ -229,6 +230,7 @@ const HireCandidate = () => {
     };
 
     useEffect(() => {
+        setAiData([])
         if (appliedcandidate.length == 0) {
             rendering();
             get_subscription_details();

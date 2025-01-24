@@ -44,6 +44,7 @@ const CreateNewJob = () => {
         education: '',
         country: '',
         salaryType: '',
+        Job_Link: '',
         Phone_Screening: false,
         HR_Round: false,
         Technical_Round: false,
@@ -473,6 +474,24 @@ const CreateNewJob = () => {
                                     placeholder="Ex: New York"
                                     name="location"
                                     value={createJobData?.location}
+                                    onChange={handleFormChange}
+                                />
+                            </InputGroup>
+                        </Col>
+                        <Col xs={6} md={9}>
+                            <Form.Label className="custom-input-group-label">
+                                Job Link
+                                <span className="text-danger">*</span>
+                            </Form.Label>
+                            <InputGroup
+                                size="sm"
+                                className="mb-1 custom-input-group"
+                            >
+                                <Form.Control
+                                    aria-label="Small"
+                                    placeholder="Ex: Job_Link"
+                                    name="Job_Link"
+                                    value={createJobData?.Job_Link}
                                     onChange={handleFormChange}
                                 />
                             </InputGroup>

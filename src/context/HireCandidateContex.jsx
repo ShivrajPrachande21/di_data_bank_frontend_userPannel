@@ -18,6 +18,7 @@ export const HireCandidateProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [SearchLoading, setSearchLoading] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+        const [AiData, setAiData] = useState([]);
     const [seachBarData, setseachBarData] = useState({
         search: '',
         experience: '',
@@ -246,7 +247,8 @@ export const HireCandidateProvider = ({ children }) => {
                 SetIdentity,
                 SetProfile,
                 CompanyProfile,
-                get_subscription_details
+                get_subscription_details,
+                AiData, setAiData
             }}
         >
             {children}

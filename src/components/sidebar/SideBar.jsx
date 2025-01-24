@@ -130,7 +130,7 @@ const SideBar = () => {
         },
         {
             id: 3,
-            label: 'Create Job',
+            label: 'List Job',
             backendName: 'create_job',
             icon: createjobblue,
             inactiveIcon: createJob,

@@ -25,7 +25,7 @@ const ViewCandidateDetails = () => {
     const handleCertificateClose = () => setCertificateModalShow(false);
     const navigate = useNavigate();
     const navigateProfile = () => {
-        navigate('/main/hire-candidate');
+        navigate(-2);
     };
     const handleClose = () => setModalShow(false);
     const googleDrivePDFLink = candidate_detials?.workDetails?.resume;

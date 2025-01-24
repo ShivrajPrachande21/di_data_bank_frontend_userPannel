@@ -89,14 +89,6 @@ const CreateNewJob = () => {
     const handleFormChange = e => {
         const { name, value } = e.target;
 
-        if (name === 'salary') {
-            // If the value is not a number, return without updating state
-            if (isNaN(value)) {
-                alert('Please enter a valid number for salary');
-                return;
-            }
-        }
-
         // Update createJobData with the new form input and include skillsData
         setcreateJobData(prev => ({
             ...prev,

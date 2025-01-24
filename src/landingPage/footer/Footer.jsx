@@ -53,13 +53,13 @@ function Footer() {
                         <p style={{ marginTop: '10px' }}>Contact</p>
                         <ul>
                             <li>
-                                <a href=" mailto:priyanka.bagda@directors-institute.com">
+                                <a href=" mailto:info@boardsearch.ai">
                                     {' '}
-                                    priyanka.bagda@directors-institute.com
+                                    info@boardsearch.ai
                                 </a>
                             </li>
                             <li>
-                                <a href=" tel:+7039000797"> +7039000797</a>
+                                <a href=" tel:+9730001746"> +9730001746</a>
                             </li>
                         </ul>
                     </div>

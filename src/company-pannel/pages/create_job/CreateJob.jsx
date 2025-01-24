@@ -596,7 +596,7 @@ const CreateJob = () => {
                             ))
                         ) : (
                             <div className="no-jobs-container">
-                                <span>You haven't created any jobs yet.</span>
+                                <span>You haven't listed any jobs yet</span>
                             </div>
                         )}
                     </div>

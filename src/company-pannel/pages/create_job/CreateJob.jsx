@@ -218,6 +218,18 @@ const CreateJob = () => {
         });
     };
 
+    const hideEditButton=(CreateDate)=>{
+        const createdDate = new Date(CreateDate);
+    const currentTime = new Date(); 
+    const timeDifference = currentTime - createdDate;
+    const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+    if (hoursDifference <= 24) {
+     return true;
+    }
+    return false;
+}
+
     useEffect(() => {
         rendering();
     }, []);
@@ -399,6 +411,18 @@ const CreateJob = () => {
                                                     >
                                                         Delete job post
                                                     </p>
+                                                    {hideEditButton(item?.createdDate)?(
+                                                         <p
+                                                         onClick={() =>
+                                                             delete_job_status(
+                                                                 item?._id
+                                                             )
+                                                         }
+                                                     >
+                                                         Edit job post
+                                                     </p>
+                                                    ):null}
+
                                                 </div>
                                             ) : null}
                                         </div>

@@ -319,7 +319,7 @@ const Dashboard = () => {
                             </h3>
                         </div>
                         <div className="col-12">
-                            <p className="Candidates-cv">Create Job</p>
+                            <p className="Candidates-cv">Listed Job</p>
                             <h3 className="Candidates-s">
                                 {data?.subscriptionData[0]?.AdminSubscription[0]
                                     ?.job_posting +

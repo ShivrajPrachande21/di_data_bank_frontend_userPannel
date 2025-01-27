@@ -17,3 +17,9 @@
     background-color: #3b96e1;
     border-color: white;
 }
+@media (max-width: 575.98px) {
+    .navbar {
+        display: flex;
+        flex-direction: column;
+    }
+}

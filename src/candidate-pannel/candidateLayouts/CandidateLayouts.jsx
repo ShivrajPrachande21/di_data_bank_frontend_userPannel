@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SideBar from '../../components/sidebar/SideBar';
 import { Outlet } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../../../src/layouts/dashboardlayout.css';
 import List from '../../assets/images/List.png';
+import { CandidateSupportContext } from '../../context/candidateContext/CandidateSupportContext';
 const CandidateLayouts = () => {
-    const [hideSidebar, sethidSidebar] = useState(false);
+    const { hideSidebar, sethidSidebar } = useContext(CandidateSupportContext);
     return (
         <>
             <div className="right-top-navbar">

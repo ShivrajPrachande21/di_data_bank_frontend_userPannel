@@ -3,7 +3,7 @@
 }
 .create-job-btn {
     font-size: 0.8rem;
-    padding: 10px 8px;
+    padding: 12px 8px;
     background: #3b96e1;
 }
 .create-job-btn span {
@@ -24,6 +24,7 @@
     box-shadow: 0px 0px 10px 2px rgb(221, 221, 221);
 }
 .job-created-data {
+    padding: 4px 0px;
     border-right: 1px solid #aeaeae;
     margin-left: -14px;
     width: 200px;

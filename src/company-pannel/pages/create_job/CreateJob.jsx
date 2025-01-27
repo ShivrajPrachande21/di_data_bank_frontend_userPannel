@@ -30,7 +30,8 @@ const CreateJob = () => {
         fetch_job_status,
         EditShow,
         SetEditShow,
-        EditId,SetEditId
+        EditId,
+        SetEditId
     } = useContext(CreateJobContext);
 
     const naviagte = useNavigate();
@@ -222,25 +223,25 @@ const CreateJob = () => {
         });
     };
 
-    const hideEditButton=(CreateDate)=>{
+    const hideEditButton = CreateDate => {
         const createdDate = new Date(CreateDate);
-    const currentTime = new Date(); 
-    const timeDifference = currentTime - createdDate;
-    const hoursDifference = timeDifference / (1000 * 60 * 60);
+        const currentTime = new Date();
+        const timeDifference = currentTime - createdDate;
+        const hoursDifference = timeDifference / (1000 * 60 * 60);
 
-    if (hoursDifference <= 24) {
-     return true;
-    }
-    return false;
-}
+        if (hoursDifference <= 24) {
+            return true;
+        }
+        return false;
+    };
 
     useEffect(() => {
         rendering();
     }, []);
 
-    function Edit_job_status(id){
-        SetEditId(id)
-        SetEditShow(prev=>!prev)
+    function Edit_job_status(id) {
+        SetEditId(id);
+        SetEditShow(prev => !prev);
     }
 
     return (
@@ -285,7 +286,7 @@ const CreateJob = () => {
                             size="sm"
                         >
                             <img src={whitepluse} alt="" width="20px" />
-                            Create a Job{' '}
+                            List a Job{' '}
                             <span>
                                 (
                                 {(job_status?.SubscriptionStatus[0]
@@ -308,7 +309,7 @@ const CreateJob = () => {
                                 {job_status?.dataWithJobCounts[0]?.jobCount ||
                                     0}
                             </p>
-                            <p className="total-activ"> Job Created</p>
+                            <p className="total-activ"> Job Listed </p>
                         </div>
                         <div className="job-created-data">
                             <p style={{ color: '#3B96E1' }}>
@@ -420,18 +421,19 @@ const CreateJob = () => {
                                                     >
                                                         Delete job post
                                                     </p>
-                                                    {hideEditButton(item?.createdDate)?(
-                                                         <p
-                                                         onClick={() =>
-                                                             Edit_job_status(
-                                                                 item?._id
-                                                             )
-                                                         }
-                                                     >
-                                                         Edit job post
-                                                     </p>
-                                                    ):null}
-
+                                                    {hideEditButton(
+                                                        item?.createdDate
+                                                    ) ? (
+                                                        <p
+                                                            onClick={() =>
+                                                                Edit_job_status(
+                                                                    item?._id
+                                                                )
+                                                            }
+                                                        >
+                                                            Edit job post
+                                                        </p>
+                                                    ) : null}
                                                 </div>
                                             ) : null}
                                         </div>
@@ -490,13 +492,13 @@ const CreateJob = () => {
                                                         {' '}
                                                         <span className="card-table-span">
                                                             {item?.experience &&
-                                              item?.experience.length> 13
-                                                    ? `${item?.experience.substring(
-                                                          0,
-                                                          13
-                                                      )}...`
-                                                    :item?.experience}
-                                                            {' '}
+                                                            item?.experience
+                                                                .length > 13
+                                                                ? `${item?.experience.substring(
+                                                                      0,
+                                                                      13
+                                                                  )}...`
+                                                                : item?.experience}{' '}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -707,7 +709,7 @@ const CreateJob = () => {
                     aria-labelledby="example-modal-sizes-title-lg"
                     className="custom-modal" // Apply the custom class here
                 >
-                   <EditNewJob/>
+                    <EditNewJob />
                 </Modal>
                 <Modal
                     show={modalShowhide}

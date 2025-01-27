@@ -2,11 +2,13 @@
     width: 100%;
     background: rgb(255, 255, 255);
     padding-bottom: 50px;
+    overflow: hidden;
 }
 .testimonials-child {
     width: 84%;
 
     margin: 0px auto;
+    overflow: hidden;
 }
 .restimonials-h1 {
     text-align: center;
@@ -22,13 +24,13 @@
     margin-top: -6px;
 }
 .testimonials-card-div {
-    margin-top: 90px;
+    margin-top: 50px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 40px;
-    width: 100%;
+
+    /* flex-wrap: wrap; */
+    gap: 10px;
 }
 .testimonials-cards {
     padding: 12px;
@@ -63,8 +65,24 @@
     text-align: center;
     margin-top: -4px;
 }
+/* For WebKit browsers (Chrome, Safari) */
+.align::-webkit-scrollbar {
+    height: 6px;
+}
+
+.align::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+/* For Firefox */
+.align {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
+}
 @media (max-width: 575.98px) {
     .testimonials-card-div {
         justify-content: center;
+        overflow: hidden;
     }
 }

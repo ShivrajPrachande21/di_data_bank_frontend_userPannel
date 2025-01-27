@@ -340,7 +340,7 @@ const CredibilityEstablishment = () => {
             <p className="text-danger pan-error-in-cerdibility">
                 {errorMessage}
             </p>
-            <div style={{ display: 'flex', gap: 12 }}>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 {CredibilityData ? (
                     <>
                         {' '}

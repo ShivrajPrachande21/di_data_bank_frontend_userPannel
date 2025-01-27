@@ -71,4 +71,11 @@
         width: 20px;
         margin-top: -10px;
     }
+    .footer-bottom {
+        flex-direction: column;
+        gap: 14px;
+    }
+    .fotter-images {
+        padding-bottom: 10px;
+    }
 }

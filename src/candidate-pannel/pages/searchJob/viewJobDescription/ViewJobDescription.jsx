@@ -30,11 +30,11 @@ const ViewJobDescription = () => {
     );
     const { id } = useParams();
     const navigate = useNavigate();
-    const [modalShow, setModalShow] = React.useState(true);
     const [JobData, setJobdata] = useState();
     const [description, SetDescription] = useState('');
 const [showConfirmation,setShowConfirmation]=useState(false)
 const [applyId,SetApplyId]=useState(null);
+ const [ApplyLink,SetApplyLink]=useState(null)
 
  const [showConfirmations,setShowConfirmations]=useState(false)
     const [saveId,SetSaveId]=useState(null)
@@ -84,9 +84,14 @@ const [applyId,SetApplyId]=useState(null);
             setShowModal(true);
             return;
         }
-        await applyTo_job(applyId);
+        if(ApplyLink){
+            setShowConfirmation(false);
+            window.open(ApplyLink, '_blank');
+        }else{
+            await applyTo_job(applyId);
         setShowConfirmation(false);
         navigate('/candidate-dashboard/search-job');
+        }
     };
 
     // Save Jobs
@@ -510,7 +515,7 @@ const [applyId,SetApplyId]=useState(null);
                                                 color: '#3B96E1',
                                                 border: 'none'
                                             }}
-                                           onClick={()=>{setShowConfirmation(true),SetApplyId(id)}}
+                                           onClick={()=>{setShowConfirmation(true),SetApplyId(id),SetApplyLink(JobData?.Job_Link)}}
                                         >
                                             Apply
                                         </Button>
@@ -547,7 +552,7 @@ const [applyId,SetApplyId]=useState(null);
                                                         color: '#3B96E1',
                                                         border: 'none'
                                                     }}
-                                                   onClick={()=>{setShowConfirmation(true),SetApplyId(id)}}
+                                                   onClick={()=>{setShowConfirmation(true),SetApplyId(id),SetApplyLink(JobData?.Job_Link)}}
                                                 >
                                                     Apply
                                                 </Button>

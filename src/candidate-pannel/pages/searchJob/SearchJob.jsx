@@ -62,6 +62,7 @@ const SearchJob = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [applyId, SetApplyId] = useState(null);
+    const [ApplyLink,SetApplyLink]=useState(null)
 
     const [showConfirmations, setShowConfirmations] = useState(false);
     const [saveId, SetSaveId] = useState(null);
@@ -148,8 +149,13 @@ const SearchJob = () => {
             setShowModal(true);
             return;
         }
-        setShowConfirmation(false);
-        await applyTo_job(applyId);
+        if(ApplyLink){
+            setShowConfirmation(false);
+            window.open(ApplyLink, '_blank');
+        }else{
+            setShowConfirmation(false);
+            await applyTo_job(applyId);
+        }
     };
 
     // function to Save Jobs
@@ -595,7 +601,14 @@ const SearchJob = () => {
                                                 <td>
                                                     {' '}
                                                     <span className="card-table-span">
-                                                        {item?.experience}
+                                                        {item?.experience &&
+                                              item?.experience.length > 13
+                                                    ? `${item?.experience.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :item?.experience}
+                                                        
                                                     </span>
                                                 </td>
                                             </tr>
@@ -759,6 +772,7 @@ const SearchJob = () => {
                                                             setShowConfirmation(
                                                                 true
                                                             );
+                                                            SetApplyLink(item?.Job_Link);
                                                         }}
                                                     >
                                                         Apply
@@ -799,6 +813,7 @@ const SearchJob = () => {
                                                             setShowConfirmation(
                                                                 true
                                                             );
+                                                            SetApplyLink(item?.Job_Link)
                                                         }}
                                                     >
                                                         Apply

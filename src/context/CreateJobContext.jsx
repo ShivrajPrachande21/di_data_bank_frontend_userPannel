@@ -22,6 +22,9 @@ export const CreateJobProvider = ({ children }) => {
     const [paymentLoading, SetPropaymentLoading] = useState(null);
     const [PromotpaymentData, SetPromotpaymentData] = useState('');
     const [longlistData, SetlonglistData] = useState(null);
+    const [EditShow,SetEditShow]=useState(false);
+    const [EditId,SetEditId]=useState(null)
+
     const fetch_job_status = async () => {
         const token = localStorage.getItem('companyToken');
 
@@ -301,7 +304,9 @@ export const CreateJobProvider = ({ children }) => {
                 fetch_Job_applicant,
                 fetch_job_status,
                 fetch_Job_Longlist,
-                longlistData
+                longlistData,
+                EditShow,SetEditShow,
+                EditId,SetEditId
             }}
         >
             {children}

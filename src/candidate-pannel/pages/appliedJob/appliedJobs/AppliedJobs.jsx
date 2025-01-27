@@ -108,10 +108,10 @@ const AppliedJobs = () => {
                                         height="40" // Set the desired height
                                     />
                                     <h6>
-                                        {item?.job_title.length > 23
+                                        {item?.job_title.length > 22
                                                 ? `${item.job_title.substring(
                                                       0,
-                                                      23
+                                                      22
                                                   )}...`
                                                 : item?.job_title}
                                         <p
@@ -131,7 +131,7 @@ const AppliedJobs = () => {
                                                       0,
                                                       22
                                                   )}...`
-                                                : item?.job_title}
+                                                : item?.company_details?.company_name}
                                         </p>
                                     </h6>
                                     <div className="green-thik">
@@ -169,10 +169,13 @@ const AppliedJobs = () => {
                                             <td>
                                                 {' '}
                                                 <span className="card-table-span">
-                                                    {item?.experience
-                                                        ? item?.experience
-                                                        : 'N/A'}{' '}
-                                                    Years
+{item?.experience &&
+                                              item?.experience.length > 13
+                                                    ? `${item?.experience.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :`${item?.experience} Years`||'N/A'}
                                                 </span>
                                             </td>
                                         </tr>
@@ -214,9 +217,13 @@ const AppliedJobs = () => {
                                             <td>
                                                 {' '}
                                                 <span className="card-table-span">
-                                                    {item?.salary
-                                                        ? item?.salary
-                                                        : 'N/A'}{' '}
+                                                {item?.salary &&
+                                                        item?.salary.length > 10
+                                                            ? `${item.salary.substring(
+                                                                  0,
+                                                                  12
+                                                              )}...`
+                                                            : item?.salary}
                                                 </span>
                                             </td>
                                         </tr>

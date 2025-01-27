@@ -46,15 +46,21 @@ const Job = () => {
     const [showModal, setShowModal] = useState(false);
     const [showConfirmation,setShowConfirmation]=useState(false);
     const [applyId,SetApplyId]=useState(null);
+    const [ApplyLink,SetApplyLink]=useState(null)
 
      const [showConfirmations,setShowConfirmations]=useState(false)
         const [saveId,SetSaveId]=useState(null)
     
    
     const handleApplyJob = async() => {
-        await applyTo_job(applyId);
+        if(ApplyLink){
+            setShowConfirmation(false);
+            window.open(ApplyLink, '_blank');
+        }else{
+            await applyTo_job(applyId);
         setShowConfirmation(false);
         await getJobs();
+        }
     };
     const handleSaveJob = async () => {
         await save_job(saveId);
@@ -223,7 +229,13 @@ const Job = () => {
                                     <td>
                                         {' '}
                                         <span className="card-table-span">
-                                            {item?.experience} Years
+                                            {item?.experience &&
+                                              item?.experience.length > 13
+                                                    ? `${item?.experience.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :item?.experience}
                                         </span>
                                     </td>
                                 </tr>
@@ -240,7 +252,13 @@ const Job = () => {
                                     <td>
                                         {' '}
                                         <span className="card-table-span">
-                                            {item?.location}
+                                            {item?.location &&
+                                              item?.location.length > 13
+                                                    ? `${item?.location.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :item?.location}
                                         </span>
                                     </td>
                                 </tr>
@@ -257,7 +275,13 @@ const Job = () => {
                                     <td>
                                         {' '}
                                         <span className="card-table-span">
-                                            {item?.salary}
+                                            {item?.salary &&
+                                              item?.salary.length > 13
+                                                    ? `${item?.salary.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :item?.salary}
                                         </span>
                                     </td>
                                 </tr>
@@ -274,7 +298,13 @@ const Job = () => {
                                     <td>
                                         {' '}
                                         <span className="card-table-span">
-                                            {item?.education}
+                                            {item?.education &&
+                                              item?.education.length > 13
+                                                    ? `${item?.education.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :item?.education}
                                         </span>
                                     </td>
                                 </tr>
@@ -336,7 +366,7 @@ const Job = () => {
 
                                         border: 'none'
                                     }}
-                                    onClick={()=>{setShowConfirmation(true),SetApplyId(item?._id)}}
+                                    onClick={()=>{setShowConfirmation(true),SetApplyId(item?._id),SetApplyLink(item?.Job_Link)}}
                                 >
                                     Apply
                                 </Button>

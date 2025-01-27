@@ -6,6 +6,7 @@ import whitepluse from '../../../assets/images/whiteplus.png';
 import hamburger from '../../../assets/images/hamburger.png';
 import { CreateJobContext } from '../../../context/CreateJobContext';
 import CreateNewJob from './create_new_Job/CreateNewJob';
+import EditNewJob from './Edit_new_Job/editjob';
 import Verified from '../../../assets/images/Verified.png';
 import altprofile from '../../../assets/images/altprofile.jpg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -26,7 +27,10 @@ const CreateJob = () => {
         lgShow,
         setLgShow,
         paymentLoading,
-        fetch_job_status
+        fetch_job_status,
+        EditShow,
+        SetEditShow,
+        EditId,SetEditId
     } = useContext(CreateJobContext);
 
     const naviagte = useNavigate();
@@ -234,6 +238,11 @@ const CreateJob = () => {
         rendering();
     }, []);
 
+    function Edit_job_status(id){
+        SetEditId(id)
+        SetEditShow(prev=>!prev)
+    }
+
     return (
         <>
             <Helmet>
@@ -414,7 +423,7 @@ const CreateJob = () => {
                                                     {hideEditButton(item?.createdDate)?(
                                                          <p
                                                          onClick={() =>
-                                                             delete_job_status(
+                                                             Edit_job_status(
                                                                  item?._id
                                                              )
                                                          }
@@ -480,8 +489,14 @@ const CreateJob = () => {
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {item?.experience}{' '}
-                                                            Years
+                                                            {item?.experience &&
+                                              item?.experience.length> 13
+                                                    ? `${item?.experience.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :item?.experience}
+                                                            {' '}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -685,6 +700,14 @@ const CreateJob = () => {
                     className="custom-modal" // Apply the custom class here
                 >
                     <CreateNewJob />
+                </Modal>
+
+                <Modal
+                    show={EditShow}
+                    aria-labelledby="example-modal-sizes-title-lg"
+                    className="custom-modal" // Apply the custom class here
+                >
+                   <EditNewJob/>
                 </Modal>
                 <Modal
                     show={modalShowhide}

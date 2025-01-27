@@ -36,6 +36,7 @@ const SavedJobs = () => {
     const [deleteId,SetDeleteId]=useState(null)
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showApplyConfirmation,setApplyShowConfirmation]=useState(false)
+    const [ApplyLink,SetApplyLink]=useState(null)
 
     const navigate = useNavigate();
 
@@ -59,13 +60,19 @@ const SavedJobs = () => {
                 setShowModal(true);
                 return;
             }
-            if (name === 'profile') {
-                await applyFromProfile(deleteId);
-            } else {
-                await applyTo_job(deleteId);
-                await fetchSavedJob();
+           
+            if(ApplyLink){
+                window.open(ApplyLink, '_blank');
+                setApplyShowConfirmation(false) 
+            }else{
+                if (name === 'profile') {
+                    await applyFromProfile(deleteId);
+                } else {
+                    await applyTo_job(deleteId);
+                    await fetchSavedJob();
+                }
+                setApplyShowConfirmation(false) 
             }
-            setApplyShowConfirmation(false)
         } catch (error) {
             console.error('Error applying to job:', error);
         }
@@ -241,10 +248,10 @@ const SavedJobs = () => {
                                     height="40"
                                 />
                                 <h6>
-                                    {item?.job_title.length > 20
+                                    {item?.job_title.length > 18
                                                 ? `${item.job_title.substring(
                                                       0,
-                                                      20
+                                                      18
                                                   )}...`
                                                 : item?.job_title}
                                     <p
@@ -260,7 +267,7 @@ const SavedJobs = () => {
                                                       0,
                                                       20
                                                   )}...`
-                                                : item?.job_title}
+                                                :item?.company_details?.company_name }
                                     </p>
                                 </h6>
                                 {item?.Green_Batch && (
@@ -293,7 +300,13 @@ const SavedJobs = () => {
                                             </td>
                                             <td>
                                                 <span className="card-table-span">
-                                                    {item?.experience} Years
+                                                    {item?.experience &&
+                                              item?.experience.length > 13
+                                                    ? `${item?.experience.substring(
+                                                          0,
+                                                          13
+                                                      )}...`
+                                                    :`${item?.experience} Years`}
                                                 </span>
                                             </td>
                                         </tr>
@@ -307,7 +320,15 @@ const SavedJobs = () => {
                                             </td>
                                             <td>
                                                 <span className="card-table-span">
-                                                    {item?.location}
+                                                    {item?.location
+                                                        ? item.location.length >
+                                                          15
+                                                            ? `${item.location.substring(
+                                                                  0,
+                                                                  15
+                                                              )}...`
+                                                            : item.location
+                                                        : 'N/A'}
                                                 </span>
                                             </td>
                                         </tr>
@@ -321,7 +342,13 @@ const SavedJobs = () => {
                                             </td>
                                             <td>
                                                 <span className="card-table-span">
-                                                    {item?.salary}
+                                                {item?.salary &&
+                                                        item?.salary.length > 10
+                                                            ? `${item.salary.substring(
+                                                                  0,
+                                                                  12
+                                                              )}...`
+                                                            : item?.salary}
                                                 </span>
                                             </td>
                                         </tr>
@@ -389,7 +416,7 @@ const SavedJobs = () => {
                                             width: '100%',
                                             border: 'none'
                                         }}
-                                        onClick={()=>{setApplyShowConfirmation(true), SetDeleteId(item._id);}}
+                                        onClick={()=>{setApplyShowConfirmation(true), SetDeleteId(item._id),SetApplyLink(item?.Job_Link)}}
                                     >
                                         Apply
                                     </Button>

@@ -5,7 +5,7 @@ import altprofile from '../../../../assets/images/altprofile.jpg';
 import { Button, Col, Row } from 'react-bootstrap';
 
 import Modal from 'react-bootstrap/Modal';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { HireCandidateContext } from '../../../../context/HireCandidateContex';
 import BaseUrl from '../../../../services/BaseUrl';
 const ViewCandidateDetails = () => {
@@ -90,20 +90,20 @@ const ViewCandidateDetails = () => {
 
     useEffect(() => {
         if (!dataFetched) {
-        rendering();
-        //get_Candidate_detials(id);
-        setDataFetched(true);
+            rendering();
+            //get_Candidate_detials(id);
+            setDataFetched(true);
         }
     }, [dataFetched]);
 
-    const formatDate = (isoDate) => {
-        const date = new Date(isoDate); 
-        const day = date.getDate().toString().padStart(2, '0'); 
+    const formatDate = isoDate => {
+        const date = new Date(isoDate);
+        const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
-      
-        return `${day}/${month}/${year}`; 
-      };
+
+        return `${day}/${month}/${year}`;
+    };
     return (
         <>
             <div className="viewCandidate-main">
@@ -220,213 +220,601 @@ const ViewCandidateDetails = () => {
                     </Row>
                     <Row className="mt-2">
                         <Col className="Overview">
-                            <p style={{ color: 'black'}}>{candidate_detials?.summary}</p>
+                            <p style={{ color: 'black' }}>
+                                {candidate_detials?.summary}
+                            </p>
                         </Col>
                     </Row>
                     <Row>
                         <div className="info-view">
                             <div className="public-info">
                                 <p className="basic-details">Basic Details</p>
-                                <div className="cardsFlex">
-                                    <div className="cards">
-                                        <div className="tables">
-                                            <p style={{ color: '#051F50' }}>Email:</p>
-                                            <p style={{ color: '#051F50' }}>Contact Email:</p>
-                                            <p style={{ color: '#051F50' }}>Mobile No.:</p>
-                                            <p style={{ color: '#051F50' }}>LinkedIn:</p>
-                                        </div>
-                                    </div>
+                                <table
+                                    style={{
+                                        marginLeft: '10px',
+                                        marginTop: '16px'
+                                    }}
+                                >
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
 
-                                    <div className="cards">
-                                        <div className="tables">
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+                                                width: '42%',
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Email:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.basicDetails
                                                     ?.email || 'N/A'}
                                             </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Contact Email:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
                                             <p style={{ color: '#051F50' }}>
                                                 {candidate_detials?.basicDetails
                                                     ?.contact_email || 'N/A'}
-                                            </p>
+                                            </p>{' '}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Mobile No.:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
                                             <p style={{ color: '#051F50' }}>
                                                 {' '}
                                                 {candidate_detials?.basicDetails
                                                     ?.mobile || 'N/A'}
                                             </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            LinkedIn:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
                                             <p style={{ color: '#051F50' }}>
                                                 {' '}
-                                                {candidate_detials?.basicDetails
-                                                    ?.linkedIn || 'N/A'}
+                                                <Link
+                                                    to={
+                                                        candidate_detials
+                                                            ?.basicDetails
+                                                            ?.linkedIn
+                                                    }
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {candidate_detials?.basicDetails?.linkedIn.substring(
+                                                        0,
+                                                        34
+                                                    ) || 'N/A'}
+                                                </Link>
                                             </p>
-                                        </div>
-                                    </div>
-                                   
-                                </div>
-                                <hr style={{width:"90%"}}/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr style={{ width: '90%' }} />
+                                {/* Work Details */}
                                 <p className="basic-details">Work Detials</p>
-                                <div className="cardsFlex">
-                                    <div className="cards">
-                                        <div className="tables">
-                                            <p style={{ color: '#051F50' }}>Designation:</p>
-                                            {/* <p>Company name:</p> */}
-                                            <p style={{ color: '#051F50' }}> Aspiring Position/Role:</p>
-                                            <p style={{ color: '#051F50' }}>Expected CTC:</p>
+                                <table
+                                    style={{
+                                        marginLeft: '10px',
+                                        marginTop: '16px'
+                                    }}
+                                >
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
 
-                                            <p style={{ color: '#051F50' }}>Total Experience:</p>
-
-                                            <p style={{ color: '#051F50' }}>Career highlights details:</p>
-                                            <p style={{ color: '#051F50' }}>Recognition</p>
-                                            <p style={{ color: '#051F50' }}>Skills:</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="cards" >
-                                        <div className="tables">
-                                            <p style={{ color: '#051F50' }}>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+                                                width: '20%',
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Designation:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem',
+                                                width: '38%'
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
                                                 {candidate_detials?.workDetails
                                                     ?.designation || 'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
-                                                {' '}
+                                        </td>
+                                    </tr>
+                                    <tr className="mt-4">
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Aspiring Position/Role:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
                                                 {candidate_detials?.workDetails
                                                     ?.aspiring_position ||
                                                     'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
-                                                {
-                                                    candidate_detials
-                                                        ?.workDetails
-                                                        ?.current_ctc ||'N/A'
-                                                }
-                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
 
-                                            <p style={{ color: '#051F50' }}>
-                                                {
-                                                    candidate_detials
-                                                        ?.workDetails
-                                                        ?.work_experience||'N/A'
-                                                }
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Expected CTC:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
+                                                {candidate_detials?.workDetails
+                                                    ?.current_ctc || 'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+                                                paddingRight: '20px',
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Total Experience:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
+                                                {candidate_detials?.workDetails
+                                                    ?.work_experience || 'N/A'}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Career highlights details:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            {' '}
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
                                                 {candidate_detials?.workDetails
                                                     ?.career_highlight || 'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Recognition
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            {' '}
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
                                                 {candidate_detials?.workDetails
                                                     ?.recognation || 'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50',width:'250px'}}>
-                                                {candidate_detials?.workDetails?.skill?.map(
-                                                    (item, index) => (
-                                                        <span key={index}>
-                                                            {item}
-                                                            {index !==
-                                                                candidate_detials
-                                                                    .workDetails
-                                                                    .skill
-                                                                    .length -
-                                                                    1 && ', '}
-                                                        </span>
-                                                    )
-                                                )}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr style={{width:"90%"}}/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Skills:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            {candidate_detials?.workDetails?.skill?.map(
+                                                (item, index) => (
+                                                    <span key={index}>
+                                                        {item}
+                                                        {index !==
+                                                            candidate_detials
+                                                                .workDetails
+                                                                .skill.length -
+                                                                1 && ', '}
+                                                    </span>
+                                                )
+                                            )}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr style={{ width: '90%' }} />
                                 {/* Experience */}
+
                                 <p className="basic-details">Experience</p>
+
                                 {candidate_detials?.workDetails?.Experience.map(
                                     (item, iddex) => (
                                         <>
-                                            <div
-                                                className="cardsFlex"
-                                                key={iddex}
+                                            <table
+                                                style={{
+                                                    marginLeft: '4px',
+                                                    marginTop: '16px'
+                                                }}
                                             >
-                                                <div className="cards">
-                                                    <div className="tables">
-                                                        <p style={{ color: '#051F50' }}>Designation:</p>
-                                                        {/* <p>Company name:</p> */}
-                                                        <p style={{ color: '#051F50' }}>Company name:</p>
-                                                        <p style={{ color: '#051F50' }}>Salary:</p>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
 
-                                                        <p style={{ color: '#051F50' }}>Location:</p>
-
-                                                        <p style={{ color: '#051F50' }}>Start_date:</p>
-                                                        <p style={{ color: '#051F50' }}>End-date</p>
-                                                        <p style={{ color: '#051F50' }}>
-                                                            Reporting_structure:
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <div className="cards">
-                                                    <div className="tables">
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+                                                            width: '20%',
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Designation:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem',
+                                                            width: '38%'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
                                                             {item?.designation ||
                                                                 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr className="mt-4">
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Company name:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
                                                             {item?.companyName ||
                                                                 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Salary:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
                                                             {item?.CTC || 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+                                                            paddingRight:
+                                                                '20px',
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Location:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
                                                             {item?.location ||
                                                                 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Start_date:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
+                                                        {' '}
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
-                                                            {formatDate(item?.start_date) ||
-                                                                'N/A'}
+                                                            {formatDate(
+                                                                item?.start_date
+                                                            ) || 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign:
+                                                                'top',
+                                                            marginBottom: '6px'
+                                                        }}
+                                                    >
+                                                        End-date
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
+                                                        {' '}
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
                                                             {item?.current_workingStatus
                                                                 ? 'Currently Working'
-                                                                :formatDate(item?.end_date) ||
-                                                                  'N/A'}
+                                                                : formatDate(
+                                                                      item?.end_date
+                                                                  ) || 'N/A'}
                                                         </p>
-                                                        <p
-                                                            style={{
-                                                                color: '#051F50'
-                                                            }}
-                                                        >
-                                                            {item?.reporting_structure ||
-                                                                'N/A'}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr style={{width:'90%'}} />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Reporting_structure:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
+                                                        {item?.reporting_structure ||
+                                                            'N/A'}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <hr style={{ width: '90%' }} />
                                         </>
                                     )
                                 )}
                             </div>
 
+                            {/* Personal Details  */}
                             <div className="personal-info">
                                 <p className="basic-details">
                                     Personal Details
@@ -434,12 +822,24 @@ const ViewCandidateDetails = () => {
                                 <div className="cardsFlex">
                                     <div className="cards">
                                         <div className="tables">
-                                            <p style={{ color: '#051F50' }}>Gender:</p>
-                                            <p style={{ color: '#051F50' }}>Age:</p>
-                                            <p style={{ color: '#051F50' }}>Marriage Status:</p>
-                                            <p style={{ color: '#051F50' }}>Members in family:</p>
-                                            <p style={{ color: '#051F50' }}>Father/Mother Name:</p>
-                                            <p style={{ color: '#051F50' }}>Son/Daughter:</p>
+                                            <p style={{ color: '#051F50' }}>
+                                                Gender:
+                                            </p>
+                                            <p style={{ color: '#051F50' }}>
+                                                Age:
+                                            </p>
+                                            <p style={{ color: '#051F50' }}>
+                                                Marriage Status:
+                                            </p>
+                                            <p style={{ color: '#051F50' }}>
+                                                Members in family:
+                                            </p>
+                                            <p style={{ color: '#051F50' }}>
+                                                Father/Mother Name:
+                                            </p>
+                                            <p style={{ color: '#051F50' }}>
+                                                Son/Daughter:
+                                            </p>
                                         </div>
                                     </div>
 
@@ -480,77 +880,180 @@ const ViewCandidateDetails = () => {
                                                     ?.personalDetails
                                                     ?.son_name || 'N/A'}
                                             </p>
-                                           
                                         </div>
                                     </div>
                                 </div>
-                                <hr style={{width:"90%"}}/>
+                                <hr style={{ width: '90%' }} />
+
+                                {/*Education Details  */}
                                 <p className="basic-details">
                                     Education Details
                                 </p>
-                                <div className="cardsFlex">
-                                    <div className="cards">
-                                        <div className="tables">
-                                            <p style={{ color: '#051F50'  }}>Highest level of education:</p>
-                                            <p style={{ color: '#051F50', marginTop:'31px' }}>Boards represented name:</p>
-                                            <p style={{ color: '#051F50',marginTop:'31px' }}>Book Published/Article:</p>
-                                            <p style={{ color: '#051F50',marginTop:'31px' }}>Resume:</p>
-                                            {candidate_detials?.educationDetails?.certificates?.map(
-                                                    (item, index) => (
-                                                        <>
-                                                          <p style={{ marginTop: '50px',color:'#051F50' }}>
-                                                {item?.Certificate}:
-                                            </p>
-                                                        </>
-                                                    )
-                                                )}
-                                            
-                                        </div>
-                                    </div>
+                                <table
+                                    style={{
+                                        marginLeft: '10px',
+                                        marginTop: '16px'
+                                    }}
+                                >
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
 
-                                    <div className="cards">
-                                        <div className="tables">
-                                            <p style={{ color: '#051F50' }}>
-                                                {
-                                                    candidate_detials
-                                                        ?.educationDetails
-                                                        ?.highest_education ||'N/A'
-                                                }
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+                                                width: '20%',
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Highest level of education:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem',
+                                                width: '38%'
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
+                                                {candidate_detials
+                                                    ?.educationDetails
+                                                    ?.highest_education ||
+                                                    'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50' }}>
-                                                {
-                                                    candidate_detials
-                                                        ?.educationDetails
-                                                        ?.board_represent ||'N/A'
-                                                }
+                                        </td>
+                                    </tr>
+                                    <tr className="mt-4">
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Boards represented name:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
+                                                {candidate_detials
+                                                    ?.educationDetails
+                                                    ?.board_represent || 'N/A'}
                                             </p>
-                                            <p style={{ color: '#051F50'}}>
-                                                {
-                                                    candidate_detials
-                                                        ?.educationDetails
-                                                        ?.articles ||'N/A'
-                                                }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+
+                                                verticalAlign: 'top'
+                                            }}
+                                        >
+                                            Book Published/Article:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            <p
+                                                style={{
+                                                    color: '#051F50',
+                                                    paddingRight: '20px'
+                                                }}
+                                            >
+                                                {candidate_detials
+                                                    ?.educationDetails
+                                                    ?.articles || 'N/A'}
                                             </p>
-                                            
-                                            <p style={{ marginTop: '80px' }}>
-                                                <div className="pdf-view">
-                                                    <div
-                                                        className="pdf"
-                                                        onClick={() =>
-                                                            setModalShow(true)
-                                                        }
-                                                    >
-                                                        PDF
-                                                    </div>
-                                                    <div className="pdf-text">
-                                                   {candidate_detials
-                                                        ?.workDetails
-                                                        ?.current_ctc?candidate_detials?.basicDetails
-                                                    ?.name :'N/A'}
-                                                    </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+                                                paddingRight: '20px'
+                                            }}
+                                        >
+                                            Resume:
+                                        </td>
+                                        <td
+                                            style={{
+                                                verticalAlign: 'top',
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            <div className="pdf-view">
+                                                <div
+                                                    className="pdf"
+                                                    onClick={() =>
+                                                        setModalShow(true)
+                                                    }
+                                                >
+                                                    PDF
                                                 </div>
-                                            </p>
-                                            <p className="mt-4">
+                                                <div className="pdf-text">
+                                                    {candidate_detials
+                                                        ?.workDetails
+                                                        ?.current_ctc
+                                                        ? candidate_detials
+                                                              ?.basicDetails
+                                                              ?.name
+                                                        : 'N/A'}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style={{
+                                                color: '#051F50',
+                                                fontSize: '0.8rem',
+                                                paddingRight: '20px'
+                                            }}
+                                        >
+                                            {candidate_detials?.educationDetails?.certificates?.map(
+                                                (item, index) => (
+                                                    <>
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50'
+                                                            }}
+                                                        >
+                                                            {item?.Certificate}:
+                                                        </p>
+                                                    </>
+                                                )
+                                            )}
+                                        </td>
+                                        <td
+                                            style={{
+                                                fontSize: '0.8rem'
+                                            }}
+                                        >
+                                            <p>
                                                 {candidate_detials?.educationDetails?.certificates?.map(
                                                     (item, index) => (
                                                         <>
@@ -570,106 +1073,253 @@ const ViewCandidateDetails = () => {
                                                                     {
                                                                         item?.Certificate
                                                                     }
-                                                                
                                                                 </div>
                                                             </div>
                                                         </>
                                                     )
                                                 )}
                                             </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr style={{width:"90%"}}/>
-                                <p className="basic-details">
-                                Education
-                                </p>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                {/* Education */}
+                                <hr style={{ width: '90%' }} />
+                                <p className="basic-details">Education</p>
                                 {candidate_detials?.educationDetails?.Education.map(
                                     (item, iddex) => (
                                         <>
-                                            <div
-                                                className="cardsFlex"
-                                                key={iddex}
+                                            <table
+                                                style={{
+                                                    marginLeft: '10px',
+                                                    marginTop: '16px'
+                                                }}
                                             >
-                                                <div className="cards">
-                                                    <div className="tables">
-                                                        <p style={{ color: '#051F50' }}>College/School :</p>
-                                                        {/* <p>Company name:</p> */}
-                                                        <p style={{ color: '#051F50' }}>Degree:</p>
-                                                        <p style={{ color: '#051F50' }}>Field of study:</p>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
 
-                                                        <p style={{ color: '#051F50' }}>Start date:</p>
-
-                                                        <p style={{ color: '#051F50' }}>End date:</p>
-                                                        <p style={{ color: '#051F50' }}>Grade </p>
-                                                        <p style={{ color: '#051F50' }}>
-                                                        Description:
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <div className="cards" style={{width:'450px'}}>
-                                                    <div className="tables">
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+                                                            width: '20%',
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        College/School :
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem',
+                                                            width: '38%'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
                                                             {item?.school ||
                                                                 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr className="mt-4">
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Degree:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
-                                                            {item?.degree||
+                                                            {item?.degree ||
                                                                 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Field of study:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
-                                                            {item?.Field_study || 'N/A'}
-                                                        </p>
-                                                        <p
-                                                            style={{
-                                                                color: '#051F50'
-                                                            }}
-                                                        >
-                                                            {formatDate(item?. start_date) ||
+                                                            {item?.Field_study ||
                                                                 'N/A'}
                                                         </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+                                                            paddingRight:
+                                                                '20px',
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Start date:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
                                                         <p
                                                             style={{
-                                                                color: '#051F50'
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
                                                             }}
                                                         >
-                                                            {formatDate(item?.end_date) ||
+                                                            {formatDate(
+                                                                item?.start_date
+                                                            ) || 'N/A'}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        End date:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem',
+                                                            marginBottom: '6px'
+                                                        }}
+                                                    >
+                                                        {' '}
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px'
+                                                            }}
+                                                        >
+                                                            {formatDate(
+                                                                item?.end_date
+                                                            ) || 'N/A'}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Grade{' '}
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
+                                                        {' '}
+                                                        <p
+                                                            style={{
+                                                                color: '#051F50',
+                                                                paddingRight:
+                                                                    '20px',
+                                                                marginBottom:
+                                                                    '6px'
+                                                            }}
+                                                        >
+                                                            {item?.grade ||
                                                                 'N/A'}
                                                         </p>
-                                                        <p
-                                                            style={{
-                                                                color: '#051F50'
-                                                            }}
-                                                        >
-                                                            {item?.grade
-                                                                ||'N/A'
-                                                               }
-                                                        </p>
-                                                        <p
-                                                            style={{
-                                                                color: '#051F50'
-                                                            }}
-                                                        >
-                                                            {item?.description ||
-                                                                'N/A'}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            color: '#051F50',
+                                                            fontSize: '0.8rem',
+
+                                                            verticalAlign: 'top'
+                                                        }}
+                                                    >
+                                                        Description:
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            verticalAlign:
+                                                                'top',
+                                                            fontSize: '0.8rem'
+                                                        }}
+                                                    >
+                                                        {item?.description ||
+                                                            'N/A'}
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </>
                                     )
                                 )}

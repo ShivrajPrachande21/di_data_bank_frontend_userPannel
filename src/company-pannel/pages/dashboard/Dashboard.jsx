@@ -283,7 +283,7 @@ const Dashboard = () => {
                             <p className="Candidates">Ai Searches</p>
                             <h3 className="Candidates-s">0</h3>
                         </div>
-                        <div className="col-12 mt-2">
+                        <div className="col-12 mt-2 ai-searches">
                             <p className="Candidates-cv">
                                 Multiple CV downloads
                             </p>
@@ -293,7 +293,7 @@ const Dashboard = () => {
                                     : 'N/A'}
                             </h3>
                         </div>
-                        <div className="col-12">
+                        <div className="col-12 ai-searches">
                             <p className="Candidates-cv">
                                 Multiple Emails downloads
                             </p>
@@ -305,7 +305,7 @@ const Dashboard = () => {
                                     : 'N/A'}
                             </h3>
                         </div>
-                        <div className="col-12">
+                        <div className="col-12 ai-searches">
                             <p className="Candidates-cv">Listed Job</p>
                             <h3 className="Candidates-s">
                                 {data?.subscriptionData[0]?.job_posting +

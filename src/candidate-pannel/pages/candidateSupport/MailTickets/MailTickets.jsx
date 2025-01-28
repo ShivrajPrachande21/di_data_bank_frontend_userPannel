@@ -16,6 +16,7 @@ import {
 import SendMails from '../Sendmail/SendMail';
 import { CandidateSupportContext } from '../../../../context/candidateContext/CandidateSupportContext';
 import BaseUrl from '../../../../services/BaseUrl';
+import SearchIconS from '../../../../assets/images/SearchIconS.png';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 const MailTickets = () => {
@@ -96,7 +97,7 @@ const MailTickets = () => {
                         </OverlayTrigger>
 
                         <div className="search-bar-suport">
-                            {/* <img src={SearchIconS} alt="" width="20px" /> */}
+                            <img src={SearchIconS} alt="" width="20px" />
                             <input
                                 type="text"
                                 placeholder="Search"

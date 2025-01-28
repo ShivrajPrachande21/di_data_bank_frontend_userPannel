@@ -118,10 +118,10 @@ const AppliedJob = () => {
                                     Application Send
                                 </option>
                                 <option value="ApplicationShortlist">
-                                    Application Shortlist
+                                    Application Shortlisted
                                 </option>
                                 <option value="JobOfferReject">
-                                    JobOffer Reject
+                                    Job Offer Rejected
                                 </option>
                                 <option value="Hired">Hired</option>
                             </Form.Select>

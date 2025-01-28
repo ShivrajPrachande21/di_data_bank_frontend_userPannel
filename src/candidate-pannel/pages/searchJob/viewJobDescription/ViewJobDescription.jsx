@@ -11,7 +11,6 @@ import {
 } from 'react-bootstrap';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import flag from '../../../../assets/images/flag.png';
 import ep_back from '../../../../assets/images/ep_back.png';
 import './viewJobdescription.css';
 import Applications from './../../../../company-pannel/pages/create_job/viewJobApplication/applications/Applications';
@@ -301,14 +300,6 @@ const ViewJobDescription = () => {
                                     {JobData?.company_id?.company_name}
                                 </p>
                             </h6>
-                            <div className="green-thik">
-                                <img
-                                    src={flag}
-                                    alt=""
-                                    height="20px"
-                                    onClick={() => handleReport()}
-                                />
-                            </div>
                         </div>
                     </Col>
                 </Row>

@@ -93,7 +93,7 @@ const AddNewUser = () => {
                         ) : filterData && filterData?.length !== 0 ? (
                             filterData?.map((item, index) => (
                                 <>
-                                    <tbody>
+                                    <tbody style={{ fontSize: '0.8rem' }}>
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{item?.email}</td>

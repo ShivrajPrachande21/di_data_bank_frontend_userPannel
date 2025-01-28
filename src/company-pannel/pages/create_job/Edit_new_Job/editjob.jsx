@@ -460,7 +460,6 @@ const EditNewJob = () => {
                         <Col xs={6} md={9}>
                             <Form.Label className="custom-input-group-label">
                                 Job Link
-                                <span className="text-danger">*</span>
                             </Form.Label>
                             <InputGroup
                                 size="sm"

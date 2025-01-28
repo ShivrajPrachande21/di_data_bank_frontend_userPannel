@@ -112,8 +112,9 @@ const DisplayHiredCandidate = ({ onHide }) => {
                 striped
                 responsive
                 className="striped-columns compact-table mt-2"
+                style={{ border: '1px solid gray', borderCollapse: 'collapse' }}
             >
-                <thead>
+                <thead >
                     <tr>
                         <th>Sr no.</th>
                         <th>Name</th>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useSupport } from '../../context/SupportContext';
 
-const DisplayImage = () => {
+const DisplayImage = ({button}) => {
     const {
         smShowGloble,
         setSmShowGloble,
@@ -13,7 +13,40 @@ const DisplayImage = () => {
         pdfGloble,
         setPdfGloble
     } = useSupport();
-    console.log('dada', smShowGloble);
+
+
+    
+    // Download Imaeg
+    const handleDownload = async fileUrl => {
+        if (fileUrl) {
+            try {
+                // Fetch the image as a Blob
+                const response = await fetch(fileUrl);
+                const blob = await response.blob();
+
+                // Create a temporary URL for the Blob object
+                const url = window.URL.createObjectURL(blob);
+
+                // Create an anchor element and trigger the download
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'offerletter.jpg'); // Set the file name
+
+                // Append the link to the document and click it programmatically
+                document.body.appendChild(link);
+                link.click();
+
+                // Clean up by revoking the object URL and removing the anchor
+                link.parentNode.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error downloading the image:', error);
+            }
+        } else {
+            console.log('No file URL provided.');
+        }
+    };
+
     return (
         <>
             <Modal
@@ -47,6 +80,20 @@ const DisplayImage = () => {
                         ></iframe>
                     )}
                 </Modal.Body>
+                {button?(
+                      <Modal.Footer>
+                      <button
+                              className="donwload-btn-job"
+                              onClick={() =>
+                                  handleDownload(imagesGloble?imagesGloble:pdfGloble)
+                              }
+                          >
+                              download
+                          </button>
+      
+                      </Modal.Footer>
+                ):null}
+              
             </Modal>
         </>
     );

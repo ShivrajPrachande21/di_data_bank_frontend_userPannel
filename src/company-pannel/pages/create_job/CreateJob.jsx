@@ -441,10 +441,9 @@ const CreateJob = () => {
                                             style={{
                                                 marginTop: '-18px',
                                                 color: item?.promote_job
-                                                    ? '#3B96E1'
+                                                    ? 'green'
                                                     : 'white',
                                                 fontSize: '0.8rem',
-
                                                 marginTop: '0px'
                                             }}
                                         >

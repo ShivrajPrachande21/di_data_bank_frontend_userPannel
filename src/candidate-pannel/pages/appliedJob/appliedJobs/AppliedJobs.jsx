@@ -332,7 +332,7 @@ const AppliedJobs = () => {
                                             }}
                                         >
                                             {item?.Shortlisted.length == 0
-                                                ? 'Application sent'
+                                                ? 'Application send'
                                                 : item?.Shortlisted?.length !==
                                                       0 &&
                                                   item?.Shortlisted[0]

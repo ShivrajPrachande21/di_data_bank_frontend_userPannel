@@ -7,11 +7,25 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AppliedJobContext } from '../../../../context/candidateContext/AppliedJobContext';
 import harsh from '../../../../assets/images/harsh.pdf';
+import DisplayImage from '../../../../components/DisplayImage/DisplayImage';
+import { useSupport } from '../../../../context/SupportContext';
 const ApplicationStatus = () => {
     const id = localStorage.getItem('job_id');
     //const { id } = useParams();
     const { reject_Offered_letter, Accept_offer_lettter } =
         useContext(AppliedJobContext);
+
+          const {
+                smShowGloble,
+                setSmShowGloble,
+                imagesGloble,
+                setImageGloble,
+                handleGlobleModal,
+                pdfGloble,
+                setPdfGloble,
+                getFileTypeFromHeaders
+            } = useSupport();
+
     const [currentStep, setCurrentStep] = useState(null);
     //const [rating, setRating] = useState(0); // Set default rating to 5
     const location = useLocation();
@@ -149,40 +163,15 @@ const ApplicationStatus = () => {
         return ` ${day}${daySuffix(day)} ${month} ${year}`;
     };
 
-    const [modalShow, setModalShow] = useState(null);
-    const showModal = user_id => {
-        setModalShow(prev => !prev);
-    };
 
-    // Download Imaeg
-    const handleDownload = async fileUrl => {
-        if (fileUrl) {
-            try {
-                // Fetch the image as a Blob
-                const response = await fetch(fileUrl);
-                const blob = await response.blob();
-
-                // Create a temporary URL for the Blob object
-                const url = window.URL.createObjectURL(blob);
-
-                // Create an anchor element and trigger the download
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'offerletter.jpg'); // Set the file name
-
-                // Append the link to the document and click it programmatically
-                document.body.appendChild(link);
-                link.click();
-
-                // Clean up by revoking the object URL and removing the anchor
-                link.parentNode.removeChild(link);
-                window.URL.revokeObjectURL(url);
-            } catch (error) {
-                console.error('Error downloading the image:', error);
-            }
-        } else {
-            console.log('No file URL provided.');
-        }
+    const showModal =async ()=> {
+        setSmShowGloble(prev=>!prev)
+        const fileType = await getFileTypeFromHeaders(applicationState?.offerletterUrl);
+        if (fileType === 'image') {
+            setImageGloble(applicationState?.offerletterUrl);
+        } else if (fileType === 'pdf') {
+            setPdfGloble(applicationState?.offerletterUrl);
+        } 
     };
 
     const handleRejectOffer = async id => {
@@ -288,56 +277,9 @@ const ApplicationStatus = () => {
 
     return (
         <div>
-            <Modal
-                show={modalShow}
-                onHide={showModal}
-                aria-labelledby="example-modal-sizes-title-lg"
-                centered
-                className="custommodule"
-            >
-                <div
-                    style={{
-                        height: '60vh',
-                        width: '100%',
-
-                        overflow: 'hidden',
-                        position: 'relative',
-                        borderRadius: '10px'
-                    }}
-                >
-                    {/* {isValidFile ? ( */}
-                    <img
-                        src={applicationState?.offerletterUrl}
-                        alt=""
-                        style={{ width: '100%', height: '100%' }}
-                    />
-                    {/* ) : (
-                        <iframe
-                            src={applicationState?.offerletterUrl}
-                            // Ensure the src is set
-                            frameBorder="0"
-                            style={{
-                                width: '89%',
-                                height: '80vh',
-                                zoom: '1',
-                                margin: '0px 20px',
-                                width: '100%'
-                            }}
-                            title="Resume"
-                        ></iframe>
-                    )} */}
-
-                    <button
-                        className="donwload-btn-job"
-                        onClick={() =>
-                            handleDownload(applicationState?.offerletterUrl)
-                        }
-                    >
-                        download
-                    </button>
-                </div>
-            </Modal>
+            <DisplayImage button={true}/>
             <div className="stepper-container">
+        
                 <Row className="mb-4">
                     {[...Array(steps)].map((_, index) => (
                         <Col
@@ -528,7 +470,7 @@ const ApplicationStatus = () => {
                                 name="feedback"
                                 value={feedback}
                                 onChange={e => SetFeeBack(e.target.value)}
-                                placeholder="Give a short feedback to the Candidate"
+                                placeholder="Give a short feedback to the company"
                                 style={{ color: 'black' }}
                             />
                             <Button
@@ -553,9 +495,7 @@ const ApplicationStatus = () => {
                                 <div className="view-pdf-btn">
                                     <Button
                                         size="sm"
-                                        onClick={() =>
-                                            setModalShow(prev => !prev)
-                                        }
+                                        onClick={()=>showModal(applicationState?.offerletterUrl)}
                                     >
                                         View
                                     </Button>
@@ -614,9 +554,7 @@ const ApplicationStatus = () => {
                                 <div className="view-pdf-btn">
                                     <Button
                                         size="sm"
-                                        onClick={() =>
-                                            setModalShow(prev => !prev)
-                                        }
+                                        onClick={()=>showModal(applicationState?.offerletterUrl)}
                                     >
                                         View
                                     </Button>

@@ -44,6 +44,8 @@ import { useSubscription } from '../../context/SubscriptionContext';
 import { CandidateProfileContext } from '../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import { AccessManagementContext } from './../../context/AccessManagementContext';
+import { CandidateSupportContext } from '../../context/candidateContext/CandidateSupportContext';
+
 const SideBar = () => {
     const {
         handleCloseHire,
@@ -64,6 +66,8 @@ const SideBar = () => {
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
     );
+
+    const { hideSidebar, sethidSidebar } = useContext(CandidateSupportContext);
     const navigate = useNavigate();
     const locate = useLocation();
     const [hidelogout, sethidelogout] = useState(null);
@@ -370,10 +374,17 @@ const SideBar = () => {
         } else {
         }
     }, []);
+    const toggleSidebar = () => {
+        // Check if the screen width is less than 768px (mobile screen)
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            sethidSidebar(prev => !prev);
+        }
+    };
 
     useEffect(() => {
         getSingleData();
     }, []);
+
     return (
         <>
             <div className="MainSidebar">
@@ -588,6 +599,7 @@ const SideBar = () => {
                             {candidateToken
                                 ? sidebarButtonsCanditas.map(button => (
                                       <Link
+                                          onClick={toggleSidebar}
                                           key={button.id}
                                           to={button.link}
                                           style={{

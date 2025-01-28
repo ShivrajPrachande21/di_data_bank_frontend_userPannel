@@ -98,7 +98,7 @@
     margin-bottom: -2px;
 }
 .Candidates-s {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 500;
     line-height: 36px;
     text-align: left;
@@ -139,7 +139,7 @@
 .company-dashboard-card {
     display: flex;
     flex-wrap: wrap;
-    background: rgb(255, 255, 255);
+
     border-radius: 6px;
     width: 106%;
     margin-left: -4px;
@@ -147,19 +147,21 @@
     padding: 10px;
 }
 .companydashboaord-child-card {
-    height: 70px;
+    height: 80px;
     width: 49%;
     background: rgb(255, 255, 255);
     border-radius: 6px;
     box-shadow: 0px 0px 4px 0px rgba(196, 196, 196, 0.624);
     padding: 10px;
+    display: flex;
+    gap: 14px;
 }
 .companydashboaord-child-card h3 {
     font-size: 0.8rem;
     font-weight: 500;
 }
 .companydashboaord-child-card p {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 500;
     color: #3b96e1;
 }
@@ -167,8 +169,8 @@
 .custom-select-company {
     font-size: 0.8rem;
     position: absolute;
-    right: 6px;
-    top: 10px;
+    right: -6px;
+    top: 4px;
 }
 .custom-select-company select:hover {
     border-color: rgb(0, 149, 255);
@@ -199,7 +201,24 @@
     font-weight: 500;
     color: #3b96e1;
 }
-
+.candidate-searches {
+    margin-top: 14px;
+    box-shadow: 0px 0px 8px 0px rgba(212, 212, 212, 0.784);
+    border-radius: 8px;
+    padding: 10px;
+}
+.cv-views {
+    margin-top: 14px;
+    box-shadow: 0px 0px 8px 0px rgba(212, 212, 212, 0.784);
+    border-radius: 8px;
+    padding: 10px;
+}
+.ai-searches {
+    margin-top: 14px;
+    box-shadow: 0px 0px 8px 0px rgba(212, 212, 212, 0.784);
+    border-radius: 8px;
+    padding: 10px;
+}
 @media (max-width: 575.98px) {
     .companydashboaord-child-card {
         width: 100%;

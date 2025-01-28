@@ -8,6 +8,7 @@ import CandidateHiredIcon from '../../../assets/images/CandidateHiredIcon.png';
 import CandidateOnboardedIcon from '../../../assets/images/CandidateOnboardedIcon.png';
 import building from '../../../assets/images/building.png';
 import Calendar from '../../../assets/images/Calendar.png';
+import shortListCount from '../../../assets/images/shortListCount.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
@@ -151,11 +152,11 @@ const Dashboard = () => {
     return (
         <div>
             <>
-              <Helmet>
-                            <meta charSet="utf-8" />
-                            <title>Dashboard</title>
-                            <link rel="canonical" href="http://mysite.com/example" />
-                        </Helmet>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Dashboard</title>
+                    <link rel="canonical" href="http://mysite.com/example" />
+                </Helmet>
                 {/*First Row Card */}
                 <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                     <div className="c-dsahboard-top-cards">
@@ -166,11 +167,17 @@ const Dashboard = () => {
                         </div>
                         <div
                             className="custom-select-company"
-                            style={{ display: 'flex', gap: '5px' }}
+                            style={{
+                                display: 'flex',
+                                gap: '5px'
+                            }}
                         >
                             <div
                                 className="custom-select-sub-date"
-                                style={{ display: 'flex', gap: '5px' }}
+                                style={{
+                                    display: 'flex',
+                                    gap: '5px'
+                                }}
                             >
                                 <p>From: </p>
                                 <input
@@ -203,7 +210,13 @@ const Dashboard = () => {
                         <div
                             className="serach-icon"
                             onClick={getSelectedData}
-                            style={{ marginTop: '20px', marginLeft: '69px' }}
+                            style={{
+                                marginTop: '30px',
+                                marginLeft: '20px',
+                                width: '100px',
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }}
                         >
                             <span>Filter</span>
                         </div>
@@ -245,58 +258,32 @@ const Dashboard = () => {
                             ) : null}
                         </div>
 
-                        <div className="col-12">
+                        <div className="col-12 candidate-searches">
                             <p className="Candidates">Candidates Searches</p>
                             <h3 className="Candidates-s">
                                 {' '}
-                                {data?.subscriptionData[0]?.AdminSubscription[0]
-                                    ?.search_limit +
+                                {data?.subscriptionData[0].search_limit +
                                     ((data?.subscriptionData[1] &&
                                         data?.subscriptionData[1]
-                                            ?.AdminSubscription[0]
                                             ?.search_limit) ||
                                         0)}
-                                {data?.subscriptionData[0].search_limit ==
-                                'Unlimited'
-                                    ? null
-                                    : `/${
-                                          data?.subscriptionData[0]
-                                              .search_limit +
-                                          ((data?.subscriptionData[1] &&
-                                              data?.subscriptionData[1]
-                                                  ?.search_limit) ||
-                                              0)
-                                      }`}
                             </h3>
                         </div>
-                        <div className="col-12">
+                        <div className="col-12 cv-views">
                             <p className="Candidates">CV Views</p>
                             <h3 className="Candidates-s">
-                                {data?.subscriptionData[0].AdminSubscription[0]
-                                    ?.cv_view_limit +
+                                {data?.subscriptionData[0].cv_view_limit +
                                     ((data?.subscriptionData[1] &&
                                         data?.subscriptionData[1]
-                                            .AdminSubscription[0]
                                             ?.cv_view_limit) ||
-                                        0)}{' '}
-                                {data?.subscriptionData[0].cv_view_limit ==
-                                'Unlimited'
-                                    ? null
-                                    : `/${
-                                          data?.subscriptionData[0]
-                                              .cv_view_limit +
-                                          ((data?.subscriptionData[1] &&
-                                              data?.subscriptionData[1]
-                                                  ?.cv_view_limit) ||
-                                              0)
-                                      }`}
+                                        0)}
                             </h3>
                         </div>
-                        <div className="col-12">
+                        <div className="col-12 ai-searches">
                             <p className="Candidates">Ai Searches</p>
                             <h3 className="Candidates-s">0</h3>
                         </div>
-                        <div className="col-12">
+                        <div className="col-12 mt-2">
                             <p className="Candidates-cv">
                                 Multiple CV downloads
                             </p>
@@ -321,14 +308,6 @@ const Dashboard = () => {
                         <div className="col-12">
                             <p className="Candidates-cv">Listed Job</p>
                             <h3 className="Candidates-s">
-                                {data?.subscriptionData[0]?.AdminSubscription[0]
-                                    ?.job_posting +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            ?.AdminSubscription[0]
-                                            ?.job_posting) ||
-                                        0)}{' '}
-                                /{' '}
                                 {data?.subscriptionData[0]?.job_posting +
                                     ((data?.subscriptionData[1] &&
                                         data?.subscriptionData[1]
@@ -347,52 +326,73 @@ const Dashboard = () => {
                     </div>
                     {/*2 Row Card */}
 
-                    <div className="col-12 col-md-7">
+                    <div className="col-12 col-md-7 bg-white mx-2">
                         <div className="company-dashboard-card">
                             <div className="companydashboaord-child-card">
-                                <h3>Total Shortlisted Candidate</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.count[0]
-                                        ?.totalShortlistedCandidates || 0}
-                                </p>
+                                <div>
+                                    <img alt="" />
+                                </div>
+                                <div>
+                                    <h3>Total Shortlisted Candidate</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.count[0]
+                                            ?.totalShortlistedCandidates || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total Offer Letters</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.count[0]
-                                        ?.totalOfferLetters || 0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total Offer Letters</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.count[0]
+                                            ?.totalOfferLetters || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total CV View Count</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.cv_view_count?.totalViewCV ||
-                                        0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total CV View Count</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.cv_view_count
+                                            ?.totalViewCV || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total CV Download Count</h3>
-                                <p>
-                                    {dasboardData?.cv_view_count
-                                        ?.totalDownloadCount || 0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total CV Download Count</h3>
+                                    <p>
+                                        {dasboardData?.cv_view_count
+                                            ?.totalDownloadCount || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total Promoted Jobs</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.data?.totalPromotedJobs || 0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total Promoted Jobs</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.data
+                                            ?.totalPromotedJobs || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total Unpromoted Jobs</h3>
-                                <p>
-                                    {dasboardData?.data?.totalUnpromotedJobs ||
-                                        0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total Unpromoted Jobs</h3>
+                                    <p>
+                                        {dasboardData?.data
+                                            ?.totalUnpromotedJobs || 0}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

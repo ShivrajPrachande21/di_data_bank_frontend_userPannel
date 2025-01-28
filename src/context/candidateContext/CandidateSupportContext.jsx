@@ -10,8 +10,9 @@ export const CandidateSupportProvider = ({ children }) => {
     const [mailModelShow, setMailModelShow] = React.useState(false);
     const [Data, setdata] = useState('shajivr');
     const [hide, setHide] = useState(1);
-     const [mailData, setMailData] = useState(null);
-      const [loading, setLoading] = useState(true);
+    const [mailData, setMailData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [hideSidebar, sethidSidebar] = useState(false);
     const fetch_Candidate_issue = async () => {
         const token = localStorage.getItem('Candidate_token');
 
@@ -94,9 +95,13 @@ export const CandidateSupportProvider = ({ children }) => {
                 RemovePath,
                 formatDate,
                 toCamelCase_Name,
-                mailData, setMailData,
+                mailData,
+                setMailData,
                 getAllMails,
-                loading, setLoading
+                loading,
+                setLoading,
+                hideSidebar,
+                sethidSidebar
             }}
         >
             {children}

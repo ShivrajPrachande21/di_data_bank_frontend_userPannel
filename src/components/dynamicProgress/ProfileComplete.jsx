@@ -13,7 +13,7 @@ const ProfileComplete = () => {
 
     return (
         <h1
-            style={{ ...getProgressiveBorderStyle(progress), ...staticH1Style }}
+            style={{ ...getProgressiveBorderStyle(progress), ...staticH1Style}}
         >
             Profile Complete <span>{progress}%</span>
         </h1>

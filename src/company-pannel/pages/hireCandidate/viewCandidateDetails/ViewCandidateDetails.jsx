@@ -91,7 +91,7 @@ const ViewCandidateDetails = () => {
     useEffect(() => {
         if (!dataFetched) {
         rendering();
-        get_Candidate_detials(id);
+        //get_Candidate_detials(id);
         setDataFetched(true);
         }
     }, [dataFetched]);

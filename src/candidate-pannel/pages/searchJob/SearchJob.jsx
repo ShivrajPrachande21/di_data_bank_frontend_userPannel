@@ -145,8 +145,10 @@ const SearchJob = () => {
 
     // function for Apply job
     const ApplyTOJob = async () => {
+       
         if (CandidateProfile?.profileCompletionPercentage != 100) {
             setShowModal(true);
+            setShowConfirmation(false);
             return;
         }
         if (ApplyLink) {

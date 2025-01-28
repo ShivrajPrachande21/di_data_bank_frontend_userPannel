@@ -353,7 +353,7 @@ const CompanyNotification = ({ handleClose }) => {
                 )}
 
                 
-<NotificationList profileView={NewCandidate} message={`  New Candidte Registered.`}/>
+<NotificationList profileView={NewCandidate} message={`  New Candidate Registered.`}/>
 
 <NotificationList profileView={profileView} message={` Good news! A company just viewed your CV.`}/>
 

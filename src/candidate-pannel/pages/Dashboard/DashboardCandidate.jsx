@@ -21,6 +21,8 @@ import BaseUrl from '../../../services/BaseUrl';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
+import BuyPlanDesign from '../../../components/BuyplanDesign/BuyPlanDesign';
+
 const DashboardCandidate = () => {
     const yearStartISO = moment().startOf('year').toISOString();
     const yearEndISO = moment().endOf('year').toISOString();
@@ -178,51 +180,58 @@ const DashboardCandidate = () => {
                 <div style={{ width: '100%' }}>
                     <Row>
                         <Col md={4} style={{ marginRight: '-10px' }}>
-                            <Card style={{ marginTop: '10px', height: '94vh' }}>
-                                <div className="candidate-dashboard-subscription-card">
-                                    <div className="my-plan-dashboard">
-                                        <h2>My Plan :</h2>
-                                        {DashboardData?.existedPlane
-                                            ?.plane_name !== '' ? (
-                                            <span>
-                                                {DashboardData?.existedPlane
-                                                    ?.plane_name || ''}
-                                            </span>
-                                        ) : (
-                                            'N/A'
-                                        )}
-                                    </div>
-                                    <div className="ai-sub-cards-details">
-                                        <div className="get-featured">
-                                            <p>
-                                                Get Featured in Top {}Candidate{' '}
-                                            </p>
-                                            <h4>
-                                                {DashboardData?.existedPlane
-                                                    ?.top_candidate || 0}
-                                            </h4>
-                                        </div>
-
-                                        <div className="ai-resume-create">
-                                            <p>AI Resume Create </p>
-                                            <h4>
-                                                {DashboardData?.existedPlane
-                                                    ?.resume_write || 0}
-                                            </h4>
-                                        </div>
-
-                                        <div className="ai-search-css">
-                                            <h4>Support</h4>
+                            {DashboardData?.existedPlane ? (
+                                <Card
+                                    style={{
+                                        marginTop: '10px',
+                                        height: '94vh'
+                                    }}
+                                >
+                                    <div className="candidate-dashboard-subscription-card">
+                                        <div className="my-plan-dashboard">
+                                            <h2>My Plan :</h2>
                                             {DashboardData?.existedPlane
-                                                ?.customer_support ? (
-                                                <p>
-                                                    Email support and chat
-                                                    support
-                                                </p>
-                                            ) : null}
+                                                ?.plane_name !== '' ? (
+                                                <span>
+                                                    {DashboardData?.existedPlane
+                                                        ?.plane_name || ''}
+                                                </span>
+                                            ) : (
+                                                'N/A'
+                                            )}
                                         </div>
+                                        <div className="ai-sub-cards-details">
+                                            <div className="get-featured">
+                                                <p>
+                                                    Get Featured in Top {}
+                                                    Candidate{' '}
+                                                </p>
+                                                <h4>
+                                                    {DashboardData?.existedPlane
+                                                        ?.top_candidate || 0}
+                                                </h4>
+                                            </div>
 
-                                        {/* <p>Interview question </p>
+                                            <div className="ai-resume-create">
+                                                <p>AI Resume Create </p>
+                                                <h4>
+                                                    {DashboardData?.existedPlane
+                                                        ?.resume_write || 0}
+                                                </h4>
+                                            </div>
+
+                                            <div className="ai-search-css">
+                                                <h4>Support</h4>
+                                                {DashboardData?.existedPlane
+                                                    ?.customer_support ? (
+                                                    <p>
+                                                        Email support and chat
+                                                        support
+                                                    </p>
+                                                ) : null}
+                                            </div>
+
+                                            {/* <p>Interview question </p>
                                         <h4
                                             style={{
                                                 color: '#3B96E1',
@@ -233,29 +242,33 @@ const DashboardCandidate = () => {
                                             {DashboardData?.existedPlane
                                                 ?.interview_question || 0}
                                         </h4> */}
-                                        <div className="ai-job-recommandation">
-                                            <h4>Recommendation</h4>
+                                            <div className="ai-job-recommandation">
+                                                <h4>Recommendation</h4>
+                                                {DashboardData?.existedPlane
+                                                    ?.job_recommandation ? (
+                                                    <p>Job Recommendation </p>
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                        <div className="expiry-date-sub">
+                                            <h4>Your Subscription</h4>
                                             {DashboardData?.existedPlane
-                                                ?.job_recommandation ? (
-                                                <p>Job Recommendation </p>
+                                                ?.expiresAt ? (
+                                                <p>
+                                                    Renew on :
+                                                    {formatDate(
+                                                        DashboardData
+                                                            ?.existedPlane
+                                                            ?.expiresAt || 0
+                                                    )}
+                                                </p>
                                             ) : null}
                                         </div>
                                     </div>
-                                    <div className="expiry-date-sub">
-                                        <h4>Your Subscription</h4>
-                                        {DashboardData?.existedPlane
-                                            ?.expiresAt ? (
-                                            <p>
-                                                Renew on :
-                                                {formatDate(
-                                                    DashboardData?.existedPlane
-                                                        ?.expiresAt || 0
-                                                )}
-                                            </p>
-                                        ) : null}
-                                    </div>
-                                </div>
-                            </Card>
+                                </Card>
+                            ) : (
+                                <BuyPlanDesign />
+                            )}
                         </Col>
                         <Col md={8}>
                             <Card

@@ -14,6 +14,7 @@ import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
+import BuyPlanDesign from './../../../components/BuyplanDesign/BuyPlanDesign';
 
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
@@ -245,85 +246,97 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="row mt-2 mx-1 ">
-                    <div class="col-5  dashboard-card  first-row  ">
-                        <div className="col-12  mt-2 dashboard-div d-flex">
-                            <p className="myplan-p ">My Plan:</p>
-                            <p className="myplan-btn">
-                                {data?.subscriptionData[0].plane_name || 'N/A'}
-                            </p>
-                            {data?.subscriptionData[1]?.plane_name ? (
+                    {loading || data?.subscriptionData.length > 0 ? (
+                        <div class="col-5  dashboard-card  first-row  ">
+                            <div className="col-12  mt-2 dashboard-div d-flex">
+                                <p className="myplan-p ">My Plan:</p>
                                 <p className="myplan-btn">
-                                    {data?.subscriptionData[1]?.plane_name}
+                                    {data?.subscriptionData[0].plane_name ||
+                                        'N/A'}
                                 </p>
-                            ) : null}
-                        </div>
+                                {data?.subscriptionData[1]?.plane_name ? (
+                                    <p className="myplan-btn">
+                                        {data?.subscriptionData[1]?.plane_name}
+                                    </p>
+                                ) : null}
+                            </div>
 
-                        <div className="col-12 candidate-searches">
-                            <p className="Candidates">Candidates Searches</p>
-                            <h3 className="Candidates-s">
-                                {' '}
-                                {data?.subscriptionData[0].search_limit +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            ?.search_limit) ||
-                                        0)}
-                            </h3>
+                            <div className="col-12 candidate-searches">
+                                <p className="Candidates">
+                                    Candidates Searches
+                                </p>
+                                <h3 className="Candidates-s">
+                                    {' '}
+                                    {data?.subscriptionData[0].search_limit +
+                                        ((data?.subscriptionData[1] &&
+                                            data?.subscriptionData[1]
+                                                ?.search_limit) ||
+                                            0)}
+                                </h3>
+                            </div>
+                            <div className="col-12 cv-views">
+                                <p className="Candidates">CV Views</p>
+                                <h3 className="Candidates-s">
+                                    {data?.subscriptionData[0].cv_view_limit +
+                                        ((data?.subscriptionData[1] &&
+                                            data?.subscriptionData[1]
+                                                ?.cv_view_limit) ||
+                                            0)}
+                                </h3>
+                            </div>
+                            <div className="col-12 ai-searches">
+                                <p className="Candidates">Ai Searches</p>
+                                <h3 className="Candidates-s">0</h3>
+                            </div>
+                            <div className="col-12 mt-2 ai-searches">
+                                <p className="Candidates-cv">
+                                    Multiple CV downloads
+                                </p>
+                                <h3 className="Candidates-s">
+                                    {data?.subscriptionData[0]
+                                        ?.download_cv_limit
+                                        ? 'Unlimited'
+                                        : 'N/A'}
+                                </h3>
+                            </div>
+                            <div className="col-12 ai-searches">
+                                <p className="Candidates-cv">
+                                    Multiple Emails downloads
+                                </p>
+                                {}
+                                <h3 className="Candidates-s">
+                                    {' '}
+                                    {data?.subscriptionData[0]
+                                        ?.download_email_limit
+                                        ? 'Unlimited'
+                                        : 'N/A'}
+                                </h3>
+                            </div>
+                            <div className="col-12 ai-searches">
+                                <p className="Candidates-cv">Listed Job</p>
+                                <h3 className="Candidates-s">
+                                    {data?.subscriptionData[0]?.job_posting +
+                                        ((data?.subscriptionData[1] &&
+                                            data?.subscriptionData[1]
+                                                ?.job_posting) ||
+                                            0)}
+                                </h3>
+                            </div>
+                            <div className="col-12 ">
+                                <p className="only">
+                                    {/* {/ Only for Premium/Enterprise - UPGRADE /} */}
+                                </p>
+                                <p className="ends-on">
+                                    {data?.subscriptionData[0]?.expiresAt}
+                                </p>
+                            </div>
                         </div>
-                        <div className="col-12 cv-views">
-                            <p className="Candidates">CV Views</p>
-                            <h3 className="Candidates-s">
-                                {data?.subscriptionData[0].cv_view_limit +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            ?.cv_view_limit) ||
-                                        0)}
-                            </h3>
+                    ) : (
+                        <div class="col-5  dashboard-card  first-row  ">
+                            <BuyPlanDesign />
                         </div>
-                        <div className="col-12 ai-searches">
-                            <p className="Candidates">Ai Searches</p>
-                            <h3 className="Candidates-s">0</h3>
-                        </div>
-                        <div className="col-12 mt-2 ai-searches">
-                            <p className="Candidates-cv">
-                                Multiple CV downloads
-                            </p>
-                            <h3 className="Candidates-s">
-                                {data?.subscriptionData[0]?.download_cv_limit
-                                    ? 'Unlimited'
-                                    : 'N/A'}
-                            </h3>
-                        </div>
-                        <div className="col-12 ai-searches">
-                            <p className="Candidates-cv">
-                                Multiple Emails downloads
-                            </p>
-                            {}
-                            <h3 className="Candidates-s">
-                                {' '}
-                                {data?.subscriptionData[0]?.download_email_limit
-                                    ? 'Unlimited'
-                                    : 'N/A'}
-                            </h3>
-                        </div>
-                        <div className="col-12 ai-searches">
-                            <p className="Candidates-cv">Listed Job</p>
-                            <h3 className="Candidates-s">
-                                {data?.subscriptionData[0]?.job_posting +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            ?.job_posting) ||
-                                        0)}
-                            </h3>
-                        </div>
-                        <div className="col-12 ">
-                            <p className="only">
-                                {/* {/ Only for Premium/Enterprise - UPGRADE /} */}
-                            </p>
-                            <p className="ends-on">
-                                {data?.subscriptionData[0]?.expiresAt}
-                            </p>
-                        </div>
-                    </div>
+                    )}
+
                     {/*2 Row Card */}
 
                     <div className="col-12 col-md-7 bg-white mx-2">
@@ -355,7 +368,7 @@ const Dashboard = () => {
                             <div className="companydashboaord-child-card">
                                 <div></div>
                                 <div>
-                                    <h3>Total CV View Count</h3>
+                                    <h3>Candidates CV View Count</h3>
                                     <p>
                                         {' '}
                                         {dasboardData?.cv_view_count

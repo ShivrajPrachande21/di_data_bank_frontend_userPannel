@@ -13,7 +13,7 @@ const useDashboardData = url => {
     useEffect(() => {
         const fetchDashboardData = async () => {
             const token = localStorage.getItem('companyToken');
-
+            setLoading(true);
             // Decode the token to get the payload
             const decodedToken = jwtDecode(token);
             const companyId = decodedToken?._id; // Assuming the token contains an 'id' for the company
@@ -26,6 +26,7 @@ const useDashboardData = url => {
                     `${BaseUrl}/company/dashboard_status/${companyId}`
                 );
                 setData(response.data);
+                setLoading(false);
             } catch (err) {
                 setError(err.message || 'Something went wrong');
             } finally {

@@ -30,35 +30,30 @@ const ViewCandidateDetails = () => {
     const handleClose = () => setModalShow(false);
     const googleDrivePDFLink = candidate_detials?.workDetails?.resume;
 
-    // Function to extract the file ID from the Google Drive link
     const getFileIdFromLink = link => {
         if (!link) return null;
         const match = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
         return match ? match[1] : null;
     };
 
-    // Check if it's a Google Drive link
     const isGoogleDriveLink =
         googleDrivePDFLink && googleDrivePDFLink.includes('drive.google.com');
 
-    // If it's a Google Drive link, extract the file ID and generate the download and preview links
     const fileId = isGoogleDriveLink
         ? getFileIdFromLink(googleDrivePDFLink)
         : null;
     const downloadLink = fileId
         ? `https://drive.google.com/uc?export=download&id=${fileId}`
-        : googleDrivePDFLink; // Keep the original link if not a Google Drive link
+        : googleDrivePDFLink;
 
-    // If it's a Google Drive link, generate the preview link, otherwise, use the original link
     const modifiedLink = isGoogleDriveLink
         ? googleDrivePDFLink.replace('/view?usp=sharing', '/preview')
         : googleDrivePDFLink;
 
-    // Handle the download
     const handleDownload = () => {
         const a = document.createElement('a');
         a.href = downloadLink;
-        a.download = fileId ? `resume-${fileId}.pdf` : 'resume.pdf'; // Customize filename based on whether it's a Google Drive link
+        a.download = fileId ? `resume-${fileId}.pdf` : 'resume.pdf';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -111,7 +106,7 @@ const ViewCandidateDetails = () => {
                     show={modalShow}
                     onHide={handleClose}
                     aria-labelledby="example-modal-sizes-title-lg"
-                    className="custom-view-resume" // Apply the custom class here
+                    className="custom-view-resume"
                     centered
                 >
                     <div className="download">

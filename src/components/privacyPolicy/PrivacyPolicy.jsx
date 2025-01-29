@@ -28,7 +28,7 @@ const PrivacyPolicy = () => {
                     src={fileUrl}
                     frameBorder="0"
                     width="100%"
-                    height="600px"
+                    height="100vh"
                 ></iframe>
             );
         } else if (fileExtension === 'doc' || fileExtension === 'docx') {
@@ -38,7 +38,7 @@ const PrivacyPolicy = () => {
                     src={googleDocViewerUrl}
                     frameBorder="0"
                     width="100%"
-                    height="600px"
+                    height="100vh"
                 ></iframe>
             );
         } else if (

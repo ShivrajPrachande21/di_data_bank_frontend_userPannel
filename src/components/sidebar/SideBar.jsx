@@ -62,6 +62,7 @@ const SideBar = () => {
     const { getSingleData, formData, sideBarData } = useContext(
         AccessManagementContext
     );
+    const location = useLocation();
     const { ShowGreen, SetGreenBatch } = useSubscription();
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
@@ -375,9 +376,33 @@ const SideBar = () => {
         }
     }, []);
     const toggleSidebar = () => {
-        // Check if the screen width is less than 768px (mobile screen)
         if (window.matchMedia('(max-width: 768px)').matches) {
             sethidSidebar(prev => !prev);
+        }
+    };
+
+    const getButtonStyle = path => {
+        if (location.pathname.includes(path)) {
+            return {
+                fontSize: '0.8rem',
+                width: '100%',
+
+                color: 'white',
+                background: 'var(--Primary-color, #3B96E1)',
+
+                borderRadius: '8px'
+            };
+        } else {
+            return {
+                fontSize: '0.8rem',
+                width: '100%',
+                padding: '10px',
+
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+            };
         }
     };
 
@@ -725,24 +750,9 @@ const SideBar = () => {
                                               onMouseOut={() =>
                                                   setHoveredButton(null)
                                               }
-                                              style={{
-                                                  background:
-                                                      activeButton === button.id
-                                                          ? '#3b96e1'
-                                                          : hoveredButton ===
-                                                            button.id
-                                                          ? '#f0f0f0'
-                                                          : 'white', // Default background
-                                                  color:
-                                                      activeButton === button.id
-                                                          ? 'white' // Active button text color
-                                                          : hoveredButton ===
-                                                            button.id
-                                                          ? '#051F50' // Hovered button text color
-                                                          : '#3b96e1',
-                                                  transition:
-                                                      'background-color 0.3s, color 0.3s'
-                                              }}
+                                              style={getButtonStyle(
+                                                  button.link
+                                              )}
                                           >
                                               <img
                                                   src={
@@ -759,7 +769,7 @@ const SideBar = () => {
                                                   }}
                                               />
 
-                                              {button.label}
+                                              {button.label.substring(0, 20)}
                                               {button.label == 'Support' &&
                                               supportNot != 0 ? (
                                                   <span

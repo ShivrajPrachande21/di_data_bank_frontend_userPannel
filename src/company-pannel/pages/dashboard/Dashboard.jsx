@@ -207,7 +207,7 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        <div
+                        {/* <div
                             className="serach-icon"
                             onClick={getSelectedData}
                             style={{
@@ -219,7 +219,7 @@ const Dashboard = () => {
                             }}
                         >
                             <span>Filter</span>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="c-dsahboard-top-cards">

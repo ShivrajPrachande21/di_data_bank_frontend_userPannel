@@ -338,10 +338,14 @@ const ViewCandidateDetails = () => {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                 >
-                                                    {candidate_detials?.basicDetails?.linkedIn.substring(
-                                                        0,
-                                                        34
-                                                    ) || 'N/A'}
+                                                    {(candidate_detials
+                                                        ?.basicDetails
+                                                        ?.linkedIn &&
+                                                        candidate_detials?.basicDetails?.linkedIn.substring(
+                                                            0,
+                                                            34
+                                                        )) ||
+                                                        'N/A'}
                                                 </Link>
                                             </p>
                                         </td>

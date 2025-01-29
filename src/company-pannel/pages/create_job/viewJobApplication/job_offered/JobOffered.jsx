@@ -162,9 +162,7 @@ const isoDate = dateValue.toISOString();
                 </div>
             </Modal>
             <div className="job-offered mt-2">
-                <p className="hiredon">
-                    Hired on {formatDate(job_offered?.createdDate)}
-                </p>
+               
                 <div className="header-view" style={{ marginTop: '-10px' }}>
                     <Row>
                         <div>

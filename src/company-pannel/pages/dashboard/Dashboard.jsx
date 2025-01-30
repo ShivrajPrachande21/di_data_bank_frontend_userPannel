@@ -8,11 +8,19 @@ import CandidateHiredIcon from '../../../assets/images/CandidateHiredIcon.png';
 import CandidateOnboardedIcon from '../../../assets/images/CandidateOnboardedIcon.png';
 import building from '../../../assets/images/building.png';
 import Calendar from '../../../assets/images/Calendar.png';
+<<<<<<< HEAD
+=======
+import shortListCount from '../../../assets/images/shortListCount.png';
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
+<<<<<<< HEAD
+=======
+import BuyPlanDesign from './../../../components/BuyplanDesign/BuyPlanDesign';
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
 
 const Dashboard = () => {
     const { data, loading, error, VerifyJob, verfifyOffer, sethide, hide } =
@@ -30,30 +38,30 @@ const Dashboard = () => {
     const [startDate, setStartDate] = useState(yearStartISO);
     const [EndDate, setEndDate] = useState(yearEndISO);
 
-    const handleVerifyJob = e => {
-        e.preventDefault();
-        VerifyJob(PAN);
-    };
+    // const handleVerifyJob = e => {
+    //     e.preventDefault();
+    //     VerifyJob(PAN);
+    // };
 
-    const validatePAN = pan => {
-        const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-        return panRegex.test(pan);
-    };
+    // const validatePAN = pan => {
+    //     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    //     return panRegex.test(pan);
+    // };
 
     // onChange handler for the input field
-    const handleChange = e => {
-        const value = e.target.value.toUpperCase(); // Convert input to uppercase
-        setPAN(value);
+    // const handleChange = e => {
+    //     const value = e.target.value.toUpperCase(); // Convert input to uppercase
+    //     setPAN(value);
 
-        // Validate the PAN and update validation status and error message
-        if (value === '') {
-            setErrorMessage(''); // Clear error message if input is empty
-        } else if (validatePAN(value)) {
-            setErrorMessage(''); // PAN is valid, no error message
-        } else {
-            setErrorMessage('PAN number format is invalid.'); // Set error message
-        }
-    };
+    //     // Validate the PAN and update validation status and error message
+    //     if (value === '') {
+    //         setErrorMessage(''); // Clear error message if input is empty
+    //     } else if (validatePAN(value)) {
+    //         setErrorMessage(''); // PAN is valid, no error message
+    //     } else {
+    //         setErrorMessage('PAN number format is invalid.'); // Set error message
+    //     }
+    // };
 
     const getSelectedData = async () => {
         const token = localStorage.getItem('companyToken');
@@ -64,29 +72,29 @@ const Dashboard = () => {
             const userId = decodedToken?._id;
             try {
                 const response = await axios.get(
-                    `${BaseUrl}company/subscription/count/${userId}/${SelectedData}`
+                    `${BaseUrl}company/subscription/count/${userId}/${startDate}/${EndDate}`
                 );
                 setDashboardData(response?.data);
             } catch (error) {}
         }
     };
-    const handlSelectChange = async e => {
-        const selectedText = e.target.value;
-        setSelectedData(selectedText);
-        const token = localStorage.getItem('companyToken');
-        if (!token) {
-            return;
-        } else {
-            const decodedToken = jwtDecode(token);
-            const userId = decodedToken?._id;
-            try {
-                const response = await axios.get(
-                    `${BaseUrl}company/subscription/count/${userId}/${selectedText}`
-                );
-                setDashboardData(response?.data);
-            } catch (error) {}
-        }
-    };
+    // const handlSelectChange = async e => {
+    //     const selectedText = e.target.value;
+    //     setSelectedData(selectedText);
+    //     const token = localStorage.getItem('companyToken');
+    //     if (!token) {
+    //         return;
+    //     } else {
+    //         const decodedToken = jwtDecode(token);
+    //         const userId = decodedToken?._id;
+    //         try {
+    //             const response = await axios.get(
+    //                 `${BaseUrl}company/subscription/count/${userId}/${selectedText}`
+    //             );
+    //             setDashboardData(response?.data);
+    //         } catch (error) {}
+    //     }
+    // };
 
     // const getSelectedData = async () => {
     //     const token = localStorage.getItem('Candidate_token');
@@ -159,6 +167,11 @@ const Dashboard = () => {
                 <link rel="canonical" href="http://mysite.com/example" />
             </Helmet>
             <>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Dashboard</title>
+                    <link rel="canonical" href="http://mysite.com/example" />
+                </Helmet>
                 {/*First Row Card */}
                 <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
                     <div className="c-dsahboard-top-cards">
@@ -167,6 +180,7 @@ const Dashboard = () => {
                             <h3>Total Job Created</h3>
                             <p>{dasboardData?.data?.totalJobs || 0}</p>
                         </div>
+<<<<<<< HEAD
                         <div className="custom-select-company">
                             <div
                                 style={{
@@ -225,7 +239,63 @@ const Dashboard = () => {
                                     <option value="Thismonth">This Month</option>
                                     <option value="Thisyear">This Year</option>
                                 </Form.Select> */}
+=======
+                        <div
+                            className="custom-select-company"
+                            style={{
+                                display: 'flex',
+                                gap: '5px'
+                            }}
+                        >
+                            <div
+                                className="custom-select-sub-date"
+                                style={{
+                                    display: 'flex',
+                                    gap: '5px'
+                                }}
+                            >
+                                <p>From: </p>
+                                <input
+                                    type="date"
+                                    style={{
+                                        width: '24px',
+                                        marginTop: '-3px',
+                                        height: '25px'
+                                    }}
+                                    onChange={handleStartChange}
+                                />
+                            </div>
+                            <div
+                                className="custom-select-sub-date"
+                                style={{ display: 'flex', gap: '5px' }}
+                            >
+                                <p>To: </p>
+                                <input
+                                    type="date"
+                                    style={{
+                                        width: '24px',
+                                        marginTop: '-3px',
+                                        height: '25px'
+                                    }}
+                                    onChange={handleEndChange}
+                                />
+                            </div>
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
                         </div>
+
+                        {/* <div
+                            className="serach-icon"
+                            onClick={getSelectedData}
+                            style={{
+                                marginTop: '30px',
+                                marginLeft: '20px',
+                                width: '100px',
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <span>Filter</span>
+                        </div> */}
                     </div>
 
                     <div className="c-dsahboard-top-cards">
@@ -251,167 +321,166 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="row mt-2 mx-1 ">
-                    <div class="col-5  dashboard-card  first-row  ">
-                        <div className="col-12  mt-2 dashboard-div d-flex">
-                            <p className="myplan-p ">My Plan:</p>
-                            <p className="myplan-btn">
-                                {data?.subscriptionData[0].plane_name || 'N/A'}
-                            </p>
-                            {data?.subscriptionData[1]?.plane_name ? (
+                    {loading || data?.subscriptionData.length > 0 ? (
+                        <div class="col-5  dashboard-card  first-row  ">
+                            <div className="col-12  mt-2 dashboard-div d-flex">
+                                <p className="myplan-p ">My Plan:</p>
                                 <p className="myplan-btn">
-                                    {data?.subscriptionData[1]?.plane_name}
+                                    {data?.subscriptionData[0].plane_name ||
+                                        'N/A'}
                                 </p>
-                            ) : null}
-                        </div>
+                                {data?.subscriptionData[1]?.plane_name ? (
+                                    <p className="myplan-btn">
+                                        {data?.subscriptionData[1]?.plane_name}
+                                    </p>
+                                ) : null}
+                            </div>
 
-                        <div className="col-12">
-                            <p className="Candidates">Candidates Searches</p>
-                            <h3 className="Candidates-s">
-                                {' '}
-                                {data?.subscriptionData[0]?.AdminSubscription[0]
-                                    ?.search_limit +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            ?.AdminSubscription[0]
-                                            ?.search_limit) ||
-                                        0)}
-                                {data?.subscriptionData[0].search_limit ==
-                                'Unlimited'
-                                    ? null
-                                    : `/${
-                                          data?.subscriptionData[0]
-                                              .search_limit +
-                                          ((data?.subscriptionData[1] &&
-                                              data?.subscriptionData[1]
-                                                  ?.search_limit) ||
-                                              0)
-                                      }`}
-                            </h3>
+                            <div className="col-12 candidate-searches">
+                                <p className="Candidates">
+                                    Candidates Searches
+                                </p>
+                                <h3 className="Candidates-s">
+                                    {' '}
+                                    {data?.subscriptionData[0].search_limit +
+                                        ((data?.subscriptionData[1] &&
+                                            data?.subscriptionData[1]
+                                                ?.search_limit) ||
+                                            0)}
+                                </h3>
+                            </div>
+                            <div className="col-12 cv-views">
+                                <p className="Candidates">CV Views</p>
+                                <h3 className="Candidates-s">
+                                    {data?.subscriptionData[0].cv_view_limit +
+                                        ((data?.subscriptionData[1] &&
+                                            data?.subscriptionData[1]
+                                                ?.cv_view_limit) ||
+                                            0)}
+                                </h3>
+                            </div>
+                            <div className="col-12 ai-searches">
+                                <p className="Candidates">Ai Searches</p>
+                                <h3 className="Candidates-s">0</h3>
+                            </div>
+                            <div className="col-12 mt-2 ai-searches">
+                                <p className="Candidates-cv">
+                                    Multiple CV downloads
+                                </p>
+                                <h3 className="Candidates-s">
+                                    {data?.subscriptionData[0]
+                                        ?.download_cv_limit
+                                        ? 'Unlimited'
+                                        : 'N/A'}
+                                </h3>
+                            </div>
+                            <div className="col-12 ai-searches">
+                                <p className="Candidates-cv">
+                                    Multiple Emails downloads
+                                </p>
+                                {}
+                                <h3 className="Candidates-s">
+                                    {' '}
+                                    {data?.subscriptionData[0]
+                                        ?.download_email_limit
+                                        ? 'Unlimited'
+                                        : 'N/A'}
+                                </h3>
+                            </div>
+                            <div className="col-12 ai-searches">
+                                <p className="Candidates-cv">Listed Job</p>
+                                <h3 className="Candidates-s">
+                                    {data?.subscriptionData[0]?.job_posting +
+                                        ((data?.subscriptionData[1] &&
+                                            data?.subscriptionData[1]
+                                                ?.job_posting) ||
+                                            0)}
+                                </h3>
+                            </div>
+                            <div className="col-12 ">
+                                <p className="only">
+                                    {/* {/ Only for Premium/Enterprise - UPGRADE /} */}
+                                </p>
+                                <p className="ends-on">
+                                    {data?.subscriptionData[0]?.expiresAt}
+                                </p>
+                            </div>
                         </div>
-                        <div className="col-12">
-                            <p className="Candidates">CV Views</p>
-                            <h3 className="Candidates-s">
-                                {data?.subscriptionData[0].AdminSubscription[0]
-                                    ?.cv_view_limit +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            .AdminSubscription[0]
-                                            ?.cv_view_limit) ||
-                                        0)}{' '}
-                                {data?.subscriptionData[0].cv_view_limit ==
-                                'Unlimited'
-                                    ? null
-                                    : `/${
-                                          data?.subscriptionData[0]
-                                              .cv_view_limit +
-                                          ((data?.subscriptionData[1] &&
-                                              data?.subscriptionData[1]
-                                                  ?.cv_view_limit) ||
-                                              0)
-                                      }`}
-                            </h3>
+                    ) : (
+                        <div class="col-5  dashboard-card  first-row  ">
+                            <BuyPlanDesign />
                         </div>
-                        <div className="col-12">
-                            <p className="Candidates">Ai Searches</p>
-                            <h3 className="Candidates-s">0</h3>
-                        </div>
-                        <div className="col-12">
-                            <p className="Candidates-cv">
-                                Multiple CV downloads
-                            </p>
-                            <h3 className="Candidates-s">
-                                {data?.subscriptionData[0]?.download_cv_limit
-                                    ? 'Unlimited'
-                                    : 'N/A'}
-                            </h3>
-                        </div>
-                        <div className="col-12">
-                            <p className="Candidates-cv">
-                                Multiple Emails downloads
-                            </p>
-                            {}
-                            <h3 className="Candidates-s">
-                                {' '}
-                                {data?.subscriptionData[0]?.download_email_limit
-                                    ? 'Unlimited'
-                                    : 'N/A'}
-                            </h3>
-                        </div>
-                        <div className="col-12">
-                            <p className="Candidates-cv">Create Job</p>
-                            <h3 className="Candidates-s">
-                                {data?.subscriptionData[0]?.AdminSubscription[0]
-                                    ?.job_posting +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            ?.AdminSubscription[0]
-                                            ?.job_posting) ||
-                                        0)}{' '}
-                                /{' '}
-                                {data?.subscriptionData[0]?.job_posting +
-                                    ((data?.subscriptionData[1] &&
-                                        data?.subscriptionData[1]
-                                            ?.job_posting) ||
-                                        0)}
-                            </h3>
-                        </div>
-                        <div className="col-12 ">
-                            <p className="only">
-                                {/* Only for Premium/Enterprise - UPGRADE */}
-                            </p>
-                            <p className="ends-on">
-                                {data?.subscriptionData[0]?.expiresAt}
-                            </p>
-                        </div>
-                    </div>
+                    )}
+
                     {/*2 Row Card */}
 
-                    <div className="col-12 col-md-7">
+                    <div className="col-12 col-md-7 bg-white mx-2">
                         <div className="company-dashboard-card">
                             <div className="companydashboaord-child-card">
-                                <h3>Total Shortlisted Candidate</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.count[0]
-                                        ?.totalShortlistedCandidates || 0}
-                                </p>
+                                <div>
+                                    <img alt="" />
+                                </div>
+                                <div>
+                                    <h3>Total Shortlisted Candidate</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.count[0]
+                                            ?.totalShortlistedCandidates || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total Offer Letters</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.count[0]
-                                        ?.totalOfferLetters || 0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total Offer Letters</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.count[0]
+                                            ?.totalOfferLetters || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total CV View Count</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.cv_view_count?.totalViewCV ||
-                                        0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Candidates CV View Count</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.cv_view_count
+                                            ?.totalViewCV || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total CV Download Count</h3>
-                                <p>
-                                    {dasboardData?.cv_view_count
-                                        ?.totalDownloadCount || 0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total CV Download Count</h3>
+                                    <p>
+                                        {dasboardData?.cv_view_count
+                                            ?.totalDownloadCount || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total Promoted Jobs</h3>
-                                <p>
-                                    {' '}
-                                    {dasboardData?.data?.totalPromotedJobs || 0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total Promoted Jobs</h3>
+                                    <p>
+                                        {' '}
+                                        {dasboardData?.data
+                                            ?.totalPromotedJobs || 0}
+                                    </p>
+                                </div>
                             </div>
                             <div className="companydashboaord-child-card">
-                                <h3>Total Unpromoted Jobs</h3>
-                                <p>
-                                    {dasboardData?.data?.totalUnpromotedJobs ||
-                                        0}
-                                </p>
+                                <div></div>
+                                <div>
+                                    <h3>Total Unpromoted Jobs</h3>
+                                    <p>
+                                        {dasboardData?.data
+                                            ?.totalUnpromotedJobs || 0}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

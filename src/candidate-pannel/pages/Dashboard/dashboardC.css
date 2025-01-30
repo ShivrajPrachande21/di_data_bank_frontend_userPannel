@@ -9,7 +9,6 @@
     font-size: 1.2rem;
 }
 .candidate-dashboard-subscription-card {
-    height: 54vh;
     background: #ffffff;
     width: 100%;
     border-radius: 8px;
@@ -19,6 +18,8 @@
 .my-plan-dashboard {
     display: flex;
     align-items: center;
+    border-bottom: 2px solid rgb(25, 157, 245);
+    padding-bottom: 10px;
 }
 .my-plan-dashboard h2 {
     font-size: 1.6rem;
@@ -39,27 +40,33 @@
     );
 }
 .expiry-date-sub {
-    position: absolute;
-    bottom: 0px;
+    margin-top: 6px;
+
+    border-radius: 8px;
+    padding: 4px;
+}
+.expiry-date-sub h4 {
+    color: #0698e6;
 }
 .expiry-date-sub p {
-    color: #051f50;
-    font-size: 0.9rem;
+    margin-top: -4px;
+    color: #868686;
+    font-size: 0.85rem;
 }
 .ai-sub-cards-details {
     margin-top: 8px;
 }
 .left-card-ai {
-    margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-
+    /* background: #ffffff;
+    box-shadow: 0px 0px 8px 0px rgb(212, 212, 212); */
     width: 100%;
     border-radius: 8px;
 }
 .ai-cards-div {
-    width: 310px;
+    width: 100%;
     padding: 6px;
     background: #ffffff;
 
@@ -70,9 +77,27 @@
     font-size: 1.2rem;
     margin-top: -14px;
 }
+.ai-cards-div-no {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px;
+    background: #ffffff;
+
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px 0px rgb(212, 212, 212);
+}
+.ai-cards-div-no h4 {
+    font-size: 1.6rem;
+    margin-top: -14px;
+}
+.ai-cards-div-no p {
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
 .drop-down-list {
     display: flex;
-    justify-content: space-around;
 }
 
 .custom-select-sub {
@@ -81,13 +106,17 @@
 
     height: 30px;
 }
-
+.custom-select-sub-date {
+    width: 50%;
+    padding: 6px;
+}
 .custom-select-sub-date input[type='date'] {
     background: #0698e6;
     font-size: 0.8rem;
     border: none;
-    padding: 4px 4px;
+    padding: 6px 6px;
     border-radius: 4px;
+    width: 100%;
 }
 .custom-select-sub-date p {
     font-size: 0.8rem;
@@ -101,4 +130,63 @@
 }
 .selecte:hover {
     border: 1.2px solid rgb(38, 161, 255);
+}
+.get-featured {
+    margin-top: 14px;
+    box-shadow: 0px 0px 8px 0px rgba(212, 212, 212, 0.784);
+    border-radius: 8px;
+    padding: 10px;
+}
+.get-featured p {
+    color: #0698e6;
+}
+.get-featured h4 {
+    color: #535a68;
+
+    margin-top: -6px;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+.ai-search-css {
+    margin-top: 14px;
+
+    border-radius: 8px;
+    padding: 4px;
+}
+.ai-search-css h4 {
+    color: #0698e6;
+}
+.ai-search-css p {
+    color: #868686;
+
+    margin-top: -4px;
+    font-size: 0.85rem;
+}
+.ai-resume-create {
+    margin-top: 10px;
+    box-shadow: 0px 0px 8px 0px rgba(212, 212, 212, 0.794);
+    border-radius: 8px;
+    padding: 10px;
+}
+.ai-resume-create p {
+    color: #0698e6;
+}
+.ai-resume-create h4 {
+    color: #5b6068;
+    margin-top: -6px;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+.ai-job-recommandation {
+    border-radius: 8px;
+
+    padding: 4px;
+}
+.ai-job-recommandation h4 {
+    color: #0698e6;
+}
+.ai-job-recommandation p {
+    color: #868686;
+    font-size: 0.85rem;
+    margin-top: -4px;
 }

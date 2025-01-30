@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import blackCross from '../../../assets/images/blackCross.png';
 import Cross from '../../../assets/images/Cross.png';
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://localhost:4000');
+const socket = io('https://boardsearch.ai');
+import NotificationList from './Notification';
+
 const CompanyNotification = ({ handleClose }) => {
     const { handleCloseHire, showHire, SetShowHire, show, setShow } =
         useContext(HireCandidateContext);
@@ -16,7 +20,7 @@ const CompanyNotification = ({ handleClose }) => {
     const [ShortlistNot, SetShortlistNot] = useState([]);
     const [candidateToken, setCandidateToken] = useState('');
     const [changeButton, setChangeButton] = useState(null);
-
+    const navigate=useNavigate();
     useEffect(() => {
         const render = localStorage.getItem('render');
         if (render == 'company') {
@@ -176,7 +180,18 @@ const CompanyNotification = ({ handleClose }) => {
         for (const item of newCompanyNot || []) {
             handleCloseNewCompany(item?._id);
         }
+
+        for(const item of notifications){
+            handle_notification(item?._id);
+        }
     };
+
+    const handleCloseShortlistAndView=async(jobId)=>{
+        // socket.emit('userviewshortlist', candidateToken, jobId);
+        // socket.on('candidateview', data => {});
+        setShow(false);
+        localStorage.setItem('job_id',jobId);
+    }
 
     useEffect(() => {
         const render = localStorage.getItem('render');
@@ -193,6 +208,14 @@ const CompanyNotification = ({ handleClose }) => {
         }
     }, []);
 
+       const [notificationss, setNotificationss] = useState([]);
+   
+       const handleMouseEnter = () => {
+           const newNotifications = Array(profileView.length).fill(
+           'Congratulations! Your profile has been shortlisted!'
+           );
+           setNotificationss(newNotifications);
+       };
     return (
         <>
             <div
@@ -202,6 +225,7 @@ const CompanyNotification = ({ handleClose }) => {
                     overflowY: 'auto'
                 }}
             >
+<<<<<<< HEAD
                 {notifications?.map((item, index) => (
                     <p
                         key={index}
@@ -246,6 +270,10 @@ const CompanyNotification = ({ handleClose }) => {
                     </>
                 ))}
                 {ShortlistNot.map((item, index) => (
+=======
+
+                {/* {ShortlistNot.map((item, index) => (
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
                     <>
                         <p
                             key={index}
@@ -259,9 +287,9 @@ const CompanyNotification = ({ handleClose }) => {
                             }}
                         >
                             Congratulations! Your profile has been shortlisted!
-                            {/* <Link
-                                to="/candidate-dashboard/applied-job/applied-jobs"
-                                onClick={() => handleCloseShortlist(item?._id)}
+                            <Link
+                             to={`/candidate-dashboard/viewAppliedJobDetails/${item?._id}`}
+                                onClick={() => handleCloseShortlistAndView(item?._id)}
                                 style={{
                                     color: '#3B96E1',
                                     fontSize: '0.8rem',
@@ -270,11 +298,115 @@ const CompanyNotification = ({ handleClose }) => {
                                 }}
                             >
                                 View
-                            </Link> */}
+                            </Link>
                         </p>
                     </>
-                ))}
+                ))} */}
 
+
+{ShortlistNot.length > 0 &&notificationss.length==0&& (
+                <div
+                    style={{
+                        background: 'linear-gradient(90deg, #B4DDFF, #80C2FF)',
+                        padding: '12px 20px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        borderRadius: '12px',
+                        boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.15)',
+                        marginBottom: '15px',
+                        transition: 'all 0.3s ease-in-out',
+                        cursor: 'pointer',
+                    }}
+                   // onMouseEnter={handleMouseEnter}
+                    onClick={handleMouseEnter}
+                >
+                    <p
+                        style={{
+                            margin: 0,
+                            color: '#003366',
+                            fontSize: '0.8rem',
+                            fontWeight: 'normal',
+                        }}
+                    >
+                      Congratulations! Your profile has been shortlisted!
+                    </p>
+                  
+                         <span
+                         style={{
+                             background: '#0056D2',
+                             color: '#FFFFFF',
+                             padding: '1px 7px',
+                             borderRadius: '25px',
+                             fontSize: '0.85rem',
+                             fontWeight: 'bold',
+                             textAlign: 'center',
+                             boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.2)',
+                         }}
+                     >
+                         {ShortlistNot.length}
+                     </span>
+                
+                   
+                </div>
+            )}
+           {notificationss.map((notification, index) => (
+  <div
+    key={index}
+    style={{
+        background: 'linear-gradient(90deg, #B4DDFF, #80C2FF)',
+      padding: '12px 20px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderRadius: '12px',
+      boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.15)',
+      marginBottom: '10px',
+      animation: `slideIn 0.5s ease-in-out ${index * 0.2}s both`, // Add animation
+    }}
+  >
+    <p
+      style={{
+        margin: 0,
+         color: '#003366',
+        fontSize: '0.8rem',
+        fontWeight: 'normal',
+      }}
+    >
+      {notificationss[index]}
+       <Link
+                                   to={`/candidate-dashboard/viewAppliedJobDetails/${ShortlistNot[index]?._id}`}
+                                onClick={() => handleCloseShortlistAndView(ShortlistNot[index]?._id)}
+                                      style={{
+                                          color: '#3B96E1',
+                                          fontSize: '0.8rem',
+                                          marginLeft: '10px',
+                                          cursor: 'pointer'
+                                      }}
+                                  >
+                                      View
+                                  </Link>
+      
+    </p>
+  </div>
+))}
+
+
+
+{changeButton?(
+                     <NotificationList profileView={notifications} message={` Your support request has been solved.`} Path={'/main/support'} Btn={true}/>
+                ):(
+                    <NotificationList profileView={notifications} message={` Your support request has been solved.`} Path={'/candidate-dashboard/support-candidate'} Btn={true}/>
+                )}
+
+                
+<NotificationList profileView={NewCandidate} message={`  New Candidate Registered.`}/>
+
+<NotificationList profileView={profileView} message={` Good news! A company just viewed your CV.`}/>
+
+<NotificationList profileView={newCompanyNot} message={` A new company has joined our platform!`}/>
+
+<<<<<<< HEAD
                 {profileView.map((item, index) => (
                     <>
                         <p
@@ -336,6 +468,9 @@ const CompanyNotification = ({ handleClose }) => {
                         </p>
                     </>
                 ))}
+=======
+
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
             </div>
             {changeButton ? (
                 <button
@@ -350,7 +485,7 @@ const CompanyNotification = ({ handleClose }) => {
                     }}
                     onClick={handleClearALL}
                 >
-                    CLear ALL
+                    CLear All
                 </button>
             ) : (
                 <button
@@ -365,8 +500,7 @@ const CompanyNotification = ({ handleClose }) => {
                     }}
                     onClick={handleClearALLCandidate}
                 >
-                    Clear ALL Notification{' '}
-                    <img src={Cross} alt="" width="20px" />
+                    Clear All{' '}
                 </button>
             )}
         </>

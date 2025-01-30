@@ -49,7 +49,7 @@ const AddNewUser = () => {
                         onClick={() => setShowModule(prev => !prev)}
                         style={{ borderRadius: '14px' }}
                     >
-                        Add New User
+                        Add New HR
                     </Button>
                     <input
                         type="text"
@@ -93,7 +93,7 @@ const AddNewUser = () => {
                         ) : filterData && filterData?.length !== 0 ? (
                             filterData?.map((item, index) => (
                                 <>
-                                    <tbody>
+                                    <tbody style={{ fontSize: '0.8rem' }}>
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{item?.email}</td>

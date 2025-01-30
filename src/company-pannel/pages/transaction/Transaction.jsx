@@ -3,6 +3,7 @@ import { Col, Pagination, Row, Table } from 'react-bootstrap';
 import arrowdown from '../../../assets/images/arrowdown.png';
 import TrasactionsData from '../../../hooks/company_dashboard/TrasactionsData';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const Transaction = () => {
     const { transactionData } = TrasactionsData(); // Fetch the data
@@ -57,6 +58,14 @@ const Transaction = () => {
     }
     return (
         <>
+<<<<<<< HEAD
+=======
+          <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Transaction</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
             <div className="transaction">
                 <Row
                     style={{
@@ -69,7 +78,11 @@ const Transaction = () => {
                     <Col xs={12} style={{ marginTop: '6px' }}>
                         <Table bordered className="custom-table" responsive>
                             <thead>
+<<<<<<< HEAD
                                 <tr style={{ border: 'none' }}>
+=======
+                                <tr>
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
                                     <th
                                         style={{
                                             fontSize: '0.8rem',
@@ -78,7 +91,7 @@ const Transaction = () => {
                                         className="p-3"
                                         scope="col"
                                     >
-                                        Sr no
+                                        Sr.no
                                     </th>
                                     <th
                                         className="p-3"
@@ -140,12 +153,22 @@ const Transaction = () => {
                                                 1}
                                         </td>
                                         <td>{item?.type}</td>
+<<<<<<< HEAD
+                                        <td>
+                                            {toCamelCase_Name(item?.Plane_name)}
+                                        </td>
+=======
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
                                         <td>
                                             {toCamelCase_Name(item?.Plane_name)}
                                         </td>
                                         <td>
-                                            {formatDate(item?.purchesed_data)} -
-                                            {formatDate(item?.Expire_date)}
+                                            {item?.purchesed_data
+                                                ? `${formatDate(
+                                                      item?.purchesed_data
+                                                  )} -
+                                          ${formatDate(item?.Expire_date)}`
+                                                : 'N/A'}
                                         </td>
                                         <td>
                                             <span
@@ -162,7 +185,11 @@ const Transaction = () => {
                                         <td>{item?.payment_method}</td>
                                         <td>{item?.transaction_Id}</td>
                                         <td>
-                                            {formatDate(item?.purchesed_data)}
+                                            {item?.purchesed_data
+                                                ? formatDate(
+                                                      item?.purchesed_data
+                                                  )
+                                                : 'N/A'}
                                         </td>
                                     </tr>
                                 ))}

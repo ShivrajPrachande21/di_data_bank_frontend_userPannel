@@ -4,7 +4,8 @@ import BaseUrl from '../services/BaseUrl';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import io from 'socket.io-client';
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
+const socket = io('https://boardsearch.ai');
 
 // Create the context
 export const HireCandidateContext = createContext();
@@ -16,6 +17,13 @@ export const HireCandidateProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [SearchLoading, setSearchLoading] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+        const [AiData, setAiData] = useState([]);
+    const [seachBarData, setseachBarData] = useState({
+        search: '',
+        experience: '',
+        location: ''
+    });
 
     const [email_loading, setEmail_loading] = useState(null);
     const [resume_loading, setResume_loading] = useState(null);
@@ -44,27 +52,6 @@ export const HireCandidateProvider = ({ children }) => {
 
     // subsciption data
     const [Subscription_Data, setSubscription_Data] = useState({});
-    // Function to fetch data
-    const fetchCandidates = async () => {
-        setLoading(true);
-        const token = localStorage.getItem('companyToken');
-        const decodedToken = jwtDecode(token);
-        const companyId = decodedToken?._id; // Assuming the token contains an 'id' for the company
-
-        if (!companyId) {
-            throw new Error('Invalid token');
-        }
-        try {
-            const response = await axios.get(
-                `${BaseUrl}company/get_appliedcandidate/${companyId}`
-            ); // Your API endpoint here
-            setappliedcandidate(response?.data);
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-            setLoading(false);
-        }
-    };
 
     const get_subscription_details = async () => {
         const token = localStorage.getItem('companyToken');
@@ -179,7 +166,6 @@ export const HireCandidateProvider = ({ children }) => {
     };
 
     const Search_bye_keyWord = async seachBarData => {
-        console.log("appus hired candidate ",seachBarData)
         setSearchLoading(true);
 
         const token = localStorage.getItem('companyToken');
@@ -199,6 +185,11 @@ export const HireCandidateProvider = ({ children }) => {
                 get_subscription_details();
                 setSearchLoading(false);
                 // toast.success('jhgaj');
+                setseachBarData({
+                    search: '',
+                    experience: '',
+                    location: ''
+                });
             }
         } catch (error) {
             toast.error(error?.response?.data?.error);
@@ -220,7 +211,6 @@ export const HireCandidateProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        fetchCandidates();
         get_subscription_details();
     }, []);
 
@@ -229,15 +219,21 @@ export const HireCandidateProvider = ({ children }) => {
             value={{
                 resume_loading,
                 appliedcandidate,
+                setappliedcandidate,
                 loading,
+                setLoading,
                 candidate_detials,
+                currentPage,
+                setCurrentPage,
                 error,
-                fetchCandidates,
+                setError,
                 Subscription_Data,
                 downloadSelectedEmails,
                 handleDownload_Resume,
                 get_Candidate_detials,
                 Search_bye_keyWord,
+                seachBarData,
+                setseachBarData,
                 SearchLoading,
                 handleCloseHire,
                 showHire,
@@ -251,7 +247,8 @@ export const HireCandidateProvider = ({ children }) => {
                 SetIdentity,
                 SetProfile,
                 CompanyProfile,
-                get_subscription_details
+                get_subscription_details,
+                AiData, setAiData
             }}
         >
             {children}

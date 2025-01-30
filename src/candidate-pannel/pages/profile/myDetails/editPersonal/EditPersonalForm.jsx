@@ -606,7 +606,6 @@ function EditPersonalForm() {
                             style={{ fontSize: '0.8rem', fontWeight: '500' }}
                         >
                             Spouse Profession
-                            <span className="text-danger">*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
@@ -632,6 +631,10 @@ function EditPersonalForm() {
 
                         <div className="d-flex ">
                             <Form.Check
+                                style={{
+                                    fontSize: '0.8rem',
+                                    fontWeight: '500'
+                                }}
                                 type="radio"
                                 id="email1"
                                 name="disability"
@@ -643,6 +646,10 @@ function EditPersonalForm() {
                             />
 
                             <Form.Check
+                                style={{
+                                    fontSize: '0.8rem',
+                                    fontWeight: '500'
+                                }}
                                 type="radio"
                                 id="email2"
                                 name="disability"

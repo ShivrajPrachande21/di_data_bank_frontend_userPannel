@@ -32,16 +32,12 @@ const Home = () => {
                     </div>
                     <div className="home-counts">
                         <div className="counts-home-card">
-                            <h2>10K+</h2>
+                            <h2>4K+</h2>
                             <p>Candidates</p>
                         </div>
                         <div className="counts-home-card">
-                            <h2>250+</h2>
+                            <h2>25+</h2>
                             <p>Companies</p>
-                        </div>
-                        <div className="counts-home-card">
-                            <h2>3.1K</h2>
-                            <p>Candidates</p>
                         </div>
                     </div>
                 </div>

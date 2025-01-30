@@ -16,7 +16,7 @@
     color: white;
 }
 .home-span {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: white;
     font-weight: 300;
     width: 80%;
@@ -29,7 +29,7 @@
 }
 .home-buttons button {
     font-size: 0.9rem;
-    padding: 4px 30px;
+    padding: 10px 30px;
     background: white;
     color: #3b96e1;
 }
@@ -37,7 +37,7 @@
     margin-top: 60px;
     width: 80%;
     display: flex;
-    justify-content: space-between;
+    gap: 90px;
 }
 .counts-home-card {
     color: white;

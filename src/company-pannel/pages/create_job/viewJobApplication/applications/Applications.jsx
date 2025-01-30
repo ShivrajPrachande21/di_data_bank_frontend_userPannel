@@ -4,6 +4,8 @@ import './application.css';
 import View from '../../../../../assets/images/View.png';
 import { CreateJobContext } from '../../../../../context/CreateJobContext';
 import { useLocation } from 'react-router-dom';
+import { useSupport } from '../../../../../context/SupportContext';
+import DisplayImage from '../../../../../components/DisplayImage/DisplayImage';
 
 const Applications = () => {
     const {
@@ -12,6 +14,17 @@ const Applications = () => {
         shortlis_candidate,
         fetch_Job_applicant
     } = useContext(CreateJobContext);
+    const {
+        smShowGloble,
+        setSmShowGloble,
+        imagesGloble,
+        setImageGloble,
+        handleGlobleModal,
+        pdfGloble,
+        setPdfGloble,
+        getFileTypeFromHeaders
+    } = useSupport();
+
     const [modalShow, setModalShow] = useState(false);
     const [currentResume, setCurrentResume] = useState('');
     const [user_id, setUser_id] = useState('');
@@ -64,7 +77,18 @@ const Applications = () => {
         await shortlis_candidate(user_id);
         setModalVisible(false); // Close the modal after confirming
     };
+    async function getImage(image) {
+        const fileType = await getFileTypeFromHeaders(image);
+        if (fileType === 'image') {
+            setImageGloble(image);
+        } else if (fileType === 'pdf') {
+            setPdfGloble(image);
+        } else {
+            console.log('Unsupported file type.');
+        }
 
+        setSmShowGloble(true);
+    }
     useEffect(() => {
         fetch_Job_applicant();
     }, [location]);
@@ -166,7 +190,7 @@ const Applications = () => {
                                             alt=""
                                             height="20px"
                                             onClick={() =>
-                                                handleShow(item?.resumeUrl)
+                                                getImage(item?.resumeUrl)
                                             } // Pass the correct resume link
                                         />
                                     </td>
@@ -200,6 +224,7 @@ const Applications = () => {
                     </tbody>
                 </Table>
 
+                {smShowGloble && <DisplayImage />}
                 <Modal
                     show={modalShow}
                     onHide={handleClose}

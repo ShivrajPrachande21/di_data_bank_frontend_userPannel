@@ -18,6 +18,7 @@ const JobOffered = () => {
     const [date,SetDate]=useState(null)
     const fileref = useRef();
     const [file, setFilename] = useState(null);
+    const [error, setError] = useState('');
     const handle_submit = e => {
         e.preventDefault();
         alert('jhajag');
@@ -28,6 +29,17 @@ const JobOffered = () => {
     const handle_file_change = e => {
         const fileData = e.target.files[0];
         setFilename(fileData);
+
+        if (fileData) {
+            const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+            if (allowedTypes.includes(fileData.type)) {
+                setFilename(fileData);
+                setError('');
+            } else {
+                setError('Only PDF or image files (JPEG, PNG) are allowed.');
+                setFilename(null);
+            }
+        }
     };
 
     const formatDate = dateString => {
@@ -150,9 +162,7 @@ const isoDate = dateValue.toISOString();
                 </div>
             </Modal>
             <div className="job-offered mt-2">
-                <p className="hiredon">
-                    Hired on {formatDate(job_offered?.createdDate)}
-                </p>
+               
                 <div className="header-view" style={{ marginTop: '-10px' }}>
                     <Row>
                         <div>
@@ -279,7 +289,7 @@ const isoDate = dateValue.toISOString();
                                     </td>
                                     <td>
                                         {' '}
-                                        <span
+                                        <span style={{cursor:"pointer"}}
                                             className="hired-table-span"
                                             onClick={() =>
                                                 hanlde_resume_view(
@@ -297,11 +307,12 @@ const isoDate = dateValue.toISOString();
                 </div>
                 <Row>
                     <div className="job-offered-file mt-2">
+                        <div>
                         <label
                             htmlFor="btnupload"
                             style={{ fontSize: '0.7rem', fontWeight: '500' }}
                         >
-                            Upload Offere letter
+                            Upload Offer letter
                         </label>
                         <br />
                         <button
@@ -313,69 +324,51 @@ const isoDate = dateValue.toISOString();
                                 {file ? file?.name : 'browser from file'}
                             </span>
                         </button>
+                        </div>
+                        
                         <input
                             ref={fileref}
                             type="file"
                             style={{ display: 'none' }}
                             onChange={handle_file_change}
                         />{' '}
-                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <div>
                         <Form.Group controlId="Start_date" className="mt-2">
-                        <Form.Label
-                            style={{ fontSize: '0.8rem', fontWeight: '500' }}
-                        >
-                        </Form.Label>
-                        <Row style={{ marginLeft: '-2px' }}>
-                            <Col lg={8} className="custom-option-exps">
-                            <Form.Group controlId="formBasicDate" style={{ backgroundColor: "white", padding: "3px", borderRadius: "4px", display: "flex", alignItems: "center" }}>
-  <input
-    type="date"
-    name="start_date"
-    value={date}
-    onChange={(e) => SetDate(e.target.value)}
-    style={{
-      backgroundColor: "white",
-      border: "1px solid #ccc",
-      borderRadius: "4px",
-      padding: "5px",
-      flex: "1",
-      outline: "none",
-      color:'black'
-    }}
-  />
-  <img
-    src={Calendar}
-    alt=""
-    width="30px"
-    //onClick={handleCalendarClick}
-    className="calendar"
-    style={{
-      marginLeft: "5px",
-      cursor: "pointer",
-      backgroundColor: "white",
-      padding: "5px",
-      borderRadius: "50%",
-    }}
-  />
-</Form.Group>
+                       
 
-                            </Col>
-                        </Row>
-                    </Form.Group>  
+                           <div className="custom-select-sub-date mx-3 " style={{marginTop:'20px'}} >
+                                <p  style={{ fontSize: '0.7rem', fontWeight: '500' }}>Offer Validity</p>
+
+                                <input
+                                style={{cursor:'pointer'}}
+                                    type="date"
+                                    onChange={(e) => SetDate(e.target.value)}
+                                />
+                            </div>
+  
+  
+
+
+
+                             </Form.Group>  
  
-</div> 
+                      </div> 
 
 
                         <br />
-                        <button
+                       
+                    </div>
+                    
+
+                </Row>
+                {error && <p style={{ color: 'red', fontSize: '0.7rem'  }}>{error}</p>}
+                <button
                             className="offered-send mt-2"
                             disabled={!file}
                             onClick={handle_send_offerLetter}
                         >
                             <span>send Offer</span>
                         </button>
-                    </div>
-                </Row>
             </div>
         </>
     );

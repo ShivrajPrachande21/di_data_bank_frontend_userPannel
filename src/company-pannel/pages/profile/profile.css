@@ -255,18 +255,18 @@ details {
 
 /* Custom styles for the modal */
 .custom-modal .modal-dialog {
-    max-width: 80%; /* Adjust the width as needed */
+    max-width: 80%;
 }
 
 .custom-modal .modal-content {
-    height: 92vh; /* Adjust the height as needed */
-    border-radius: 8px; /* Optional: Add border radius */
+    height: 92vh;
+    border-radius: 8px;
 }
 
 .custom-modal .modal-header,
 .custom-modal .modal-body,
 .custom-modal .modal-footer {
-    padding: 20px; /* Optional: Adjust padding */
+    padding: 20px;
 }
 .rejection {
     margin: 0px auto;
@@ -287,8 +287,7 @@ details {
     cursor: pointer;
 }
 .pro {
-    margin-top: -10px;
-    margin-left: 14px;
+    margin-left: 20px;
 }
 
 .divice-loged-in {
@@ -298,18 +297,18 @@ details {
 }
 /* For WebKit browsers (Chrome, Safari) */
 .align::-webkit-scrollbar {
-    height: 6px; /* Horizontal scrollbar height */
+    height: 6px;
 }
 
 .align::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.4); /* Scrollbar color */
-    border-radius: 10px; /* Rounded edges */
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
 }
 
 /* For Firefox */
 .align {
-    scrollbar-width: thin; /* Makes scrollbar thinner */
-    scrollbar-color: rgba(0, 0, 0, 0.4) transparent; /* Scrollbar color */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
 }
 
 @media (max-width: 768px) {

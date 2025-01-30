@@ -3,6 +3,7 @@ import { Col, Pagination, Row, Table } from 'react-bootstrap';
 import arrowdown from '../../../assets/images/arrowdown.png';
 import { TransactionContext } from '../../../context/candidateContext/TransactionContext';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const CandidateTransaction = () => {
     const { transactionData, fetch_transaction } =
@@ -66,6 +67,17 @@ const CandidateTransaction = () => {
     }, []);
     return (
         <>
+            <Helmet>
+                <title>Transaction</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             <div className="p-2 transaction">
                 <Row
                     style={{

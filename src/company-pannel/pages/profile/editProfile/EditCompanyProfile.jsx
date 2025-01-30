@@ -4,6 +4,7 @@ import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Cross from '../../../../assets/images/Cross.png';
 import EditprofileData from '../../../../hooks/company_dashboard/EditprofileData';
 import clarity_note_edit_line from '../../../../assets/images/clarity_note-edit-line.png';
+import Verified from '../../../../assets/images/Verified.png';
 const EditCompanyProfile = ({ setLgShow }) => {
     const [Gstimage, setGstImage] = useState(null);
     const [Panimage, setPAnImage] = useState(null);
@@ -96,6 +97,7 @@ const EditCompanyProfile = ({ setLgShow }) => {
     const handleSubmit = async e => {
         e.preventDefault();
         await submitForm(formFields, GST, PAN, profileImage);
+        await FormDataFunction();
     };
 
     const fromData = async () => {
@@ -407,6 +409,10 @@ const EditCompanyProfile = ({ setLgShow }) => {
                                     onChange={handleFieldChange}
                                     readOnly={formFields?.status == 'approve'}
                                 />
+                                {formFields?.status == 'approve'?
+                                 <img src={Verified} alt="" width="30px" />:null
+                                }
+                                
                                 {/* <button className="verify-btn">Verify</button> */}
                             </div>
                         </Col>
@@ -477,6 +483,9 @@ const EditCompanyProfile = ({ setLgShow }) => {
                                     readOnly={formFields?.status == 'approve'}
                                     onChange={handleFieldChange}
                                 />
+                                  {formFields?.status == 'approve'?
+                                 <img src={Verified} alt="" width="30px" />:null
+                                }
                             </div>
                         </Col>
                         <Col xs={2}>

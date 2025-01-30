@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Image } from 'react-bootstrap';
 import './testimonials.css';
 import Verified from '../../assets/images/Verified.png';
 import q2qwzuzm from '../../assets/images/q2qwzuzm.png';
+import { testimonialsData } from '../../constant/testimonials';
 function Testimonials() {
+    const [testimonials, setTestimonialData] = useState(testimonialsData);
     return (
         <>
             <div className="testimonials">
@@ -13,103 +15,50 @@ function Testimonials() {
                         <p>From Company & Candidates</p>
                     </div>
 
-                    <div className="testimonials-card-div">
-                        <div className="testimonials-cards">
-                            <div className="crads-profile">
-                                <p>
-                                    <Image
-                                        src={q2qwzuzm}
-                                        roundedCircle
-                                        alt="Rounded"
-                                        width="20%"
-                                    />
-                                </p>
-                            </div>
+                    <div
+                        className="testimonials-card-div align"
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            alignItems: 'start',
+                            flexWrap: 'nowrap',
+                            overflowX: 'auto',
+                            overflowY: 'hidden',
+                            width: '100%'
+                        }}
+                    >
+                        {testimonials &&
+                            testimonials.map((items, index) => (
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        padding: '30px '
+                                    }}
+                                >
+                                    <div className="testimonials-cards">
+                                        <div className="crads-profile">
+                                            <p>
+                                                <Image
+                                                    src={
+                                                        items.image
+                                                            ? items?.image
+                                                            : q2qwzuzm
+                                                    }
+                                                    roundedCircle
+                                                    alt="Rounded"
+                                                    width="20%"
+                                                />
+                                            </p>
+                                        </div>
 
-                            <div className="test-card-heading">
-                                <h6>Microdoft</h6>
-                                <img src={Verified} alt="" />
-                            </div>
-                            <p>
-                                We were highly impressed with the remarkable
-                                qualities that John Smith exhibited throughout
-                                the interview process. John's exceptional
-                                technical expertise, leadership skills, and
-                                innovative
-                            </p>
-                        </div>
-                        <div className="testimonials-cards">
-                            <div className="crads-profile">
-                                <p>
-                                    <Image
-                                        src={q2qwzuzm}
-                                        roundedCircle
-                                        alt="Rounded"
-                                        width="20%"
-                                    />
-                                </p>
-                            </div>
-
-                            <div className="test-card-heading">
-                                <h6>Microdoft</h6>
-                                <img src={Verified} alt="" />
-                            </div>
-                            <p>
-                                We were highly impressed with the remarkable
-                                qualities that John Smith exhibited throughout
-                                the interview process. John's exceptional
-                                technical expertise, leadership skills, and
-                                innovative
-                            </p>
-                        </div>
-                        <div className="testimonials-cards">
-                            <div className="crads-profile">
-                                <p>
-                                    <Image
-                                        src={q2qwzuzm}
-                                        roundedCircle
-                                        alt="Rounded"
-                                        width="20%"
-                                    />
-                                </p>
-                            </div>
-
-                            <div className="test-card-heading">
-                                <h6>Microdoft</h6>
-                                <img src={Verified} alt="" />
-                            </div>
-                            <p>
-                                We were highly impressed with the remarkable
-                                qualities that John Smith exhibited throughout
-                                the interview process. John's exceptional
-                                technical expertise, leadership skills, and
-                                innovative
-                            </p>
-                        </div>
-                        <div className="testimonials-cards">
-                            <div className="crads-profile">
-                                <p>
-                                    <Image
-                                        src={q2qwzuzm}
-                                        roundedCircle
-                                        alt="Rounded"
-                                        width="20%"
-                                    />
-                                </p>
-                            </div>
-
-                            <div className="test-card-heading">
-                                <h6>Microdoft</h6>
-                                <img src={Verified} alt="" />
-                            </div>
-                            <p>
-                                We were highly impressed with the remarkable
-                                qualities that John Smith exhibited throughout
-                                the interview process. John's exceptional
-                                technical expertise, leadership skills, and
-                                innovative
-                            </p>
-                        </div>
+                                        <div className="test-card-heading">
+                                            <h6>{items?.name}</h6>
+                                            <img src={Verified} alt="" />
+                                        </div>
+                                        <p>{items?.text}</p>
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>

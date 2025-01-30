@@ -1,6 +1,6 @@
 .applied-btns {
     background: rgb(255, 255, 255);
-    width: 240px;
+    width: 360px;
     display: flex;
     justify-content: space-between;
     padding: 6px;
@@ -9,10 +9,14 @@
 }
 .appliedJobs-card-div {
     border-radius: 8px;
-    margin-top: 10px;
+
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 10px; */
+    background-color: #f9f9f9;
 }
 /* Saved Job Css */
 .saved-jobs-card {
@@ -46,6 +50,9 @@
     margin-top: -4px;
     margin-left: 20px;
     display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-bottom: 10px;
 }
 .applied-skilss p {
     background: #f8f8f8;
@@ -62,6 +69,7 @@
     justify-content: space-between;
 }
 .view-top-p {
+    margin-top: 20px;
     margin-left: 20px;
     cursor: pointer;
     color: #051f50;

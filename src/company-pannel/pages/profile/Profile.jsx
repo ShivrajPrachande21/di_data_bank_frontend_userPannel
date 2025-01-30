@@ -17,6 +17,7 @@ import profileimg from '../../../assets/images/profileimg.png';
 import EditCompanyProfile from './editProfile/EditCompanyProfile';
 import EditprofileData from '../../../hooks/company_dashboard/EditprofileData';
 import ProfileComplete from '../../../components/dynamicProgress/ProfileComplete';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
     const { profileData, loading, error, fetchProfileData } = useProfileData();
@@ -67,15 +68,34 @@ const Profile = () => {
     useEffect(() => {
         rendering();
     }, []);
+
+    function toCamelCase_Name(input) {
+        if (typeof input == 'string') {
+            return input
+                ? input
+                      .toLowerCase()
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
+                : null;
+        } else {
+            return input;
+        }
+    }
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Profile</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
             <div className="ReportedJob">
                 {profileData?.updatedData?.status !== 'approve' &&
                 profileData?.updatedData?.status ? (
                     <div className="rejection">
                         <p className="status">
                             Verification Status :{' '}
-                            {profileData?.updatedData?.status}
+                            {toCamelCase_Name(profileData?.updatedData?.status)}
                         </p>
                         <p
                             style={{
@@ -420,7 +440,7 @@ const Profile = () => {
                 show={lgShow}
                 onHide={() => setLgShow(prev => !prev)}
                 aria-labelledby="example-modal-sizes-title-lg"
-                className="custom-modal" // Apply the custom class here
+                className="custom-modal"
             >
                 <EditCompanyProfile setLgShow={setLgShow} />
             </Modal>

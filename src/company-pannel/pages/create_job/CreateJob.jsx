@@ -6,6 +6,7 @@ import whitepluse from '../../../assets/images/whiteplus.png';
 import hamburger from '../../../assets/images/hamburger.png';
 import { CreateJobContext } from '../../../context/CreateJobContext';
 import CreateNewJob from './create_new_Job/CreateNewJob';
+import EditNewJob from './Edit_new_Job/editjob';
 import Verified from '../../../assets/images/Verified.png';
 import altprofile from '../../../assets/images/altprofile.jpg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -13,6 +14,8 @@ import axios from 'axios';
 import BaseUrl from '../../../services/BaseUrl';
 import Loader from '../loader/Loader';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
+import DisplayHiredCandidate from './DisplayHiredCandidate/DisplayHiredCandidate';
 let promoteJob = {};
 const CreateJob = () => {
     const {
@@ -24,7 +27,11 @@ const CreateJob = () => {
         lgShow,
         setLgShow,
         paymentLoading,
-        fetch_job_status
+        fetch_job_status,
+        EditShow,
+        SetEditShow,
+        EditId,
+        SetEditId
     } = useContext(CreateJobContext);
 
     const naviagte = useNavigate();
@@ -39,6 +46,11 @@ const CreateJob = () => {
     const [orderId, SetOrderId] = useState('');
     const [jobId, setJob_id] = useState('');
     const [PromoteLoading, SetPromoteLoading] = useState(null);
+
+    const [showTable, setShowTable] = useState(false);
+
+    const handleCloseTable = () => setShowTable(false);
+    const handleShowTable = () => setShowTable(true);
 
     const handleClose = () => {
         const jobPosting0 = job_status?.SubscriptionStatus[0]?.job_posting || 0;
@@ -211,12 +223,34 @@ const CreateJob = () => {
         });
     };
 
+    const hideEditButton = CreateDate => {
+        const createdDate = new Date(CreateDate);
+        const currentTime = new Date();
+        const timeDifference = currentTime - createdDate;
+        const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+        if (hoursDifference <= 24) {
+            return true;
+        }
+        return false;
+    };
+
     useEffect(() => {
         rendering();
     }, []);
 
+    function Edit_job_status(id) {
+        SetEditId(id);
+        SetEditShow(prev => !prev);
+    }
+
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>List Job</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
             {PromoteLoading ? (
                 <div className="loader-div">
                     <Loader />
@@ -244,15 +278,15 @@ const CreateJob = () => {
                     </Modal>
                 )}
 
-                <Row>
-                    <Col xs={windowWidth < 768 ? 12 : 3}>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                    <div>
                         <Button
                             className="create-job-btn"
                             onClick={handleClose}
                             size="sm"
                         >
                             <img src={whitepluse} alt="" width="20px" />
-                            Create a Job{' '}
+                            List a Job{' '}
                             <span>
                                 (
                                 {(job_status?.SubscriptionStatus[0]
@@ -268,14 +302,14 @@ const CreateJob = () => {
                                 remaining)
                             </span>
                         </Button>
-                    </Col>
-                    <Col xs={windowWidth < 768 ? 12 : 8} className="job-data">
+                    </div>
+                    <Col className="job-data">
                         <div className="job-created-data">
                             <p>
                                 {job_status?.dataWithJobCounts[0]?.jobCount ||
                                     0}
                             </p>
-                            <p className="total-activ"> Job Created</p>
+                            <p className="total-activ"> Job Listed </p>
                         </div>
                         <div className="job-created-data">
                             <p style={{ color: '#3B96E1' }}>
@@ -308,7 +342,8 @@ const CreateJob = () => {
                         </div>
                         <div
                             className="job-created-data"
-                            style={{ border: 'none' }}
+                            style={{ border: 'none', cursor: 'pointer' }}
+                            onClick={handleShowTable}
                         >
                             <p style={{ color: '#06C306' }}>
                                 {job_status?.dataWithJobCounts[0]
@@ -317,7 +352,7 @@ const CreateJob = () => {
                             <p className="total-activ">Candidates Hired</p>
                         </div>
                     </Col>
-                </Row>
+                </div>
                 {/* card Sections */}
                 <Row className="mt-4">
                     <div
@@ -374,7 +409,7 @@ const CreateJob = () => {
                                                     >
                                                         {!item?.status
                                                             ? 'restart'
-                                                            : 'stop Applications'}
+                                                            : 'Stop Applications'}
                                                     </p>
 
                                                     <p
@@ -386,6 +421,19 @@ const CreateJob = () => {
                                                     >
                                                         Delete job post
                                                     </p>
+                                                    {hideEditButton(
+                                                        item?.createdDate
+                                                    ) ? (
+                                                        <p
+                                                            onClick={() =>
+                                                                Edit_job_status(
+                                                                    item?._id
+                                                                )
+                                                            }
+                                                        >
+                                                            Edit job post
+                                                        </p>
+                                                    ) : null}
                                                 </div>
                                             ) : null}
                                         </div>
@@ -393,10 +441,9 @@ const CreateJob = () => {
                                             style={{
                                                 marginTop: '-18px',
                                                 color: item?.promote_job
-                                                    ? '#3B96E1'
+                                                    ? 'green'
                                                     : 'white',
                                                 fontSize: '0.8rem',
-
                                                 marginTop: '0px'
                                             }}
                                         >
@@ -443,8 +490,14 @@ const CreateJob = () => {
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {item?.experience}{' '}
-                                                            Years
+                                                            {item?.experience &&
+                                                            item?.experience
+                                                                .length > 13
+                                                                ? `${item?.experience.substring(
+                                                                      0,
+                                                                      13
+                                                                  )}...`
+                                                                : item?.experience}{' '}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -455,7 +508,7 @@ const CreateJob = () => {
                                                         }}
                                                     >
                                                         <span className="card-table-span">
-                                                            Loction:
+                                                            Location:
                                                         </span>{' '}
                                                     </td>
                                                     <td>
@@ -485,7 +538,7 @@ const CreateJob = () => {
                                                     <td>
                                                         {' '}
                                                         <span className="card-table-span">
-                                                            {item?.salary} LPA
+                                                            {item?.salary}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -583,7 +636,7 @@ const CreateJob = () => {
                             ))
                         ) : (
                             <div className="no-jobs-container">
-                                <span>You haven't created any jobs yet.</span>
+                                <span>You haven't listed any jobs yet</span>
                             </div>
                         )}
                     </div>
@@ -644,11 +697,18 @@ const CreateJob = () => {
                 )}
                 <Modal
                     show={lgShow}
-                    onHide={handleClose}
                     aria-labelledby="example-modal-sizes-title-lg"
                     className="custom-modal" // Apply the custom class here
                 >
                     <CreateNewJob />
+                </Modal>
+
+                <Modal
+                    show={EditShow}
+                    aria-labelledby="example-modal-sizes-title-lg"
+                    className="custom-modal" // Apply the custom class here
+                >
+                    <EditNewJob />
                 </Modal>
                 <Modal
                     show={modalShowhide}
@@ -675,6 +735,10 @@ const CreateJob = () => {
                     </div>
                 </Modal>
             </div>
+
+            <Modal show={showTable} centered className="customtable-css">
+                <DisplayHiredCandidate onHide={handleCloseTable} />
+            </Modal>
         </>
     );
 };

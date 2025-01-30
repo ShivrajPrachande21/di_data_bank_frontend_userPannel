@@ -261,7 +261,7 @@ const EditEducation = () => {
                                 required
                             />
                         </Col>
-                        <Col xs={4}>
+                        <Col xs={5}>
                             <button
                                 className="education-btn"
                                 type="button"

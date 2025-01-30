@@ -25,6 +25,7 @@ import profileimg from '../../../assets/images/profileimg.png';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import ProfileEdit from './myDetails/profileEdit/ProfileEdit';
 import CandidateProfileComplete from '../../../components/dynamicProgress/CandidateProfileComplete';
+import { Helmet } from 'react-helmet';
 
 const CandidateProfile = () => {
     const {
@@ -125,6 +126,17 @@ const CandidateProfile = () => {
     }, []);
     return (
         <>
+            <Helmet>
+                <title>Profile</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             <div className="ReportedJob candidate-profile">
                 {/* {profileData?.updatedData?.status !== 'approve' &&
                 profileData?.updatedData?.status ? (
@@ -194,7 +206,6 @@ const CandidateProfile = () => {
                                     <img
                                         src={EditProfile}
                                         alt=""
-                                        height="20px"
                                         onClick={showEditModle}
                                     />
                                 </OverlayTrigger>
@@ -207,8 +218,8 @@ const CandidateProfile = () => {
                             <div
                                 className="div-img"
                                 style={{
-                                    width: '40%',
-                                    background: '#AEAEAE',
+                                    width: '64px',
+
                                     overflow: 'hidden',
                                     borderRadius: '50px',
                                     marginTop: '-6px',
@@ -356,7 +367,7 @@ const CandidateProfile = () => {
 
             <Modal
                 show={modalShowEdit}
-                onHide={showEditModle}
+                //onHide={showEditModle}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
             >

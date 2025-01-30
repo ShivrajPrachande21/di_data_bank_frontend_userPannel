@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './subscription.css';
 import { Button, Row } from 'react-bootstrap';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const SubscriptionPlan = () => {
     const [activeButton, setActiveButton] = useState('subscription');
@@ -43,6 +44,11 @@ const SubscriptionPlan = () => {
     }, []);
     return (
         <div className="sub-scription">
+              <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Subscription Plan</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
             <Row>
                 <div className="top-btns">
                     <div className="btn-center">

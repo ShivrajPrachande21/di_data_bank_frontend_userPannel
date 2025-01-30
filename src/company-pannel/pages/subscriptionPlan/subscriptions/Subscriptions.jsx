@@ -122,6 +122,36 @@ const Subscriptions = () => {
             ) : (
                 ''
             )}
+
+{modalShow && (
+              <Modal
+              show={modalShow}
+              onHide={() => SetmodalShow(false)}
+              size="sm" // Keep small size
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              className="compact-modal" // Custom class for additional styling
+          >
+              <Modal.Header closeButton style={{ padding: '0.5rem', borderBottom: 'none' }}>
+                  <Modal.Title id="contained-modal-title-vcenter" className="text-center w-100">
+                      <h6 className="text-success mb-0">🎉 Payment Successful!</h6>
+                  </Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{ padding: '0.5rem 1rem' }}>
+                  <div className="text-center">
+                      <p className="mb-1" style={{ fontSize: '0.8rem', color: '#6c757d' }}>Order ID:{SubId}</p>
+                  </div>
+              </Modal.Body>
+              <Modal.Footer style={{ padding: '0.5rem', borderTop: 'none' }}>
+                  <Button 
+                    onClick={() => { SetmodalShow(false); SetSubId(''); }}
+                      style={{ width: '100%', padding: '0.4rem 0', background: '#3B96E1', border: 'none', fontSize: '0.85rem' }}
+                  >
+                      OK
+                  </Button>
+              </Modal.Footer>
+          </Modal>
+            )}
             <div className="plan">
                 <p> Plans for Hiring</p>
                 <hr />
@@ -215,31 +245,7 @@ const Subscriptions = () => {
                                                 Up to {item?.search_limit}{' '}
                                                 Search results
                                             </li>
-                                            {item?.candidate_match ? (
-                                                <li>
-                                                    {' '}
-                                                    <img
-                                                        src={
-                                                            subscriptionData
-                                                                ?.CurrentSubscription[0]
-                                                                ?.plane_name ==
-                                                                item?.plane_name ||
-                                                            subscriptionData
-                                                                ?.CurrentSubscription[1]
-                                                                ?.plane_name ==
-                                                                item?.plane_name
-                                                                ? bluetick
-                                                                : CardCheck
-                                                        }
-                                                        alt=""
-                                                        width="14px"
-                                                    />
-                                                    Candidate Matching
-                                                </li>
-                                            ) : (
-                                                ''
-                                            )}
-
+                                            
                                             <li>
                                                 {' '}
                                                 <img
@@ -358,7 +364,7 @@ const Subscriptions = () => {
                                             ) : (
                                                 ''
                                             )}
-                                            {item?.ai_question ? (
+                                            {/* {item?.ai_question ? (
                                                 <li>
                                                     <img
                                                         src={
@@ -381,7 +387,7 @@ const Subscriptions = () => {
                                                 </li>
                                             ) : (
                                                 ''
-                                            )}
+                                            )} */}
                                             {item?.support ? (
                                                 <li>
                                                     <img
@@ -400,7 +406,7 @@ const Subscriptions = () => {
                                                         alt=""
                                                         width="14px"
                                                     />
-                                                    Support
+                                                     Email support and chat support
                                                 </li>
                                             ) : (
                                                 ''
@@ -430,6 +436,32 @@ const Subscriptions = () => {
                                             ) : (
                                                 ``
                                             )}
+                                            {item?.Credibility_Search &&
+                                        item?.Credibility_Search !== 0 ? (
+                                            <li>
+                                                {' '}
+                                                <img
+                                                     src={
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[0]
+                                                            ?.plane_name ==
+                                                            item?.plane_name ||
+                                                        subscriptionData
+                                                            ?.CurrentSubscription[1]
+                                                            ?.plane_name ==
+                                                            item?.plane_name
+                                                            ? bluetick
+                                                            : CardCheck
+                                                    }
+                                                    alt=""
+                                                    width="14px"
+                                                />
+                                                {`${item?.Credibility_Search} Creadibility search`}
+                                            </li>
+                                        ) : (
+                                            ''
+                                        )}
+
                                         </ul>
 
                                         {subscriptionData
@@ -591,35 +623,8 @@ const Subscriptions = () => {
                 </div>
 
                 
-                {modalShow && (
-              <Modal
-              show={modalShow}
-              size="sm" // Keep small size
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              className="compact-modal" // Custom class for additional styling
-          >
-              <Modal.Header closeButton style={{ padding: '0.5rem', borderBottom: 'none' }}>
-                  <Modal.Title id="contained-modal-title-vcenter" className="text-center w-100">
-                      <h6 className="text-success mb-0">🎉 Payment Successful!</h6>
-                  </Modal.Title>
-              </Modal.Header>
-              <Modal.Body style={{ padding: '0.5rem 1rem' }}>
-                  <div className="text-center">
-                      <p className="mb-1" style={{ fontSize: '0.8rem', color: '#6c757d' }}>Order ID:{SubId}</p>
-                  </div>
-              </Modal.Body>
-              <Modal.Footer style={{ padding: '0.5rem', borderTop: 'none' }}>
-                  <Button 
-                    onClick={() => { SetmodalShow(false); SetSubId(''); }}
-                      style={{ width: '100%', padding: '0.4rem 0', background: '#3B96E1', border: 'none', fontSize: '0.85rem' }}
-                  >
-                      OK
-                  </Button>
-              </Modal.Footer>
-          </Modal>
-            )}
-            </div> */}
+               
+            </div>  */}
         </>
     );
 };

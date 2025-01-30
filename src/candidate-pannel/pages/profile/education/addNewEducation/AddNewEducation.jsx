@@ -176,14 +176,14 @@ function AddNewEducation() {
                     </Row>
                     <Form.Group controlId="mobile" className="mt-2">
                         <Form.Label className="edit-lable-edu">
-                            Garde<span style={{ color: 'red' }}> *</span>
+                            Grade<span style={{ color: 'red' }}> *</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
                             name="grade"
                             value={addNewData?.grade}
                             onChange={handleInputChange}
-                            placeholder="Enter Garde"
+                            placeholder="Enter Grade"
                             className="education-form"
                         />
                     </Form.Group>
@@ -196,7 +196,7 @@ function AddNewEducation() {
                             name="description"
                             value={addNewData?.description}
                             onChange={handleInputChange}
-                            placeholder="Eenter Description"
+                            placeholder="Enter Description"
                             className="education-form"
                         />
                     </Form.Group>

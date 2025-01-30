@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import './support.css';
-import { Button, Modal, Row, Table } from 'react-bootstrap';
+import {
+    Button,
+    Modal,
+    Row,
+    Table,
+    OverlayTrigger,
+    Tooltip
+} from 'react-bootstrap';
 import SearchIconS from '../../../assets/images/SearchIconS.png';
 import chatIcon from '../../../assets/images/chatIcon.png';
 import { useNavigate } from 'react-router-dom';
 import { useSupport } from '../../../context/SupportContext';
 import Addissue from './addIssue/Addissue';
+import SendMail from './Sendmail/SendMail';
+import { jwtDecode } from 'jwt-decode';
+import io from 'socket.io-client';
+import { Helmet } from 'react-helmet';
+//const socket=io('http://localhost:4000');
+//const socket = io('http://65.20.91.47:4000');
+const socket=io('https://boardsearch.ai')
+
 const Support = () => {
-    const { fetch_all_issue, data, modalShow, setModalShow } = useSupport();
+    const {
+        fetch_all_issue,
+        data,
+        modalShow,
+        setModalShow,
+        mailModelShow,
+        setMailModelShow,
+        setData
+    } = useSupport();
     const [SeacrhInput, SetSeacrhInput] = useState('');
-    console.log('dataatatt', data);
 
     const navigate = useNavigate();
     function navigateChate(id) {
@@ -22,9 +44,10 @@ const Support = () => {
     };
 
     const fiteredData = data?.filter(item => {
-        console.log('item?.Issue_type', item?.Issue_type);
-        return item?.Issue_type.toLowerCase().includes(
-            SeacrhInput.toLowerCase()
+        const issueType = item?.Issue_type;
+        return (
+            typeof issueType == 'string' &&
+            issueType.toLowerCase().includes(SeacrhInput.toLowerCase())
         );
     });
 
@@ -52,25 +75,66 @@ const Support = () => {
     }, []);
 
     function RemovePath(imageUrl) {
-        if(imageUrl){
-            return imageUrl.split("\\").pop();
+        if (imageUrl) {
+            return imageUrl.split('\\').pop();
         }
-        return "N/A"
+        return 'N/A';
     }
 
     function toCamelCase_Name(input) {
-        if(typeof input=='string'){
-        return input?input
-          .toLowerCase()
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' '):null
-        }else{
-          return input;
+        if (typeof input == 'string') {
+            return input
+                ? input
+                      .toLowerCase()
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
+                : null;
+        } else {
+            return input;
         }
-      }
+    }
+
+    const SendMails = props => (
+        <Tooltip id="save-tooltip" {...props}>
+            Click this button to send an email directly to the support team.
+        </Tooltip>
+    );
+
+    const AddIssue = props => (
+        <Tooltip id="save-tooltip" {...props}>
+            Click this button to report your issue directly to the support team.
+        </Tooltip>
+    );
+    useEffect(() => {
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const company_id = decodedToken?._id;
+        socket.connect();
+        socket.emit('ViewNewMessage', company_id);
+        socket.emit('messageNotification', company_id);
+        socket.on('disconnect', () => {
+            console.log('User disconnected');
+        });
+
+        return () => {
+            socket.off('notification');
+            socket.disconnect();
+        };
+    }, []);
+    useEffect(() => {
+        fetch_all_issue();
+        return () => {
+            setData([]);
+        };
+    }, []);
     return (
         <>
+          <Helmet>
+                            <meta charSet="utf-8" />
+                            <title>Support</title>
+                            <link rel="canonical" href="http://mysite.com/example" />
+                        </Helmet>
             <Modal
                 show={modalShow}
                 size="lg"
@@ -81,16 +145,29 @@ const Support = () => {
             >
                 <Addissue />
             </Modal>
+            <Modal
+                show={mailModelShow}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                onHide={() => setMailModelShow(false)}
+                dialogClassName="add-modal-width"
+            >
+                <SendMail />
+            </Modal>
             <div className="support">
                 <Row>
                     <div className="Search-support">
-                        <Button
-                            size="sm"
-                            className="add-issue-btn"
-                            onClick={() => setModalShow(prev => !prev)}
-                        >
-                            Add Issue +
-                        </Button>
+                        <OverlayTrigger placement="bottom" overlay={AddIssue}>
+                            <Button
+                                size="sm"
+                                className="add-issue-btn"
+                                onClick={() => setModalShow(prev => !prev)}
+                            >
+                                Add Issue +
+                            </Button>
+                        </OverlayTrigger>
+
                         <div className="search-bar-suport">
                             <img src={SearchIconS} alt="" width="20px" />
                             <input
@@ -101,6 +178,7 @@ const Support = () => {
                         </div>
                     </div>
                 </Row>
+
                 <Row className="mt-2">
                     <Table bordered responsive className="custom-table">
                         <thead>
@@ -115,6 +193,17 @@ const Support = () => {
                                     scope="col"
                                 >
                                     Sr. No
+                                </th>
+                                <th
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        borderLeft: 'none',
+                                        color: '#051F50'
+                                    }}
+                                    className="p-3"
+                                    scope="col"
+                                >
+                                    Tickets
                                 </th>
                                 <th
                                     className="p-3"
@@ -183,6 +272,7 @@ const Support = () => {
                                 <>
                                     <tr>
                                         <td>{index + 1}</td>
+                                        <td>{item?.Ticket}</td>
                                         <td>{item?.Issue_type}</td>
                                         <td>{item?.description}</td>
                                         <td>
@@ -201,16 +291,22 @@ const Support = () => {
                                             <p
                                                 style={{
                                                     color:
-                                                        index?.status ===
-                                                        'Pending'
+                                                        item?.status == 'solved'
                                                             ? 'green'
-                                                            : index?.status ===
-                                                              'rejected'
+                                                            : item?.status ===
+                                                              'reject'
                                                             ? 'red'
-                                                            : ''
+                                                            : '#051F50'
                                                 }}
                                             >
-                                                {toCamelCase_Name(item?.status)}
+                                                {toCamelCase_Name(
+                                                    item?.status === 'solved'
+                                                        ? 'Solved'
+                                                        : item?.status ===
+                                                          'reject'
+                                                        ? 'Rejected'
+                                                        : 'Pending'
+                                                )}
                                             </p>
                                         </td>
                                     </tr>

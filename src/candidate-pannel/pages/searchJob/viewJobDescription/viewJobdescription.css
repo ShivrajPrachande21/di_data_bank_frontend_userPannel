@@ -7,6 +7,7 @@
 }
 .veiw-skills {
     display: flex;
+    flex-wrap: wrap;
 }
 .veiw-skills p {
     background: #f8f8f8;

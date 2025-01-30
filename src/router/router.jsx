@@ -59,6 +59,8 @@ import Resume from '../candidate-pannel/pages/profile/resume/Resume';
 import AccessManagement from '../company-pannel/pages/accessManagement/AccessManagement';
 import AddNewRole from '../company-pannel/pages/accessManagement/addNewRole/AddNewRole';
 import AddNewUser from '../company-pannel/pages/accessManagement/addNewUser/AddNewUser';
+import SupportCandidateNav from '../candidate-pannel/pages/candidateSupport/SupportCandidateNav';
+import CompanySupportNav from '../company-pannel/pages/support/CompanySupportNav';
 
 const router = createBrowserRouter([
     {
@@ -194,7 +196,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'support',
-                element: <Support />
+                element: <CompanySupportNav />
             },
             {
                 path: 'credibility-establishment',
@@ -233,7 +235,7 @@ const router = createBrowserRouter([
                         element: <AppliedJobs />
                     },
                     {
-                        path: 'saved-jobs',
+                        path: 'saved-jobs/:name',
                         element: <SavedJobs />
                     }
                 ]
@@ -252,7 +254,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'support-candidate',
-                element: <CandidateSupport />
+                element: <SupportCandidateNav />
             },
             {
                 path: 'candidate-chat/:id',

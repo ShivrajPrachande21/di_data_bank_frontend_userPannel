@@ -86,6 +86,17 @@
     list-style-type: none; /* Remove bullets */
     padding-left: 0; /* Remove default padding */
 }
+.sidebar-btns ul li:hover {
+    background-color: rgb(
+        243,
+        243,
+        243
+    ); /* Use background-color instead of background */
+}
+
+.sidebar-btns a {
+    text-decoration: none;
+}
 .logout-img {
     margin-left: 10px;
 }

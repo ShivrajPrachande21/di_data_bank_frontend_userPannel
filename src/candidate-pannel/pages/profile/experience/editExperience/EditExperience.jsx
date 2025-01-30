@@ -29,7 +29,7 @@ const EditExperience = () => {
         }
     };
     const [expData, setExpData] = useState({
-        End_posistion:false,
+        End_posistion: false,
         companyName: '',
         current_workingStatus: false,
         designation: '',
@@ -189,6 +189,7 @@ const EditExperience = () => {
                                         fontSize: '0.8rem'
                                     }}
                                 >
+                                    <option value="">Select</option>
                                     <option value="Full-Time">Full-Time</option>
                                     <option value="Part-Time">Part-Time</option>
                                     <option value="Contract">Contract</option>

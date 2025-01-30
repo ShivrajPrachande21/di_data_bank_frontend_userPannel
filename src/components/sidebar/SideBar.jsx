@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import io from 'socket.io-client';
-const socket = io('http://65.20.91.47:4000');
+//const socket = io('http://65.20.91.47:4000');
+//const socket=io('http://localhost:4000');
+const socket = io('https://boardsearch.ai');
+//const socket = io('http://65.20.91.47:4000');
 import './sidebar.css';
 import WdcLogo from '../../assets/images/Withoutbg.png';
 import bellgray from '../../assets/images/bellgray.png';
@@ -25,6 +28,9 @@ import accessWhite from '../../assets/images/accessWhite.png';
 import SubscritionIconWhite from '../../assets/images/SubscritionIconWhite.png';
 import AdminPanelmenu from '../../assets/images/AdminPanelmenu icons.png';
 import hireWhite from '../../assets/images/hireWhite.png';
+import searchJobWhite from '../../assets/images/searchJobWhite.png';
+import transactionwhite from '../../assets/images/transactionwhite.png';
+
 import axios from 'axios';
 import BaseUrl from '../../services/BaseUrl';
 import CompanyNotification from '../../company-pannel/pages/company_Notification/CompanyNotification';
@@ -38,6 +44,8 @@ import { useSubscription } from '../../context/SubscriptionContext';
 import { CandidateProfileContext } from '../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import { AccessManagementContext } from './../../context/AccessManagementContext';
+import { CandidateSupportContext } from '../../context/candidateContext/CandidateSupportContext';
+
 const SideBar = () => {
     const {
         handleCloseHire,
@@ -54,16 +62,20 @@ const SideBar = () => {
     const { getSingleData, formData, sideBarData } = useContext(
         AccessManagementContext
     );
+    const location = useLocation();
     const { ShowGreen, SetGreenBatch } = useSubscription();
     const { CandidateProfile, fetchCandidateProfile } = useContext(
         CandidateProfileContext
     );
+
+    const { hideSidebar, sethidSidebar } = useContext(CandidateSupportContext);
     const navigate = useNavigate();
     const locate = useLocation();
     const [hidelogout, sethidelogout] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
     const [hoveredButton, setHoveredButton] = useState(null);
     const [candidateToken, setCandidateToken] = useState('');
+    const [supportNot, SetSupportNot] = useState(0);
 
     const handleClose = () => setShow(prev => !prev);
     const handleShow = () => setShow(prev => !prev);
@@ -123,7 +135,7 @@ const SideBar = () => {
         },
         {
             id: 3,
-            label: 'Create Job',
+            label: 'List Job',
             backendName: 'create_job',
             icon: createjobblue,
             inactiveIcon: createJob,
@@ -150,7 +162,7 @@ const SideBar = () => {
             label: 'Transactions',
             backendName: 'transaction',
             icon: transactions,
-            // inactiveIcon: transactionsInactive,
+            inactiveIcon: transactionwhite,
             link: 'transaction'
         },
         {
@@ -180,18 +192,21 @@ const SideBar = () => {
             id: 1,
             label: 'Dashboard',
             icon: dashboard,
+            inactiveIcon: AdminPanelmenu,
             link: 'dashboard'
         },
         {
             id: 2,
             label: 'Search Jobs',
             icon: SearchJob,
+            inactiveIcon: searchJobWhite,
             link: 'search-job'
         },
         {
             id: 3,
             label: 'Applied Jobs',
             icon: SearchJob,
+            inactiveIcon: searchJobWhite,
             link: 'applied-job/applied-jobs'
         },
 
@@ -199,18 +214,22 @@ const SideBar = () => {
             id: 4,
             label: 'Subscription Plans',
             icon: SubscriptionIcon,
+            inactiveIcon: SubscritionIconWhite,
             link: 'subscription-candidate'
         },
         {
             id: 5,
             label: 'Transactions',
             icon: transactions,
+            inactiveIcon: transactionwhite,
             link: 'transaction-candidate'
         },
         {
             id: 6,
             label: 'Support',
             icon: SupportIcon,
+            inactiveIcon: SupportIconWhite,
+
             link: 'support-candidate'
         }
 
@@ -266,6 +285,11 @@ const SideBar = () => {
                 ///setNotifications(newNotification);
             });
 
+            socket.emit('messageNotification', company_id);
+            socket.on('messageNot', MessageNot => {
+                SetSupportNot(MessageNot);
+            });
+
             socket.on('disconnect', () => {
                 console.log('User disconnected');
             });
@@ -310,6 +334,11 @@ const SideBar = () => {
                     SetProfileView(data);
                 });
 
+                socket.emit('messageNotification', candidate_id);
+                socket.on('messageNot', MessageNot => {
+                    SetSupportNot(MessageNot);
+                });
+
                 socket.on('disconnect', () => {
                     console.log('User disconnected');
                 });
@@ -346,10 +375,41 @@ const SideBar = () => {
         } else {
         }
     }, []);
+    const toggleSidebar = () => {
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            sethidSidebar(prev => !prev);
+        }
+    };
+
+    const getButtonStyle = path => {
+        if (location.pathname.includes(path)) {
+            return {
+                fontSize: '0.8rem',
+                width: '100%',
+
+                color: 'white',
+                background: 'var(--Primary-color, #3B96E1)',
+
+                borderRadius: '8px'
+            };
+        } else {
+            return {
+                fontSize: '0.8rem',
+                width: '100%',
+                padding: '10px',
+
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+            };
+        }
+    };
 
     useEffect(() => {
         getSingleData();
-    }, [locate]);
+    }, []);
+
     return (
         <>
             <div className="MainSidebar">
@@ -380,10 +440,10 @@ const SideBar = () => {
                                 width="23px"
                                 onClick={handleShow}
                             />
-                            {notifications.length +
-                                notiCount.length +
-                                profileview.lengthv +
-                                shortlist.length ==
+                            {parseInt(notifications.length) +
+                                parseInt(notiCount.length) +
+                                parseInt(profileview.length) +
+                                parseInt(shortlist.length) ==
                             0 ? (
                                 ''
                             ) : (
@@ -410,7 +470,11 @@ const SideBar = () => {
                             borderRadius: '12px'
                         }}
                     >
+<<<<<<< HEAD
                         <div className="Select">
+=======
+                        <div className="Select" onClick={toggleLogoout}>
+>>>>>>> d6e37708e15ed13fa3e71fdd3ede604138526d96
                             <div>
                                 <img
                                     src={
@@ -442,7 +506,6 @@ const SideBar = () => {
                                     marginRight: '6px',
                                     cursor: 'pointer'
                                 }}
-                                onClick={toggleLogoout}
                             />
                         </div>
                         <Col xs={12}>
@@ -565,70 +628,8 @@ const SideBar = () => {
                             {candidateToken
                                 ? sidebarButtonsCanditas.map(button => (
                                       <Link
+                                          onClick={toggleSidebar}
                                           key={button.id}
-                                          to={button.link}
-                                          style={{
-                                              textDecoration: 'none',
-                                              color:
-                                                  activeButton === button.id
-                                                      ? 'white' // Active button text color
-                                                      : hoveredButton ===
-                                                        button.id
-                                                      ? '#051F50' // Hovered button text color
-                                                      : '#3b96e1'
-                                          }}
-                                      >
-                                          <li
-                                              key={button.id}
-                                              // onMouseOver={e => {
-                                              //     e.currentTarget.style.backgroundColor =
-                                              //         '#fff'; // Change to any hover color
-                                              // }}
-                                              onClick={() =>
-                                                  handleButtonClick(button.id)
-                                              }
-                                              onMouseOver={() =>
-                                                  setHoveredButton(button.id)
-                                              } // Set hovered button
-                                              onMouseOut={() =>
-                                                  setHoveredButton(null)
-                                              }
-                                              style={{
-                                                  background:
-                                                      activeButton === button.id
-                                                          ? '#3b96e1' // Active button background
-                                                          : hoveredButton ===
-                                                            button.id
-                                                          ? '#f0f0f0' // Hover background
-                                                          : 'white', // Default background
-                                                  color:
-                                                      activeButton === button.id
-                                                          ? 'white' // Active button text color
-                                                          : hoveredButton ===
-                                                            button.id
-                                                          ? '#051F50' // Hovered button text color
-                                                          : '#3b96e1',
-                                                  transition:
-                                                      'background-color 0.3s, color 0.3s'
-                                              }}
-                                          >
-                                              <img
-                                                  src={button.icon}
-                                                  alt=""
-                                                  width="18px"
-                                                  style={{
-                                                      marginRight: '12px',
-                                                      marginLeft: '4px',
-                                                      marginTop: '-4px'
-                                                  }}
-                                              />
-
-                                              {button.label}
-                                          </li>
-                                      </Link>
-                                  ))
-                                : filteredButtons.map(button => (
-                                      <Link
                                           to={button.link}
                                           style={{
                                               textDecoration: 'none',
@@ -691,6 +692,118 @@ const SideBar = () => {
                                               />
 
                                               {button.label}
+                                              {button.label == 'Support' &&
+                                              supportNot != 0 ? (
+                                                  <span
+                                                      style={{
+                                                          marginLeft: '60%',
+                                                          marginTop: '-19px',
+                                                          backgroundColor:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? 'white'
+                                                                  : '#3b96e1',
+                                                          color:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? '#3b96e1'
+                                                                  : 'white',
+                                                          borderRadius: '50%',
+                                                          width: '15px',
+                                                          height: '15px',
+                                                          display: 'flex',
+                                                          justifyContent:
+                                                              'center',
+                                                          alignItems: 'center',
+                                                          fontSize: '12px',
+                                                          fontWeight: 'simple'
+                                                      }}
+                                                  >
+                                                      {supportNot}
+                                                  </span>
+                                              ) : null}
+                                          </li>
+                                      </Link>
+                                  ))
+                                : filteredButtons.map(button => (
+                                      <Link
+                                          to={button.link}
+                                          style={{
+                                              textDecoration: 'none',
+                                              color:
+                                                  activeButton === button.id
+                                                      ? 'white' // Active button text color
+                                                      : hoveredButton ===
+                                                        button.id
+                                                      ? '#051F50' // Hovered button text color
+                                                      : '#3b96e1'
+                                          }}
+                                      >
+                                          <li
+                                              key={button.id}
+                                              // onMouseOver={e => {
+                                              //     e.currentTarget.style.backgroundColor =
+                                              //         '#fff'; // Change to any hover color
+                                              // }}
+                                              onClick={() =>
+                                                  handleButtonClick(button.id)
+                                              }
+                                              onMouseOver={() =>
+                                                  setHoveredButton(button.id)
+                                              } // Set hovered button
+                                              onMouseOut={() =>
+                                                  setHoveredButton(null)
+                                              }
+                                              style={getButtonStyle(
+                                                  button.link
+                                              )}
+                                          >
+                                              <img
+                                                  src={
+                                                      activeButton == button.id
+                                                          ? button.inactiveIcon
+                                                          : button.icon
+                                                  }
+                                                  alt=""
+                                                  width="18px"
+                                                  style={{
+                                                      marginRight: '12px',
+                                                      marginLeft: '4px',
+                                                      marginTop: '-4px'
+                                                  }}
+                                              />
+
+                                              {button.label.substring(0, 20)}
+                                              {button.label == 'Support' &&
+                                              supportNot != 0 ? (
+                                                  <span
+                                                      style={{
+                                                          marginLeft: '60%',
+                                                          marginTop: '-19px',
+                                                          backgroundColor:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? 'white'
+                                                                  : '#3b96e1',
+                                                          color:
+                                                              activeButton ==
+                                                              button.id
+                                                                  ? '#3b96e1'
+                                                                  : 'white',
+                                                          borderRadius: '50%',
+                                                          width: '15px',
+                                                          height: '15px',
+                                                          display: 'flex',
+                                                          justifyContent:
+                                                              'center',
+                                                          alignItems: 'center',
+                                                          fontSize: '12px',
+                                                          fontWeight: 'simple'
+                                                      }}
+                                                  >
+                                                      {supportNot}
+                                                  </span>
+                                              ) : null}
                                           </li>
                                       </Link>
                                   ))}
@@ -698,6 +811,7 @@ const SideBar = () => {
                     </div>
                 </div>
             </div>
+
             <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Notifications</Offcanvas.Title>

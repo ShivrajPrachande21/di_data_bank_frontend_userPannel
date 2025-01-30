@@ -18,8 +18,8 @@
     appearance: none; /* Remove default radio button appearance */
     -webkit-appearance: none;
     -moz-appearance: none;
-    width: 18px; /* Set the size */
-    height: 18px; /* Set the size */
+    width: 15px; /* Set the size */
+    height: 15px; /* Set the size */
     border-radius: 50%; /* Make it circular */
     border: 1px solid #3b96e1; /* Add border color */
     outline: none; /* Remove focus outline */

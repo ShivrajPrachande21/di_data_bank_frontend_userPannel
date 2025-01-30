@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import arrow_back from '../../../../assets/images/arrow_back.png';
 import chatuser from '../../../../assets/images/chatuser.png';
-import avatar from '../../../../assets/images/avatar.png';
-
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client';
 import BaseUrl from './../../../../services/BaseUrl';
 import axios from 'axios';
-const socket = io('http://65.20.91.47:4000');
-
+//const socket = io('http://65.20.91.47:4000');
+//const socket=io('http://localhost:4000')
+//const socket = io('https://boardsearch.ai');
+const socket = io('https://boardsearch.ai');
 function CandidateChat() {
+    const location = useLocation();
     const { id } = useParams();
 
     const navigateBack = useNavigate();
@@ -86,9 +87,7 @@ function CandidateChat() {
             setChat(receivedMessages);
         });
 
-        socket.on('message', newMessage => {
-            console.log('shivraj message', newMessage);
-        });
+        socket.on('message', newMessage => {});
 
         const messageListener = newMessage => {
             setChat(prevMessages => [...prevMessages, newMessage]);
@@ -111,9 +110,11 @@ function CandidateChat() {
         const data = {
             refference_id: companyId,
             Issue_id: id,
-            message: message
+            message: message,
+            User_view: true
         };
         socket.emit('newMessage', data);
+        socket.emit('adminMessagNot');
         setMessage('');
         settimeStamp(timestamps);
     };
@@ -126,9 +127,7 @@ function CandidateChat() {
             if (!token) {
                 navigateBack('/login');
             } else {
-                navigateBack(
-                    '/candidate-dashboard/candidate-chat/6722227ffaabccf3abb083f6'
-                );
+                navigateBack(`/candidate-dashboard/candidate-chat/${id}`);
             }
         } else {
             navigateBack('/login');
@@ -152,6 +151,14 @@ function CandidateChat() {
         fun();
         rendering();
     }, []);
+
+    useEffect(() => {
+        return () => {
+            setChat([]);
+        };
+    }, []);
+
+    // console.log('chat', chat);
     return (
         <>
             <div className="Chatpage">

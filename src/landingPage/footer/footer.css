@@ -17,9 +17,13 @@
     color: white;
 }
 .footer-bottom {
+    margin: 0px auto;
+    width: 80%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .footer-bottom p a {
     margin-right: 36px;
@@ -47,6 +51,12 @@
     font-size: 0.9rem;
     margin-top: 4px;
 }
+.fotter-images {
+    display: flex;
+    gap: 10px;
+}
+.copyright {
+}
 @media (max-width: 575.98px) {
     .footer-child {
         width: 90%;
@@ -60,5 +70,12 @@
     .social-icon-div img {
         width: 20px;
         margin-top: -10px;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        gap: 14px;
+    }
+    .fotter-images {
+        padding-bottom: 10px;
     }
 }

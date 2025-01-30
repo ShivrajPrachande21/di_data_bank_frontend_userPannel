@@ -14,6 +14,7 @@ import Loader from '../../../company-pannel/pages/loader/Loader';
 import { CandidateProfileContext } from '../../../context/candidateContext/CandidateProfileContext';
 import { toast } from 'react-toastify';
 import ProfileCompletionModal from '../ProfileAlert/ProfileCompletion';
+import { Helmet } from 'react-helmet';
 
 const CandidateSubscription = () => {
     const {
@@ -165,6 +166,17 @@ const CandidateSubscription = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Subscription</title>
+                <meta
+                    name="description"
+                    content="Find your dream job on our platform."
+                />
+                <meta
+                    name="keywords"
+                    content="jobs, career, search jobs, employment"
+                />
+            </Helmet>
             {SuccessModal && (
                 <Modal
                     show={SuccessModal}
@@ -255,7 +267,12 @@ const CandidateSubscription = () => {
                                                 {item?.job_recommandation ? (
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                            src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />
@@ -286,7 +303,12 @@ const CandidateSubscription = () => {
                                                 {item?.resume_write ? (
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                            src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />
@@ -301,21 +323,32 @@ const CandidateSubscription = () => {
                                                 <ul>
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                            src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />
-                                                        Customer Support
+                                                        Email support and chat
+                                                        support
                                                     </li>
                                                 </ul>
                                             ) : (
                                                 ''
                                             )}
-                                            <ul>
+                                            {/* <ul>
                                                 {item?.interview_question ? (
                                                     <li>
                                                         <img
-                                                            src={CardCheck}
+                                                            src={
+                                                                currentSubscription?.plane_name ==
+                                                                item?.plane_name
+                                                                    ? bluetick
+                                                                    : CardCheck
+                                                            }
                                                             alt=""
                                                             width="14px"
                                                         />
@@ -328,7 +361,7 @@ const CandidateSubscription = () => {
                                                 ) : (
                                                     ''
                                                 )}
-                                            </ul>
+                                            </ul> */}
                                             {currentSubscription?.plane_name ==
                                             item?.plane_name ? (
                                                 <Button

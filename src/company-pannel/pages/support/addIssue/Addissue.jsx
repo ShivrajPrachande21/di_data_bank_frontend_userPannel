@@ -6,11 +6,10 @@ import blackCross from '../../../../assets/images/blackCross.png';
 import { useSupport } from '../../../../context/SupportContext';
 import axios from 'axios';
 import BaseUrl from '../../../../services/BaseUrl';
-
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 const Addissue = () => {
-    const { modalShow, setModalShow } = useSupport();
+    const { modalShow, setModalShow,fetch_all_issue } = useSupport();
     const [loading, setLoading] = useState(false);
     const [FileData, setFileData] = useState(null);
     const [formData, setFormData] = useState({
@@ -77,7 +76,7 @@ const Addissue = () => {
             if (response.status == 200 || response.status == 201) {
                 toast.success('Issue Submited Successfully');
                 setModalShow(prev => !prev);
-
+                fetch_all_issue()
                 setFormData({
                     Issue_type: '',
                     description: '',

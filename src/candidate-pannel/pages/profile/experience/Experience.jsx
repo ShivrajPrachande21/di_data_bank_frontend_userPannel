@@ -364,7 +364,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Total Experience:
@@ -382,7 +383,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Current CTC:
@@ -399,7 +401,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Aspiring Position/Role:
@@ -416,7 +419,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Skills:
@@ -445,7 +449,9 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Resume:
@@ -474,7 +480,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Career highlights details:
@@ -490,7 +497,8 @@ const Experience = () => {
                                                 style={{
                                                     color: '#AEAEAE',
                                                     fontSize: '0.8rem',
-                                                    width: '50%'
+                                                    width: '50%',
+                                                    verticalAlign: 'top'
                                                 }}
                                             >
                                                 Awards & Recognition:
@@ -555,7 +563,9 @@ const Experience = () => {
                                                                     width: '20px',
                                                                     cursor: 'pointer',
                                                                     marginTop:
-                                                                        '-10px'
+                                                                        '-10px',
+                                                                    verticalAlign:
+                                                                        'top'
                                                                 }}
                                                                 onClick={() =>
                                                                     handleShowEditProject(
@@ -572,7 +582,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Project Title:
@@ -589,7 +601,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Project Duration:
@@ -607,7 +621,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Project Url:
@@ -630,7 +646,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Project Status:
@@ -648,7 +666,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Role:
@@ -664,7 +684,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Skills Used:
@@ -680,7 +702,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Project Site:
@@ -696,7 +720,9 @@ const Experience = () => {
                                                                 color: '#AEAEAE',
                                                                 fontSize:
                                                                     '0.8rem',
-                                                                width: '50%'
+                                                                width: '50%',
+                                                                verticalAlign:
+                                                                    'top'
                                                             }}
                                                         >
                                                             Project-Details:
@@ -718,7 +744,7 @@ const Experience = () => {
                                                                         textAlign:
                                                                             'justify',
                                                                         fontSize:
-                                                                            '0.7rem'
+                                                                            '0.9rem'
                                                                     }}
                                                                 >
                                                                     {
@@ -758,7 +784,7 @@ const Experience = () => {
             {/* Work Details  Model */}
             <Modal
                 show={showWork}
-                onHide={handleShowWork}
+                //  onHide={handleShowWork}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -782,7 +808,7 @@ const Experience = () => {
             {/* EDit Personal Module */}
             <Modal
                 show={editExp}
-                onHide={showEditExp}
+                // onHide={showEditExp}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -805,7 +831,7 @@ const Experience = () => {
             </Modal>
             <Modal
                 show={ExpModle}
-                onHide={showExperiencelModal}
+                // onHide={showExperiencelModal}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -828,7 +854,7 @@ const Experience = () => {
             </Modal>
             <Modal
                 show={showProjectModel}
-                onHide={handleShowProject}
+                //  onHide={handleShowProject}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"
@@ -851,7 +877,7 @@ const Experience = () => {
             </Modal>
             <Modal
                 show={showEDitProject}
-                onHide={handleShowEditProject}
+                // onHide={handleShowEditProject}
                 aria-labelledby="example-modal-sizes-title-lg"
                 centered
                 className="custom-modal-size"

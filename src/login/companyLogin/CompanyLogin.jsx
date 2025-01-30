@@ -9,7 +9,9 @@ import {
     Spinner
 } from 'react-bootstrap';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import backgroundImage from '../../assets/images/AdminLoginPanelBackGround.png';
+// import backgroundImage from '../../assets/images/AdminLoginPanelBackGround.png';
+import backgroundImage from '../../assets/images/BoarSearchBgImg.jpg'
+import WdcLogo from '../../assets/images/Withoutbg.png';
 import './companyLogin.css';
 import { useNavigate } from 'react-router-dom';
 import BaseUrl from '../../services/BaseUrl';
@@ -217,6 +219,12 @@ const CompanyLogin = () => {
                     <img src={backgroundImage} alt="" />
                 </div>
                 <div className="login-FormDiv">
+                      <div className="top">
+                                            
+                                                                    <div className="Head">
+                                                                        <img src={WdcLogo} alt="" style={{width:'40%',marginBottom:'10px'}} />
+                                                                    </div>
+                                                                </div>
                     <div className="loginHead">
                         <p>Log in</p>
                     </div>

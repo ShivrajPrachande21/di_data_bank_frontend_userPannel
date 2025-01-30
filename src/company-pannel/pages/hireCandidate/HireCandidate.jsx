@@ -8,6 +8,7 @@ import {
     OverlayTrigger,
     Tooltip
 } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import { Link, useNavigate, Outlet, useLocation } from 'react-router-dom';
 import Ai from '../../../assets/images/Ai.png';
 import SearchIcon from '../../../assets/images/SearchIcon.png';
@@ -19,31 +20,38 @@ import { HireCandidateContext } from '../../../context/HireCandidateContex';
 import profileimg from '../../../assets/images/profileimg.png';
 import { toast } from 'react-toastify';
 import BaseUrl from '../../../services/BaseUrl';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const HireCandidate = () => {
     const {
         appliedcandidate,
+        setappliedcandidate,
         resume_loading,
         SearchLoading,
+        seachBarData,
+        setseachBarData,
+        setLoading,
+        loading,
+        setError,
+        currentPage,
+        setCurrentPage,
         error,
         Subscription_Data,
         downloadSelectedEmails,
         handleDownload_Resume,
         get_Candidate_detials,
-        fetchCandidates,
         Search_bye_keyWord,
-        get_subscription_details
+        get_subscription_details,
+        setAiData
     } = useContext(HireCandidateContext);
     const navigate = useNavigate();
     const locate = useLocation();
 
     const [fiedEmpty, setfiedEmpty] = useState('');
-
-    const [seachBarData, setseachBarData] = useState({
-        search: '',
-        experience: '',
-        location: ''
-    });
+    const [hasMore, setHasmore] = useState(true);
+    const [totalUser, setTotalUser] = useState(0);
 
     const handle_sideBar_change = e => {
         const { name, value } = e.target;
@@ -51,18 +59,7 @@ const HireCandidate = () => {
         setfiedEmpty('');
     };
     const handle_search = () => {
-        // if (
-        //     seachBarData.search.trim() == '' &&
-        //     seachBarData.search.trim() === ''
-        // ) {
-        //     toast.error('Please enter keywords to search relevant Candidate');
-        // } else {
         Search_bye_keyWord(seachBarData);
-        // }
-
-        if (seachBarData) {
-            // setseachBarData({ search: '', experience: '', location: '' });
-        }
     };
 
     const [selectAllChecked, setSelectAllChecked] = useState(false);
@@ -167,9 +164,9 @@ const HireCandidate = () => {
                     typeof Subscription_Data[0]?.cv_view_limit == 'number' &&
                     Subscription_Data[0]?.cv_view_limit == 0
                 ) {
-                    toast.error('Please Top up or Upgrade your plane');
+                    toast.error('Please Top up or Upgrade your plan');
                 } else {
-                    toast.error('Please buy subscription plane');
+                    toast.error('Please buy subscription plan');
                 }
             }
         }
@@ -177,10 +174,6 @@ const HireCandidate = () => {
 
     const appliedcandidate_Count = appliedcandidate.length;
 
-    useEffect(() => {
-        fetchCandidates();
-        get_subscription_details();
-    }, [locate]);
     const searchLimit =
         (Subscription_Data[0]?.search_limit || 0) +
         (Subscription_Data[1]?.search_limit || 0);
@@ -200,12 +193,65 @@ const HireCandidate = () => {
         }
     }
 
+    const fetchCandidates = async () => {
+        setLoading(true);
+        const token = localStorage.getItem('companyToken');
+        const decodedToken = jwtDecode(token);
+        const companyId = decodedToken?._id;
+
+        if (!companyId) {
+            setLoading(false);
+            toast.error('Invalid token');
+            return;
+        }
+
+        try {
+            const response = await axios.get(
+                `${BaseUrl}company/get_appliedcandidate/${companyId}/${currentPage}/${50}`
+            );
+            const newCandidates = response.data?.data;
+            setappliedcandidate(prevCandidates => [
+                ...prevCandidates,
+                ...newCandidates
+            ]);
+            setTotalUser(response.data?.TotalCandidate);
+
+            if (newCandidates.length < 50) {
+                setHasmore(false);
+            } else {
+                setCurrentPage(prevPage => prevPage + 1);
+            }
+        } catch (err) {
+            setError(err.message);
+            setHasmore(false);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        rendering();
+        setAiData([])
+        if (appliedcandidate.length == 0) {
+            rendering();
+            get_subscription_details();
+            fetchCandidates();
+        }
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            setappliedcandidate([]);
+            setCurrentPage(1);
+        };
     }, []);
 
     return (
         <div className="hire-candidate">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Hire-Candidate</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
             <Row>
                 <Col xs={12} md={3}>
                     <Button className="ai-btn">
@@ -217,7 +263,7 @@ const HireCandidate = () => {
                     <div className="Search">
                         <input
                             type="text"
-                            placeholder="( Search by Job-title , skills , Qualification ) "
+                            placeholder="( Search by Job-title , skills , Qualification , Name ) "
                             name="search"
                             value={seachBarData.search}
                             onChange={handle_sideBar_change}
@@ -241,7 +287,7 @@ const HireCandidate = () => {
                         <div className="search-by-location">
                             <input
                                 type="text"
-                                placeholder="Search bye location"
+                                placeholder="Search by location"
                                 name="location"
                                 value={seachBarData.location}
                                 onChange={handle_sideBar_change}
@@ -269,7 +315,18 @@ const HireCandidate = () => {
                 <Col xs={12}>
                     <div className="serach-result">
                         <div className="para">
-                            <p>Search Results :{appliedcandidate_Count}</p>
+                            <p>
+                                Results: {appliedcandidate_Count}
+                                <span
+                                    style={{
+                                        fontSize: '0.8rem',
+                                        margin: '0 5px'
+                                    }}
+                                >
+                                    /
+                                </span>
+                                {totalUser}
+                            </p>
                         </div>
 
                         <div className="download-email">
@@ -337,96 +394,108 @@ const HireCandidate = () => {
                 </Col>
             </Row>
             <Row className="mt-2">
-                {appliedcandidate.map((candidate, index) => (
-                    <Col xs={12} className="mb-2" key={index}>
-                        <div className="result-array">
-                            {}
-                            <div
-                                className="result-left"
-                                onClick={() =>
-                                    naviagte_view_candidate(candidate?._id)
-                                }
-                            >
-                                <div className="result-img">
-                                    <img
-                                        src={
-                                            candidate?.candidateDetails?.profile
-                                                ? candidate?.candidateDetails
-                                                      ?.profile
-                                                : altprofile
-                                        }
-                                        style={{
-                                            width: '100%',
-                                            height: '100%'
-                                        }}
-                                    />
-                                </div>
-                                <div className="result-text">
-                                    <h4>
-                                        {candidate?.basicDetails[0]?.name}
+                <InfiniteScroll
+                    style={{ height: '100vh' }}
+                    dataLength={appliedcandidate.length}
+                    next={fetchCandidates}
+                    hasMore={hasMore}
+                    loader={<p>Loading...</p>}
+                    endMessage={<p>No more candidates to display.</p>}
+                    height={450}
+                >
+                    {appliedcandidate.map((candidate, index) => (
+                        <Col xs={12} className="mb-2" key={index}>
+                            <div className="result-array">
+                                {}
+                                <div
+                                    className="result-left"
+                                    onClick={() =>
+                                        naviagte_view_candidate(candidate?._id)
+                                    }
+                                >
+                                    <div className="result-img">
+                                        <img
+                                            src={
+                                                candidate?.candidateDetails
+                                                    ?.profile
+                                                    ? candidate
+                                                          ?.candidateDetails
+                                                          ?.profile
+                                                    : altprofile
+                                            }
+                                            style={{
+                                                width: '100%',
+                                                height: '100%'
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="result-text">
+                                        <h4>
+                                            {candidate?.basicDetails[0]?.name}
 
-                                        {/* Tool-tip componet */}
-                                        {candidate?.personalDetails[0]
-                                            ?.Aadhar_verified_status &&
-                                        candidate?.personalDetails[0]
-                                            ?.Pan_verified_status ? (
-                                            <OverlayTrigger
-                                                placement="top"
-                                                overlay={
-                                                    <div
-                                                        style={{
-                                                            position:
-                                                                'absolute',
-                                                            backgroundColor:
-                                                                'white',
-                                                            padding: '2px 10px',
-                                                            color: '#008000',
-                                                            borderRadius: 3,
-                                                            border: '1px solid #008000'
-                                                        }}
-                                                    >
-                                                        Verified
-                                                    </div>
-                                                }
-                                            >
-                                                <img
-                                                    src={Verified}
-                                                    alt="Verified"
-                                                    width="19"
-                                                />
-                                            </OverlayTrigger>
-                                        ) : null}
-                                    </h4>
-                                    <p>
-                                        {
-                                            candidate?.workDetails[0]
-                                                ?.aspiring_position
-                                        }
-                                    </p>
+                                            {/* Tool-tip componet */}
+                                            {candidate?.personalDetails[0]
+                                                ?.Aadhar_verified_status &&
+                                            candidate?.personalDetails[0]
+                                                ?.Pan_verified_status ? (
+                                                <OverlayTrigger
+                                                    placement="top"
+                                                    overlay={
+                                                        <div
+                                                            style={{
+                                                                position:
+                                                                    'absolute',
+                                                                backgroundColor:
+                                                                    'white',
+                                                                padding:
+                                                                    '2px 10px',
+                                                                color: '#008000',
+                                                                borderRadius: 3,
+                                                                border: '1px solid #008000'
+                                                            }}
+                                                        >
+                                                            Verified
+                                                        </div>
+                                                    }
+                                                >
+                                                    <img
+                                                        src={Verified}
+                                                        alt="Verified"
+                                                        width="19"
+                                                    />
+                                                </OverlayTrigger>
+                                            ) : null}
+                                        </h4>
+                                        <p>
+                                            {
+                                                candidate?.workDetails[0]
+                                                    ?.aspiring_position
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="right-">
+                                    <Form>
+                                        <Form.Check
+                                            type="checkbox"
+                                            id="custom-checkbox"
+                                            style={{
+                                                marginTop: '10px',
+                                                marginRight: '6px'
+                                            }}
+                                            checked={selectedCandidates[index]}
+                                            onChange={handleCheckboxChange(
+                                                index,
+                                                candidate?._id
+                                            )}
+                                        />
+                                    </Form>
                                 </div>
                             </div>
-                            <div className="right-">
-                                <Form>
-                                    <Form.Check
-                                        type="checkbox"
-                                        id="custom-checkbox"
-                                        style={{
-                                            marginTop: '10px',
-                                            marginRight: '6px'
-                                        }}
-                                        checked={selectedCandidates[index]}
-                                        onChange={handleCheckboxChange(
-                                            index,
-                                            candidate?._id
-                                        )}
-                                    />
-                                </Form>
-                            </div>
-                        </div>
-                    </Col>
-                ))}
+                        </Col>
+                    ))}
+                </InfiniteScroll>
             </Row>
-
             <Outlet />
         </div>
     );

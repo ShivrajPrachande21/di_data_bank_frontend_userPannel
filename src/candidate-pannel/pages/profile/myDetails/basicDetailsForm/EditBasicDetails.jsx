@@ -393,14 +393,14 @@ const EditBasicDetails = () => {
                     </div>
                 </Form>
 
-                {validated &&
+                {/* {validated &&
                     !errors.email &&
                     !errors.phone &&
                     !errors.linkedin && (
                         <Alert variant="success" className="mt-4">
                             Form is valid!
                         </Alert>
-                    )}
+                    )} */}
             </div>
         </>
     );

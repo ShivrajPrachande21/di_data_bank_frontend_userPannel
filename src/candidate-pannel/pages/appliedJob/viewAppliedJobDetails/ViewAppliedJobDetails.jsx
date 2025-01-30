@@ -121,7 +121,9 @@ const ViewAppliedJobDetails = () => {
                         <div className="applied-skilss">
                             {appliedJob?.jobDescription?.skills.map(
                                 (item, index) => (
-                                    <p>{item}</p>
+                                 
+                                      <p style={{fontSize:'0.8rem'}} key={index}>{item}</p>
+                                 
                                 )
                             )}
                         </div>
@@ -158,13 +160,31 @@ const ViewAppliedJobDetails = () => {
                                     }}
                                 >
                                     <span className="card-table-span">
-                                        Loction:
+                                        Location:
                                     </span>{' '}
                                 </td>
                                 <td>
                                     {' '}
                                     <span className="card-table-span">
                                         {appliedJob?.jobDescription?.location}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td
+                                    style={{
+                                        paddingRight: '30px'
+                                    }}
+                                >
+                                    <span className="card-table-span">
+                                        Job type:
+                                    </span>{' '}
+                                </td>
+                                <td>
+                                    {' '}
+                                    <span className="card-table-span">
+                                        {appliedJob?.jobDescription
+                                                ?.job_type}
                                     </span>
                                 </td>
                             </tr>
@@ -187,7 +207,7 @@ const ViewAppliedJobDetails = () => {
                                 <td>
                                     {' '}
                                     <span className="card-table-span">
-                                        {appliedJob?.jobDescription?.salary} LPA
+                                        {appliedJob?.jobDescription?.salary}
                                     </span>
                                 </td>
                             </tr>
@@ -205,6 +225,26 @@ const ViewAppliedJobDetails = () => {
                                     {' '}
                                     <span className="card-table-span">
                                         {appliedJob?.jobDescription?.education}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td
+                                    style={{
+                                        paddingRight: '30px'
+                                    }}
+                                >
+                                    <span className="card-table-span">
+                                        Work  type:
+                                    </span>{' '}
+                                </td>
+                                <td>
+                                    {' '}
+                                    <span className="card-table-span">
+                                        {
+                                            appliedJob?.jobDescription
+                                                ?.work_type
+                                        }
                                     </span>
                                 </td>
                             </tr>
@@ -254,9 +294,11 @@ const ViewAppliedJobDetails = () => {
                                     </span>
                                 </td>
                             </tr>
+                                        
                         </table>
                     </div>
 
+                   
                     <p className="view-top-p" onClick={handleSelectClick}>
                         Job Description
                         <img src={iconamoon_arrowd} alt="" width="20px" />

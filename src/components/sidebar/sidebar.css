@@ -31,6 +31,7 @@
 .Select {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background: rgba(242, 242, 242, 1);
     border-radius: 8px;
     height: 6vh;

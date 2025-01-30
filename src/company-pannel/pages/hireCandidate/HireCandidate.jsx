@@ -229,7 +229,7 @@ const HireCandidate = () => {
                             className="custom-select"
                             onChange={handle_sideBar_change}
                         >
-                            <option value="">select</option>
+                            <option value="">Select Experience</option>
                             {Array.from({ length: 30 }, (_, i) => i + 1).map(
                                 year => (
                                     <option key={year} value={year}>

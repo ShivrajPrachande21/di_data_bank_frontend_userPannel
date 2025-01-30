@@ -203,29 +203,33 @@ const CompanyNotification = ({ handleClose }) => {
                 }}
             >
                 {notifications?.map((item, index) => (
-                    <p key={index} style={{ fontSize: '0.8rem' }}>
+                    <p
+                        key={index}
+                        style={{
+                            fontSize: '0.8rem',
+                            background: '#B4DDFF',
+                            padding: '6px',
+                            display: 'flex',
+                            justifyContent: 'space-around',
+                            borderRadius: '10px'
+                        }}
+                    >
                         Your support request has been solved.
-                        <Link
-                            to={
-                                candidateToken
-                                    ? '/candidate-dashboard/support-candidate'
-                                    : '/main/support'
-                            }
-                            onClick={handle_notification}
-                            style={{
-                                color: '#3B96E1',
-                                fontSize: '0.8rem',
-                                marginLeft: '10px',
-                                cursor: 'pointer'
-                            }}
-                        >
-                            View
-                        </Link>
                     </p>
                 ))}
                 {NewCandidate.map((item, index) => (
                     <>
-                        <p key={index} style={{ fontSize: '0.8rem' }}>
+                        <p
+                            key={index}
+                            style={{
+                                fontSize: '0.8rem',
+                                background: '#B4DDFF',
+                                padding: '6px',
+                                display: 'flex',
+                                justifyContent: 'space-around',
+                                borderRadius: '10px'
+                            }}
+                        >
                             New Candidte Registered
                             {/* <span
                                 onClick={() => handleCloseHire(item?._id)}
@@ -243,7 +247,17 @@ const CompanyNotification = ({ handleClose }) => {
                 ))}
                 {ShortlistNot.map((item, index) => (
                     <>
-                        <p key={index} style={{ fontSize: '0.8rem' }}>
+                        <p
+                            key={index}
+                            style={{
+                                fontSize: '0.8rem',
+                                background: '#B4DDFF',
+                                padding: '6px',
+                                display: 'flex',
+                                justifyContent: 'space-around',
+                                borderRadius: '10px'
+                            }}
+                        >
                             Congratulations! Your profile has been shortlisted!
                             {/* <Link
                                 to="/candidate-dashboard/applied-job/applied-jobs"
@@ -263,7 +277,17 @@ const CompanyNotification = ({ handleClose }) => {
 
                 {profileView.map((item, index) => (
                     <>
-                        <p key={index} style={{ fontSize: '0.8rem' }}>
+                        <p
+                            key={index}
+                            style={{
+                                fontSize: '0.8rem',
+                                background: '#B4DDFF',
+                                padding: '6px',
+                                display: 'flex',
+                                justifyContent: 'space-around',
+                                borderRadius: '10px'
+                            }}
+                        >
                             Good news! A company just viewed your CV.
                             {/* <span
                                 onClick={() =>
@@ -286,7 +310,17 @@ const CompanyNotification = ({ handleClose }) => {
 
                 {newCompanyNot.map((item, index) => (
                     <>
-                        <p key={index} style={{ fontSize: '0.8rem' }}>
+                        <p
+                            key={index}
+                            style={{
+                                fontSize: '0.8rem',
+                                background: '#B4DDFF',
+                                padding: '6px',
+                                display: 'flex',
+                                justifyContent: 'space-around',
+                                borderRadius: '10px'
+                            }}
+                        >
                             A new company has joined our platform!
                             {/* <span
                                 onClick={() => handleCloseNewCompany(item?._id)}

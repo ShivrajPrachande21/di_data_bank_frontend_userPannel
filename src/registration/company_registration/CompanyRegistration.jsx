@@ -155,7 +155,7 @@ const CompanyRegistration = () => {
                                         className="custom-input"
                                         type="text"
                                         name="company_name"
-                                        placeholder="Enter your email"
+                                        placeholder="Enter Company Name"
                                         required
                                         value={company_reg.company_name}
                                         onChange={handleInputChange}
@@ -169,13 +169,13 @@ const CompanyRegistration = () => {
                                         className="custom-lable"
                                         style={{ fontSize: '1rem' }}
                                     >
-                                        Mobile No.
+                                        Email
                                     </Form.Label>
                                     <Form.Control
                                         className="custom-input"
                                         type="email"
                                         name="email"
-                                        placeholder="Enter your mobile no"
+                                        placeholder="Enter your email id"
                                         value={company_reg.email}
                                         onChange={handleInputChange}
                                         disabled
@@ -200,7 +200,7 @@ const CompanyRegistration = () => {
                                             fontSize: '0.76rem'
                                         }}
                                     >
-                                        Enter the OTP sent to number
+                                        Enter the OTP sent to Email
                                     </p>
                                 </Col>
                                 {HideOTP && (

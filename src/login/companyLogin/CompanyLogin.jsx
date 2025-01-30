@@ -89,7 +89,7 @@ const CompanyLogin = () => {
 
             // Simulate successful response
             if (response.status === 200) {
-                const company_otp =10;
+                const company_otp = 10;
                 const Candidate_token = response?.data?.CandidateToken;
                 // set Candidate token to local storage
 
@@ -139,31 +139,28 @@ const CompanyLogin = () => {
 
     const handle_Verify_otp = async e => {
         e.preventDefault();
-            try {
-                // Replace with actual OTP verification logic
+        try {
+            // Replace with actual OTP verification logic
 
-                // API call to verify OTP
-                const response = await axios.post(
-                    `${BaseUrl}company/login_otp`,
-                    {
-                        email: CompanyLogindata.email ,
-                        OTP:CompanyLogindata.otp
-                    }
-                );
-                const Company_token = response?.data?.companyToken;
-                localStorage.setItem('companyToken', Company_token);
-                localStorage.setItem('render', 'company');
-                if (response.status === 200) {
-                    // Navigate on success
-                    toast.success('Login successful!');
-                    navigate('/main/dashboard');
-                    clearStates();
-                } else {
-                    toast.error('Unexpected response from server.');
-                }
-            } catch (error) {
-                toast.error(error.response.data.error);
+            // API call to verify OTP
+            const response = await axios.post(`${BaseUrl}company/login_otp`, {
+                email: CompanyLogindata.email,
+                OTP: CompanyLogindata.otp
+            });
+            const Company_token = response?.data?.companyToken;
+            localStorage.setItem('companyToken', Company_token);
+            localStorage.setItem('render', 'company');
+            if (response.status === 200) {
+                // Navigate on success
+                toast.success('Login successful!');
+                navigate('/main/dashboard');
+                clearStates();
+            } else {
+                toast.error('Unexpected response from server.');
             }
+        } catch (error) {
+            toast.error(error.response.data.error);
+        }
     };
     // forgot password
     const naigateForgetpassword = () => {
@@ -196,18 +193,15 @@ const CompanyLogin = () => {
         }
     }
 
-    async function ResendOTP(){
-        try{
-            const response = await axios.post(
-                `${BaseUrl}/company/resend/otp`,
-                {
-                    email: CompanyLogindata.email
-                }
-            );
-            if(response.status==200||response.status==201){
+    async function ResendOTP() {
+        try {
+            const response = await axios.post(`${BaseUrl}/company/resend/otp`, {
+                email: CompanyLogindata.email
+            });
+            if (response.status == 200 || response.status == 201) {
                 toast.success(response?.data?.message);
             }
-        }catch(error){
+        } catch (error) {
             toast.error(error.response.data.error);
         }
     }
@@ -316,7 +310,16 @@ const CompanyLogin = () => {
                                         </Col>
                                     ))}
                                     <Col xs={12}>
-                                        <span style={{ color: '#3b96e1',fontSize: '0.8rem',float: 'right',cursor: 'pointer',paddingTop:'5px'}} onClick={ResendOTP}>
+                                        <span
+                                            style={{
+                                                color: '#3b96e1',
+                                                fontSize: '0.8rem',
+                                                float: 'right',
+                                                cursor: 'pointer',
+                                                paddingTop: '5px'
+                                            }}
+                                            onClick={ResendOTP}
+                                        >
                                             Resend
                                         </span>
                                     </Col>
@@ -357,7 +360,7 @@ const CompanyLogin = () => {
                                 {DisplayOtp_input ? (
                                     <div className="btn-div">
                                         <button onClick={handle_Verify_otp}>
-                                            verify otp
+                                            Verify Otp
                                         </button>
                                     </div>
                                 ) : (

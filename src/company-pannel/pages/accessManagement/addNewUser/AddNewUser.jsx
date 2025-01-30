@@ -31,9 +31,11 @@ const AddNewUser = () => {
         setEditModule(prev => !prev);
     };
 
-    const filterData = accessData&&accessData?.filter(item => {
-        return item?.email.toLowerCase().includes(userInput.toLowerCase());
-    });
+    const filterData =
+        accessData &&
+        accessData?.filter(item => {
+            return item?.email.toLowerCase().includes(userInput.toLowerCase());
+        });
     useEffect(() => {
         getAllSubAdmin();
     }, [locate]);
@@ -61,10 +63,18 @@ const AddNewUser = () => {
                     <Table bordered className="custom-table">
                         <thead>
                             <tr>
-                                <th className="p-3" scope="col">
+                                <th
+                                    className="p-3"
+                                    scope="col"
+                                    style={{ textAlign: 'center' }}
+                                >
                                     Sr.no
                                 </th>
-                                <th className="p-3" scope="col">
+                                <th
+                                    className="p-3"
+                                    scope="col"
+                                    style={{ textAlign: 'center' }}
+                                >
                                     HR Email
                                 </th>
 
